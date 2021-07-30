@@ -1,0 +1,24 @@
+Setting up LWJGL project:
+- Assimp {
+	Serve para importar modelos 3d. Mas mesmo para jogos 2d é bom tê-lo no nosso projecto
+}
+
+- GLFW {
+	Controla a janela
+}
+
+- OpenAL {
+	Biblioteca para reproduzir sons
+}
+
+- OpenGL {
+	Biblioteca que irá tratar dos gráficos
+}
+
+- Stb {
+	Para carregar imagens e/ou fontes
+}
+
+- Native file dialog {
+	Importar algumas dependências automaticamente
+}
