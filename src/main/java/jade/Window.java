@@ -1,5 +1,10 @@
 package jade;
 
+import jade.scenes.LevelEditorScene;
+import jade.scenes.LevelScene;
+import jade.scenes.Scene;
+import jade.scenes.Scenes;
+import jade.utils.Time;
 import org.lwjgl.Version;
 import org.lwjgl.glfw.GLFWErrorCallback;
 import org.lwjgl.opengl.GL;
@@ -16,6 +21,7 @@ public class Window {
     private long glfwWindow; // Vai agir como se fosse um ponteiro
     private boolean fadingToBlack = false;
     private float r, g, b, a;
+    private static Scene currentScene;
 
     private Window() {
         this.width  = 1920;
@@ -25,14 +31,6 @@ public class Window {
         this.g = 1.0f;
         this.b = 1.0f;
         this.a = 1.0f;
-    }
-
-    public static Window get() {
-        if (window == null) {
-            window = new Window();
-        }
-
-        return window;
     }
 
     public void run() {
@@ -115,9 +113,16 @@ public class Window {
         // creates the GLCapabilities instance and makes the OpenGL
         // bindings available for use.
         GL.createCapabilities();
+
+        // Colocar a scene
+        changeScene(Scenes.LEVEL_EDITOR_SCENE);
     }
 
     public void loop() {
+        float beginTime = Time.getTime();
+        float endTime;
+        float dt = -1.0f;
+
         while (!glfwWindowShouldClose(glfwWindow)) {
             KeyListener.updateLastKeys();
 
@@ -146,8 +151,42 @@ public class Window {
             glClear(GL_COLOR_BUFFER_BIT); /* Contar para o OpenGL como limpar a frame (Indicates the buffers
             currently enabled for color writing).*/
 
+            if (dt >= 0) {
+                System.out.println("FPS: " + 1.0f / dt);
+                currentScene.update(dt);
+            }
+
             glfwSwapBuffers(glfwWindow); /* Faz o mesmo que o Bufferstrategy, aquela parte de já termos uma
             imagem pronta para mostrar antes de apagarmos a outra. */
+
+            // Gameloop
+            endTime = Time.getTime();
+            dt = endTime - beginTime;
+            beginTime = endTime;
         }
+    }
+
+    private void changeScene(Scenes scene) {
+        switch (scene) {
+            case LEVEL_EDITOR_SCENE:
+                currentScene = new LevelEditorScene();
+                currentScene.init();
+                break;
+            case LEVEL_SCENE:
+                currentScene = new LevelScene();
+                currentScene.init();
+                break;
+            default:
+                assert false : "Unknown scene '" + scene + "'";
+                break;
+        }
+    }
+
+    public static Window get() {
+        if (window == null) {
+            window = new Window();
+        }
+
+        return window;
     }
 }

@@ -1,0 +1,15 @@
+- Criar vertexs ou fragments e compilá-los
+    glCreateShader(int type); => Cria um vertex ou fragment
+    glShaderSource(int id, String glslCode); => Para ir buscar código glsl e ligá-lo ao vertex/fragment já criado
+    glCompileShader(int id); => Irá compilar o shader
+    glGetShaderi(int id, int processName); => Busca informações sobre determinado processo
+    glGetShaderInfoLog(int id, int maxLength); => Vai buscar o erro que ocorreu na compilação, isto é, se ocorreu algum
+erro, por isso temos de arranjar maneira de o fazer antes disto.
+
+- Fazer o seu linking
+    glCreateProgram(); => Cria o local para pudermos ligar o vertex e o fragment
+    glAttachShader(int programID, int vertex/fragmentID); => Ligar vertex/fragment ao programa
+    glLinkProgram(int programID); => Faz finalnalmente o linking agora que tudo está preparado
+    glGetProgrami(int proramID, int processName); => Busca informações sobre determinado processo
+    glGetProgramInfoLog(shaderProgramID, int maxLenght); => Vai buscar o erro que ocorreu no linking, isto é,
+se ocorreu algum erro, por isso temos de arranjar maneira de o fazer antes disto.
