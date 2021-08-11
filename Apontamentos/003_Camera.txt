@@ -1,0 +1,31 @@
+ Temos dois tipos de câmaras, a perspective camera e a ortographic camera, usadas para jogos 3D e 2D
+respetivamente.
+ A perspective camera, dá-nos uma perspetiva, ou seja, à medida que nos aproximamos de um objeto,
+este vai ficando maior e à medida que nos afastamos de um objeto, este vai ficando menor. Tornando-a,
+então, perfeita para jogos 3D.
+ Na ortographic camera, esta não altera o tamanho do objeto, tornando-a perfeita para jogos 2D.
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Para a construção da câmara, precisamos de:
+ → ViewMatrix: onde a câmara está nas coordenadas do mundo e para onde a câmara aponta.
+ → ProjectionMatrix: define se nós temos ou não uma perspetiva, ou uma orthographic perspetive.
+
+ - Projection Matrix:
+ Precisamos dos métodos:
+ → .ortho(left, right, bottom, top, zNear, zFar);
+ Neste método, nos 4 primeiros parâmetros colocamos as dimensões que queremos que a nossa câmara
+ tenha. Como estamos a fazer um jogo 2D, zNear é definido como 0 e o zFar, por questões de
+ "segurança", tem de ser um número estupidamente grande mas que não irá afetar a performance do
+ nosso jogo.
+ → .identity();
+ Este método normaliza as matrizes, fazendo com que os seus valores sejam equivalentes a 1.
+
+ - View Matrix:
+ Para realizar isto, vamos precisar de usar os valores 1 ou -1, para fazermos unit vectors.
+ Vamos precisar de:
+    uma variável, center, que representa o ponto para onde a câmara estará a
+ apontar;
+    outra, eye, a posição da câmara no mundo;
+    up, que é a direção em que o topo da câmara assume.
+    → .lookAt(eye, center, up);
+    Vai criar a matriz necessária para a câmara.

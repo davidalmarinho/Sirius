@@ -1,8 +1,11 @@
 package jade.renderer;
 
 import jade.utils.OperatingSystem;
+import org.joml.Matrix4f;
+import org.lwjgl.BufferUtils;
 
 import java.io.IOException;
+import java.nio.FloatBuffer;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
@@ -109,7 +112,7 @@ public class Shader {
         int success = glGetShaderi(vertexID, GL_COMPILE_STATUS); // Buscar informações à cerca da compilação do vertex shader
         if (success == GL_FALSE) {
             int len = glGetShaderi(vertexID, GL_INFO_LOG_LENGTH);
-            System.out.println("Error: '" + "default.glsl" + "', couldn't be compiled.\n\tFailed vertex shader " +
+            System.out.println("Error: '" + filePath + "', couldn't be compiled.\n\tFailed vertex shader " +
                     "compilation");
             System.out.println(glGetShaderInfoLog(vertexID, len));
             assert false : "";
@@ -124,7 +127,7 @@ public class Shader {
         success = glGetShaderi(fragmentID, GL_COMPILE_STATUS);
         if (success == GL_FALSE) {
             int len = glGetShaderi(fragmentID, GL_INFO_LOG_LENGTH);
-            System.out.println("Error: '" + "default.glsl" + "', couldn't be compiled.\n\tFailed " +
+            System.out.println("Error: '" + filePath + "', couldn't be compiled.\n\tFailed " +
                     "fragment shader compilation.");
             System.out.println(glGetShaderInfoLog(fragmentID, len));
             assert false : "";
@@ -139,7 +142,7 @@ public class Shader {
         success = glGetProgrami(shaderProgramID, GL_LINK_STATUS);
         if (success == GL_FALSE) {
             int len = glGetProgrami(shaderProgramID, GL_INFO_LOG_LENGTH);
-            System.out.println("Error: '" + "default.glsl" + "' couldn't be linked.");
+            System.out.println("Error: '" + filePath + "' couldn't be linked.");
             System.out.println(glGetProgramInfoLog(shaderProgramID, len));
             assert false : "";
         }
@@ -152,5 +155,12 @@ public class Shader {
 
     public void detach() {
         glUseProgram(0);
+    }
+
+    public void uploadMat4(String varName, Matrix4f mat4) {
+        int varLocation = glGetUniformLocation(shaderProgramID, varName);
+        FloatBuffer matBuffer = BufferUtils.createFloatBuffer(16); // Matriz de 4, logo 4 * 4 = 16
+        mat4.get(matBuffer);
+        glUniformMatrix4fv(varLocation, false, matBuffer);
     }
 }

@@ -1,7 +1,10 @@
 package jade.scenes;
 
+import jade.renderer.Camera;
 import jade.renderer.Shader;
 import jade.utils.Data;
+import org.joml.Vector2f;
+import org.joml.Vector3f;
 
 import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
@@ -17,10 +20,10 @@ public class LevelEditorScene extends Scene {
 
     private final float[] vertexArray = {
             // Positions               // Colors (r, g, b, a)
-             0.5f, -0.5f, 0.0f,        1.0f, 0.0f, 0.0f, 1.0f, // Bottom right [0]
-            -0.5f,  0.5f, 0.0f,        0.0f, 1.0f, 0.0f, 1.0f, // Top left [1]
-            -0.5f, -0.5f, 0.0f,        0.0f, 0.0f, 0.0f, 0.0f, // Bottom left [2]
-             0.5f,  0.5f, 0.0f,        0.0f, 0.0f, 1.0f, 0.0f  // Top right [3]
+            100.5f,   0.5f, 0.0f,        1.0f, 0.0f, 0.0f, 1.0f, // Bottom right [0]
+              0.5f, 100.5f, 0.0f,        0.0f, 1.0f, 0.0f, 1.0f, // Top left [1]
+            100.5f, 100.5f, 0.0f,        0.0f, 0.0f, 0.0f, 0.0f, // Bottom left [2]
+              0.5f,   0.5f, 0.0f,        0.0f, 0.0f, 1.0f, 0.0f  // Top right [3]
     };
 
     private final int[] elementArray = {
@@ -36,6 +39,7 @@ public class LevelEditorScene extends Scene {
 
     @Override
     public void init() {
+        this.camera = new Camera(new Vector3f());
         defaultShader = new Shader("assets/shaders/default.glsl");
 
         defaultShader.compile();
@@ -74,8 +78,12 @@ public class LevelEditorScene extends Scene {
 
     @Override
     public void update(float dt) {
+        camera.position.x -= dt * 50.0f;
         // Bind shader program
         defaultShader.use();
+
+        defaultShader.uploadMat4("uProjection", camera.getProjectionMatrix());
+        defaultShader.uploadMat4("uView", camera.getViewMatrix());
 
         // Bind VAO
         glBindVertexArray(vaoID);
