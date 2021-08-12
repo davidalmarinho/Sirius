@@ -13,3 +13,8 @@ erro, por isso temos de arranjar maneira de o fazer antes disto.
     glGetProgrami(int proramID, int processName); => Busca informações sobre determinado processo
     glGetProgramInfoLog(shaderProgramID, int maxLenght); => Vai buscar o erro que ocorreu no linking, isto é,
 se ocorreu algum erro, por isso temos de arranjar maneira de o fazer antes disto.
+
+-------- Escrevendo GLSL --------
+layout → declarar o atributo no VAO
+uniform → usado quando queremos que um valor não mude, como os valores da câmara
+in/out → Por cada in que tivermos no vertex shader, temos que ter um out no fragment shader.

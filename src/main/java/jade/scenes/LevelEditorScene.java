@@ -3,8 +3,11 @@ package jade.scenes;
 import jade.renderer.Camera;
 import jade.renderer.Shader;
 import jade.utils.Data;
-import org.joml.Vector2f;
+import jade.utils.Time;
 import org.joml.Vector3f;
+import org.lwjgl.opengl.GL15;
+import org.lwjgl.opengl.GL20;
+import org.lwjgl.opengl.GL30;
 
 import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
@@ -46,34 +49,34 @@ public class LevelEditorScene extends Scene {
 
         // Gerar VAO, EBO e VBO e mandá-los para o GPU
         vaoID = glGenVertexArrays();
-        glBindVertexArray(vaoID);
+        GL30.glBindVertexArray(vaoID);
 
         // Criar float buffer dos vertices
         FloatBuffer vertexBuffer = Data.toBuffer(vertexArray);
 
         // Criar VBO e mandá-lo para o GPU
         vboID = glGenBuffers();
-        glBindBuffer(GL_ARRAY_BUFFER, vboID);
-        glBufferData(GL_ARRAY_BUFFER, vertexBuffer, GL_STATIC_DRAW);
+        GL15.glBindBuffer(GL_ARRAY_BUFFER, vboID);
+        GL15.glBufferData(GL_ARRAY_BUFFER, vertexBuffer, GL_STATIC_DRAW);
 
         // Criar os índices e carregá-los
         IntBuffer elementBuffer = Data.toBuffer(elementArray);
 
-        eboID = glGenBuffers();
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, eboID);
-        glBufferData(GL_ELEMENT_ARRAY_BUFFER, elementBuffer, GL_STATIC_DRAW);
+        eboID = GL15.glGenBuffers();
+        GL15.glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, eboID);
+        GL15.glBufferData(GL_ELEMENT_ARRAY_BUFFER, elementBuffer, GL_STATIC_DRAW);
 
         // Atributos dos vértices (por ponteiros)
-        int floatBytes      = 4;
         int positionIndexes = 3;
         int colorIndexes    = 4;
+        int vertexSizeBytes = (positionIndexes + colorIndexes) * Float.BYTES;
 
-        int vertexSizeBytes = (positionIndexes + colorIndexes) * floatBytes;
-        glVertexAttribPointer(0, positionIndexes, GL_FLOAT, false, vertexSizeBytes, 0);
-        glEnableVertexAttribArray(0);
+        GL20.glVertexAttribPointer(0, positionIndexes, GL_FLOAT, false, vertexSizeBytes, 0);
+        GL20.glEnableVertexAttribArray(0);
 
-        glVertexAttribPointer(1, colorIndexes, GL_FLOAT, false, vertexSizeBytes, positionIndexes * floatBytes);
-        glEnableVertexAttribArray(1);
+        GL20.glVertexAttribPointer(1, colorIndexes, GL_FLOAT, false, vertexSizeBytes,
+                positionIndexes * Float.BYTES);
+        GL20.glEnableVertexAttribArray(1);
     }
 
     @Override
@@ -82,8 +85,9 @@ public class LevelEditorScene extends Scene {
         // Bind shader program
         defaultShader.use();
 
-        defaultShader.uploadMat4("uProjection", camera.getProjectionMatrix());
-        defaultShader.uploadMat4("uView", camera.getViewMatrix());
+        defaultShader.uploadMat4f("uProjection", camera.getProjectionMatrix());
+        defaultShader.uploadMat4f("uView", camera.getViewMatrix());
+        defaultShader.uploadFloat("uTime", Time.getTime());
 
         // Bind VAO
         glBindVertexArray(vaoID);
