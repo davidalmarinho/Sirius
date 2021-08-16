@@ -1,14 +1,31 @@
 => Gráficos modernos
-É dividido por 6 etapas, vertex shader, shape assembly, geometry shader
+É dividido por 6 etapas, vertex shader, shape assembly, geometry shader, rayterization, fragment
+shader e test & blending
 
 - Vertex Shader [estritamente programável]:
 Este é programado por nós.
 Nesta parte, basicamente, definimos os pontos dos vértices da nossa forma.
-Mas como fazemos isso? Muito simples, porém complexo.
+Mas como fazemos isso? Muito simples, porém difícil.
 Precisamos da intervenção do VAO.
     VAO (Vertex array object) => Guardamos elementos, como a posição da forma (vértices),
-a cor, a textura no VBO (Vertex buffer object)... E a ordem pela qual vamos desenhar os vértices, ou seja, o EBO
-(Element Buffer Object).
+a cor, a textura... Os dados de cada um destes atributos, são chamados de VBOs
+(Vertex buffer object)... E a ordem pela qual vamos desenhar os vértices, ou seja, o EBO
+(Element Buffer Object). Devemos sempre selecionar os vértices de acordo com o sentido contrário
+dos ponteiros do relógio.
+Resumindo:
+ _____________________
+| VAO:                |
+|  Atributo1 (aPos)   | → VBO das posições
+|  Atributo2 (aColor) | → VBO das cores
+|_____________________|
+
+Sendo este o nosso quadrado:       1__________2
+                                   |          |
+                                   |          |
+                                   |__________|
+                                   3          4
+
+                                   EBO: [4, 2, 1, 4, 3, 1] Porque temos de desenhar por triângulos
 
 - Shape assembly [CPU trata disto]:
 Responsável por conectar os vértices.

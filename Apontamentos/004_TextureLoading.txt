@@ -1,0 +1,31 @@
+glGenTexures(); → Cria um id para as texturas porque assim é mais otimizado
+glBindTexture(); → Engatar o tipo de textura ao id de textura criado
+
+glTextureParameteri(); → Especificar alguns comportamentos
+
+stbi_load(filePath, width, height, channels, desired_channels);
+    filePath         → localização da imagem
+    width            → comprimento da imagem
+    height           → altura da imagem
+    channels         → guardar em RGBA ou RGB
+    desired_channels → Se temos alguma preferência por algum channels, se não temos, então
+colocamos 0.
+
+glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width.get(0), height.get(0),
+                    0, GL_RGBA, GL_UNSIGNED_BYTE, image);
+                    1º - Qual a textura que queremos carregar
+                    2º - Especifica o o nível de detalhe da imagem. Usamos 0 para manter a qualidade
+                    original. Também devemos de usar 0 se for uma GL_TEXTURE_RECTANGLE ou
+                    GL_PROXY_TEXTURE_RECTANGLE
+                    3º - Especifica o número de canais presentes na textura
+                    4º - Comprimento da textura
+                    5º - Altura da textura
+                    6º - Border, deve ser 0
+                    7º - Especifica o formato dos píxeis que vão ser guardados
+                    8º - Especificar o tipo em que os dados estão a ser guardados
+                    9º - Imagem que queremos renderizar
+
+
+stbi_image_free(imagem); → Libertar da memória do GPU a imagem (limpando o array [r, g, b, a, r, ...])
+
+glActiveTexture(); → Precisamos de ativar a textura para começar a renderizar
