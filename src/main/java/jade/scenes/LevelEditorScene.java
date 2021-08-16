@@ -1,5 +1,7 @@
 package jade.scenes;
 
+import jade.gameobjects.GameObject;
+import jade.gameobjects.components.SpriteRenderer;
 import jade.renderer.Camera;
 import jade.renderer.Shader;
 import jade.renderer.Texture;
@@ -22,6 +24,9 @@ import static org.lwjgl.opengl.GL30.*;
 public class LevelEditorScene extends Scene {
     private Shader defaultShader;
     private Texture testTexture;
+    private GameObject gameObject;
+
+    private boolean firstTime = true;
 
     private final float[] vertexArray = {
             // Positions               // Colors (r, g, b, a)      // UV coordinates
@@ -44,6 +49,12 @@ public class LevelEditorScene extends Scene {
 
     @Override
     public void init() {
+        System.out.println("Creating 'Player'");
+        gameObject = new GameObject("Player");
+        gameObject.addComponent(new SpriteRenderer());
+        // gameObject.removeComponent(SpriteRenderer.class);
+        addGameObject(gameObject);
+
         this.camera = new Camera(new Vector3f());
         defaultShader = new Shader("assets/shaders/default.glsl");
 
@@ -122,5 +133,17 @@ public class LevelEditorScene extends Scene {
         glBindVertexArray(0); // Use no VAO
         // glUseProgram(0); // Use no shaderProgram
         defaultShader.detach();
+
+        if (firstTime) {
+            System.out.println("Creating enemy");
+            GameObject enemy = new GameObject("enemy");
+            enemy.addComponent(new SpriteRenderer());
+            addGameObject(enemy);
+            firstTime = false;
+        }
+
+        for (GameObject go : gameObjectList) {
+            go.update(dt);
+        }
     }
 }

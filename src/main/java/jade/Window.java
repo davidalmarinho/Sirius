@@ -152,7 +152,7 @@ public class Window {
             currently enabled for color writing).*/
 
             if (dt >= 0) {
-                System.out.println("FPS: " + 1.0f / dt);
+                // System.out.println("FPS: " + 1.0f / dt);
                 currentScene.update(dt);
             }
 
@@ -171,10 +171,12 @@ public class Window {
             case LEVEL_EDITOR_SCENE:
                 currentScene = new LevelEditorScene();
                 currentScene.init();
+                currentScene.start();
                 break;
             case LEVEL_SCENE:
                 currentScene = new LevelScene();
                 currentScene.init();
+                currentScene.start();
                 break;
             default:
                 assert false : "Unknown scene '" + scene + "'";
