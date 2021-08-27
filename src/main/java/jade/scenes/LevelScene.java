@@ -15,6 +15,11 @@ public class LevelScene extends Scene {
     }
 
     @Override
+    public void loadResources() {
+
+    }
+
+    @Override
     public void update(float dt) {
 
     }

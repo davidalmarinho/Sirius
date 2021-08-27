@@ -2,6 +2,7 @@ package jade.renderer;
 
 import jade.Window;
 import jade.gameobjects.components.SpriteRenderer;
+import jade.utils.AssetPool;
 import org.joml.Vector4f;
 
 import static org.lwjgl.opengl.GL15.*;
@@ -34,8 +35,8 @@ public class RenderBatch {
      * @param maxBatchSize Quantos tiles desenhamos de uma só vez
      */
     public RenderBatch(int maxBatchSize) {
-        this.shader = new Shader("assets/shaders/default.glsl");
-        shader.compile();
+        this.shader = AssetPool.getShader("assets/shaders/default.glsl");
+
         // 1 sprite por cada batch
         this.sprites = new SpriteRenderer[maxBatchSize];
         this.maxBatchSize = maxBatchSize;

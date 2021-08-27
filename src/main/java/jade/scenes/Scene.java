@@ -20,6 +20,10 @@ public abstract class Scene {
 
     public abstract void init();
 
+    public abstract void update(float dt);
+
+    public abstract void loadResources();
+
     public void start() {
         for (GameObject g : gameObjectList) {
             g.start();
@@ -27,8 +31,6 @@ public abstract class Scene {
         }
         running = true;
     }
-
-    public abstract void update(float dt);
 
     protected void addGameObject(GameObject gameObject) {
         gameObjectList.add(gameObject);

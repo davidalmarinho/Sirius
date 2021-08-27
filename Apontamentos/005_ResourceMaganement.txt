@@ -1,0 +1,6 @@
+Para limpar o lixo, Java usufrui de um algoritmo que se pode tornar desgastante, dependendo
+de como organizamos o nosso projeto.
+Quando Java procede à limpeza de variáveis, esta linguagem examina todas as variáveis existentes
+na memória e depois coloca num grupo as que não estão em uso, as dead variables.
+Por isso, vamos tornar static tudo aquilo que não precisa de ser limpo, já que assim aliviamos
+bastante o software e torna-mo-lo mais rápido.
