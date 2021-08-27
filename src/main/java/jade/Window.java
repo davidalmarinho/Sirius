@@ -4,7 +4,6 @@ import jade.scenes.LevelEditorScene;
 import jade.scenes.LevelScene;
 import jade.scenes.Scene;
 import jade.scenes.Scenes;
-import jade.utils.Time;
 import org.lwjgl.Version;
 import org.lwjgl.glfw.GLFWErrorCallback;
 import org.lwjgl.opengl.GL;
@@ -119,7 +118,7 @@ public class Window {
     }
 
     public void loop() {
-        float beginTime = Time.getTime();
+        float beginTime = (float) glfwGetTime();
         float endTime;
         float dt = -1.0f;
 
@@ -141,7 +140,6 @@ public class Window {
 
             if (KeyListener.isKeyDown(GLFW_KEY_SPACE)) fadingToBlack = true;
 
-
             if (fadingToBlack) {
                 r = Math.max(r - 0.01f, 0);
                 g = Math.max(g - 0.01f, 0);
@@ -160,7 +158,7 @@ public class Window {
             imagem pronta para mostrar antes de apagarmos a outra. */
 
             // Gameloop
-            endTime = Time.getTime();
+            endTime = (float) glfwGetTime();
             dt = endTime - beginTime;
             beginTime = endTime;
         }

@@ -8,14 +8,15 @@ jade/renderer/Texture.java
  jade.renderer.Texture
 jade/MouseListener.java
  jade.MouseListener
-jade/utils/Time.java
- jade.utils.Time
+jade/utils/AssetPool.java
+ jade.utils.AssetPool
 jade/utils/Data.java
  jade.utils.Data
+jade/Window.java
+ jade.Window
+ jade.Window$1
 jade/renderer/Camera.java
  jade.renderer.Camera
-jade/gameobjects/components/SpriteRenderer.java
- jade.gameobjects.components.SpriteRenderer
 jade/gameobjects/Transform.java
  jade.gameobjects.Transform
 jade/gameobjects/GameObject.java
@@ -24,22 +25,19 @@ jade/gameobjects/components/Component.java
  jade.gameobjects.components.Component
 jade/gameobjects/components/FontRenderer.java
  jade.gameobjects.components.FontRenderer
-jade/renderer/Shader.java
- jade.renderer.Shader
 Main.java
  Main
+jade/renderer/Shader.java
+ jade.renderer.Shader
 jade/scenes/LevelScene.java
  jade.scenes.LevelScene
 jade/scenes/Scene.java
  jade.scenes.Scene
-jade/Window.java
- jade.Window
- jade.Window$1
 jade/renderer/Renderer.java
  jade.renderer.Renderer
 jade/scenes/LevelEditorScene.java
  jade.scenes.LevelEditorScene
 jade/renderer/RenderBatch.java
  jade.renderer.RenderBatch
-jade/utils/AssetPool.java
- jade.utils.AssetPool
+jade/gameobjects/components/SpriteRenderer.java
+ jade.gameobjects.components.SpriteRenderer

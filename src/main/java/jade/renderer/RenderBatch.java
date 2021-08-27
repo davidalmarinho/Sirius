@@ -3,7 +3,11 @@ package jade.renderer;
 import jade.Window;
 import jade.gameobjects.components.SpriteRenderer;
 import jade.utils.AssetPool;
+import org.joml.Vector2f;
 import org.joml.Vector4f;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.lwjgl.opengl.GL15.*;
 import static org.lwjgl.opengl.GL20.*;
@@ -11,21 +15,33 @@ import static org.lwjgl.opengl.GL30.glBindVertexArray;
 import static org.lwjgl.opengl.GL30.glGenVertexArrays;
 
 public class RenderBatch {
+    /* Em síntese:
+     *
+     * Pos              Color                           Texture Coordinates      Texture ID
+     * float, float,    float, float, float, float,     float, float             float
+     */
+
     // Atributos
     private final int POSITION_SIZE = 2;
     private final int COLOR_SIZE = 4;
+    private final int TEXTURE_COORDINATES_SIZE = 2;
+    private final int TEXTURE_ID_SIZE = 1;
 
     // Offsets
     private final int POSITION_OFFSET = 0;
     private final int COLOR_OFFSET = POSITION_OFFSET + POSITION_SIZE * Float.BYTES;
-    private final int VERTEX_SIZE = POSITION_SIZE + COLOR_SIZE;
+    private final int TEXTURE_COORDINATES_OFFSET = COLOR_OFFSET + COLOR_SIZE * Float.BYTES;
+    private final int TEXTURE_ID_OFFSET = TEXTURE_COORDINATES_OFFSET + TEXTURE_COORDINATES_SIZE * Float.BYTES;
+    private final int VERTEX_SIZE = POSITION_SIZE + COLOR_SIZE + TEXTURE_COORDINATES_SIZE + TEXTURE_ID_SIZE;
     private final int VERTEX_SIZE_BYTES = VERTEX_SIZE * Float.BYTES;
 
     // Necessário
     private SpriteRenderer[] sprites;
+    private List<Texture> textureList;
     private int numSprites;
     private boolean hasRoom;
     private float[] vertices;
+    private int[] textureSlots = {0, 1, 2, 3, 4, 5, 6, 7};
 
     private int vaoID, vboID, eboID;
     private int maxBatchSize;
@@ -46,6 +62,7 @@ public class RenderBatch {
 
         this.numSprites = 0;
         hasRoom = true;
+        this.textureList = new ArrayList<>();
     }
 
     /**
@@ -74,8 +91,16 @@ public class RenderBatch {
         glEnableVertexAttribArray(0);
 
         glVertexAttribPointer(1, COLOR_SIZE, GL_FLOAT, false, VERTEX_SIZE_BYTES,
-                POSITION_OFFSET + COLOR_OFFSET);
+                COLOR_OFFSET);
         glEnableVertexAttribArray(1);
+
+        glVertexAttribPointer(2, TEXTURE_COORDINATES_SIZE, GL_FLOAT, false,
+                VERTEX_SIZE_BYTES, TEXTURE_COORDINATES_OFFSET);
+        glEnableVertexAttribArray(2);
+
+        glVertexAttribPointer(3, TEXTURE_ID_SIZE, GL_FLOAT, false, VERTEX_SIZE_BYTES,
+                TEXTURE_ID_OFFSET);
+        glEnableVertexAttribArray(3);
     }
 
     private int[] generateIndices() {
@@ -114,6 +139,13 @@ public class RenderBatch {
         this.sprites[index] = spr;
         this.numSprites++;
 
+        // Colocar a textura na nossa lista
+        if (spr.getTexture() != null) {
+            if (!textureList.contains(spr.getTexture())) {
+                textureList.add(spr.getTexture());
+            }
+        }
+
         // Adicionar propriedades aos vértices
         loadVertexProperties(index);
 
@@ -131,6 +163,20 @@ public class RenderBatch {
         int offset = index * 4 * VERTEX_SIZE;
 
         Vector4f color = sprite.getColor();
+        Vector2f[] textCoords = sprite.getTexCoords();
+
+        // Por default, a nossa textID será 0
+        int textID = 0;
+
+        // Verificar se temos alguma textura
+        if (sprite.getTexture() != null) {
+            for (int i = 0; i < textureList.size(); i++) {
+                if (textureList.get(i) == sprite.getTexture()) {
+                    textID = i + 1;
+                    break;
+                }
+            }
+        }
 
         // Adicionar os 4 vértices com as suas propriedades
 
@@ -166,6 +212,13 @@ public class RenderBatch {
             vertices[offset + 4] = color.z;
             vertices[offset + 5] = color.w;
 
+            // Carregar textura
+            vertices[offset + 6] = textCoords[i].x;
+            vertices[offset + 7] = textCoords[i].y;
+
+            // Carregar TextureID
+            vertices[offset + 8] = textID;
+
             offset += VERTEX_SIZE;
         }
     }
@@ -180,6 +233,13 @@ public class RenderBatch {
         shader.uploadMat4f("uProjection", Window.getCurrentScene().getCamera().getProjectionMatrix());
         shader.uploadMat4f("uView", Window.getCurrentScene().getCamera().getViewMatrix());
 
+        // Carregar as texturas
+        for (int i = 0; i < textureList.size(); i++) {
+            glActiveTexture(GL_TEXTURE0 + i + 1);
+            textureList.get(i).bind();
+        }
+        shader.uploadIntArray("uTextures", textureSlots);
+
         glBindVertexArray(vaoID);
         glEnableVertexAttribArray(0);
         glEnableVertexAttribArray(1);
@@ -191,6 +251,11 @@ public class RenderBatch {
         glDisableVertexAttribArray(0);
         glDisableVertexAttribArray(1);
         glBindVertexArray(0);
+
+        // Desengatar texturas
+        for (int i = 0; i < textureList.size(); i++) {
+            textureList.get(i).unbind();
+        }
 
         shader.detach();
     }
