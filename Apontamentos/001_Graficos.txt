@@ -44,3 +44,43 @@ Trata da atribuição das cores.
 - Test & blending
 Testes e isso, basicamente para debug. Acabamos por programá-lo, uma vez que é tipo
 a fase final.
+
+-------- Escrevendo Java --------
+VAO:
+    glGenVertexArrays();
+        Gera o vaoID.
+    glBindVertexArray(int vaoID);
+        Engatar / carregar o vao para o CPU.
+
+VBO:
+    glGenBuffers();
+        Gerar o vboID.
+    glBindBuffer(GL_ARRAY_BUFFER, int vboID);
+        Engatar / carregar o vbo para o CPU.
+    glBufferData(GL_ARRAY_BUFFER, int size, GL_STATIC_DRAW / GL_DYNAMIC_DRAW);
+        Especificar o tipo de dados que vão entrar no CPU
+            {
+                size            → memória usada para os vértices
+                GL_STATIC_DRAW  → para quando não alteramos os dados dos vértices de batch para batch
+                GL_DYNAMIC_DRAW → para quando alteramos os dados dos vértices de batch para batch
+            }
+    glBufferSubData(GL_ARRAY_BUFFER, int offset, float[] data);
+        Altera dados já alocados na memória pelo glBufferData.
+            {
+                offset → Em que indíce queremos começar a trocar os valores
+                data   → Dados que queremos alterar, como os  vértices
+            }
+
+EBO:
+    glGenBuffers();
+        Gerar o eboID.
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, int eboID);
+        Engatar / carregar o ebo para o CPU
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, int size, GL_STATIC_DRAW);
+        Especificar o tipo de dados que vão entar no CPU
+
+Atributos:
+    glVertexAttribPointer();
+        Indicar onde o programa vai buscar os dados respetivos para o atributo desejado
+    glEnableVertexAttribArray(int index);
+        Ativar o respetivo atributo

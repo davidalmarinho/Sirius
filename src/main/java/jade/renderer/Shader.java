@@ -98,6 +98,9 @@ public class Shader {
         return str.indexOf("\n");
     }
 
+    /**
+     * Aqui criamos um vertexShader e um fragment shader e depois compilamos
+     */
     public void compile() {
         int vertexID, fragmentID;
 

@@ -3,28 +3,28 @@
 
     layout (location = 0) in vec3 aPosition;// 0 => attributionPosition (vec3 -> [x, y, z])
     layout (location = 1) in vec4 aColor;// 1 => attributonColor (vec4 -> [a, r, g, b])
-    layout (location = 2) in vec2 aTexCoordinates;
+    // layout (location = 2) in vec2 aTexCoordinates;
 
     uniform mat4 uProjection;
     uniform mat4 uView;
 
     out vec4 fColor;// fragmentColor
-    out vec2 fTexCoordinates;
+    // out vec2 fTexCoordinates;
 
     void main() {
         fColor = aColor;
-        fTexCoordinates = aTexCoordinates;
+        // fTexCoordinates = aTexCoordinates;
         gl_Position = uProjection * uView * vec4(aPosition, 1.0);
     }
 
     #type fragment
     #version 330 core
 
-    uniform float uTime;
-    uniform sampler2D uTexSampler;
+    // uniform float uTime;
+    // uniform sampler2D uTexSampler;
 
     in vec4 fColor;
-    in vec2 fTexCoordinates;
+    // in vec2 fTexCoordinates;
 
     out vec4 color;
 
@@ -50,11 +50,11 @@
         // color = toBlackAndWhite(fColor);
 
         // Cor normal
-        // color = fColor;
+        color = fColor;
 
         // Noise
         // color = noise(fColor);
 
         // applyTexture(color);
-        color = texture(uTexSampler, fTexCoordinates);
+        // color = texture(uTexSampler, fTexCoordinates);
     }

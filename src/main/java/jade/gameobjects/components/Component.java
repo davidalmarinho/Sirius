@@ -11,8 +11,8 @@ public abstract class Component {
 
     public abstract void update(float dt);
 
-    public String getParent() {
-        return parent.NAME;
+    public GameObject getGameObject() {
+        return this.parent;
     }
 
     public void setParent(GameObject parent) {

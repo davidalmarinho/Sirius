@@ -8,10 +8,18 @@ import java.util.List;
 public class GameObject {
     public final String NAME;
     public List<Component> componentList;
+    public Transform transform;
 
     public GameObject(String name) {
         this.NAME = name;
         componentList = new ArrayList<>();
+        this.transform = new Transform();
+    }
+
+    public GameObject(String name, Transform transform) {
+        this.NAME = name;
+        componentList = new ArrayList<>();
+        this.transform = transform;
     }
 
     public void start() {

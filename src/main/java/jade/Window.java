@@ -27,10 +27,10 @@ public class Window {
         this.width  = 1920;
         this.height = 1080;
         this.title  = "Mario";
-        this.r = 1.0f;
-        this.g = 1.0f;
-        this.b = 1.0f;
-        this.a = 1.0f;
+        this.r      = 1.0f;
+        this.g      = 1.0f;
+        this.b      = 1.0f;
+        this.a      = 1.0f;
     }
 
     public void run() {
@@ -190,5 +190,9 @@ public class Window {
         }
 
         return window;
+    }
+
+    public static Scene getCurrentScene() {
+        return currentScene;
     }
 }
