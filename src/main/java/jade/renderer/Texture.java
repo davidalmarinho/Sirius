@@ -12,6 +12,7 @@ import static org.lwjgl.opengl.GL11.*;
 public class Texture {
     private final String FILEPATH;
     private int textureID;
+    private int width, height;
 
     public Texture(String filePath) {
         this.FILEPATH = filePath;
@@ -42,6 +43,9 @@ public class Texture {
         ByteBuffer image = STBImage.stbi_load(FILEPATH, width, height, channels, 0);
 
         if (image != null) {
+            this.width = width.get(0);
+            this.height = height.get(0);
+
             // Temos dados, então podemos carregar a imagem
             if (channels.get(0) == 4) {
                 glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width.get(0), height.get(0),
@@ -66,5 +70,13 @@ public class Texture {
 
     public void unbind() {
         glBindTexture(GL_TEXTURE_2D, 0);
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public int getHeight() {
+        return height;
     }
 }

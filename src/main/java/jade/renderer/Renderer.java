@@ -27,9 +27,12 @@ public class Renderer {
         for (RenderBatch renderBatch : batches) {
             // Se tivermos espaço no renderBatch atual, colocamos o sprite nesse
             if (renderBatch.hasRoom()) {
-                renderBatch.addSprite(spriteRenderer);
-                added = true;
-                break;
+                Texture texture = spriteRenderer.getTexture();
+                if (texture == null ||renderBatch.hasRoomTexture() || renderBatch.hasTexture(texture)) {
+                    renderBatch.addSprite(spriteRenderer);
+                    added = true;
+                    break;
+                }
             }
         }
 

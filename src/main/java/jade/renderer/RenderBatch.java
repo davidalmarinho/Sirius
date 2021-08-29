@@ -263,4 +263,12 @@ public class RenderBatch {
     public boolean hasRoom() {
         return hasRoom;
     }
+
+    public boolean hasRoomTexture() {
+        return this.textureList.size() < 8;
+    }
+
+    public boolean hasTexture(Texture texture) {
+        return this.textureList.contains(texture);
+    }
 }
