@@ -13,6 +13,11 @@ import org.joml.Vector3f;
  * Lógica para editar níveis
  */
 public class LevelEditorScene extends Scene {
+    private Spritesheet sprites;
+    private GameObject obj1;
+    private final float FLIP_TIME = 0.2f;
+    private float flip_time_left = 0.0f;
+    private int spriteIndex = 0;
 
     public LevelEditorScene() {
 
@@ -24,15 +29,15 @@ public class LevelEditorScene extends Scene {
 
         this.camera = new Camera(new Vector3f(-250, 0, 1));
 
-        Spritesheet sprites = AssetPool.getSpritesheet("assets/images/spritesheet.png");
+        sprites = AssetPool.getSpritesheet("assets/images/spritesheet.png");
 
-        GameObject obj1 = new GameObject("Object 1", new Transform(new Vector2f(100, 100), new Vector2f(256, 256)));
+        obj1 = new GameObject("Object 1", new Transform(new Vector2f(100, 100), new Vector2f(256, 256)));
         obj1.addComponent(new SpriteRenderer(sprites.getSprite(0)));
         addGameObject(obj1);
 
-        GameObject obj2 = new GameObject("Object 2", new Transform(new Vector2f(400, 100), new Vector2f(256, 256)));
-        obj2.addComponent(new SpriteRenderer(sprites.getSprite(15)));
-        addGameObject(obj2);
+        // GameObject obj2 = new GameObject("Object 2", new Transform(new Vector2f(400, 100), new Vector2f(256, 256)));
+        // obj2.addComponent(new SpriteRenderer(sprites.getSprite(15)));
+        // addGameObject(obj2);
     }
 
     @Override
@@ -46,6 +51,16 @@ public class LevelEditorScene extends Scene {
 
     @Override
     public void update(float dt) {
+        flip_time_left -= 0.5f * dt;
+        if (flip_time_left <= 0.0f) {
+            flip_time_left = FLIP_TIME;
+            spriteIndex++;
+            if (spriteIndex > 7) {
+                spriteIndex = 0;
+            }
+            obj1.getComponent(SpriteRenderer.class).setSprite(sprites.getSprite(spriteIndex));
+        }
+
         for (GameObject go : gameObjectList) {
             go.update(dt);
         }

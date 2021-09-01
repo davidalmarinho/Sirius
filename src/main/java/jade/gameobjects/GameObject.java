@@ -61,6 +61,6 @@ public class GameObject {
 
     public void addComponent(Component component) {
         componentList.add(component);
-        component.setParent(this);
+        component.gameObject = this;
     }
 }

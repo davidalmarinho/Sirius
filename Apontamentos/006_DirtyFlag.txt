@@ -1,0 +1,7 @@
+Dirty Flag System
+We have to tell the GPU when a sprite changes.
+CPU dizer ao GPU que mudamos coisas
+
+if (sprite.isDirty()) {
+    changeData();
+}

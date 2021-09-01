@@ -201,10 +201,10 @@ public class RenderBatch {
             }
 
             // Carregar posições
-            vertices[offset] = sprite.getGameObject().transform.position.x
-                    + (xAdd * sprite.getGameObject().transform.scale.x);
-            vertices[offset + 1] = sprite.getGameObject().transform.position.y
-                    + (yAdd * sprite.getGameObject().transform.scale.y);
+            vertices[offset] = sprite.gameObject.transform.position.x
+                    + (xAdd * sprite.gameObject.transform.scale.x);
+            vertices[offset + 1] = sprite.gameObject.transform.position.y
+                    + (yAdd * sprite.gameObject.transform.scale.y);
 
             // Carregar cor
             vertices[offset + 2] = color.x;
@@ -224,9 +224,21 @@ public class RenderBatch {
     }
 
     public void render() {
-        // Por agora, vamos fazer rebuffer aos dados por cada frame
-        glBindBuffer(GL_ARRAY_BUFFER, vboID);
-        glBufferSubData(GL_ARRAY_BUFFER, 0, vertices);
+        boolean rebuffer = false;
+        for (int i = 0; i < numSprites; i++) {
+            SpriteRenderer sprite = sprites[i];
+            if (sprite.isDirty()) {
+                loadVertexProperties(i);
+                sprite.setDirty(false);
+                rebuffer = true;
+            }
+        }
+
+        // We rebuffer if the sprite is dirty
+        if (rebuffer) {
+            glBindBuffer(GL_ARRAY_BUFFER, vboID);
+            glBufferSubData(GL_ARRAY_BUFFER, 0, vertices);
+        }
 
         // Usar o shader
         shader.use();
