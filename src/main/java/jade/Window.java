@@ -113,6 +113,10 @@ public class Window {
         // bindings available for use.
         GL.createCapabilities();
 
+        // Enable blending
+        glEnable(GL_BLEND);
+        glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
+
         // Colocar a scene
         changeScene(Scenes.LEVEL_EDITOR_SCENE);
     }

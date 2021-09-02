@@ -28,4 +28,4 @@ Para a construção da câmara, precisamos de:
     outra, eye, a posição da câmara no mundo;
     up, que é a direção em que o topo da câmara assume.
     → .lookAt(eye, center, up);
-    Vai criar a matriz necessária para a câmara.
+    Vai criar a matriz necessária para a câmara

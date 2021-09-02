@@ -17,11 +17,13 @@ public class SpriteRenderer extends Component {
     public SpriteRenderer(Vector4f color) {
         this.color = color;
         this.sprite = new Sprite(null);
+        this.dirty = true;
     }
 
     public SpriteRenderer(Sprite sprite) {
         this.color = new Vector4f(1.0f, 1.0f, 1.0f, 1.0f);
         this.sprite = sprite;
+        this.dirty = true;
     }
 
     @Override
