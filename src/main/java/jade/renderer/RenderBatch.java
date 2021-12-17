@@ -15,13 +15,13 @@ import static org.lwjgl.opengl.GL30.glBindVertexArray;
 import static org.lwjgl.opengl.GL30.glGenVertexArrays;
 
 public class RenderBatch implements Comparable<RenderBatch> {
-    /* Em síntese:
+    /* In synthesis:
      *
      * Pos              Color                           Texture Coordinates      Texture ID
      * float, float,    float, float, float, float,     float, float             float
      */
 
-    // Atributos
+    // Attributes
     private final int POSITION_SIZE = 2;
     private final int COLOR_SIZE = 4;
     private final int TEXTURE_COORDINATES_SIZE = 2;
@@ -35,7 +35,7 @@ public class RenderBatch implements Comparable<RenderBatch> {
     private final int VERTEX_SIZE = POSITION_SIZE + COLOR_SIZE + TEXTURE_COORDINATES_SIZE + TEXTURE_ID_SIZE;
     private final int VERTEX_SIZE_BYTES = VERTEX_SIZE * Float.BYTES;
 
-    // Necessário
+    // Necessary stuff
     private SpriteRenderer[] sprites;
     private List<Texture> textureList;
     private int numSprites;
@@ -56,7 +56,7 @@ public class RenderBatch implements Comparable<RenderBatch> {
         this.zIndex = zIndex;
         this.shader = AssetPool.getShader("assets/shaders/default.glsl");
 
-        // 1 sprite por cada batch
+        // 1 sprite per each batch
         this.sprites = new SpriteRenderer[maxBatchSize];
         this.maxBatchSize = maxBatchSize;
 
@@ -69,26 +69,26 @@ public class RenderBatch implements Comparable<RenderBatch> {
     }
 
     /**
-     * Aqui é onde vamos criar e carregar para o CPU o vaoID, o vboID e o eboID.
-     * Também vamos atribuir pointers e ativar esse respetivo atributo
+     * Here is where we are going to create and load the vao, vbo and ebo to the CPU.
+     * We will also attribute pointers and active its respective attribute
      */
     public void start() {
-        // Gerar e engatar o VAO
+        // Generate and engage o VAO
         vaoID = glGenVertexArrays();
         glBindVertexArray(vaoID);
 
-        // Alocar espaço para os vértices
+        // Allocate space to the vertices
         vboID = glGenBuffers();
         glBindBuffer(GL_ARRAY_BUFFER, vboID);
         glBufferData(GL_ARRAY_BUFFER, (long) vertices.length * Float.BYTES, GL_DYNAMIC_DRAW);
 
-        // Criar e carregar os índices
+        // Create and load the indices
         eboID = glGenBuffers();
         int[] indices = generateIndices();
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, eboID);
         glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices, GL_STATIC_DRAW);
 
-        // Dar enable aos atributos
+        // Gives enable to the attributes
         glVertexAttribPointer(0, POSITION_SIZE, GL_FLOAT, false, VERTEX_SIZE_BYTES,
                 POSITION_OFFSET);
         glEnableVertexAttribArray(0);
@@ -107,7 +107,7 @@ public class RenderBatch implements Comparable<RenderBatch> {
     }
 
     private int[] generateIndices() {
-        // 6 indíces por quadrado (3 por triângulo)
+        // 6 indices per square (3 per triangle)
         int[] elements = new int[maxBatchSize * 6];
 
         for (int i = 0; i < maxBatchSize; i++) {
@@ -118,11 +118,11 @@ public class RenderBatch implements Comparable<RenderBatch> {
     }
 
     private void loadElement(int[] elements, int index) {
-        // Para encontrarmos o início da renderização
+        // To find the beginning of the rendering
         int arrayIndexOffset = 6 * index;
 
-        // Para encontramos o atual
-        int offset = 4 * index; // 4, pois precisamos de 4 elementos para desenhar um quadrado
+        // To find the current
+        int offset = 4 * index; // 4, because we need 4 elements to draw a square
 
         // 3, 2, 0, 0, 2, 1           7, 6, 4, 4, 6, 5
         // Triangle 1
@@ -142,24 +142,24 @@ public class RenderBatch implements Comparable<RenderBatch> {
         this.sprites[index] = spr;
         this.numSprites++;
 
-        // Colocar a textura na nossa lista
+        // Add the texture to the list
         if (spr.getTexture() != null) {
             if (!textureList.contains(spr.getTexture())) {
                 textureList.add(spr.getTexture());
             }
         }
 
-        // Adicionar propriedades aos vértices
+        // Add properties to the vertices
         loadVertexProperties(index);
 
-        // Verificar se ainda temos mais espaço para renderizar algum gameObject
+        // Verify if we still have space to draw one more game object in the same render batch
         if (numSprites >= this.maxBatchSize) {
             this.hasRoom = false;
         }
     }
 
     private void loadVertexProperties(int index) {
-        // 4 vértices por quadrado
+        // 4 vertices per square
         SpriteRenderer sprite = this.sprites[index];
 
         // Find offset within array (4 vertices per sprite)
@@ -168,10 +168,10 @@ public class RenderBatch implements Comparable<RenderBatch> {
         Vector4f color = sprite.getColor();
         Vector2f[] textCoords = sprite.getTexCoords();
 
-        // Por default, a nossa textID será 0
+        // By default, the textID will be 0
         int textID = 0;
 
-        // Verificar se temos alguma textura
+        // Verify if we have textures
         if (sprite.getTexture() != null) {
             for (int i = 0; i < textureList.size(); i++) {
                 if (textureList.get(i) == sprite.getTexture()) {
@@ -181,7 +181,7 @@ public class RenderBatch implements Comparable<RenderBatch> {
             }
         }
 
-        // Adicionar os 4 vértices com as suas propriedades
+        // Add the 4 vertices with its properties
 
         /*
               [3]-----[2]
@@ -203,23 +203,23 @@ public class RenderBatch implements Comparable<RenderBatch> {
                 yAdd = 1.0f;
             }
 
-            // Carregar posições
+            // Load positions
             vertices[offset] = sprite.gameObject.transform.position.x
                     + (xAdd * sprite.gameObject.transform.scale.x);
             vertices[offset + 1] = sprite.gameObject.transform.position.y
                     + (yAdd * sprite.gameObject.transform.scale.y);
 
-            // Carregar cor
+            // Load color
             vertices[offset + 2] = color.x;
             vertices[offset + 3] = color.y;
             vertices[offset + 4] = color.z;
             vertices[offset + 5] = color.w;
 
-            // Carregar textura
+            // Load texture
             vertices[offset + 6] = textCoords[i].x;
             vertices[offset + 7] = textCoords[i].y;
 
-            // Carregar TextureID
+            // Load texture's ID
             vertices[offset + 8] = textID;
 
             offset += VERTEX_SIZE;
@@ -243,12 +243,12 @@ public class RenderBatch implements Comparable<RenderBatch> {
             glBufferSubData(GL_ARRAY_BUFFER, 0, vertices);
         }
 
-        // Usar o shader
+        // Use shader
         shader.use();
         shader.uploadMat4f("uProjection", Window.getCurrentScene().getCamera().getProjectionMatrix());
         shader.uploadMat4f("uView", Window.getCurrentScene().getCamera().getViewMatrix());
 
-        // Carregar as texturas
+        // Load the textures
         for (int i = 0; i < textureList.size(); i++) {
             glActiveTexture(GL_TEXTURE0 + i + 1);
             textureList.get(i).bind();
@@ -259,15 +259,15 @@ public class RenderBatch implements Comparable<RenderBatch> {
         glEnableVertexAttribArray(0);
         glEnableVertexAttribArray(1);
 
-        // Desenhar os elementos
+        // Draw the elements
         glDrawElements(GL_TRIANGLES, this.numSprites * 6, GL_UNSIGNED_INT, 0);
 
-        // Desengatar tudo
+        // Disengage everything
         glDisableVertexAttribArray(0);
         glDisableVertexAttribArray(1);
         glBindVertexArray(0);
 
-        // Desengatar texturas
+        // Disengage the textures
         for (int i = 0; i < textureList.size(); i++) {
             textureList.get(i).unbind();
         }
