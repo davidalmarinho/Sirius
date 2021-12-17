@@ -1,3 +1,5 @@
+import org.apache.tools.ant.taskdefs.condition.Os
+
 plugins {
     id 'java'
 }
@@ -20,9 +22,59 @@ test {
 
 project.ext.lwjglVersion = "3.2.3"
 project.ext.jomlVersion = "1.10.1"
-project.ext.lwjglNatives = "natives-linux"
+project.ext.imguiVersion = '1.85.0'
+
+/**
+ * Sets the project.ext.lwjglNatives variable with the current operating system.
+ */
+def setLWJGLNatives() {
+    // Check in which os we are
+    if (Os.isFamily(Os.FAMILY_WINDOWS)) {
+        println("Running on Windows...")
+        project.ext.lwjglNatives = "natives-windows"
+    } else if (Os.isFamily(Os.FAMILY_MAC)) {
+        project.ext.lwjglNatives = "natives-macos"
+        println("Running on Mac Os...")
+    } else if (Os.isFamily(Os.FAMILY_UNIX)) {
+        println("Running on Linux...")
+        project.ext.lwjglNatives = "natives-linux"
+    } else {
+        println("Error: Couldn't get the os.")
+    }
+}
+
+/**
+ * Gets a completed implementation based on which os we are running the application.
+ *
+ * @param implWithoutNatives the implementation path without specifying the os.
+ * @param version just if is needed to specify it.
+ *
+ * Example:
+ * getImplementation("org.lwjgl:lwjgl$it::", "")
+ *  If we are running on windows, it will return "org.lwjgl:lwjgl$it::natives-windows"
+ *
+ * getImplementationBasedOnOS("io.github.spair:imgui-java-", ":$imguiVersion")
+ *  If we are running on linux, it will return "io.github.spair:imgui-java-natives-linux:$imguiVersion"
+ */
+def getImplementationBasedOnOS(String implWithoutNatives, String version) {
+    StringBuilder stringBuilder = new StringBuilder(implWithoutNatives)
+
+    // Check in which os we are
+    if (Os.isFamily(Os.FAMILY_WINDOWS)) {
+        stringBuilder.append("natives-windows")
+    } else if (Os.isFamily(Os.FAMILY_MAC)) {
+        stringBuilder.append("natives-macos")
+    } else if (Os.isFamily(Os.FAMILY_UNIX)) {
+        stringBuilder.append("natives-linux")
+    } else {
+        println("Error: Couldn't get the os.")
+    }
+    stringBuilder.append(version)
+    return stringBuilder.toString()
+}
 
 dependencies {
+    setLWJGLNatives()
     implementation platform("org.lwjgl:lwjgl-bom:$lwjglVersion")
 
     implementation "org.lwjgl:lwjgl"
