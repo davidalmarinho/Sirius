@@ -21,6 +21,7 @@ public class Window {
     private boolean fadingToBlack = false;
     private float r, g, b, a;
     private static Scene currentScene;
+    private ImGuiLayer imGuiLayer;
 
     private Window() {
         this.width  = 1920;
@@ -93,6 +94,10 @@ public class Window {
         glfwSetCursorPosCallback(glfwWindow, MouseListener::mousePosCallback);
         glfwSetScrollCallback(glfwWindow, MouseListener::mouseScrollCallback);
         glfwSetMouseButtonCallback(glfwWindow, MouseListener::mouseButtonCallback);
+        glfwSetWindowSizeCallback(glfwWindow, (w, newWidth, newHeight) -> {
+            Window.setWidth(newWidth);
+            Window.setHeight(newHeight);
+        });
 
         // Configurar callbacks do teclado
         glfwSetKeyCallback(glfwWindow, KeyListener::keyCallback);
@@ -116,6 +121,9 @@ public class Window {
         // Enable blending
         glEnable(GL_BLEND);
         glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
+
+        imGuiLayer = new ImGuiLayer(glfwWindow);
+        imGuiLayer.initImGui();
 
         // Colocar a scene
         changeScene(Scenes.LEVEL_EDITOR_SCENE);
@@ -158,6 +166,7 @@ public class Window {
                 currentScene.update(dt);
             }
 
+            imGuiLayer.update(dt);
             glfwSwapBuffers(glfwWindow); /* Faz o mesmo que o Bufferstrategy, aquela parte de já termos uma
             imagem pronta para mostrar antes de apagarmos a outra. */
 
@@ -192,6 +201,22 @@ public class Window {
         }
 
         return window;
+    }
+
+    public static int getWidth() {
+        return get().width;
+    }
+
+    public static int getHeight() {
+        return get().height;
+    }
+
+    public static void setWidth(int width) {
+        get().width = width;
+    }
+
+    public static void setHeight(int height) {
+        get().height = height;
     }
 
     public static Scene getCurrentScene() {
