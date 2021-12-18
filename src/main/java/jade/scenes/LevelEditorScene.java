@@ -1,5 +1,6 @@
 package jade.scenes;
 
+import imgui.ImGui;
 import jade.gameobjects.GameObject;
 import jade.gameobjects.Transform;
 import jade.gameobjects.components.Sprite;
@@ -58,5 +59,12 @@ public class LevelEditorScene extends Scene {
         }
 
         this.renderer.render();
+    }
+
+    @Override
+    public void imgui() {
+        ImGui.begin("Window test");
+        ImGui.text("Hello World");
+        ImGui.end();
     }
 }
