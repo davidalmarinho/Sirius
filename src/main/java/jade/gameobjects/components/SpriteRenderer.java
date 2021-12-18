@@ -7,25 +7,17 @@ import org.joml.Vector2f;
 import org.joml.Vector4f;
 
 public class SpriteRenderer extends Component {
-    private Vector4f color;
-    private Sprite sprite;
+    private Vector4f color = new Vector4f(1, 1, 1, 1);
+    private Sprite sprite = Sprite.Builder.newInstance().build();
 
-    private Transform lastTransform;
+    private SpriteRenderer() {
+
+    }
+
+    private transient Transform lastTransform;
 
     // Dirty Flag
-    private boolean dirty;
-
-    public SpriteRenderer(Vector4f color) {
-        this.color = color;
-        this.sprite = new Sprite(null);
-        this.dirty = true;
-    }
-
-    public SpriteRenderer(Sprite sprite) {
-        this.color = new Vector4f(1.0f, 1.0f, 1.0f, 1.0f);
-        this.sprite = sprite;
-        this.dirty = true;
-    }
+    private transient boolean dirty;
 
     @Override
     public void start() {
@@ -79,5 +71,40 @@ public class SpriteRenderer extends Component {
 
     public void setDirty(boolean dirty) {
         this.dirty = dirty;
+    }
+
+    public static class Builder {
+        private Vector4f color = new Vector4f(1, 1, 1, 1);
+        private Sprite sprite = Sprite.Builder.newInstance().build();
+
+        private Builder() {
+
+        }
+
+        public Builder setColor(Vector4f color) {
+            this.color = color;
+            return this;
+        }
+
+        public Builder setColor(int r, int g, int b, int a) {
+            this.color.set(r, g, b, a);
+            return this;
+        }
+
+        public Builder setSprite(Sprite sprite) {
+            this.sprite = sprite;
+            return this;
+        }
+
+        public static Builder newInstance() {
+            return new Builder();
+        }
+
+        public SpriteRenderer build() {
+            SpriteRenderer spriteRenderer = new SpriteRenderer();
+            spriteRenderer.setSprite(this.sprite);
+            spriteRenderer.setColor(this.color);
+            return spriteRenderer;
+        }
     }
 }
