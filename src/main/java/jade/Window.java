@@ -166,7 +166,7 @@ public class Window {
                 currentScene.update(dt);
             }
 
-            imGuiLayer.update(dt);
+            imGuiLayer.update(dt, currentScene);
             glfwSwapBuffers(glfwWindow); /* Faz o mesmo que o Bufferstrategy, aquela parte de já termos uma
             imagem pronta para mostrar antes de apagarmos a outra. */
 

@@ -1,5 +1,6 @@
 package jade.gameobjects.components;
 
+import imgui.ImGui;
 import jade.gameobjects.Transform;
 import jade.renderer.Texture;
 import org.joml.Vector2f;
@@ -36,6 +37,15 @@ public class SpriteRenderer extends Component {
         if (!lastTransform.equals(gameObject.transform)) {
             this.gameObject.transform.copy(this.lastTransform);
             dirty = true;
+        }
+    }
+
+    @Override
+    public void imgui() {
+        final float[] imColors = {color.x, color.y, color.z, color.w};
+        if (ImGui.colorPicker4("Color Picker: ", imColors)) {
+            this.color.set(imColors[0], imColors[1], imColors[2], imColors[3]);
+            this.dirty = true;
         }
     }
 

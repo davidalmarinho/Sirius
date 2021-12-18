@@ -1,5 +1,6 @@
 package jade.scenes;
 
+import imgui.ImGui;
 import jade.gameobjects.GameObject;
 import jade.renderer.Camera;
 import jade.renderer.Renderer;
@@ -12,6 +13,8 @@ public abstract class Scene {
     protected Renderer renderer = new Renderer();
     protected Camera camera;
     protected List<GameObject> gameObjectList;
+    // Game object that we are inspecting
+    protected GameObject activeGameObject = null;
     private boolean running;
 
     public Scene() {
@@ -44,5 +47,23 @@ public abstract class Scene {
 
     public Camera getCamera() {
         return camera;
+    }
+
+    public void sceneImgui() {
+        if (activeGameObject != null) {
+            // Creates a Window
+            ImGui.begin("Inspector");
+            activeGameObject.imgui();
+            ImGui.end();
+        }
+
+        imgui();
+    }
+
+    /**
+     * Create custom scene integration ImGui
+     */
+    public void imgui() {
+
     }
 }
