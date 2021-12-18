@@ -10,6 +10,7 @@ import jade.renderer.Camera;
 import jade.utils.AssetPool;
 import org.joml.Vector2f;
 import org.joml.Vector3f;
+import org.joml.Vector4f;
 
 /**
  * Lógica para editar níveis
@@ -31,10 +32,9 @@ public class LevelEditorScene extends Scene {
         sprites = AssetPool.getSpritesheet("assets/images/spritesheet.png");
 
         obj1 = new GameObject("Object 1", new Transform(new Vector2f(200, 100), new Vector2f(256, 256)), 2);
-        obj1.addComponent(new SpriteRenderer(
-                new Sprite(AssetPool.getTexture("assets/images/blendImage1.png"))
-        ));
+        obj1.addComponent(new SpriteRenderer(new Vector4f(1, 0, 0, 1)));
         addGameObject(obj1);
+        activeGameObject = obj1;
 
         GameObject obj2 = new GameObject("Object 2", new Transform(new Vector2f(400, 100), new Vector2f(256, 256)), 0);
         obj2.addComponent(new SpriteRenderer(
