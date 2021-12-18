@@ -1,5 +1,7 @@
 package jade;
 
+import imgui.ImFontAtlas;
+import imgui.ImFontConfig;
 import imgui.ImGui;
 import imgui.ImGuiIO;
 import imgui.callback.ImStrConsumer;
@@ -143,39 +145,23 @@ public class ImGuiLayer {
         // ------------------------------------------------------------
         // Fonts configuration
         // Read: https://raw.githubusercontent.com/ocornut/imgui/master/docs/FONTS.txt
-/*
 
+        // ImFontAtlas is like a spritesheet
         final ImFontAtlas fontAtlas = io.getFonts();
         final ImFontConfig fontConfig = new ImFontConfig(); // Natively allocated object, should be explicitly destroyed
 
         // Glyphs could be added per-font as well as per config used globally like here
-        fontConfig.setGlyphRanges(fontAtlas.getGlyphRangesCyrillic());
-
-        // Add a default font, which is 'ProggyClean.ttf, 13px'
-        fontAtlas.addFontDefault();
+        fontConfig.setGlyphRanges(fontAtlas.getGlyphRangesDefault());
 
         // Fonts merge example
-        fontConfig.setMergeMode(true); // When enabled, all fonts added with this config would be merged with the previously added font
+        // fontConfig.setMergeMode(true); // When enabled, all fonts added with this config would be merged with the previously added font
         fontConfig.setPixelSnapH(true);
+        fontAtlas.addFontFromFileTTF("assets/fonts/verdana.ttf", 26, fontConfig);
 
-        fontAtlas.addFontFromMemoryTTF(loadFromResources("basis33.ttf"), 16, fontConfig);
-
-        fontConfig.setMergeMode(false);
-        fontConfig.setPixelSnapH(false);
-
-        // Fonts from file/memory example
-        // We can add new fonts from the file system
-        fontAtlas.addFontFromFileTTF("src/test/resources/Righteous-Regular.ttf", 14, fontConfig);
-        fontAtlas.addFontFromFileTTF("src/test/resources/Righteous-Regular.ttf", 16, fontConfig);
-
-        // Or directly from the memory
-        fontConfig.setName("Roboto-Regular.ttf, 14px"); // This name will be displayed in Style Editor
-        fontAtlas.addFontFromMemoryTTF(loadFromResources("Roboto-Regular.ttf"), 14, fontConfig);
-        fontConfig.setName("Roboto-Regular.ttf, 16px"); // We can apply a new config value every time we add a new font
-        fontAtlas.addFontFromMemoryTTF(loadFromResources("Roboto-Regular.ttf"), 16, fontConfig);
+        // fontAtlas.addFontFromMemoryTTF(loadFromResources("basis33.ttf"), 16, fontConfig);
 
         fontConfig.destroy(); // After all fonts were added we don't need this config more
-*/
+
 
         // ------------------------------------------------------------
         // Use freetype instead of stb_truetype to build a fonts texture
