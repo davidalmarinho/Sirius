@@ -4,10 +4,9 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import imgui.ImGui;
 import jade.gameobjects.GameObject;
+import jade.gameobjects.GameObjectDeserializer;
 import jade.gameobjects.Transform;
-import jade.gameobjects.components.Sprite;
-import jade.gameobjects.components.SpriteRenderer;
-import jade.gameobjects.components.Spritesheet;
+import jade.gameobjects.components.*;
 import jade.renderer.Camera;
 import jade.utils.AssetPool;
 import org.joml.Vector2f;
@@ -45,13 +44,15 @@ public class LevelEditorScene extends Scene {
                 .build());
         addGameObject(obj2);
 
-        Gson gson = new GsonBuilder().setPrettyPrinting().create();
-        System.out.println(gson.toJson(obj1));
-
-        Gson gson1 = new GsonBuilder().setPrettyPrinting().create();
-        Vector2f vec = new Vector2f(0.5f, 4.5f);
-        String serialized = gson1.toJson(vec);
-        System.out.println("Deserialized: " + gson1.fromJson(serialized, Vector2f.class));
+        Gson gson = new GsonBuilder()
+                .setPrettyPrinting()
+                .registerTypeAdapter(Component.class, new ComponentDeserializer())
+                .registerTypeAdapter(GameObject.class, new GameObjectDeserializer())
+                .create();
+        String serialized = gson.toJson(obj1);
+        System.out.println(serialized);
+        GameObject objDeserializationTest = gson.fromJson(serialized, GameObject.class);
+        System.out.println(objDeserializationTest);
     }
 
     @Override
