@@ -1,0 +1,29 @@
+How to serialize and deserialize with Gson?
+Actually is pretty easy, there is only one problem: It doesn't serialize objects
+when its Constructor method has parameters. Knowing this, let's do some simulations.
+
+If we want to serialize, we can do:
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        System.out.println(gson.toJson(obj1));
+
+And that is it. If we want to deserialize we have to:
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        Vector2f vec = new Vector2f(0.5f, 4.5f);
+        String serialized = gson.toJson(vec);
+        System.out.println("Deserialized: " + gson.fromJson(serialized, Vector2f.class));
+
+Now, there will be times that we have to change the default way that Gson serializes
+and deserializes objects. We create a new class which implements our needs (JsonSerializer<>, JsonDeserializer<>)
+and we can use it:
+
+        Gson gson = new GsonBuilder()
+                .setPrettyPrinting()
+                .registerTypeAdapter(Component.class, new ComponentDeserializer())
+                .registerTypeAdapter(GameObject.class, new GameObjectDeserializer())
+                .create();
+        String serialized = gson.toJson(obj1);
+        System.out.println(serialized);
+        GameObject objDeserializationTest = gson.fromJson(serialized, GameObject.class);
+        System.out.println(objDeserializationTest);
+
+And that is it! :D
