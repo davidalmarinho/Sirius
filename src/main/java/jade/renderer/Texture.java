@@ -10,13 +10,15 @@ import java.nio.IntBuffer;
 import static org.lwjgl.opengl.GL11.*;
 
 public class Texture {
-    private final String FILEPATH;
-    private int textureID;
+    private String filePath;
+    private transient int textureID;
     private int width, height;
 
-    public Texture(String filePath) {
-        this.FILEPATH = filePath;
+    private Texture() {
 
+    }
+
+    private void init() {
         // Criar a textura
         this.textureID = GL11.glGenTextures();
         GL11.glBindTexture(GL_TEXTURE_2D, textureID);
@@ -40,7 +42,7 @@ public class Texture {
         // uma vez que ela vai ser renderizada ao contrário
         STBImage.stbi_set_flip_vertically_on_load(true); // Serve para virar a textura ao contrario
 
-        ByteBuffer image = STBImage.stbi_load(FILEPATH, width, height, channels, 0);
+        ByteBuffer image = STBImage.stbi_load(this.filePath, width, height, channels, 0);
 
         if (image != null) {
             this.width = width.get(0);
@@ -57,11 +59,15 @@ public class Texture {
                 assert false : "Error: (Texture) Unknown number of channels '" + channels.get(0) + "'.";
             }
         } else {
-            assert false : "Error: (Texture) Couldn't load image '" + FILEPATH + "'.";
+            assert false : "Error: (Texture) Couldn't load image '" + this.filePath + "'.";
         }
 
         // Limpar a memória no GPU
         STBImage.stbi_image_free(image);
+    }
+
+    private void setFilePath(String filePath) {
+        this.filePath = filePath;
     }
 
     public void bind() {
@@ -78,5 +84,33 @@ public class Texture {
 
     public int getHeight() {
         return height;
+    }
+
+    public String getFilePath() {
+        return filePath;
+    }
+
+    public static class Builder {
+        private String filePath;
+
+        private Builder() {
+
+        }
+
+        public static Builder newInstance() {
+            return new Builder();
+        }
+
+        public Builder setFilePath(String filePath) {
+            this.filePath = filePath;
+            return this;
+        }
+
+        public Texture build() {
+            Texture texture = new Texture();
+            texture.setFilePath(this.filePath);
+            texture.init();
+            return texture;
+        }
     }
 }

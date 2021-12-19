@@ -1,10 +1,21 @@
 package jade.scenes;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import imgui.ImGui;
 import jade.gameobjects.GameObject;
+import jade.gameobjects.GameObjectDeserializer;
+import jade.gameobjects.components.Component;
+import jade.gameobjects.components.ComponentDeserializer;
 import jade.renderer.Camera;
 import jade.renderer.Renderer;
 
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,6 +27,8 @@ public abstract class Scene {
     // Game object that we are inspecting
     protected GameObject activeGameObject = null;
     private boolean running;
+
+    protected boolean levelLoaded;
 
     public Scene() {
         gameObjectList = new ArrayList<>();
@@ -65,5 +78,49 @@ public abstract class Scene {
      */
     public void imgui() {
 
+    }
+
+    public void saveExit() {
+        Gson gson = new GsonBuilder()
+                .setPrettyPrinting()
+                .registerTypeAdapter(Component.class, new ComponentDeserializer())
+                .registerTypeAdapter(GameObject.class, new GameObjectDeserializer())
+                .create();
+
+        try {
+            // Save gameObjectList in a txt file
+            FileWriter writer = new FileWriter("level.txt");
+            writer.write(gson.toJson(this.gameObjectList));
+            writer.flush();
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void load() {
+        Gson gson = new GsonBuilder()
+                .setPrettyPrinting()
+                .registerTypeAdapter(Component.class, new ComponentDeserializer())
+                .registerTypeAdapter(GameObject.class, new GameObjectDeserializer())
+                .create();
+        String inFile = "";
+        try {
+            File file = new File("level.txt");
+            if (file.exists()) {
+                inFile = new String(Files.readAllBytes(Paths.get("level.txt")));
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        // Means that the saving txt file isn't empty
+        if (!inFile.equals("")) {
+            GameObject[] objs = gson.fromJson(inFile, GameObject[].class);
+            for (int i = 0; i < objs.length; i++) {
+                addGameObject(objs[i]);
+            }
+            this.levelLoaded = true;
+        }
     }
 }
