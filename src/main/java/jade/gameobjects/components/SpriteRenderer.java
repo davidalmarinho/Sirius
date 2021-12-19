@@ -17,7 +17,7 @@ public class SpriteRenderer extends Component {
     private transient Transform lastTransform;
 
     // Dirty Flag
-    private transient boolean dirty;
+    private transient boolean dirty = true;
 
     @Override
     public void start() {
@@ -51,6 +51,10 @@ public class SpriteRenderer extends Component {
 
     public Texture getTexture() {
         return sprite.getTexture();
+    }
+
+    public void setTexture(Texture texture) {
+        sprite.setTexture(texture);
     }
 
     public void setSprite(Sprite sprite) {

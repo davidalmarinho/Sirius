@@ -27,8 +27,15 @@ public class LevelEditorScene extends Scene {
     @Override
     public void init() {
         loadResources();
-
         this.camera = new Camera(new Vector3f(-250, 0, 1));
+
+        // We have a level already created, so we don't want to create a new one
+        if (levelLoaded) {
+            if (gameObjectList.size() > 0) {
+                this.activeGameObject = gameObjectList.get(0);
+            }
+            return;
+        }
 
         sprites = AssetPool.getSpritesheet("assets/images/spritesheet.png");
 
@@ -37,22 +44,12 @@ public class LevelEditorScene extends Scene {
         addGameObject(obj1);
         activeGameObject = obj1;
 
-        GameObject obj2 = new GameObject("Object 2", new Transform(new Vector2f(400, 100), new Vector2f(256, 256)), 0);
+        GameObject obj2 = new GameObject("Object 2", new Transform(new Vector2f(400, 100), new Vector2f(256, 256)), 3);
         obj2.addComponent(SpriteRenderer.Builder.newInstance()
                 .setSprite(Sprite.Builder.newInstance()
                         .setTexture(AssetPool.getTexture("assets/images/blendImage2.png")).build())
                 .build());
         addGameObject(obj2);
-
-        Gson gson = new GsonBuilder()
-                .setPrettyPrinting()
-                .registerTypeAdapter(Component.class, new ComponentDeserializer())
-                .registerTypeAdapter(GameObject.class, new GameObjectDeserializer())
-                .create();
-        String serialized = gson.toJson(obj1);
-        System.out.println(serialized);
-        GameObject objDeserializationTest = gson.fromJson(serialized, GameObject.class);
-        System.out.println(objDeserializationTest);
     }
 
     @Override
@@ -62,6 +59,17 @@ public class LevelEditorScene extends Scene {
                 new Spritesheet(
                         AssetPool.getTexture("assets/images/spritesheet.png"),
                         16, 16, 26, 0));
+        AssetPool.getTexture("assets/images/blendImage2.png");
+
+        // Get the texture that was already loaded after saving the saving file with Gson
+        for (GameObject g : gameObjectList) {
+            if (g.getComponent(SpriteRenderer.class) != null) {
+                SpriteRenderer spr = g.getComponent(SpriteRenderer.class);
+                if (spr.getTexture() != null) {
+                    spr.setTexture(AssetPool.getTexture(spr.getTexture().getFilePath()));
+                }
+            }
+        }
     }
 
     @Override

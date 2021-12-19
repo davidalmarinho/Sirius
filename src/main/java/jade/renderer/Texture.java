@@ -11,7 +11,7 @@ import static org.lwjgl.opengl.GL11.*;
 
 public class Texture {
     private String filePath;
-    private int textureID;
+    private transient int textureID;
     private int width, height;
 
     private Texture() {
@@ -84,6 +84,10 @@ public class Texture {
 
     public int getHeight() {
         return height;
+    }
+
+    public String getFilePath() {
+        return filePath;
     }
 
     public static class Builder {
