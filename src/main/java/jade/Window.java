@@ -18,8 +18,6 @@ public class Window {
     private final String title;
     private static Window window;
     private long glfwWindow; // Vai agir como se fosse um ponteiro
-    private boolean fadingToBlack = false;
-    private float r, g, b, a;
     private static Scene currentScene;
     private ImGuiLayer imGuiLayer;
 
@@ -27,10 +25,6 @@ public class Window {
         this.width  = 1920;
         this.height = 1080;
         this.title  = "Mario";
-        this.r      = 1.0f;
-        this.g      = 1.0f;
-        this.b      = 1.0f;
-        this.a      = 1.0f;
     }
 
     public void run() {
@@ -153,16 +147,8 @@ public class Window {
             // }
 
             // Limpar a frame com uma cor
-            glClearColor(r, g, b, a); /* Especifica a cor que o glClear vai usar para
+            glClearColor(1f, 1f, 1f, 1f); /* Especifica a cor que o glClear vai usar para
             limpar a color buffers */
-
-            if (KeyListener.isKeyDown(GLFW_KEY_SPACE)) fadingToBlack = true;
-
-            if (fadingToBlack) {
-                r = Math.max(r - 0.01f, 0);
-                g = Math.max(g - 0.01f, 0);
-                b = Math.max(b - 0.01f, 0);
-            }
 
             glClear(GL_COLOR_BUFFER_BIT); /* Contar para o OpenGL como limpar a frame (Indicates the buffers
             currently enabled for color writing).*/
