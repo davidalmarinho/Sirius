@@ -6,9 +6,9 @@
         "type": "jade.gameobjects.components.SpriteRenderer",
         "properties": {
           "color": {
-            "x": 0.39919353,
-            "y": 0.28329864,
-            "z": 0.33096513,
+            "x": 0.19130777,
+            "y": 0.19354838,
+            "z": 0.054630596,
             "w": 1.0
           },
           "sprite": {
