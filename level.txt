@@ -6,9 +6,9 @@
         "type": "jade.gameobjects.components.SpriteRenderer",
         "properties": {
           "color": {
-            "x": 0.19130777,
-            "y": 0.19354838,
-            "z": 0.054630596,
+            "x": 0.17056078,
+            "y": 0.067746095,
+            "z": 0.067746095,
             "w": 1.0
           },
           "sprite": {
@@ -30,6 +30,18 @@
                 "y": 1.0
               }
             ]
+          }
+        }
+      },
+      {
+        "type": "jade.gameobjects.components.RigidBody",
+        "properties": {
+          "colliderType": 1,
+          "friction": 0.5,
+          "velocity": {
+            "x": -6.0,
+            "y": 0.3,
+            "z": 0.0
           }
         }
       }

@@ -37,7 +37,8 @@ public class ImGuiLayer {
         // Initialize ImGuiIO config
         final ImGuiIO io = ImGui.getIO();
 
-        io.setIniFilename("imgui.ini"); // We don't want to save .ini file
+        // io.setIniFilename(null); // We don't want to save .ini file
+        io.setIniFilename("imgui.ini"); // We want to save .ini file
         // "imgui.ini will save the last Window's position when we reopen the program"
         io.setConfigFlags(ImGuiConfigFlags.NavEnableKeyboard); // Navigation with keyboard
         io.setBackendFlags(ImGuiBackendFlags.HasMouseCursors); // Mouse cursors to display while resizing windows etc.
