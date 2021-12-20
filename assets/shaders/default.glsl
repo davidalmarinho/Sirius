@@ -57,12 +57,31 @@
         // applyTexture(color);
         // color = texture(uTexSampler, fTexCoordinates);
 
-        // Aplicar textura
-        if (fTexID > 0) {
-            int id = int(fTexID);
-            color = fColor * texture(uTextures[id], fTexCoordinates);
-            // color = vec4(fTexCoordinates, 0, 1); // (x, y, 0, 1)
-        } else {
-            color = fColor;
+        // Apply texture
+        switch(int(fTexID)) {
+            case 0:
+                color = fColor;
+            break;
+            case 1:
+                color = fColor * texture(uTextures[1], fTexCoordinates);
+            break;
+            case 2:
+                color = fColor * texture(uTextures[2], fTexCoordinates);
+            break;
+            case 3:
+                color = fColor * texture(uTextures[3], fTexCoordinates);
+            break;
+            case 4:
+                color = fColor * texture(uTextures[4], fTexCoordinates);
+            break;
+            case 5:
+                color = fColor * texture(uTextures[5], fTexCoordinates);
+            break;
+            case 6:
+                color = fColor * texture(uTextures[6], fTexCoordinates);
+            break;
+            case 7:
+                color = fColor * texture(uTextures[7], fTexCoordinates);
+            break;
         }
     }

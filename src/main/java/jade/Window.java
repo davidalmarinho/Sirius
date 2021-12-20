@@ -79,6 +79,12 @@ public class Window {
         glfwWindowHint(GLFW_RESIZABLE, GLFW_TRUE);
         glfwWindowHint(GLFW_MAXIMIZED, GLFW_TRUE);
 
+        // For linux compatibility, we have to specify the context version and make an opengl profile
+        glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+        glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR,  2);
+        glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+        glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
+
         // Criar a janela
         /* O primeiro NULL serve para selecionar o monitor (NULL vai indicar o monitor primário)
          * O segundo NULL serve para ligar shared objects. Mas não é multiplataforma, por isso
