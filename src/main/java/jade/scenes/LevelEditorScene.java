@@ -5,7 +5,6 @@ import imgui.ImVec2;
 import jade.gameobjects.GameObject;
 import jade.gameobjects.Transform;
 import jade.gameobjects.components.*;
-import jade.input.MouseListener;
 import jade.renderer.Camera;
 import jade.renderer.spritesheet.Images;
 import jade.renderer.spritesheet.Spritesheet;
@@ -47,7 +46,7 @@ public class LevelEditorScene extends Scene {
         GameObject obj2 = new GameObject("Object 2", new Transform(new Vector2f(400, 100), new Vector2f(256, 256)), 3);
         obj2.addComponent(SpriteRenderer.Builder.newInstance()
                 .setSprite(Sprite.Builder.newInstance()
-                        .setTexture(AssetPool.getTexture("assets/images/blendImage2.png")).build())
+                        .setTexture(AssetPool.getTexture(Images.BLEND_IMAGE_2.getTexture())).build())
                 .build());
         addGameObject(obj2);
     }
@@ -74,7 +73,6 @@ public class LevelEditorScene extends Scene {
 
     @Override
     public void update(float dt) {
-        MouseListener.getOrthoY();
         for (GameObject go : gameObjectList) {
             go.update(dt);
         }

@@ -31,7 +31,7 @@ public class Camera {
         */
         projectionMatrix.identity();
         projectionMatrix.ortho(0.0f, 32.0f * 40.0f, 0.0f, 32.0f * 21.0f, 0.0f, 100.0f);
-        inverseProjection = projectionMatrix.invert();
+        projectionMatrix.invert(inverseProjection);
     }
 
     // Onde a camara está no mundo e para once ela aponta
@@ -52,7 +52,7 @@ public class Camera {
                 cameraUp
         );
 
-        inverseView = viewMatrix.invert();
+        viewMatrix.invert(inverseView);
 
         return this.viewMatrix;
     }
