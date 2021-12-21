@@ -1,17 +1,16 @@
 package jade.scenes;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import imgui.ImGui;
+import imgui.ImVec2;
 import jade.gameobjects.GameObject;
-import jade.gameobjects.GameObjectDeserializer;
 import jade.gameobjects.Transform;
 import jade.gameobjects.components.*;
 import jade.renderer.Camera;
+import jade.renderer.spritesheet.Images;
+import jade.renderer.spritesheet.Spritesheet;
 import jade.utils.AssetPool;
 import org.joml.Vector2f;
 import org.joml.Vector3f;
-import org.joml.Vector4f;
 
 /**
  * Lógica para editar níveis
@@ -28,6 +27,7 @@ public class LevelEditorScene extends Scene {
     public void init() {
         loadResources();
         this.camera = new Camera(new Vector3f(-250, 0, 1));
+        sprites = AssetPool.getSpritesheet(Images.DECORATIONS_AND_BLOCKS.getSpritesheet());
 
         // We have a level already created, so we don't want to create a new one
         if (levelLoaded) {
@@ -37,7 +37,6 @@ public class LevelEditorScene extends Scene {
             return;
         }
 
-        sprites = AssetPool.getSpritesheet("assets/images/spritesheet.png");
 
         obj1 = new GameObject("Object 1", new Transform(new Vector2f(200, 100), new Vector2f(256, 256)), 2);
         obj1.addComponent(SpriteRenderer.Builder.newInstance().setColor(1, 0, 0, 1).build());
@@ -56,11 +55,11 @@ public class LevelEditorScene extends Scene {
     @Override
     public void loadResources() {
         AssetPool.getShader("assets/shaders/default.glsl");
-        AssetPool.addSpritesheet("assets/images/spritesheet.png",
+        AssetPool.addSpritesheet(Images.DECORATIONS_AND_BLOCKS.getSpritesheet(),
                 new Spritesheet(
-                        AssetPool.getTexture("assets/images/spritesheet.png"),
-                        16, 16, 26, 0));
-        AssetPool.getTexture("assets/images/blendImage2.png");
+                        AssetPool.getTexture(Images.DECORATIONS_AND_BLOCKS.getSpritesheet()),
+                        16, 16, 81, 0));
+        AssetPool.getTexture(Images.BLEND_IMAGE_2.getTexture());
 
         // Get the texture that was already loaded after saving the saving file with Gson
         for (GameObject g : gameObjectList) {
@@ -84,8 +83,51 @@ public class LevelEditorScene extends Scene {
 
     @Override
     public void imgui() {
-        ImGui.begin("Window test");
-        ImGui.text("Hello World");
+        ImGui.begin("Icons");
+
+        // Gets the window's positions
+        ImVec2 windowPos = new ImVec2();
+        ImGui.getWindowPos(windowPos);
+
+        // Gets the window's size
+        ImVec2 windowSize = new ImVec2();
+        ImGui.getWindowSize(windowSize);
+
+        // Gets item's spacing
+        ImVec2 itemSpacing = new ImVec2();
+        ImGui.getStyle().getItemSpacing(itemSpacing);
+
+        float windowX2 = windowPos.x + windowSize.x;
+        for (int i = 0; i < sprites.size(); i++) {
+            Sprite sprite = sprites.getSprite(i);
+            float spriteWidth = sprite.getWidth() * 4;
+            float spriteHeight = sprite.getHeight() * 4;
+
+            int id = sprite.getTextureID();
+            Vector2f[] texCoords = sprite.getTextureCoordinates();
+
+            // Each texture has the spritesheet id, so all textures have the same id, so there is needed to pushID()
+            ImGui.pushID(i);
+
+            if (ImGui.imageButton(id, spriteWidth, spriteHeight, texCoords[2].x, texCoords[0].y, texCoords[0].x, texCoords[2].y)) {
+                System.out.println("Button " + i + " clicked!");
+            }
+
+            // After we don't want to worry about that we have changed textures' id, so let's replace it again
+            ImGui.popID();
+
+            ImVec2 lastButtonPos = new ImVec2();
+            ImGui.getItemRectMax(lastButtonPos);
+
+            float lastButtonX2 = lastButtonPos.x;
+            float nextButtonX2 = lastButtonX2 + itemSpacing.x + spriteWidth;
+
+            // Keep in the same line if we still have items and if the current item isn't bigger than the window itself
+            if (i + 1 < sprites.size() && nextButtonX2 < windowX2) {
+                ImGui.sameLine();
+            }
+        }
+
         ImGui.end();
     }
 }

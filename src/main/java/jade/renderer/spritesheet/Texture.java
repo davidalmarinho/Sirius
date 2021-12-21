@@ -1,4 +1,4 @@
-package jade.renderer;
+package jade.renderer.spritesheet;
 
 import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL11;
@@ -66,6 +66,10 @@ public class Texture {
         STBImage.stbi_image_free(image);
     }
 
+    public String getFilePath() {
+        return filePath;
+    }
+
     private void setFilePath(String filePath) {
         this.filePath = filePath;
     }
@@ -86,8 +90,8 @@ public class Texture {
         return height;
     }
 
-    public String getFilePath() {
-        return filePath;
+    public int getTextureID() {
+        return textureID;
     }
 
     public static class Builder {

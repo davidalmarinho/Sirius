@@ -2,7 +2,7 @@ package jade.gameobjects.components;
 
 import imgui.ImGui;
 import jade.gameobjects.Transform;
-import jade.renderer.Texture;
+import jade.renderer.spritesheet.Texture;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
 

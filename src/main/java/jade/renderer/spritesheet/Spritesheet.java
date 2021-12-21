@@ -1,6 +1,6 @@
-package jade.gameobjects.components;
+package jade.renderer.spritesheet;
 
-import jade.renderer.Texture;
+import jade.gameobjects.components.Sprite;
 import org.joml.Vector2f;
 
 import java.util.ArrayList;
@@ -38,7 +38,10 @@ public class Spritesheet {
                     new Vector2f(leftBottom.x, leftBottom.y),
                     new Vector2f(leftBottom.x, rightTop.y)
             };
-            Sprite sprite = Sprite.Builder.newInstance().setTexture(parentTex).setTextureCoordinates(texCoords).build();
+            Sprite sprite = Sprite.Builder.newInstance()
+                    .setTexture(parentTex)
+                    .setSize(spriteWidth, spriteHeight)
+                    .setTextureCoordinates(texCoords).build();
             this.spriteList.add(sprite);
 
             // Catch next sprite
@@ -48,6 +51,10 @@ public class Spritesheet {
                 currentY -= spriteHeight + spacing;
             }
         }
+    }
+
+    public int size() {
+        return spriteList.size();
     }
 
     public Sprite getSprite(int index) {
