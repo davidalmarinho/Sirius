@@ -6,12 +6,14 @@
         "type": "jade.gameobjects.components.SpriteRenderer",
         "properties": {
           "color": {
-            "x": 0.17056078,
-            "y": 0.067746095,
-            "z": 0.067746095,
+            "x": 0.2744918,
+            "y": 0.1034173,
+            "z": 0.40059346,
             "w": 1.0
           },
           "sprite": {
+            "width": 0,
+            "height": 0,
             "textureCoordinates": [
               {
                 "x": 1.0,
@@ -36,7 +38,7 @@
       {
         "type": "jade.gameobjects.components.RigidBody",
         "properties": {
-          "colliderType": 1,
+          "colliderType": 455,
           "friction": 0.5,
           "velocity": {
             "x": -6.0,
@@ -71,6 +73,8 @@
             "w": 1.0
           },
           "sprite": {
+            "width": 0,
+            "height": 0,
             "texture": {
               "filePath": "assets/images/blendImage2.png",
               "width": 256,

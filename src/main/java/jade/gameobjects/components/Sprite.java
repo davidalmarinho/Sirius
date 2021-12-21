@@ -4,6 +4,7 @@ import jade.renderer.spritesheet.Texture;
 import org.joml.Vector2f;
 
 public class Sprite {
+    private int width, height;
     private Texture texture;
     private Vector2f[] textureCoordinates;
 
@@ -19,6 +20,19 @@ public class Sprite {
         this.texture = texture;
     }
 
+    public int getWidth() {
+        return width;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
+    private void setSize(int width, int height) {
+        this.width = width;
+        this.height = height;
+    }
+
     public Vector2f[] getTextureCoordinates() {
         return textureCoordinates;
     }
@@ -27,7 +41,12 @@ public class Sprite {
         this.textureCoordinates = textureCoordinates;
     }
 
+    public int getTextureID() {
+        return texture == null ? -1 : texture.getTextureID();
+    }
+
     public static class Builder {
+        private int width, height;
         private Texture texture;
         private Vector2f[] textureCoordinates;
 
@@ -55,10 +74,17 @@ public class Sprite {
             return this;
         }
 
+        public Builder setSize(int width, int height) {
+            this.width = width;
+            this.height = height;
+            return this;
+        }
+
         public Sprite build() {
             Sprite sprite = new Sprite();
             sprite.setTextureCoordinates(textureCoordinates);
             sprite.setTexture(texture);
+            sprite.setSize(width, height);
             return sprite;
         }
     }
