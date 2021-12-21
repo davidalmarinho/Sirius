@@ -4,13 +4,24 @@ import org.joml.Matrix4f;
 import org.joml.Vector3f;
 
 public class Camera {
-    private Matrix4f projectionMatrix, viewMatrix;
+    private Matrix4f projectionMatrix, viewMatrix, inverseProjection, inverseView;
     public Vector3f position;
 
     public Camera(Vector3f position) {
         this.position = position;
         this.projectionMatrix = new Matrix4f();
         this.viewMatrix = new Matrix4f();
+
+        /* Since gl_Position = viewMatrix * projectionMatrix * aPos, we can use this formula to convert
+         * screen coordinates to world coordinates doing:
+         *
+         *      world_coordinates = gl_Position * (viewMatrix) ^ -1 * (projectionMatrix) ^ -1
+         *
+         * This is why we will keep the inverseProjection and the inverseView, to do this math
+         * when it is needed.
+         * */
+        this.inverseProjection = new Matrix4f();
+        this.inverseView = new Matrix4f();
         adjustProjection();
     }
 
@@ -20,6 +31,7 @@ public class Camera {
         */
         projectionMatrix.identity();
         projectionMatrix.ortho(0.0f, 32.0f * 40.0f, 0.0f, 32.0f * 21.0f, 0.0f, 100.0f);
+        inverseProjection = projectionMatrix.invert();
     }
 
     // Onde a camara está no mundo e para once ela aponta
@@ -40,10 +52,20 @@ public class Camera {
                 cameraUp
         );
 
+        inverseView = viewMatrix.invert();
+
         return this.viewMatrix;
     }
 
     public Matrix4f getProjectionMatrix() {
         return this.projectionMatrix;
+    }
+
+    public Matrix4f getInverseProjection() {
+        return inverseProjection;
+    }
+
+    public Matrix4f getInverseView() {
+        return inverseView;
     }
 }

@@ -1,5 +1,8 @@
 package jade.input;
 
+import jade.Window;
+import org.joml.Vector4f;
+
 import static org.lwjgl.glfw.GLFW.GLFW_PRESS;
 import static org.lwjgl.glfw.GLFW.GLFW_RELEASE;
 
@@ -84,12 +87,44 @@ public class MouseListener {
         get().scrollY  = 0.0;
     }
 
-    public static float getXPos() {
+    public static float getX() {
         return (float) get().xPos;
     }
 
-    public static float getYPos() {
+    public static float getY() {
         return (float) get().yPos;
+    }
+
+    public static float getOrthoX() {
+        float currentX = getX();
+
+        // This will convert the currentX's range, [0, 1], to [-1, 1]
+        currentX = (currentX / (float) Window.getWidth()) * 2.0f - 1.0f;
+        Vector4f tmp = new Vector4f(currentX, 0, 0, 1); // 1 IS VERY IMPORTANT TO MAINTAIN THE INTEGRITY OF MATRIX MULTIPLICATION
+
+        // See explanation of this in Camera.java file in its constructor method.
+        tmp.mul(Window.getCurrentScene().getCamera().getInverseProjection())
+                .mul(Window.getCurrentScene().getCamera().getViewMatrix());
+
+        currentX = tmp.x;
+
+        return currentX;
+    }
+
+    public static float getOrthoY() {
+        float currentY = getY();
+
+        // This will convert the currentX's range, [0, 1], to [-1, 1]
+        currentY = (currentY / (float) Window.getHeight()) * 2.0f - 1.0f;
+        Vector4f tmp = new Vector4f(0, currentY, 0, 1); // 1 IS VERY IMPORTANT TO MAINTAIN THE INTEGRITY OF MATRIX MULTIPLICATION
+
+        // See explanation of this in Camera.java file in its constructor method.
+        tmp.mul(Window.getCurrentScene().getCamera().getInverseProjection())
+                .mul(Window.getCurrentScene().getCamera().getViewMatrix());
+
+        currentY = tmp.y;
+
+        return currentY;
     }
 
     public static float getDeltaX() {

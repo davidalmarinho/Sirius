@@ -5,6 +5,7 @@ import imgui.ImVec2;
 import jade.gameobjects.GameObject;
 import jade.gameobjects.Transform;
 import jade.gameobjects.components.*;
+import jade.input.MouseListener;
 import jade.renderer.Camera;
 import jade.renderer.spritesheet.Images;
 import jade.renderer.spritesheet.Spritesheet;
@@ -36,7 +37,6 @@ public class LevelEditorScene extends Scene {
             }
             return;
         }
-
 
         obj1 = new GameObject("Object 1", new Transform(new Vector2f(200, 100), new Vector2f(256, 256)), 2);
         obj1.addComponent(SpriteRenderer.Builder.newInstance().setColor(1, 0, 0, 1).build());
@@ -74,6 +74,7 @@ public class LevelEditorScene extends Scene {
 
     @Override
     public void update(float dt) {
+        MouseListener.getOrthoY();
         for (GameObject go : gameObjectList) {
             go.update(dt);
         }
