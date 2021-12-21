@@ -2,6 +2,7 @@ package jade.renderer;
 
 import jade.Window;
 import jade.gameobjects.components.SpriteRenderer;
+import jade.renderer.spritesheet.Texture;
 import jade.utils.AssetPool;
 import org.joml.Vector2f;
 import org.joml.Vector4f;

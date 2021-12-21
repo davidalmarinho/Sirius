@@ -1,17 +1,14 @@
 package jade.scenes;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import imgui.ImGui;
 import jade.gameobjects.GameObject;
-import jade.gameobjects.GameObjectDeserializer;
 import jade.gameobjects.Transform;
 import jade.gameobjects.components.*;
 import jade.renderer.Camera;
+import jade.renderer.spritesheet.Spritesheet;
 import jade.utils.AssetPool;
 import org.joml.Vector2f;
 import org.joml.Vector3f;
-import org.joml.Vector4f;
 
 /**
  * Lógica para editar níveis
@@ -84,8 +81,10 @@ public class LevelEditorScene extends Scene {
 
     @Override
     public void imgui() {
-        ImGui.begin("Window test");
-        ImGui.text("Hello World");
+        ImGui.begin("Icos");
+
+
+
         ImGui.end();
     }
 }

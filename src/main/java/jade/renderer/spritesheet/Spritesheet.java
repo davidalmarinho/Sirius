@@ -1,6 +1,6 @@
-package jade.gameobjects.components;
+package jade.renderer.spritesheet;
 
-import jade.renderer.Texture;
+import jade.gameobjects.components.Sprite;
 import org.joml.Vector2f;
 
 import java.util.ArrayList;
