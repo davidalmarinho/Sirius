@@ -1,5 +1,7 @@
 package jade;
 
+import jade.input.KeyListener;
+import jade.input.MouseListener;
 import jade.scenes.LevelEditorScene;
 import jade.scenes.LevelScene;
 import jade.scenes.Scene;
