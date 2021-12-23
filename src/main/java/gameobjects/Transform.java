@@ -1,4 +1,4 @@
-package jade.gameobjects;
+package gameobjects;
 
 import org.joml.Vector2f;
 

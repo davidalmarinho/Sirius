@@ -1,7 +1,7 @@
-package jade.gameobjects;
+package gameobjects;
 
 import com.google.gson.*;
-import jade.gameobjects.components.Component;
+import gameobjects.components.Component;
 
 import java.lang.reflect.Type;
 

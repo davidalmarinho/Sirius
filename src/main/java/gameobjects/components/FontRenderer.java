@@ -1,4 +1,4 @@
-package jade.gameobjects.components;
+package gameobjects.components;
 
 public class FontRenderer extends Component {
     @Override

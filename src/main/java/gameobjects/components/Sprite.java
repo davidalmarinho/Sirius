@@ -1,4 +1,4 @@
-package jade.gameobjects.components;
+package gameobjects.components;
 
 import jade.renderer.spritesheet.Texture;
 import org.joml.Vector2f;

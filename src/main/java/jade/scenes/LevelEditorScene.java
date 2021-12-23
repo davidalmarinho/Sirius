@@ -2,9 +2,9 @@ package jade.scenes;
 
 import imgui.ImGui;
 import imgui.ImVec2;
-import jade.gameobjects.GameObject;
-import jade.gameobjects.Transform;
-import jade.gameobjects.components.*;
+import gameobjects.GameObject;
+import gameobjects.Transform;
+import gameobjects.components.*;
 import jade.renderer.Camera;
 import jade.renderer.spritesheet.Images;
 import jade.renderer.spritesheet.Spritesheet;

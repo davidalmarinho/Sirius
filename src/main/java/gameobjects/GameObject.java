@@ -1,6 +1,6 @@
-package jade.gameobjects;
+package gameobjects;
 
-import jade.gameobjects.components.Component;
+import gameobjects.components.Component;
 
 import java.util.ArrayList;
 import java.util.List;
