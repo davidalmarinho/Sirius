@@ -3,15 +3,14 @@ package jade.scenes;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import imgui.ImGui;
-import jade.gameobjects.GameObject;
-import jade.gameobjects.GameObjectDeserializer;
-import jade.gameobjects.components.Component;
-import jade.gameobjects.components.ComponentDeserializer;
+import gameobjects.GameObject;
+import gameobjects.GameObjectDeserializer;
+import gameobjects.components.Component;
+import gameobjects.components.ComponentDeserializer;
 import jade.renderer.Camera;
 import jade.renderer.Renderer;
 
 import java.io.File;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -48,7 +47,7 @@ public abstract class Scene {
         running = true;
     }
 
-    protected void addGameObject(GameObject gameObject) {
+    public void addGameObject(GameObject gameObject) {
         gameObjectList.add(gameObject);
 
         // Vamos supor que spawnamos um inimigo a meio do jogo, temos que lhe dar start também
@@ -116,10 +115,30 @@ public abstract class Scene {
 
         // Means that the saving txt file isn't empty
         if (!inFile.equals("")) {
+            int maxGoId = -1;
+            int maxCompId = -1;
             GameObject[] objs = gson.fromJson(inFile, GameObject[].class);
             for (int i = 0; i < objs.length; i++) {
                 addGameObject(objs[i]);
+
+                // Go throughout each component and check what is the greater ID
+                for (Component c : objs[i].componentList) {
+                    if (c.getUid() > maxCompId) {
+                        maxCompId = c.getUid();
+                    }
+                }
+
+                // Go throughout each game object and check what is the greater ID
+                if (objs[i].getUid() > maxGoId) {
+                    maxGoId = objs[i].getUid();
+                }
             }
+            // Add one more to, after, set a new maximum global ID for game object and for components
+            maxCompId++;
+            maxGoId++;
+            GameObject.init(maxGoId);
+            Component.init(maxCompId);
+
             this.levelLoaded = true;
         }
     }

@@ -1,4 +1,4 @@
-package jade.gameobjects.components;
+package gameobjects.components;
 
 import com.google.gson.*;
 

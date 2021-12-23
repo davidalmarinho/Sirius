@@ -10,7 +10,7 @@ public class MouseListener {
     private static MouseListener instance;
     private double xPos, yPos, lastXPos, lastYPos;
     private double scrollX, scrollY;
-    private final boolean[] mouseButtons = new boolean[3];
+    private final boolean[] mouseButtons = new boolean[9];
     private boolean dragging;
 
     private MouseListener() {
@@ -104,7 +104,7 @@ public class MouseListener {
 
         // See explanation of this in Camera.java file in its constructor method.
         tmp.mul(Window.getCurrentScene().getCamera().getInverseProjection())
-                .mul(Window.getCurrentScene().getCamera().getViewMatrix());
+                .mul(Window.getCurrentScene().getCamera().getInverseView());
 
         currentX = tmp.x;
 
@@ -112,7 +112,7 @@ public class MouseListener {
     }
 
     public static float getOrthoY() {
-        float currentY = getY();
+        float currentY = Window.getHeight() - getY();
 
         // This will convert the currentX's range, [0, 1], to [-1, 1]
         currentY = (currentY / (float) Window.getHeight()) * 2.0f - 1.0f;
@@ -120,7 +120,7 @@ public class MouseListener {
 
         // See explanation of this in Camera.java file in its constructor method.
         tmp.mul(Window.getCurrentScene().getCamera().getInverseProjection())
-                .mul(Window.getCurrentScene().getCamera().getViewMatrix());
+                .mul(Window.getCurrentScene().getCamera().getInverseView());
 
         currentY = tmp.y;
 

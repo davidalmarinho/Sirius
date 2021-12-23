@@ -1,0 +1,7 @@
+This system exists, because when saving the game objects, we may have an instance of a Component
+inside another component.
+That instance, if save.txt was loaded, must also be from saved game object / component from that file.
+So, each component and game object will have a unique ID. When loading the file, if some game object or
+some component has the determined ID, it will be loaded from there.
+
+// TODO: 23/12/2021 Make this explanation more understandable
