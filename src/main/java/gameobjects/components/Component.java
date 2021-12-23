@@ -9,6 +9,9 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 
 public abstract class Component {
+    private static int ID_COUNTER = 0;
+    private int uid = -1;
+
     /* Marked as transient, because each component as its parent game object and each
      * parent game object as its components and that components have, again, a parent game object.
      */
@@ -88,5 +91,19 @@ public abstract class Component {
         } catch (IllegalAccessException e) {
             e.printStackTrace();
         }
+    }
+
+    public static void init(int maxId) {
+        ID_COUNTER = maxId;
+    }
+
+    public void generateId() {
+        if (this.uid == -1) {
+            this.uid = ID_COUNTER++;
+        }
+    }
+
+    public int getUid() {
+        return uid;
     }
 }
