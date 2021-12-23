@@ -11,6 +11,7 @@ import imgui.flag.ImGuiConfigFlags;
 import imgui.flag.ImGuiKey;
 import imgui.flag.ImGuiMouseCursor;
 import imgui.gl3.ImGuiImplGl3;
+import jade.input.KeyListener;
 import jade.input.MouseListener;
 import jade.scenes.Scene;
 
@@ -98,6 +99,10 @@ public class ImGuiLayer {
             io.setKeyShift(io.getKeysDown(GLFW_KEY_LEFT_SHIFT) || io.getKeysDown(GLFW_KEY_RIGHT_SHIFT));
             io.setKeyAlt(io.getKeysDown(GLFW_KEY_LEFT_ALT) || io.getKeysDown(GLFW_KEY_RIGHT_ALT));
             io.setKeySuper(io.getKeysDown(GLFW_KEY_LEFT_SUPER) || io.getKeysDown(GLFW_KEY_RIGHT_SUPER));
+
+            if (!io.getWantCaptureKeyboard()) {
+                KeyListener.keyCallback(w, key, scancode, action, mods);
+            }
         });
 
         glfwSetCharCallback(glfwWindow, (w, c) -> {
@@ -123,7 +128,7 @@ public class ImGuiLayer {
 
             // Set a personalized callback when we are with the cursor outside an ImGui window
             if (!io.getWantCaptureMouse()) {
-                MouseListener.mouseButtonCallback(glfwWindow, button, action, mods);
+                MouseListener.mouseButtonCallback(w, button, action, mods);
             }
         });
 
