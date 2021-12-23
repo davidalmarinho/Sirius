@@ -61,7 +61,9 @@ public class GameObject {
     }
 
     public void addComponent(Component component) {
+        // Set an ID
         component.generateId();
+
         componentList.add(component);
         component.gameObject = this;
     }

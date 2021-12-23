@@ -121,20 +121,24 @@ public abstract class Scene {
             for (int i = 0; i < objs.length; i++) {
                 addGameObject(objs[i]);
 
+                // Go throughout each component and check what is the greater ID
                 for (Component c : objs[i].componentList) {
                     if (c.getUid() > maxCompId) {
                         maxCompId = c.getUid();
                     }
                 }
 
+                // Go throughout each game object and check what is the greater ID
                 if (objs[i].getUid() > maxGoId) {
                     maxGoId = objs[i].getUid();
                 }
             }
+            // Add one more to, after, set a new maximum global ID for game object and for components
             maxCompId++;
             maxGoId++;
             GameObject.init(maxGoId);
             Component.init(maxCompId);
+
             this.levelLoaded = true;
         }
     }
