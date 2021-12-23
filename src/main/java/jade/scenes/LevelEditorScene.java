@@ -1,5 +1,6 @@
 package jade.scenes;
 
+import gameobjects.Prefabs;
 import imgui.ImGui;
 import imgui.ImVec2;
 import gameobjects.GameObject;
@@ -18,6 +19,7 @@ import org.joml.Vector3f;
 public class LevelEditorScene extends Scene {
     private Spritesheet sprites;
     private GameObject obj1;
+    private MouseControls mouseControls = new MouseControls();
 
     public LevelEditorScene() {
 
@@ -73,6 +75,8 @@ public class LevelEditorScene extends Scene {
 
     @Override
     public void update(float dt) {
+        mouseControls.update(dt);
+
         for (GameObject go : gameObjectList) {
             go.update(dt);
         }
@@ -109,7 +113,9 @@ public class LevelEditorScene extends Scene {
             ImGui.pushID(i);
 
             if (ImGui.imageButton(id, spriteWidth, spriteHeight, texCoords[2].x, texCoords[0].y, texCoords[0].x, texCoords[2].y)) {
-                System.out.println("Button " + i + " clicked!");
+                GameObject object = Prefabs.generateSpriteObject(sprite, spriteWidth, spriteHeight);
+                // Attach object to the mouse cursor
+                mouseControls.pickupObject(object);
             }
 
             // After we don't want to worry about that we have changed textures' id, so let's replace it again

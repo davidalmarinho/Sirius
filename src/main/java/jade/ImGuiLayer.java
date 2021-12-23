@@ -11,6 +11,7 @@ import imgui.flag.ImGuiConfigFlags;
 import imgui.flag.ImGuiKey;
 import imgui.flag.ImGuiMouseCursor;
 import imgui.gl3.ImGuiImplGl3;
+import jade.input.MouseListener;
 import jade.scenes.Scene;
 
 import static org.lwjgl.glfw.GLFW.*;
@@ -118,6 +119,11 @@ public class ImGuiLayer {
 
             if (!io.getWantCaptureMouse() && mouseDown[1]) {
                 ImGui.setWindowFocus(null);
+            }
+
+            // Set a personalized callback when we are with the cursor outside an ImGui window
+            if (!io.getWantCaptureMouse()) {
+                MouseListener.mouseButtonCallback(glfwWindow, button, action, mods);
             }
         });
 

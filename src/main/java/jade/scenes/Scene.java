@@ -47,7 +47,7 @@ public abstract class Scene {
         running = true;
     }
 
-    protected void addGameObject(GameObject gameObject) {
+    public void addGameObject(GameObject gameObject) {
         gameObjectList.add(gameObject);
 
         // Vamos supor que spawnamos um inimigo a meio do jogo, temos que lhe dar start também
