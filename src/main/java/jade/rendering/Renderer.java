@@ -1,8 +1,8 @@
-package jade.renderer;
+package jade.rendering;
 
 import gameobjects.GameObject;
 import gameobjects.components.SpriteRenderer;
-import jade.renderer.spritesheet.Texture;
+import jade.rendering.spritesheet.Texture;
 
 import java.util.ArrayList;
 import java.util.Collections;

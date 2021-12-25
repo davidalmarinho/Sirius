@@ -1,4 +1,4 @@
-package jade.renderer.spritesheet;
+package jade.rendering.spritesheet;
 
 import gameobjects.components.Sprite;
 import org.joml.Vector2f;

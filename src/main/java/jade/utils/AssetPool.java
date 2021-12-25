@@ -1,8 +1,8 @@
 package jade.utils;
 
-import jade.renderer.spritesheet.Spritesheet;
-import jade.renderer.Shader;
-import jade.renderer.spritesheet.Texture;
+import jade.rendering.spritesheet.Spritesheet;
+import jade.rendering.Shader;
+import jade.rendering.spritesheet.Texture;
 
 import java.io.File;
 import java.util.HashMap;

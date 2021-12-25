@@ -1,8 +1,8 @@
-package jade.renderer;
+package jade.rendering;
 
 import jade.Window;
 import gameobjects.components.SpriteRenderer;
-import jade.renderer.spritesheet.Texture;
+import jade.rendering.spritesheet.Texture;
 import jade.utils.AssetPool;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
