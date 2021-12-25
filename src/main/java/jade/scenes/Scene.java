@@ -7,8 +7,8 @@ import gameobjects.GameObject;
 import gameobjects.GameObjectDeserializer;
 import gameobjects.components.Component;
 import gameobjects.components.ComponentDeserializer;
-import jade.renderer.Camera;
-import jade.renderer.Renderer;
+import jade.rendering.Camera;
+import jade.rendering.Renderer;
 
 import java.io.File;
 import java.io.FileWriter;

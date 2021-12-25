@@ -1,4 +1,4 @@
-package jade.renderer.spritesheet;
+package jade.rendering.spritesheet;
 
 import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL11;

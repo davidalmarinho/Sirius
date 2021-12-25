@@ -1,4 +1,4 @@
-package jade.renderer;
+package jade.rendering;
 
 import jade.utils.OperatingSystem;
 import org.joml.*;

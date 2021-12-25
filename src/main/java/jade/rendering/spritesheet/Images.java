@@ -1,4 +1,4 @@
-package jade.renderer.spritesheet;
+package jade.rendering.spritesheet;
 
 public enum Images {
     SPRITE_SHEET("spritesheet.png"),
