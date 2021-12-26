@@ -35,13 +35,13 @@ public class AssetPool {
     public static Texture getTexture(String filePath) {
         File file = new File(filePath);
 
-        if (!textures.containsKey(filePath)) {
+        if (textures.containsKey(file.getAbsolutePath())) {
+            return textures.get(file.getAbsolutePath());
+        } else {
             // Adds texture
-            Texture texture = Texture.Builder.newInstance().setFilePath(filePath).build();
-            textures.put(file.getAbsolutePath(), texture);
+            return textures.computeIfAbsent(file.getAbsolutePath(),
+                    key -> Texture.Builder.newInstance().build());
         }
-
-        return textures.get(file.getAbsolutePath());
     }
 
     public static void addSpritesheet(String filePath, Spritesheet spritesheet) {
