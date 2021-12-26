@@ -2,6 +2,7 @@ package jade;
 
 import jade.input.KeyListener;
 import jade.input.MouseListener;
+import jade.rendering.debug.DebugDraw;
 import jade.scenes.LevelEditorScene;
 import jade.scenes.LevelScene;
 import jade.scenes.Scene;
@@ -142,6 +143,8 @@ public class Window {
             // Carregar os eventos (teclado...)
             glfwPollEvents();
 
+            DebugDraw.beginFrame();
+
             // System.out.println("Position x: " + MouseListener.getXPos());
             // System.out.println("Position y " + MouseListener.getYPos());
             // if (KeyListener.isKeyUp(GLFW_KEY_SPACE)) {
@@ -156,6 +159,7 @@ public class Window {
             currently enabled for color writing).*/
 
             if (dt >= 0) {
+                DebugDraw.draw();
                 // System.out.println("FPS: " + 1.0f / dt);
                 currentScene.update(dt);
             }

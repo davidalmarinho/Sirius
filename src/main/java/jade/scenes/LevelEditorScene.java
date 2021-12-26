@@ -7,6 +7,7 @@ import gameobjects.GameObject;
 import gameobjects.Transform;
 import gameobjects.components.*;
 import jade.rendering.Camera;
+import jade.rendering.debug.DebugDraw;
 import jade.rendering.spritesheet.Images;
 import jade.rendering.spritesheet.Spritesheet;
 import jade.utils.AssetPool;
@@ -30,6 +31,8 @@ public class LevelEditorScene extends Scene {
         loadResources();
         this.camera = new Camera(new Vector3f(-250, 0, 1));
         sprites = AssetPool.getSpritesheet(Images.DECORATIONS_AND_BLOCKS.getSpritesheet());
+
+        DebugDraw.addLine2D(new Vector2f(0, 0), new Vector2f(800, 800), new Vector3f(1, 0, 0), 200);
 
         // We have a level already created, so we don't want to create a new one
         if (levelLoaded) {

@@ -16,7 +16,7 @@ public class Line2D {
         this.lifeTime = lifeTime;
     }
 
-    public int begginGrame() {
+    public int beginFrame() {
         this.lifeTime--;
         return this.lifeTime;
     }
