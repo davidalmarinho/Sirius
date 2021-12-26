@@ -1,6 +1,7 @@
 package jade.rendering.debug;
 
 import jade.Window;
+import jade.rendering.Colors;
 import jade.rendering.Shader;
 import jade.utils.AssetPool;
 import org.joml.Vector2f;
@@ -113,7 +114,6 @@ public class DebugDraw {
 
     // Add Line2D methods
     public static void addLine2D(Vector2f from, Vector2f to) {
-        // TODO: 26/12/2021 Add constants for common colors
         addLine2D(from, to, new Vector3f(0, 1, 0), 1);
     }
 
@@ -124,5 +124,10 @@ public class DebugDraw {
     public static void addLine2D(Vector2f from, Vector2f to, Vector3f color, int lifetime) {
         if (line2DList.size() >= MAX_LINES) return;
         DebugDraw.line2DList.add(new Line2D(from, to, color, lifetime));
+    }
+
+    public static void addLine2D(Vector2f from, Vector2f to, Colors color, int lifetime) {
+        if (line2DList.size() >= MAX_LINES) return;
+        DebugDraw.line2DList.add(new Line2D(from, to, color.getColor(), lifetime));
     }
 }

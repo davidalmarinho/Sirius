@@ -7,6 +7,7 @@ import gameobjects.GameObject;
 import gameobjects.Transform;
 import gameobjects.components.*;
 import jade.rendering.Camera;
+import jade.rendering.Colors;
 import jade.rendering.debug.DebugDraw;
 import jade.rendering.spritesheet.Images;
 import jade.rendering.spritesheet.Spritesheet;
@@ -85,7 +86,7 @@ public class LevelEditorScene extends Scene {
         float y = ((float) Math.cos(t) * 200.0f) + 400;
 
         t += 0.05f;
-        DebugDraw.addLine2D(new Vector2f(600, 400), new Vector2f(x, y), new Vector3f(0, 0, 1), 10);
+        DebugDraw.addLine2D(new Vector2f(600, 400), new Vector2f(x, y), Colors.BLUE, 10);
 
         for (GameObject go : gameObjectList) {
             go.update(dt);
