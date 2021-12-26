@@ -36,15 +36,14 @@ public class DebugDraw {
         // Create vbo
         vboID = glGenBuffers();
         glBindBuffer(GL_ARRAY_BUFFER, vboID);
-        glBufferData(GL_ARRAY_BUFFER, vertexArray.length * Float.BYTES, GL_DYNAMIC_DRAW);
+        glBufferData(GL_ARRAY_BUFFER, (long) vertexArray.length * Float.BYTES, GL_DYNAMIC_DRAW);
 
         // Enable vertex array attributes
         glVertexAttribPointer(0, 3, GL_FLOAT, false, 6 * Float.BYTES, 0);
-        glVertexAttribPointer(1, 3, GL_FLOAT, false, 6 * Float.BYTES, 3 * Float.BYTES);
         glEnableVertexAttribArray(0);
-        glEnableVertexAttribArray(1);
 
-        // TODO: 26/12/2021 Set line width
+        glVertexAttribPointer(1, 3, GL_FLOAT, false, 6 * Float.BYTES, 3 * Float.BYTES);
+        glEnableVertexAttribArray(1);
     }
 
     public static void beginFrame() {
@@ -54,9 +53,10 @@ public class DebugDraw {
         }
         
         // Remove dead lines
-        for (int i = line2DList.size() - 1; i >= 0; i--) {
+        for (int i = 0; i < line2DList.size(); i++) {
             if (line2DList.get(i).beginFrame() < 0) {
                 line2DList.remove(i);
+                i--;
             }
         }
     }

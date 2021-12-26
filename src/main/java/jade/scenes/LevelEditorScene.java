@@ -32,7 +32,7 @@ public class LevelEditorScene extends Scene {
         this.camera = new Camera(new Vector3f(-250, 0, 1));
         sprites = AssetPool.getSpritesheet(Images.DECORATIONS_AND_BLOCKS.getSpritesheet());
 
-        DebugDraw.addLine2D(new Vector2f(0, 0), new Vector2f(800, 800), new Vector3f(1, 0, 0), 200);
+        //DebugDraw.addLine2D(new Vector2f(0, 0), new Vector2f(800, 800), new Vector3f(1, 0, 0), 200);
 
         // We have a level already created, so we don't want to create a new one
         if (levelLoaded) {
@@ -76,9 +76,16 @@ public class LevelEditorScene extends Scene {
         }
     }
 
+    float t = 0.0f;
     @Override
     public void update(float dt) {
         mouseControls.update(dt);
+
+        float x = ((float) Math.sin(t) * 200.0f) + 600;
+        float y = ((float) Math.cos(t) * 200.0f) + 400;
+
+        t += 0.05f;
+        DebugDraw.addLine2D(new Vector2f(600, 400), new Vector2f(x, y), new Vector3f(0, 0, 1), 10);
 
         for (GameObject go : gameObjectList) {
             go.update(dt);
