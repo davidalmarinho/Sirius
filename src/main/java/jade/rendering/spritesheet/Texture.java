@@ -15,7 +15,12 @@ public class Texture {
     private int width, height;
 
     private Texture() {
+        this.filePath = "";
+    }
 
+    public Texture(String filePath) {
+        this.filePath = filePath;
+        init();
     }
 
     private void init() {
@@ -92,29 +97,5 @@ public class Texture {
 
     public int getTextureID() {
         return textureID;
-    }
-
-    public static class Builder {
-        private String filePath;
-
-        private Builder() {
-
-        }
-
-        public static Builder newInstance() {
-            return new Builder();
-        }
-
-        public Builder setFilePath(String filePath) {
-            this.filePath = filePath;
-            return this;
-        }
-
-        public Texture build() {
-            Texture texture = new Texture();
-            texture.setFilePath(this.filePath);
-            texture.init();
-            return texture;
-        }
     }
 }
