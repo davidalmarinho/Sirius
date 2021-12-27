@@ -114,8 +114,8 @@ public class LevelEditorScene extends Scene {
         float windowX2 = windowPos.x + windowSize.x;
         for (int i = 0; i < sprites.size(); i++) {
             Sprite sprite = sprites.getSprite(i);
-            float spriteWidth = sprite.getWidth() * 4;
-            float spriteHeight = sprite.getHeight() * 4;
+            float spriteWidth = sprite.getWidth() * 2;
+            float spriteHeight = sprite.getHeight() * 2;
 
             int id = sprite.getTextureID();
             Vector2f[] texCoords = sprite.getTextureCoordinates();
@@ -124,7 +124,7 @@ public class LevelEditorScene extends Scene {
             ImGui.pushID(i);
 
             if (ImGui.imageButton(id, spriteWidth, spriteHeight, texCoords[2].x, texCoords[0].y, texCoords[0].x, texCoords[2].y)) {
-                GameObject object = Prefabs.generateSpriteObject(sprite, spriteWidth, spriteHeight);
+                GameObject object = Prefabs.generateSpriteObject(sprite, sprite.getWidth() * 4, sprite.getHeight() * 4);
                 // Attach object to the mouse cursor
                 mouseControls.pickupObject(object);
             }
