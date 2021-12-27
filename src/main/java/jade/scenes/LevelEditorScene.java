@@ -21,7 +21,7 @@ import org.joml.Vector3f;
 public class LevelEditorScene extends Scene {
     private Spritesheet sprites;
     private GameObject obj1;
-    private MouseControls mouseControls = new MouseControls();
+    private GameObject levelEditorStuff = new GameObject("LevelEditorr", new Transform(), 0);
 
     public LevelEditorScene() {
 
@@ -29,11 +29,12 @@ public class LevelEditorScene extends Scene {
 
     @Override
     public void init() {
+        levelEditorStuff.addComponent(new MouseControls());
+        levelEditorStuff.addComponent(new GridLines());
+
         loadResources();
         this.camera = new Camera(new Vector3f(-250, 0, 1));
         sprites = AssetPool.getSpritesheet(Images.DECORATIONS_AND_BLOCKS.getSpritesheet());
-
-        //DebugDraw.addLine2D(new Vector2f(0, 0), new Vector2f(800, 800), new Vector3f(1, 0, 0), 200);
 
         // We have a level already created, so we don't want to create a new one
         if (levelLoaded) {
@@ -77,16 +78,9 @@ public class LevelEditorScene extends Scene {
         }
     }
 
-    float t = 0.0f;
     @Override
     public void update(float dt) {
-        mouseControls.update(dt);
-
-        float x = ((float) Math.sin(t) * 200.0f) + 600;
-        float y = ((float) Math.cos(t) * 200.0f) + 400;
-
-        t += 0.05f;
-        DebugDraw.addLine2D(new Vector2f(600, 400), new Vector2f(x, y), Colors.BLUE, 10);
+        levelEditorStuff.update(dt);
 
         for (GameObject go : gameObjectList) {
             go.update(dt);
@@ -124,9 +118,9 @@ public class LevelEditorScene extends Scene {
             ImGui.pushID(i);
 
             if (ImGui.imageButton(id, spriteWidth, spriteHeight, texCoords[2].x, texCoords[0].y, texCoords[0].x, texCoords[2].y)) {
-                GameObject object = Prefabs.generateSpriteObject(sprite, sprite.getWidth() * 4, sprite.getHeight() * 4);
+                GameObject object = Prefabs.generateSpriteObject(sprite, sprite.getWidth() * 2, sprite.getHeight() * 2);
                 // Attach object to the mouse cursor
-                mouseControls.pickupObject(object);
+                levelEditorStuff.getComponent(MouseControls.class).pickupObject(object);
             }
 
             // After we don't want to worry about that we have changed textures' id, so let's replace it again

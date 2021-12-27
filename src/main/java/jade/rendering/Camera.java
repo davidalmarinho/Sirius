@@ -1,11 +1,13 @@
 package jade.rendering;
 
 import org.joml.Matrix4f;
+import org.joml.Vector2f;
 import org.joml.Vector3f;
 
 public class Camera {
     private Matrix4f projectionMatrix, viewMatrix, inverseProjection, inverseView;
     public Vector3f position;
+    private Vector2f projectionSize = new Vector2f();
 
     public Camera(Vector3f position) {
         this.position = position;
@@ -30,7 +32,10 @@ public class Camera {
         * Fazendo com que os cálculos se baseiem nesta matriz.
         */
         projectionMatrix.identity();
-        projectionMatrix.ortho(0.0f, 32.0f * 40.0f, 0.0f, 32.0f * 21.0f, 0.0f, 100.0f);
+        final float projectionW = 32.0f * 40.0f;
+        final float projectionH = 32.0f * 21.0f;
+        projectionMatrix.ortho(0.0f, projectionW, 0.0f, projectionH, 0.0f, 100.0f);
+        projectionSize.set(projectionW, projectionH);
         projectionMatrix.invert(inverseProjection);
     }
 
@@ -55,6 +60,10 @@ public class Camera {
         viewMatrix.invert(inverseView);
 
         return this.viewMatrix;
+    }
+
+    public Vector2f getProjectionSize() {
+        return projectionSize;
     }
 
     public Matrix4f getProjectionMatrix() {
