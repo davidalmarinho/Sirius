@@ -7,8 +7,6 @@ import gameobjects.GameObject;
 import gameobjects.Transform;
 import gameobjects.components.*;
 import jade.rendering.Camera;
-import jade.rendering.Colors;
-import jade.rendering.debug.DebugDraw;
 import jade.rendering.spritesheet.Images;
 import jade.rendering.spritesheet.Spritesheet;
 import jade.utils.AssetPool;
@@ -20,8 +18,7 @@ import org.joml.Vector3f;
  */
 public class LevelEditorScene extends Scene {
     private Spritesheet sprites;
-    private GameObject obj1;
-    private GameObject levelEditorStuff = new GameObject("LevelEditorr", new Transform(), 0);
+    private final GameObject levelEditorStuff = new GameObject("LevelEditor", new Transform(), 0);
 
     public LevelEditorScene() {
 
@@ -43,19 +40,6 @@ public class LevelEditorScene extends Scene {
             }
             return;
         }
-
-        obj1 = new GameObject("Object 1", new Transform(new Vector2f(200, 100), new Vector2f(256, 256)), 2);
-        obj1.addComponent(SpriteRenderer.Builder.newInstance().setColor(1, 0, 0, 1).build());
-        obj1.addComponent(new RigidBody());
-        addGameObject(obj1);
-        activeGameObject = obj1;
-
-        GameObject obj2 = new GameObject("Object 2", new Transform(new Vector2f(400, 100), new Vector2f(256, 256)), 3);
-        obj2.addComponent(SpriteRenderer.Builder.newInstance()
-                .setSprite(Sprite.Builder.newInstance()
-                        .setTexture(AssetPool.getTexture(Images.BLEND_IMAGE_2.getTexture())).build())
-                .build());
-        addGameObject(obj2);
     }
 
     @Override

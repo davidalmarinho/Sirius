@@ -91,6 +91,10 @@ public class MouseListener {
         return (float) get().xPos;
     }
 
+    public static double getXD() {
+        return get().xPos;
+    }
+
     public static float getY() {
         return (float) get().yPos;
     }

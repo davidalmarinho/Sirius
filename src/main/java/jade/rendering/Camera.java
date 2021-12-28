@@ -7,7 +7,7 @@ import org.joml.Vector3f;
 public class Camera {
     private Matrix4f projectionMatrix, viewMatrix, inverseProjection, inverseView;
     public Vector3f position;
-    private Vector2f projectionSize = new Vector2f();
+    private Vector2f projectionSize = new Vector2f(32.0f * 40.0f, 32.0f * 21.0f);
 
     public Camera(Vector3f position) {
         this.position = position;
@@ -27,15 +27,12 @@ public class Camera {
         adjustProjection();
     }
 
-    private void adjustProjection() {
+    public void adjustProjection() {
         /* Aqui vamos normalizar a matriz. Ou seja, os seus valores passam a corresponder a 1.
         * Fazendo com que os cálculos se baseiem nesta matriz.
         */
         projectionMatrix.identity();
-        final float projectionW = 32.0f * 40.0f;
-        final float projectionH = 32.0f * 21.0f;
-        projectionMatrix.ortho(0.0f, projectionW, 0.0f, projectionH, 0.0f, 100.0f);
-        projectionSize.set(projectionW, projectionH);
+        projectionMatrix.ortho(0.0f, projectionSize.x, 0.0f, projectionSize.y, 0.0f, 100.0f);
         projectionMatrix.invert(inverseProjection);
     }
 
