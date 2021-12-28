@@ -72,9 +72,6 @@ public class Window {
         * a janela
         */
         glfwDefaultWindowHints(); // Colocar tudo default primeiro
-        glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE); // Ainda não a queremos visível
-        glfwWindowHint(GLFW_RESIZABLE, GLFW_TRUE);
-        glfwWindowHint(GLFW_MAXIMIZED, GLFW_TRUE);
 
         // For linux compatibility, we have to specify the context version and make an opengl profile
         glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
@@ -82,12 +79,17 @@ public class Window {
         glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
         glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 
+        glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE); // Ainda não a queremos visível
+        glfwWindowHint(GLFW_RESIZABLE, GLFW_TRUE);
+        glfwWindowHint(GLFW_MAXIMIZED, GLFW_TRUE);
+
         // Criar a janela
         /* O primeiro NULL serve para selecionar o monitor (NULL vai indicar o monitor primário)
          * O segundo NULL serve para ligar shared objects. Mas não é multiplataforma, por isso
          * vamos fazê-lo nós.
          */
         glfwWindow = glfwCreateWindow(this.width, this.height, this.title, NULL, NULL);
+
         // Verificar se a janela foi criada
         if (glfwWindow == NULL) {
             throw new IllegalStateException("Error: GLFW windows couldn't be initialized");
@@ -162,6 +164,8 @@ public class Window {
                 DebugDraw.draw();
                 // System.out.println("FPS: " + 1.0f / dt);
                 currentScene.update(dt);
+
+                glViewport(0, 0, width, height);
             }
 
             imGuiLayer.update(dt, currentScene);
