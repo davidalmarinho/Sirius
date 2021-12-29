@@ -111,8 +111,11 @@ public class DebugDraw {
 
         shader.detach();
     }
-
-    // Add Line2D methods
+    
+    // ===================================================================
+    // Add Line2D
+    // ===================================================================
+    
     public static void addLine2D(Vector2f from, Vector2f to) {
         addLine2D(from, to, new Vector3f(0, 1, 0), 1);
     }
@@ -129,5 +132,46 @@ public class DebugDraw {
     public static void addLine2D(Vector2f from, Vector2f to, Colors color, int lifetime) {
         if (line2DList.size() >= MAX_LINES) return;
         DebugDraw.line2DList.add(new Line2D(from, to, color.getColor(), lifetime));
+    }
+
+    // ===================================================================
+    // Add Box2D
+    // ===================================================================
+
+    public static void addBox2D(Vector2f center, Vector2f dimension) {
+        addLine2D(center, dimension, new Vector3f(0, 1, 0), 1);
+    }
+
+    public static void addBox2D(Vector2f center, Vector2f dimension, Vector3f color) {
+        addLine2D(center, dimension, color, 1);
+    }
+
+    public static void addBox2D(Vector2f center, Vector2f dimension, Vector3f color, int lifetime) {
+        if (line2DList.size() >= MAX_LINES) return;
+        DebugDraw.line2DList.add(new Line2D(center, dimension, color, lifetime));
+    }
+
+    public static void addBox2D(Vector2f center, Vector2f dimensions, float rotation, Colors color, int lifetime) {
+        Vector2f bottomLeftCorner = new Vector2f(center).sub(new Vector2f(dimensions)).mul(0.5f);
+        Vector2f topRightCorner = new Vector2f(center).add(new Vector2f(dimensions)).mul(0.5f);
+
+        Vector2f[] vertices = {
+                new Vector2f(bottomLeftCorner.x, bottomLeftCorner.y),  // Bottom left corner
+                new Vector2f(topRightCorner.x, topRightCorner.y),      // Top right corner
+                new Vector2f(topRightCorner.x, bottomLeftCorner.y),    // Bottom right corner
+                new Vector2f(bottomLeftCorner.x, topRightCorner.y),    // Top left corner
+        };
+
+        // If it has been rotated
+        if (rotation != 0.0f) {
+            for (Vector2f vert : vertices) {
+                // JMath.rotate(vert, rotation, center);
+            }
+        }
+
+        addLine2D(vertices[0], vertices[2], color, lifetime); // BL -> BR
+        addLine2D(vertices[0], vertices[3], color, lifetime); // BL -> TL
+        addLine2D(vertices[1], vertices[3], color, lifetime); // TR -> TL
+        addLine2D(vertices[1], vertices[2], color, lifetime); // TR -> BR
     }
 }
