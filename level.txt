@@ -16,7 +16,7 @@
             "width": 16,
             "height": 16,
             "texture": {
-              "filePath": "/home/davidalmarinho/Documents/Programming/GitHub/TheBeaver/assets/images/spritesheets/decorationsAndBlocks.png",
+              "filePath": "assets/images/spritesheets/decorationsAndBlocks.png",
               "width": 112,
               "height": 192
             },
@@ -45,8 +45,8 @@
     ],
     "transform": {
       "position": {
-        "x": 0.0,
-        "y": 192.0
+        "x": -224.0,
+        "y": 160.0
       },
       "scale": {
         "x": 32.0,
@@ -72,7 +72,7 @@
             "width": 16,
             "height": 16,
             "texture": {
-              "filePath": "/home/davidalmarinho/Documents/Programming/GitHub/TheBeaver/assets/images/spritesheets/decorationsAndBlocks.png",
+              "filePath": "assets/images/spritesheets/decorationsAndBlocks.png",
               "width": 112,
               "height": 192
             },
@@ -101,8 +101,8 @@
     ],
     "transform": {
       "position": {
-        "x": 32.0,
-        "y": 192.0
+        "x": -192.0,
+        "y": 160.0
       },
       "scale": {
         "x": 32.0,
@@ -128,7 +128,7 @@
             "width": 16,
             "height": 16,
             "texture": {
-              "filePath": "/home/davidalmarinho/Documents/Programming/GitHub/TheBeaver/assets/images/spritesheets/decorationsAndBlocks.png",
+              "filePath": "assets/images/spritesheets/decorationsAndBlocks.png",
               "width": 112,
               "height": 192
             },
@@ -157,8 +157,8 @@
     ],
     "transform": {
       "position": {
-        "x": 64.0,
-        "y": 192.0
+        "x": -160.0,
+        "y": 160.0
       },
       "scale": {
         "x": 32.0,
@@ -184,7 +184,7 @@
             "width": 16,
             "height": 16,
             "texture": {
-              "filePath": "/home/davidalmarinho/Documents/Programming/GitHub/TheBeaver/assets/images/spritesheets/decorationsAndBlocks.png",
+              "filePath": "assets/images/spritesheets/decorationsAndBlocks.png",
               "width": 112,
               "height": 192
             },
@@ -213,8 +213,8 @@
     ],
     "transform": {
       "position": {
-        "x": 96.0,
-        "y": 192.0
+        "x": -128.0,
+        "y": 160.0
       },
       "scale": {
         "x": 32.0,
@@ -240,7 +240,7 @@
             "width": 16,
             "height": 16,
             "texture": {
-              "filePath": "/home/davidalmarinho/Documents/Programming/GitHub/TheBeaver/assets/images/spritesheets/decorationsAndBlocks.png",
+              "filePath": "assets/images/spritesheets/decorationsAndBlocks.png",
               "width": 112,
               "height": 192
             },
@@ -269,8 +269,8 @@
     ],
     "transform": {
       "position": {
-        "x": 128.0,
-        "y": 192.0
+        "x": -64.0,
+        "y": 160.0
       },
       "scale": {
         "x": 32.0,
@@ -296,7 +296,7 @@
             "width": 16,
             "height": 16,
             "texture": {
-              "filePath": "/home/davidalmarinho/Documents/Programming/GitHub/TheBeaver/assets/images/spritesheets/decorationsAndBlocks.png",
+              "filePath": "assets/images/spritesheets/decorationsAndBlocks.png",
               "width": 112,
               "height": 192
             },
@@ -325,8 +325,8 @@
     ],
     "transform": {
       "position": {
-        "x": 160.0,
-        "y": 192.0
+        "x": -96.0,
+        "y": 160.0
       },
       "scale": {
         "x": 32.0,
@@ -352,7 +352,7 @@
             "width": 16,
             "height": 16,
             "texture": {
-              "filePath": "/home/davidalmarinho/Documents/Programming/GitHub/TheBeaver/assets/images/spritesheets/decorationsAndBlocks.png",
+              "filePath": "assets/images/spritesheets/decorationsAndBlocks.png",
               "width": 112,
               "height": 192
             },
@@ -381,8 +381,8 @@
     ],
     "transform": {
       "position": {
-        "x": 192.0,
-        "y": 192.0
+        "x": -32.0,
+        "y": 160.0
       },
       "scale": {
         "x": 32.0,
@@ -408,119 +408,7 @@
             "width": 16,
             "height": 16,
             "texture": {
-              "filePath": "/home/davidalmarinho/Documents/Programming/GitHub/TheBeaver/assets/images/spritesheets/decorationsAndBlocks.png",
-              "width": 112,
-              "height": 192
-            },
-            "textureCoordinates": [
-              {
-                "x": 0.14285715,
-                "y": 1.0
-              },
-              {
-                "x": 0.14285715,
-                "y": 0.9166667
-              },
-              {
-                "x": 0.0,
-                "y": 0.9166667
-              },
-              {
-                "x": 0.0,
-                "y": 1.0
-              }
-            ]
-          },
-          "uid": 9
-        }
-      }
-    ],
-    "transform": {
-      "position": {
-        "x": 224.0,
-        "y": 192.0
-      },
-      "scale": {
-        "x": 32.0,
-        "y": 32.0
-      }
-    },
-    "zIndex": 0
-  },
-  {
-    "uid": 9,
-    "NAME": "Sprite_Object_Gen",
-    "componentList": [
-      {
-        "type": "gameobjects.components.SpriteRenderer",
-        "properties": {
-          "color": {
-            "x": 1.0,
-            "y": 1.0,
-            "z": 1.0,
-            "w": 1.0
-          },
-          "sprite": {
-            "width": 16,
-            "height": 16,
-            "texture": {
-              "filePath": "/home/davidalmarinho/Documents/Programming/GitHub/TheBeaver/assets/images/spritesheets/decorationsAndBlocks.png",
-              "width": 112,
-              "height": 192
-            },
-            "textureCoordinates": [
-              {
-                "x": 0.14285715,
-                "y": 1.0
-              },
-              {
-                "x": 0.14285715,
-                "y": 0.9166667
-              },
-              {
-                "x": 0.0,
-                "y": 0.9166667
-              },
-              {
-                "x": 0.0,
-                "y": 1.0
-              }
-            ]
-          },
-          "uid": 10
-        }
-      }
-    ],
-    "transform": {
-      "position": {
-        "x": 256.0,
-        "y": 192.0
-      },
-      "scale": {
-        "x": 32.0,
-        "y": 32.0
-      }
-    },
-    "zIndex": 0
-  },
-  {
-    "uid": 10,
-    "NAME": "Sprite_Object_Gen",
-    "componentList": [
-      {
-        "type": "gameobjects.components.SpriteRenderer",
-        "properties": {
-          "color": {
-            "x": 1.0,
-            "y": 1.0,
-            "z": 1.0,
-            "w": 1.0
-          },
-          "sprite": {
-            "width": 16,
-            "height": 16,
-            "texture": {
-              "filePath": "/home/davidalmarinho/Documents/Programming/GitHub/TheBeaver/assets/images/spritesheets/decorationsAndBlocks.png",
+              "filePath": "assets/images/spritesheets/decorationsAndBlocks.png",
               "width": 112,
               "height": 192
             },
@@ -549,8 +437,8 @@
     ],
     "transform": {
       "position": {
-        "x": 288.0,
-        "y": 192.0
+        "x": 0.0,
+        "y": 160.0
       },
       "scale": {
         "x": 32.0,
@@ -560,7 +448,7 @@
     "zIndex": 0
   },
   {
-    "uid": 11,
+    "uid": 9,
     "NAME": "Sprite_Object_Gen",
     "componentList": [
       {
@@ -576,7 +464,7 @@
             "width": 16,
             "height": 16,
             "texture": {
-              "filePath": "/home/davidalmarinho/Documents/Programming/GitHub/TheBeaver/assets/images/spritesheets/decorationsAndBlocks.png",
+              "filePath": "assets/images/spritesheets/decorationsAndBlocks.png",
               "width": 112,
               "height": 192
             },
@@ -605,8 +493,120 @@
     ],
     "transform": {
       "position": {
-        "x": 320.0,
-        "y": 192.0
+        "x": 32.0,
+        "y": 160.0
+      },
+      "scale": {
+        "x": 32.0,
+        "y": 32.0
+      }
+    },
+    "zIndex": 0
+  },
+  {
+    "uid": 10,
+    "NAME": "Sprite_Object_Gen",
+    "componentList": [
+      {
+        "type": "gameobjects.components.SpriteRenderer",
+        "properties": {
+          "color": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0,
+            "w": 1.0
+          },
+          "sprite": {
+            "width": 16,
+            "height": 16,
+            "texture": {
+              "filePath": "assets/images/spritesheets/decorationsAndBlocks.png",
+              "width": 112,
+              "height": 192
+            },
+            "textureCoordinates": [
+              {
+                "x": 0.14285715,
+                "y": 1.0
+              },
+              {
+                "x": 0.14285715,
+                "y": 0.9166667
+              },
+              {
+                "x": 0.0,
+                "y": 0.9166667
+              },
+              {
+                "x": 0.0,
+                "y": 1.0
+              }
+            ]
+          },
+          "uid": 13
+        }
+      }
+    ],
+    "transform": {
+      "position": {
+        "x": 64.0,
+        "y": 160.0
+      },
+      "scale": {
+        "x": 32.0,
+        "y": 32.0
+      }
+    },
+    "zIndex": 0
+  },
+  {
+    "uid": 11,
+    "NAME": "Sprite_Object_Gen",
+    "componentList": [
+      {
+        "type": "gameobjects.components.SpriteRenderer",
+        "properties": {
+          "color": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0,
+            "w": 1.0
+          },
+          "sprite": {
+            "width": 16,
+            "height": 16,
+            "texture": {
+              "filePath": "assets/images/spritesheets/decorationsAndBlocks.png",
+              "width": 112,
+              "height": 192
+            },
+            "textureCoordinates": [
+              {
+                "x": 0.14285715,
+                "y": 1.0
+              },
+              {
+                "x": 0.14285715,
+                "y": 0.9166667
+              },
+              {
+                "x": 0.0,
+                "y": 0.9166667
+              },
+              {
+                "x": 0.0,
+                "y": 1.0
+              }
+            ]
+          },
+          "uid": 14
+        }
+      }
+    ],
+    "transform": {
+      "position": {
+        "x": 96.0,
+        "y": 160.0
       },
       "scale": {
         "x": 32.0,
@@ -632,37 +632,37 @@
             "width": 16,
             "height": 16,
             "texture": {
-              "filePath": "/home/davidalmarinho/Documents/Programming/GitHub/TheBeaver/assets/images/spritesheets/decorationsAndBlocks.png",
+              "filePath": "assets/images/spritesheets/decorationsAndBlocks.png",
               "width": 112,
               "height": 192
             },
             "textureCoordinates": [
               {
-                "x": 0.85714287,
+                "x": 0.14285715,
+                "y": 1.0
+              },
+              {
+                "x": 0.14285715,
                 "y": 0.9166667
               },
               {
-                "x": 0.85714287,
-                "y": 0.8333333
-              },
-              {
-                "x": 0.71428573,
-                "y": 0.8333333
-              },
-              {
-                "x": 0.71428573,
+                "x": 0.0,
                 "y": 0.9166667
+              },
+              {
+                "x": 0.0,
+                "y": 1.0
               }
             ]
           },
-          "uid": 13
+          "uid": 15
         }
       }
     ],
     "transform": {
       "position": {
         "x": 128.0,
-        "y": 288.0
+        "y": 160.0
       },
       "scale": {
         "x": 32.0,
@@ -688,119 +688,7 @@
             "width": 16,
             "height": 16,
             "texture": {
-              "filePath": "/home/davidalmarinho/Documents/Programming/GitHub/TheBeaver/assets/images/spritesheets/decorationsAndBlocks.png",
-              "width": 112,
-              "height": 192
-            },
-            "textureCoordinates": [
-              {
-                "x": 0.85714287,
-                "y": 0.9166667
-              },
-              {
-                "x": 0.85714287,
-                "y": 0.8333333
-              },
-              {
-                "x": 0.71428573,
-                "y": 0.8333333
-              },
-              {
-                "x": 0.71428573,
-                "y": 0.9166667
-              }
-            ]
-          },
-          "uid": 14
-        }
-      }
-    ],
-    "transform": {
-      "position": {
-        "x": 160.0,
-        "y": 288.0
-      },
-      "scale": {
-        "x": 32.0,
-        "y": 32.0
-      }
-    },
-    "zIndex": 0
-  },
-  {
-    "uid": 14,
-    "NAME": "Sprite_Object_Gen",
-    "componentList": [
-      {
-        "type": "gameobjects.components.SpriteRenderer",
-        "properties": {
-          "color": {
-            "x": 1.0,
-            "y": 1.0,
-            "z": 1.0,
-            "w": 1.0
-          },
-          "sprite": {
-            "width": 16,
-            "height": 16,
-            "texture": {
-              "filePath": "/home/davidalmarinho/Documents/Programming/GitHub/TheBeaver/assets/images/spritesheets/decorationsAndBlocks.png",
-              "width": 112,
-              "height": 192
-            },
-            "textureCoordinates": [
-              {
-                "x": 0.85714287,
-                "y": 0.9166667
-              },
-              {
-                "x": 0.85714287,
-                "y": 0.8333333
-              },
-              {
-                "x": 0.71428573,
-                "y": 0.8333333
-              },
-              {
-                "x": 0.71428573,
-                "y": 0.9166667
-              }
-            ]
-          },
-          "uid": 15
-        }
-      }
-    ],
-    "transform": {
-      "position": {
-        "x": 192.0,
-        "y": 288.0
-      },
-      "scale": {
-        "x": 32.0,
-        "y": 32.0
-      }
-    },
-    "zIndex": 0
-  },
-  {
-    "uid": 15,
-    "NAME": "Sprite_Object_Gen",
-    "componentList": [
-      {
-        "type": "gameobjects.components.SpriteRenderer",
-        "properties": {
-          "color": {
-            "x": 1.0,
-            "y": 1.0,
-            "z": 1.0,
-            "w": 1.0
-          },
-          "sprite": {
-            "width": 16,
-            "height": 16,
-            "texture": {
-              "filePath": "/home/davidalmarinho/Documents/Programming/GitHub/TheBeaver/assets/images/spritesheets/decorationsAndBlocks.png",
+              "filePath": "assets/images/spritesheets/decorationsAndBlocks.png",
               "width": 112,
               "height": 192
             },
@@ -829,8 +717,120 @@
     ],
     "transform": {
       "position": {
-        "x": 352.0,
-        "y": 192.0
+        "x": 160.0,
+        "y": 160.0
+      },
+      "scale": {
+        "x": 32.0,
+        "y": 32.0
+      }
+    },
+    "zIndex": 0
+  },
+  {
+    "uid": 14,
+    "NAME": "Sprite_Object_Gen",
+    "componentList": [
+      {
+        "type": "gameobjects.components.SpriteRenderer",
+        "properties": {
+          "color": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0,
+            "w": 1.0
+          },
+          "sprite": {
+            "width": 16,
+            "height": 16,
+            "texture": {
+              "filePath": "assets/images/spritesheets/decorationsAndBlocks.png",
+              "width": 112,
+              "height": 192
+            },
+            "textureCoordinates": [
+              {
+                "x": 0.14285715,
+                "y": 1.0
+              },
+              {
+                "x": 0.14285715,
+                "y": 0.9166667
+              },
+              {
+                "x": 0.0,
+                "y": 0.9166667
+              },
+              {
+                "x": 0.0,
+                "y": 1.0
+              }
+            ]
+          },
+          "uid": 17
+        }
+      }
+    ],
+    "transform": {
+      "position": {
+        "x": 192.0,
+        "y": 160.0
+      },
+      "scale": {
+        "x": 32.0,
+        "y": 32.0
+      }
+    },
+    "zIndex": 0
+  },
+  {
+    "uid": 15,
+    "NAME": "Sprite_Object_Gen",
+    "componentList": [
+      {
+        "type": "gameobjects.components.SpriteRenderer",
+        "properties": {
+          "color": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0,
+            "w": 1.0
+          },
+          "sprite": {
+            "width": 16,
+            "height": 16,
+            "texture": {
+              "filePath": "assets/images/spritesheets/decorationsAndBlocks.png",
+              "width": 112,
+              "height": 192
+            },
+            "textureCoordinates": [
+              {
+                "x": 0.14285715,
+                "y": 1.0
+              },
+              {
+                "x": 0.14285715,
+                "y": 0.9166667
+              },
+              {
+                "x": 0.0,
+                "y": 0.9166667
+              },
+              {
+                "x": 0.0,
+                "y": 1.0
+              }
+            ]
+          },
+          "uid": 18
+        }
+      }
+    ],
+    "transform": {
+      "position": {
+        "x": 224.0,
+        "y": 160.0
       },
       "scale": {
         "x": 32.0,
@@ -856,7 +856,7 @@
             "width": 16,
             "height": 16,
             "texture": {
-              "filePath": "/home/davidalmarinho/Documents/Programming/GitHub/TheBeaver/assets/images/spritesheets/decorationsAndBlocks.png",
+              "filePath": "assets/images/spritesheets/decorationsAndBlocks.png",
               "width": 112,
               "height": 192
             },
@@ -885,8 +885,8 @@
     ],
     "transform": {
       "position": {
-        "x": 384.0,
-        "y": 192.0
+        "x": 256.0,
+        "y": 160.0
       },
       "scale": {
         "x": 32.0,
@@ -912,7 +912,7 @@
             "width": 16,
             "height": 16,
             "texture": {
-              "filePath": "/home/davidalmarinho/Documents/Programming/GitHub/TheBeaver/assets/images/spritesheets/decorationsAndBlocks.png",
+              "filePath": "assets/images/spritesheets/decorationsAndBlocks.png",
               "width": 112,
               "height": 192
             },
@@ -941,8 +941,8 @@
     ],
     "transform": {
       "position": {
-        "x": 416.0,
-        "y": 192.0
+        "x": -32.0,
+        "y": 576.0
       },
       "scale": {
         "x": 32.0,
@@ -968,26 +968,26 @@
             "width": 16,
             "height": 16,
             "texture": {
-              "filePath": "/home/davidalmarinho/Documents/Programming/GitHub/TheBeaver/assets/images/spritesheets/decorationsAndBlocks.png",
+              "filePath": "assets/images/spritesheets/decorationsAndBlocks.png",
               "width": 112,
               "height": 192
             },
             "textureCoordinates": [
               {
-                "x": 0.85714287,
+                "x": 0.14285715,
+                "y": 1.0
+              },
+              {
+                "x": 0.14285715,
                 "y": 0.9166667
               },
               {
-                "x": 0.85714287,
-                "y": 0.8333333
-              },
-              {
-                "x": 0.71428573,
-                "y": 0.8333333
-              },
-              {
-                "x": 0.71428573,
+                "x": 0.0,
                 "y": 0.9166667
+              },
+              {
+                "x": 0.0,
+                "y": 1.0
               }
             ]
           },
@@ -997,8 +997,8 @@
     ],
     "transform": {
       "position": {
-        "x": 224.0,
-        "y": 288.0
+        "x": 288.0,
+        "y": 160.0
       },
       "scale": {
         "x": 32.0,
@@ -1024,26 +1024,26 @@
             "width": 16,
             "height": 16,
             "texture": {
-              "filePath": "/home/davidalmarinho/Documents/Programming/GitHub/TheBeaver/assets/images/spritesheets/decorationsAndBlocks.png",
+              "filePath": "assets/images/spritesheets/decorationsAndBlocks.png",
               "width": 112,
               "height": 192
             },
             "textureCoordinates": [
               {
-                "x": 0.85714287,
+                "x": 0.14285715,
+                "y": 1.0
+              },
+              {
+                "x": 0.14285715,
                 "y": 0.9166667
               },
               {
-                "x": 0.85714287,
-                "y": 0.8333333
-              },
-              {
-                "x": 0.71428573,
-                "y": 0.8333333
-              },
-              {
-                "x": 0.71428573,
+                "x": 0.0,
                 "y": 0.9166667
+              },
+              {
+                "x": 0.0,
+                "y": 1.0
               }
             ]
           },
@@ -1053,8 +1053,8 @@
     ],
     "transform": {
       "position": {
-        "x": 256.0,
-        "y": 288.0
+        "x": 320.0,
+        "y": 160.0
       },
       "scale": {
         "x": 32.0,
@@ -1080,26 +1080,26 @@
             "width": 16,
             "height": 16,
             "texture": {
-              "filePath": "/home/davidalmarinho/Documents/Programming/GitHub/TheBeaver/assets/images/spritesheets/decorationsAndBlocks.png",
+              "filePath": "assets/images/spritesheets/decorationsAndBlocks.png",
               "width": 112,
               "height": 192
             },
             "textureCoordinates": [
               {
-                "x": 0.85714287,
-                "y": 0.5833333
+                "x": 0.14285715,
+                "y": 1.0
               },
               {
-                "x": 0.85714287,
-                "y": 0.5
+                "x": 0.14285715,
+                "y": 0.9166667
               },
               {
-                "x": 0.71428573,
-                "y": 0.5
+                "x": 0.0,
+                "y": 0.9166667
               },
               {
-                "x": 0.71428573,
-                "y": 0.5833333
+                "x": 0.0,
+                "y": 1.0
               }
             ]
           },
@@ -1110,7 +1110,7 @@
     "transform": {
       "position": {
         "x": 352.0,
-        "y": 224.0
+        "y": 160.0
       },
       "scale": {
         "x": 32.0,
@@ -1136,26 +1136,26 @@
             "width": 16,
             "height": 16,
             "texture": {
-              "filePath": "/home/davidalmarinho/Documents/Programming/GitHub/TheBeaver/assets/images/spritesheets/decorationsAndBlocks.png",
+              "filePath": "assets/images/spritesheets/decorationsAndBlocks.png",
               "width": 112,
               "height": 192
             },
             "textureCoordinates": [
               {
-                "x": 0.5714286,
-                "y": 0.5
+                "x": 0.14285715,
+                "y": 1.0
               },
               {
-                "x": 0.5714286,
-                "y": 0.41666666
+                "x": 0.14285715,
+                "y": 0.9166667
               },
               {
-                "x": 0.42857143,
-                "y": 0.41666666
+                "x": 0.0,
+                "y": 0.9166667
               },
               {
-                "x": 0.42857143,
-                "y": 0.5
+                "x": 0.0,
+                "y": 1.0
               }
             ]
           },
@@ -1165,8 +1165,8 @@
     ],
     "transform": {
       "position": {
-        "x": 320.0,
-        "y": 224.0
+        "x": 384.0,
+        "y": 160.0
       },
       "scale": {
         "x": 32.0,
@@ -1192,26 +1192,26 @@
             "width": 16,
             "height": 16,
             "texture": {
-              "filePath": "/home/davidalmarinho/Documents/Programming/GitHub/TheBeaver/assets/images/spritesheets/decorationsAndBlocks.png",
+              "filePath": "assets/images/spritesheets/decorationsAndBlocks.png",
               "width": 112,
               "height": 192
             },
             "textureCoordinates": [
               {
-                "x": 0.85714287,
-                "y": 0.5
+                "x": 0.14285715,
+                "y": 1.0
               },
               {
-                "x": 0.85714287,
-                "y": 0.41666666
+                "x": 0.14285715,
+                "y": 0.9166667
               },
               {
-                "x": 0.71428573,
-                "y": 0.41666666
+                "x": 0.0,
+                "y": 0.9166667
               },
               {
-                "x": 0.71428573,
-                "y": 0.5
+                "x": 0.0,
+                "y": 1.0
               }
             ]
           },
@@ -1221,8 +1221,8 @@
     ],
     "transform": {
       "position": {
-        "x": 384.0,
-        "y": 224.0
+        "x": 416.0,
+        "y": 160.0
       },
       "scale": {
         "x": 32.0,
@@ -1248,26 +1248,26 @@
             "width": 16,
             "height": 16,
             "texture": {
-              "filePath": "/home/davidalmarinho/Documents/Programming/GitHub/TheBeaver/assets/images/spritesheets/decorationsAndBlocks.png",
+              "filePath": "assets/images/spritesheets/decorationsAndBlocks.png",
               "width": 112,
               "height": 192
             },
             "textureCoordinates": [
               {
-                "x": 0.71428573,
-                "y": 0.5833333
+                "x": 0.14285715,
+                "y": 1.0
               },
               {
-                "x": 0.71428573,
-                "y": 0.5
+                "x": 0.14285715,
+                "y": 0.9166667
               },
               {
-                "x": 0.5714286,
-                "y": 0.5
+                "x": 0.0,
+                "y": 0.9166667
               },
               {
-                "x": 0.5714286,
-                "y": 0.5833333
+                "x": 0.0,
+                "y": 1.0
               }
             ]
           },
@@ -1277,8 +1277,8 @@
     ],
     "transform": {
       "position": {
-        "x": 352.0,
-        "y": 256.0
+        "x": 448.0,
+        "y": 160.0
       },
       "scale": {
         "x": 32.0,
@@ -1304,37 +1304,37 @@
             "width": 16,
             "height": 16,
             "texture": {
-              "filePath": "/home/davidalmarinho/Documents/Programming/GitHub/TheBeaver/assets/images/spritesheets/decorationsAndBlocks.png",
+              "filePath": "assets/images/spritesheets/decorationsAndBlocks.png",
               "width": 112,
               "height": 192
             },
             "textureCoordinates": [
               {
-                "x": 0.85714287,
-                "y": 0.6666667
+                "x": 0.14285715,
+                "y": 1.0
               },
               {
-                "x": 0.85714287,
-                "y": 0.5833333
+                "x": 0.14285715,
+                "y": 0.9166667
               },
               {
-                "x": 0.71428573,
-                "y": 0.5833333
+                "x": 0.0,
+                "y": 0.9166667
               },
               {
-                "x": 0.71428573,
-                "y": 0.6666667
+                "x": 0.0,
+                "y": 1.0
               }
             ]
           },
-          "uid": 29
+          "uid": 27
         }
       }
     ],
     "transform": {
       "position": {
-        "x": 192.0,
-        "y": 352.0
+        "x": 480.0,
+        "y": 160.0
       },
       "scale": {
         "x": 32.0,
@@ -1360,37 +1360,37 @@
             "width": 16,
             "height": 16,
             "texture": {
-              "filePath": "/home/davidalmarinho/Documents/Programming/GitHub/TheBeaver/assets/images/spritesheets/decorationsAndBlocks.png",
+              "filePath": "assets/images/spritesheets/decorationsAndBlocks.png",
               "width": 112,
               "height": 192
             },
             "textureCoordinates": [
               {
-                "x": 0.71428573,
-                "y": 0.6666667
+                "x": 0.14285715,
+                "y": 1.0
               },
               {
-                "x": 0.71428573,
-                "y": 0.5833333
+                "x": 0.14285715,
+                "y": 0.9166667
               },
               {
-                "x": 0.5714286,
-                "y": 0.5833333
+                "x": 0.0,
+                "y": 0.9166667
               },
               {
-                "x": 0.5714286,
-                "y": 0.6666667
+                "x": 0.0,
+                "y": 1.0
               }
             ]
           },
-          "uid": 30
+          "uid": 28
         }
       }
     ],
     "transform": {
       "position": {
-        "x": 160.0,
-        "y": 352.0
+        "x": 512.0,
+        "y": 160.0
       },
       "scale": {
         "x": 32.0,
@@ -1416,37 +1416,37 @@
             "width": 16,
             "height": 16,
             "texture": {
-              "filePath": "/home/davidalmarinho/Documents/Programming/GitHub/TheBeaver/assets/images/spritesheets/decorationsAndBlocks.png",
+              "filePath": "assets/images/spritesheets/decorationsAndBlocks.png",
               "width": 112,
               "height": 192
             },
             "textureCoordinates": [
               {
-                "x": 0.71428573,
-                "y": 0.75
+                "x": 0.14285715,
+                "y": 1.0
               },
               {
-                "x": 0.71428573,
-                "y": 0.6666667
+                "x": 0.14285715,
+                "y": 0.9166667
               },
               {
-                "x": 0.5714286,
-                "y": 0.6666667
+                "x": 0.0,
+                "y": 0.9166667
               },
               {
-                "x": 0.5714286,
-                "y": 0.75
+                "x": 0.0,
+                "y": 1.0
               }
             ]
           },
-          "uid": 31
+          "uid": 29
         }
       }
     ],
     "transform": {
       "position": {
-        "x": 224.0,
-        "y": 352.0
+        "x": 544.0,
+        "y": 160.0
       },
       "scale": {
         "x": 32.0,
@@ -1472,37 +1472,37 @@
             "width": 16,
             "height": 16,
             "texture": {
-              "filePath": "/home/davidalmarinho/Documents/Programming/GitHub/TheBeaver/assets/images/spritesheets/decorationsAndBlocks.png",
+              "filePath": "assets/images/spritesheets/decorationsAndBlocks.png",
               "width": 112,
               "height": 192
             },
             "textureCoordinates": [
               {
-                "x": 0.2857143,
-                "y": 0.41666666
-              },
-              {
-                "x": 0.2857143,
-                "y": 0.33333334
+                "x": 0.14285715,
+                "y": 1.0
               },
               {
                 "x": 0.14285715,
-                "y": 0.33333334
+                "y": 0.9166667
               },
               {
-                "x": 0.14285715,
-                "y": 0.41666666
+                "x": 0.0,
+                "y": 0.9166667
+              },
+              {
+                "x": 0.0,
+                "y": 1.0
               }
             ]
           },
-          "uid": 32
+          "uid": 30
         }
       }
     ],
     "transform": {
       "position": {
-        "x": 192.0,
-        "y": 448.0
+        "x": 576.0,
+        "y": 160.0
       },
       "scale": {
         "x": 32.0,
@@ -1528,37 +1528,37 @@
             "width": 16,
             "height": 16,
             "texture": {
-              "filePath": "/home/davidalmarinho/Documents/Programming/GitHub/TheBeaver/assets/images/spritesheets/decorationsAndBlocks.png",
+              "filePath": "assets/images/spritesheets/decorationsAndBlocks.png",
               "width": 112,
               "height": 192
             },
             "textureCoordinates": [
               {
                 "x": 0.14285715,
-                "y": 0.41666666
+                "y": 1.0
               },
               {
                 "x": 0.14285715,
-                "y": 0.33333334
+                "y": 0.9166667
               },
               {
                 "x": 0.0,
-                "y": 0.33333334
+                "y": 0.9166667
               },
               {
                 "x": 0.0,
-                "y": 0.41666666
+                "y": 1.0
               }
             ]
           },
-          "uid": 33
+          "uid": 31
         }
       }
     ],
     "transform": {
       "position": {
-        "x": 160.0,
-        "y": 448.0
+        "x": 608.0,
+        "y": 160.0
       },
       "scale": {
         "x": 32.0,
@@ -1584,37 +1584,37 @@
             "width": 16,
             "height": 16,
             "texture": {
-              "filePath": "/home/davidalmarinho/Documents/Programming/GitHub/TheBeaver/assets/images/spritesheets/decorationsAndBlocks.png",
+              "filePath": "assets/images/spritesheets/decorationsAndBlocks.png",
               "width": 112,
               "height": 192
             },
             "textureCoordinates": [
               {
-                "x": 0.42857143,
-                "y": 0.41666666
+                "x": 0.14285715,
+                "y": 1.0
               },
               {
-                "x": 0.42857143,
-                "y": 0.33333334
+                "x": 0.14285715,
+                "y": 0.9166667
               },
               {
-                "x": 0.2857143,
-                "y": 0.33333334
+                "x": 0.0,
+                "y": 0.9166667
               },
               {
-                "x": 0.2857143,
-                "y": 0.41666666
+                "x": 0.0,
+                "y": 1.0
               }
             ]
           },
-          "uid": 34
+          "uid": 32
         }
       }
     ],
     "transform": {
       "position": {
-        "x": 224.0,
-        "y": 448.0
+        "x": 640.0,
+        "y": 160.0
       },
       "scale": {
         "x": 32.0,
@@ -1640,37 +1640,37 @@
             "width": 16,
             "height": 16,
             "texture": {
-              "filePath": "/home/davidalmarinho/Documents/Programming/GitHub/TheBeaver/assets/images/spritesheets/decorationsAndBlocks.png",
+              "filePath": "assets/images/spritesheets/decorationsAndBlocks.png",
               "width": 112,
               "height": 192
             },
             "textureCoordinates": [
               {
-                "x": 0.42857143,
-                "y": 0.33333334
+                "x": 0.14285715,
+                "y": 1.0
               },
               {
-                "x": 0.42857143,
-                "y": 0.25
+                "x": 0.14285715,
+                "y": 0.9166667
               },
               {
-                "x": 0.2857143,
-                "y": 0.25
+                "x": 0.0,
+                "y": 0.9166667
               },
               {
-                "x": 0.2857143,
-                "y": 0.33333334
+                "x": 0.0,
+                "y": 1.0
               }
             ]
           },
-          "uid": 35
+          "uid": 33
         }
       }
     ],
     "transform": {
       "position": {
-        "x": 288.0,
-        "y": 448.0
+        "x": 672.0,
+        "y": 160.0
       },
       "scale": {
         "x": 32.0,
@@ -1696,37 +1696,37 @@
             "width": 16,
             "height": 16,
             "texture": {
-              "filePath": "/home/davidalmarinho/Documents/Programming/GitHub/TheBeaver/assets/images/spritesheets/decorationsAndBlocks.png",
+              "filePath": "assets/images/spritesheets/decorationsAndBlocks.png",
               "width": 112,
               "height": 192
             },
             "textureCoordinates": [
               {
-                "x": 0.5714286,
-                "y": 0.33333334
+                "x": 0.14285715,
+                "y": 1.0
               },
               {
-                "x": 0.5714286,
-                "y": 0.25
+                "x": 0.14285715,
+                "y": 0.9166667
               },
               {
-                "x": 0.42857143,
-                "y": 0.25
+                "x": 0.0,
+                "y": 0.9166667
               },
               {
-                "x": 0.42857143,
-                "y": 0.33333334
+                "x": 0.0,
+                "y": 1.0
               }
             ]
           },
-          "uid": 36
+          "uid": 34
         }
       }
     ],
     "transform": {
       "position": {
-        "x": 320.0,
-        "y": 448.0
+        "x": 704.0,
+        "y": 160.0
       },
       "scale": {
         "x": 32.0,
@@ -1752,37 +1752,37 @@
             "width": 16,
             "height": 16,
             "texture": {
-              "filePath": "/home/davidalmarinho/Documents/Programming/GitHub/TheBeaver/assets/images/spritesheets/decorationsAndBlocks.png",
+              "filePath": "assets/images/spritesheets/decorationsAndBlocks.png",
               "width": 112,
               "height": 192
             },
             "textureCoordinates": [
               {
-                "x": 0.71428573,
-                "y": 0.33333334
+                "x": 0.14285715,
+                "y": 1.0
               },
               {
-                "x": 0.71428573,
-                "y": 0.25
+                "x": 0.14285715,
+                "y": 0.9166667
               },
               {
-                "x": 0.5714286,
-                "y": 0.25
+                "x": 0.0,
+                "y": 0.9166667
               },
               {
-                "x": 0.5714286,
-                "y": 0.33333334
+                "x": 0.0,
+                "y": 1.0
               }
             ]
           },
-          "uid": 37
+          "uid": 35
         }
       }
     ],
     "transform": {
       "position": {
-        "x": 352.0,
-        "y": 448.0
+        "x": 736.0,
+        "y": 160.0
       },
       "scale": {
         "x": 32.0,
@@ -1808,37 +1808,37 @@
             "width": 16,
             "height": 16,
             "texture": {
-              "filePath": "/home/davidalmarinho/Documents/Programming/GitHub/TheBeaver/assets/images/spritesheets/decorationsAndBlocks.png",
+              "filePath": "assets/images/spritesheets/decorationsAndBlocks.png",
               "width": 112,
               "height": 192
             },
             "textureCoordinates": [
               {
-                "x": 0.5714286,
-                "y": 0.41666666
+                "x": 0.14285715,
+                "y": 1.0
               },
               {
-                "x": 0.5714286,
-                "y": 0.33333334
+                "x": 0.14285715,
+                "y": 0.9166667
               },
               {
-                "x": 0.42857143,
-                "y": 0.33333334
+                "x": 0.0,
+                "y": 0.9166667
               },
               {
-                "x": 0.42857143,
-                "y": 0.41666666
+                "x": 0.0,
+                "y": 1.0
               }
             ]
           },
-          "uid": 38
+          "uid": 36
         }
       }
     ],
     "transform": {
       "position": {
-        "x": 288.0,
-        "y": 480.0
+        "x": 768.0,
+        "y": 160.0
       },
       "scale": {
         "x": 32.0,
@@ -1864,37 +1864,37 @@
             "width": 16,
             "height": 16,
             "texture": {
-              "filePath": "/home/davidalmarinho/Documents/Programming/GitHub/TheBeaver/assets/images/spritesheets/decorationsAndBlocks.png",
+              "filePath": "assets/images/spritesheets/decorationsAndBlocks.png",
               "width": 112,
               "height": 192
             },
             "textureCoordinates": [
               {
-                "x": 0.71428573,
-                "y": 0.41666666
+                "x": 0.14285715,
+                "y": 1.0
               },
               {
-                "x": 0.71428573,
-                "y": 0.33333334
+                "x": 0.14285715,
+                "y": 0.9166667
               },
               {
-                "x": 0.5714286,
-                "y": 0.33333334
+                "x": 0.0,
+                "y": 0.9166667
               },
               {
-                "x": 0.5714286,
-                "y": 0.41666666
+                "x": 0.0,
+                "y": 1.0
               }
             ]
           },
-          "uid": 39
+          "uid": 37
         }
       }
     ],
     "transform": {
       "position": {
-        "x": 320.0,
-        "y": 480.0
+        "x": 800.0,
+        "y": 160.0
       },
       "scale": {
         "x": 32.0,
@@ -1920,37 +1920,37 @@
             "width": 16,
             "height": 16,
             "texture": {
-              "filePath": "/home/davidalmarinho/Documents/Programming/GitHub/TheBeaver/assets/images/spritesheets/decorationsAndBlocks.png",
+              "filePath": "assets/images/spritesheets/decorationsAndBlocks.png",
               "width": 112,
               "height": 192
             },
             "textureCoordinates": [
               {
-                "x": 0.85714287,
-                "y": 0.41666666
+                "x": 0.14285715,
+                "y": 1.0
               },
               {
-                "x": 0.85714287,
-                "y": 0.33333334
+                "x": 0.14285715,
+                "y": 0.9166667
               },
               {
-                "x": 0.71428573,
-                "y": 0.33333334
+                "x": 0.0,
+                "y": 0.9166667
               },
               {
-                "x": 0.71428573,
-                "y": 0.41666666
+                "x": 0.0,
+                "y": 1.0
               }
             ]
           },
-          "uid": 40
+          "uid": 38
         }
       }
     ],
     "transform": {
       "position": {
-        "x": 352.0,
-        "y": 480.0
+        "x": 832.0,
+        "y": 160.0
       },
       "scale": {
         "x": 32.0,
@@ -1976,7 +1976,119 @@
             "width": 16,
             "height": 16,
             "texture": {
-              "filePath": "/home/davidalmarinho/Documents/Programming/GitHub/TheBeaver/assets/images/spritesheets/decorationsAndBlocks.png",
+              "filePath": "assets/images/spritesheets/decorationsAndBlocks.png",
+              "width": 112,
+              "height": 192
+            },
+            "textureCoordinates": [
+              {
+                "x": 0.14285715,
+                "y": 1.0
+              },
+              {
+                "x": 0.14285715,
+                "y": 0.9166667
+              },
+              {
+                "x": 0.0,
+                "y": 0.9166667
+              },
+              {
+                "x": 0.0,
+                "y": 1.0
+              }
+            ]
+          },
+          "uid": 39
+        }
+      }
+    ],
+    "transform": {
+      "position": {
+        "x": 864.0,
+        "y": 160.0
+      },
+      "scale": {
+        "x": 32.0,
+        "y": 32.0
+      }
+    },
+    "zIndex": 0
+  },
+  {
+    "uid": 37,
+    "NAME": "Sprite_Object_Gen",
+    "componentList": [
+      {
+        "type": "gameobjects.components.SpriteRenderer",
+        "properties": {
+          "color": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0,
+            "w": 1.0
+          },
+          "sprite": {
+            "width": 16,
+            "height": 16,
+            "texture": {
+              "filePath": "assets/images/spritesheets/decorationsAndBlocks.png",
+              "width": 112,
+              "height": 192
+            },
+            "textureCoordinates": [
+              {
+                "x": 0.14285715,
+                "y": 1.0
+              },
+              {
+                "x": 0.14285715,
+                "y": 0.9166667
+              },
+              {
+                "x": 0.0,
+                "y": 0.9166667
+              },
+              {
+                "x": 0.0,
+                "y": 1.0
+              }
+            ]
+          },
+          "uid": 40
+        }
+      }
+    ],
+    "transform": {
+      "position": {
+        "x": 896.0,
+        "y": 160.0
+      },
+      "scale": {
+        "x": 32.0,
+        "y": 32.0
+      }
+    },
+    "zIndex": 0
+  },
+  {
+    "uid": 38,
+    "NAME": "Sprite_Object_Gen",
+    "componentList": [
+      {
+        "type": "gameobjects.components.SpriteRenderer",
+        "properties": {
+          "color": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0,
+            "w": 1.0
+          },
+          "sprite": {
+            "width": 16,
+            "height": 16,
+            "texture": {
+              "filePath": "assets/images/spritesheets/decorationsAndBlocks.png",
               "width": 112,
               "height": 192
             },
@@ -2005,8 +2117,8 @@
     ],
     "transform": {
       "position": {
-        "x": -32.0,
-        "y": 192.0
+        "x": 928.0,
+        "y": 160.0
       },
       "scale": {
         "x": 32.0,
@@ -2016,7 +2128,7 @@
     "zIndex": 0
   },
   {
-    "uid": 37,
+    "uid": 39,
     "NAME": "Sprite_Object_Gen",
     "componentList": [
       {
@@ -2032,7 +2144,7 @@
             "width": 16,
             "height": 16,
             "texture": {
-              "filePath": "/home/davidalmarinho/Documents/Programming/GitHub/TheBeaver/assets/images/spritesheets/decorationsAndBlocks.png",
+              "filePath": "assets/images/spritesheets/decorationsAndBlocks.png",
               "width": 112,
               "height": 192
             },
@@ -2061,8 +2173,8 @@
     ],
     "transform": {
       "position": {
-        "x": 448.0,
-        "y": 192.0
+        "x": 960.0,
+        "y": 160.0
       },
       "scale": {
         "x": 32.0,
@@ -2072,7 +2184,7 @@
     "zIndex": 0
   },
   {
-    "uid": 38,
+    "uid": 40,
     "NAME": "Sprite_Object_Gen",
     "componentList": [
       {
@@ -2088,7 +2200,7 @@
             "width": 16,
             "height": 16,
             "texture": {
-              "filePath": "/home/davidalmarinho/Documents/Programming/GitHub/TheBeaver/assets/images/spritesheets/decorationsAndBlocks.png",
+              "filePath": "assets/images/spritesheets/decorationsAndBlocks.png",
               "width": 112,
               "height": 192
             },
@@ -2117,8 +2229,8 @@
     ],
     "transform": {
       "position": {
-        "x": 480.0,
-        "y": 192.0
+        "x": 992.0,
+        "y": 160.0
       },
       "scale": {
         "x": 32.0,
@@ -2128,7 +2240,7 @@
     "zIndex": 0
   },
   {
-    "uid": 39,
+    "uid": 41,
     "NAME": "Sprite_Object_Gen",
     "componentList": [
       {
@@ -2144,7 +2256,7 @@
             "width": 16,
             "height": 16,
             "texture": {
-              "filePath": "/home/davidalmarinho/Documents/Programming/GitHub/TheBeaver/assets/images/spritesheets/decorationsAndBlocks.png",
+              "filePath": "assets/images/spritesheets/decorationsAndBlocks.png",
               "width": 112,
               "height": 192
             },
@@ -2173,120 +2285,8 @@
     ],
     "transform": {
       "position": {
-        "x": 512.0,
-        "y": 192.0
-      },
-      "scale": {
-        "x": 32.0,
-        "y": 32.0
-      }
-    },
-    "zIndex": 0
-  },
-  {
-    "uid": 40,
-    "NAME": "Sprite_Object_Gen",
-    "componentList": [
-      {
-        "type": "gameobjects.components.SpriteRenderer",
-        "properties": {
-          "color": {
-            "x": 1.0,
-            "y": 1.0,
-            "z": 1.0,
-            "w": 1.0
-          },
-          "sprite": {
-            "width": 16,
-            "height": 16,
-            "texture": {
-              "filePath": "/home/davidalmarinho/Documents/Programming/GitHub/TheBeaver/assets/images/spritesheets/decorationsAndBlocks.png",
-              "width": 112,
-              "height": 192
-            },
-            "textureCoordinates": [
-              {
-                "x": 0.14285715,
-                "y": 1.0
-              },
-              {
-                "x": 0.14285715,
-                "y": 0.9166667
-              },
-              {
-                "x": 0.0,
-                "y": 0.9166667
-              },
-              {
-                "x": 0.0,
-                "y": 1.0
-              }
-            ]
-          },
-          "uid": 45
-        }
-      }
-    ],
-    "transform": {
-      "position": {
-        "x": 544.0,
-        "y": 192.0
-      },
-      "scale": {
-        "x": 32.0,
-        "y": 32.0
-      }
-    },
-    "zIndex": 0
-  },
-  {
-    "uid": 41,
-    "NAME": "Sprite_Object_Gen",
-    "componentList": [
-      {
-        "type": "gameobjects.components.SpriteRenderer",
-        "properties": {
-          "color": {
-            "x": 1.0,
-            "y": 1.0,
-            "z": 1.0,
-            "w": 1.0
-          },
-          "sprite": {
-            "width": 16,
-            "height": 16,
-            "texture": {
-              "filePath": "/home/davidalmarinho/Documents/Programming/GitHub/TheBeaver/assets/images/spritesheets/decorationsAndBlocks.png",
-              "width": 112,
-              "height": 192
-            },
-            "textureCoordinates": [
-              {
-                "x": 0.14285715,
-                "y": 1.0
-              },
-              {
-                "x": 0.14285715,
-                "y": 0.9166667
-              },
-              {
-                "x": 0.0,
-                "y": 0.9166667
-              },
-              {
-                "x": 0.0,
-                "y": 1.0
-              }
-            ]
-          },
-          "uid": 46
-        }
-      }
-    ],
-    "transform": {
-      "position": {
-        "x": 576.0,
-        "y": 192.0
+        "x": 1024.0,
+        "y": 160.0
       },
       "scale": {
         "x": 32.0,
@@ -2312,30 +2312,30 @@
             "width": 16,
             "height": 16,
             "texture": {
-              "filePath": "/home/davidalmarinho/Documents/Programming/GitHub/TheBeaver/assets/images/spritesheets/decorationsAndBlocks.png",
+              "filePath": "assets/images/spritesheets/decorationsAndBlocks.png",
               "width": 112,
               "height": 192
             },
             "textureCoordinates": [
               {
-                "x": 0.14285715,
-                "y": 1.0
+                "x": 0.5714286,
+                "y": 0.5833333
               },
               {
-                "x": 0.14285715,
-                "y": 0.9166667
+                "x": 0.5714286,
+                "y": 0.5
               },
               {
-                "x": 0.0,
-                "y": 0.9166667
+                "x": 0.42857143,
+                "y": 0.5
               },
               {
-                "x": 0.0,
-                "y": 1.0
+                "x": 0.42857143,
+                "y": 0.5833333
               }
             ]
           },
-          "uid": 47
+          "uid": 45
         }
       }
     ],
@@ -2368,37 +2368,37 @@
             "width": 16,
             "height": 16,
             "texture": {
-              "filePath": "/home/davidalmarinho/Documents/Programming/GitHub/TheBeaver/assets/images/spritesheets/decorationsAndBlocks.png",
+              "filePath": "assets/images/spritesheets/decorationsAndBlocks.png",
               "width": 112,
               "height": 192
             },
             "textureCoordinates": [
               {
-                "x": 0.14285715,
-                "y": 1.0
+                "x": 0.85714287,
+                "y": 0.5833333
               },
               {
-                "x": 0.14285715,
-                "y": 0.9166667
+                "x": 0.85714287,
+                "y": 0.5
               },
               {
-                "x": 0.0,
-                "y": 0.9166667
+                "x": 0.71428573,
+                "y": 0.5
               },
               {
-                "x": 0.0,
-                "y": 1.0
+                "x": 0.71428573,
+                "y": 0.5833333
               }
             ]
           },
-          "uid": 48
+          "uid": 46
         }
       }
     ],
     "transform": {
       "position": {
-        "x": 640.0,
-        "y": 192.0
+        "x": 608.0,
+        "y": 224.0
       },
       "scale": {
         "x": 32.0,
@@ -2424,36 +2424,36 @@
             "width": 16,
             "height": 16,
             "texture": {
-              "filePath": "/home/davidalmarinho/Documents/Programming/GitHub/TheBeaver/assets/images/spritesheets/decorationsAndBlocks.png",
+              "filePath": "assets/images/spritesheets/decorationsAndBlocks.png",
               "width": 112,
               "height": 192
             },
             "textureCoordinates": [
               {
-                "x": 0.14285715,
-                "y": 1.0
+                "x": 0.5714286,
+                "y": 0.5833333
               },
               {
-                "x": 0.14285715,
-                "y": 0.9166667
+                "x": 0.5714286,
+                "y": 0.5
               },
               {
-                "x": 0.0,
-                "y": 0.9166667
+                "x": 0.42857143,
+                "y": 0.5
               },
               {
-                "x": 0.0,
-                "y": 1.0
+                "x": 0.42857143,
+                "y": 0.5833333
               }
             ]
           },
-          "uid": 49
+          "uid": 47
         }
       }
     ],
     "transform": {
       "position": {
-        "x": 672.0,
+        "x": 576.0,
         "y": 192.0
       },
       "scale": {
@@ -2480,36 +2480,36 @@
             "width": 16,
             "height": 16,
             "texture": {
-              "filePath": "/home/davidalmarinho/Documents/Programming/GitHub/TheBeaver/assets/images/spritesheets/decorationsAndBlocks.png",
+              "filePath": "assets/images/spritesheets/decorationsAndBlocks.png",
               "width": 112,
               "height": 192
             },
             "textureCoordinates": [
               {
-                "x": 0.14285715,
-                "y": 1.0
+                "x": 0.5714286,
+                "y": 0.5833333
               },
               {
-                "x": 0.14285715,
-                "y": 0.9166667
+                "x": 0.5714286,
+                "y": 0.5
               },
               {
-                "x": 0.0,
-                "y": 0.9166667
+                "x": 0.42857143,
+                "y": 0.5
               },
               {
-                "x": 0.0,
-                "y": 1.0
+                "x": 0.42857143,
+                "y": 0.5833333
               }
             ]
           },
-          "uid": 50
+          "uid": 48
         }
       }
     ],
     "transform": {
       "position": {
-        "x": 704.0,
+        "x": 640.0,
         "y": 192.0
       },
       "scale": {
@@ -2536,36 +2536,36 @@
             "width": 16,
             "height": 16,
             "texture": {
-              "filePath": "/home/davidalmarinho/Documents/Programming/GitHub/TheBeaver/assets/images/spritesheets/decorationsAndBlocks.png",
+              "filePath": "assets/images/spritesheets/decorationsAndBlocks.png",
               "width": 112,
               "height": 192
             },
             "textureCoordinates": [
               {
-                "x": 0.14285715,
-                "y": 1.0
+                "x": 0.5714286,
+                "y": 0.5
               },
               {
-                "x": 0.14285715,
-                "y": 0.9166667
+                "x": 0.5714286,
+                "y": 0.41666666
               },
               {
-                "x": 0.0,
-                "y": 0.9166667
+                "x": 0.42857143,
+                "y": 0.41666666
               },
               {
-                "x": 0.0,
-                "y": 1.0
+                "x": 0.42857143,
+                "y": 0.5
               }
             ]
           },
-          "uid": 51
+          "uid": 49
         }
       }
     ],
     "transform": {
       "position": {
-        "x": 736.0,
+        "x": 544.0,
         "y": 192.0
       },
       "scale": {
@@ -2592,37 +2592,37 @@
             "width": 16,
             "height": 16,
             "texture": {
-              "filePath": "/home/davidalmarinho/Documents/Programming/GitHub/TheBeaver/assets/images/spritesheets/decorationsAndBlocks.png",
+              "filePath": "assets/images/spritesheets/decorationsAndBlocks.png",
               "width": 112,
               "height": 192
             },
             "textureCoordinates": [
               {
-                "x": 0.14285715,
-                "y": 1.0
+                "x": 0.5714286,
+                "y": 0.5
               },
               {
-                "x": 0.14285715,
-                "y": 0.9166667
+                "x": 0.5714286,
+                "y": 0.41666666
               },
               {
-                "x": 0.0,
-                "y": 0.9166667
+                "x": 0.42857143,
+                "y": 0.41666666
               },
               {
-                "x": 0.0,
-                "y": 1.0
+                "x": 0.42857143,
+                "y": 0.5
               }
             ]
           },
-          "uid": 52
+          "uid": 50
         }
       }
     ],
     "transform": {
       "position": {
-        "x": 768.0,
-        "y": 192.0
+        "x": 576.0,
+        "y": 224.0
       },
       "scale": {
         "x": 32.0,
@@ -2648,37 +2648,37 @@
             "width": 16,
             "height": 16,
             "texture": {
-              "filePath": "/home/davidalmarinho/Documents/Programming/GitHub/TheBeaver/assets/images/spritesheets/decorationsAndBlocks.png",
+              "filePath": "assets/images/spritesheets/decorationsAndBlocks.png",
               "width": 112,
               "height": 192
             },
             "textureCoordinates": [
               {
-                "x": 0.14285715,
-                "y": 1.0
+                "x": 0.85714287,
+                "y": 0.5
               },
               {
-                "x": 0.14285715,
-                "y": 0.9166667
+                "x": 0.85714287,
+                "y": 0.41666666
               },
               {
-                "x": 0.0,
-                "y": 0.9166667
+                "x": 0.71428573,
+                "y": 0.41666666
               },
               {
-                "x": 0.0,
-                "y": 1.0
+                "x": 0.71428573,
+                "y": 0.5
               }
             ]
           },
-          "uid": 53
+          "uid": 51
         }
       }
     ],
     "transform": {
       "position": {
-        "x": 800.0,
-        "y": 192.0
+        "x": 640.0,
+        "y": 224.0
       },
       "scale": {
         "x": 32.0,
@@ -2704,36 +2704,36 @@
             "width": 16,
             "height": 16,
             "texture": {
-              "filePath": "/home/davidalmarinho/Documents/Programming/GitHub/TheBeaver/assets/images/spritesheets/decorationsAndBlocks.png",
+              "filePath": "assets/images/spritesheets/decorationsAndBlocks.png",
               "width": 112,
               "height": 192
             },
             "textureCoordinates": [
               {
-                "x": 0.14285715,
-                "y": 1.0
+                "x": 0.85714287,
+                "y": 0.5
               },
               {
-                "x": 0.14285715,
-                "y": 0.9166667
+                "x": 0.85714287,
+                "y": 0.41666666
               },
               {
-                "x": 0.0,
-                "y": 0.9166667
+                "x": 0.71428573,
+                "y": 0.41666666
               },
               {
-                "x": 0.0,
-                "y": 1.0
+                "x": 0.71428573,
+                "y": 0.5
               }
             ]
           },
-          "uid": 54
+          "uid": 52
         }
       }
     ],
     "transform": {
       "position": {
-        "x": 1024.0,
+        "x": 672.0,
         "y": 192.0
       },
       "scale": {
@@ -2760,37 +2760,37 @@
             "width": 16,
             "height": 16,
             "texture": {
-              "filePath": "/home/davidalmarinho/Documents/Programming/GitHub/TheBeaver/assets/images/spritesheets/decorationsAndBlocks.png",
+              "filePath": "assets/images/spritesheets/decorationsAndBlocks.png",
               "width": 112,
               "height": 192
             },
             "textureCoordinates": [
               {
-                "x": 0.14285715,
-                "y": 1.0
+                "x": 0.71428573,
+                "y": 0.5833333
               },
               {
-                "x": 0.14285715,
-                "y": 0.9166667
+                "x": 0.71428573,
+                "y": 0.5
               },
               {
-                "x": 0.0,
-                "y": 0.9166667
+                "x": 0.5714286,
+                "y": 0.5
               },
               {
-                "x": 0.0,
-                "y": 1.0
+                "x": 0.5714286,
+                "y": 0.5833333
               }
             ]
           },
-          "uid": 55
+          "uid": 53
         }
       }
     ],
     "transform": {
       "position": {
-        "x": 992.0,
-        "y": 192.0
+        "x": 608.0,
+        "y": 256.0
       },
       "scale": {
         "x": 32.0,
@@ -2816,37 +2816,37 @@
             "width": 16,
             "height": 16,
             "texture": {
-              "filePath": "/home/davidalmarinho/Documents/Programming/GitHub/TheBeaver/assets/images/spritesheets/decorationsAndBlocks.png",
+              "filePath": "assets/images/spritesheets/decorationsAndBlocks.png",
               "width": 112,
               "height": 192
             },
             "textureCoordinates": [
               {
-                "x": 0.14285715,
-                "y": 1.0
+                "x": 0.5714286,
+                "y": 0.25
               },
               {
-                "x": 0.14285715,
-                "y": 0.9166667
+                "x": 0.5714286,
+                "y": 0.16666667
               },
               {
-                "x": 0.0,
-                "y": 0.9166667
+                "x": 0.42857143,
+                "y": 0.16666667
               },
               {
-                "x": 0.0,
-                "y": 1.0
+                "x": 0.42857143,
+                "y": 0.25
               }
             ]
           },
-          "uid": 56
+          "uid": 54
         }
       }
     ],
     "transform": {
       "position": {
-        "x": 960.0,
-        "y": 192.0
+        "x": 128.0,
+        "y": 288.0
       },
       "scale": {
         "x": 32.0,
@@ -2872,37 +2872,37 @@
             "width": 16,
             "height": 16,
             "texture": {
-              "filePath": "/home/davidalmarinho/Documents/Programming/GitHub/TheBeaver/assets/images/spritesheets/decorationsAndBlocks.png",
+              "filePath": "assets/images/spritesheets/decorationsAndBlocks.png",
               "width": 112,
               "height": 192
             },
             "textureCoordinates": [
               {
-                "x": 0.14285715,
-                "y": 1.0
+                "x": 1.0,
+                "y": 0.33333334
               },
               {
-                "x": 0.14285715,
-                "y": 0.9166667
+                "x": 1.0,
+                "y": 0.25
               },
               {
-                "x": 0.0,
-                "y": 0.9166667
+                "x": 0.85714287,
+                "y": 0.25
               },
               {
-                "x": 0.0,
-                "y": 1.0
+                "x": 0.85714287,
+                "y": 0.33333334
               }
             ]
           },
-          "uid": 57
+          "uid": 55
         }
       }
     ],
     "transform": {
       "position": {
-        "x": 928.0,
-        "y": 192.0
+        "x": 128.0,
+        "y": 256.0
       },
       "scale": {
         "x": 32.0,
@@ -2928,37 +2928,37 @@
             "width": 16,
             "height": 16,
             "texture": {
-              "filePath": "/home/davidalmarinho/Documents/Programming/GitHub/TheBeaver/assets/images/spritesheets/decorationsAndBlocks.png",
+              "filePath": "assets/images/spritesheets/decorationsAndBlocks.png",
               "width": 112,
               "height": 192
             },
             "textureCoordinates": [
               {
-                "x": 0.14285715,
-                "y": 1.0
+                "x": 1.0,
+                "y": 0.33333334
               },
               {
-                "x": 0.14285715,
-                "y": 0.9166667
+                "x": 1.0,
+                "y": 0.25
               },
               {
-                "x": 0.0,
-                "y": 0.9166667
+                "x": 0.85714287,
+                "y": 0.25
               },
               {
-                "x": 0.0,
-                "y": 1.0
+                "x": 0.85714287,
+                "y": 0.33333334
               }
             ]
           },
-          "uid": 58
+          "uid": 56
         }
       }
     ],
     "transform": {
       "position": {
-        "x": 896.0,
-        "y": 192.0
+        "x": 128.0,
+        "y": 224.0
       },
       "scale": {
         "x": 32.0,
@@ -2984,36 +2984,36 @@
             "width": 16,
             "height": 16,
             "texture": {
-              "filePath": "/home/davidalmarinho/Documents/Programming/GitHub/TheBeaver/assets/images/spritesheets/decorationsAndBlocks.png",
+              "filePath": "assets/images/spritesheets/decorationsAndBlocks.png",
               "width": 112,
               "height": 192
             },
             "textureCoordinates": [
               {
-                "x": 0.14285715,
-                "y": 1.0
+                "x": 1.0,
+                "y": 0.33333334
               },
               {
-                "x": 0.14285715,
-                "y": 0.9166667
+                "x": 1.0,
+                "y": 0.25
               },
               {
-                "x": 0.0,
-                "y": 0.9166667
+                "x": 0.85714287,
+                "y": 0.25
               },
               {
-                "x": 0.0,
-                "y": 1.0
+                "x": 0.85714287,
+                "y": 0.33333334
               }
             ]
           },
-          "uid": 59
+          "uid": 57
         }
       }
     ],
     "transform": {
       "position": {
-        "x": 832.0,
+        "x": 128.0,
         "y": 192.0
       },
       "scale": {
@@ -3040,37 +3040,37 @@
             "width": 16,
             "height": 16,
             "texture": {
-              "filePath": "/home/davidalmarinho/Documents/Programming/GitHub/TheBeaver/assets/images/spritesheets/decorationsAndBlocks.png",
+              "filePath": "assets/images/spritesheets/decorationsAndBlocks.png",
               "width": 112,
               "height": 192
             },
             "textureCoordinates": [
               {
-                "x": 0.14285715,
-                "y": 1.0
+                "x": 0.42857143,
+                "y": 0.25
               },
               {
-                "x": 0.14285715,
-                "y": 0.9166667
+                "x": 0.42857143,
+                "y": 0.16666667
               },
               {
-                "x": 0.0,
-                "y": 0.9166667
+                "x": 0.2857143,
+                "y": 0.16666667
               },
               {
-                "x": 0.0,
-                "y": 1.0
+                "x": 0.2857143,
+                "y": 0.25
               }
             ]
           },
-          "uid": 60
+          "uid": 58
         }
       }
     ],
     "transform": {
       "position": {
-        "x": 864.0,
-        "y": 192.0
+        "x": 96.0,
+        "y": 288.0
       },
       "scale": {
         "x": 32.0,
@@ -3096,37 +3096,37 @@
             "width": 16,
             "height": 16,
             "texture": {
-              "filePath": "/home/davidalmarinho/Documents/Programming/GitHub/TheBeaver/assets/images/spritesheets/decorationsAndBlocks.png",
+              "filePath": "assets/images/spritesheets/decorationsAndBlocks.png",
               "width": 112,
               "height": 192
             },
             "textureCoordinates": [
               {
                 "x": 0.85714287,
-                "y": 0.5833333
+                "y": 0.33333334
               },
               {
                 "x": 0.85714287,
-                "y": 0.5
+                "y": 0.25
               },
               {
                 "x": 0.71428573,
-                "y": 0.5
+                "y": 0.25
               },
               {
                 "x": 0.71428573,
-                "y": 0.5833333
+                "y": 0.33333334
               }
             ]
           },
-          "uid": 63
+          "uid": 59
         }
       }
     ],
     "transform": {
       "position": {
-        "x": 640.0,
-        "y": 224.0
+        "x": 96.0,
+        "y": 256.0
       },
       "scale": {
         "x": 32.0,
@@ -3152,36 +3152,36 @@
             "width": 16,
             "height": 16,
             "texture": {
-              "filePath": "/home/davidalmarinho/Documents/Programming/GitHub/TheBeaver/assets/images/spritesheets/decorationsAndBlocks.png",
+              "filePath": "assets/images/spritesheets/decorationsAndBlocks.png",
               "width": 112,
               "height": 192
             },
             "textureCoordinates": [
               {
-                "x": 0.5714286,
-                "y": 0.5
+                "x": 0.85714287,
+                "y": 0.33333334
               },
               {
-                "x": 0.5714286,
-                "y": 0.41666666
+                "x": 0.85714287,
+                "y": 0.25
               },
               {
-                "x": 0.42857143,
-                "y": 0.41666666
+                "x": 0.71428573,
+                "y": 0.25
               },
               {
-                "x": 0.42857143,
-                "y": 0.5
+                "x": 0.71428573,
+                "y": 0.33333334
               }
             ]
           },
-          "uid": 64
+          "uid": 60
         }
       }
     ],
     "transform": {
       "position": {
-        "x": 608.0,
+        "x": 128.0,
         "y": 224.0
       },
       "scale": {
@@ -3208,36 +3208,36 @@
             "width": 16,
             "height": 16,
             "texture": {
-              "filePath": "/home/davidalmarinho/Documents/Programming/GitHub/TheBeaver/assets/images/spritesheets/decorationsAndBlocks.png",
+              "filePath": "assets/images/spritesheets/decorationsAndBlocks.png",
               "width": 112,
               "height": 192
             },
             "textureCoordinates": [
               {
-                "x": 0.85714287,
-                "y": 0.5
+                "x": 1.0,
+                "y": 0.33333334
+              },
+              {
+                "x": 1.0,
+                "y": 0.25
               },
               {
                 "x": 0.85714287,
-                "y": 0.41666666
+                "y": 0.25
               },
               {
-                "x": 0.71428573,
-                "y": 0.41666666
-              },
-              {
-                "x": 0.71428573,
-                "y": 0.5
+                "x": 0.85714287,
+                "y": 0.33333334
               }
             ]
           },
-          "uid": 65
+          "uid": 61
         }
       }
     ],
     "transform": {
       "position": {
-        "x": 672.0,
+        "x": 128.0,
         "y": 224.0
       },
       "scale": {
@@ -3264,37 +3264,37 @@
             "width": 16,
             "height": 16,
             "texture": {
-              "filePath": "/home/davidalmarinho/Documents/Programming/GitHub/TheBeaver/assets/images/spritesheets/decorationsAndBlocks.png",
+              "filePath": "assets/images/spritesheets/decorationsAndBlocks.png",
               "width": 112,
               "height": 192
             },
             "textureCoordinates": [
               {
-                "x": 0.71428573,
-                "y": 0.5833333
+                "x": 0.85714287,
+                "y": 0.33333334
+              },
+              {
+                "x": 0.85714287,
+                "y": 0.25
               },
               {
                 "x": 0.71428573,
-                "y": 0.5
+                "y": 0.25
               },
               {
-                "x": 0.5714286,
-                "y": 0.5
-              },
-              {
-                "x": 0.5714286,
-                "y": 0.5833333
+                "x": 0.71428573,
+                "y": 0.33333334
               }
             ]
           },
-          "uid": 66
+          "uid": 62
         }
       }
     ],
     "transform": {
       "position": {
-        "x": 640.0,
-        "y": 256.0
+        "x": 96.0,
+        "y": 224.0
       },
       "scale": {
         "x": 32.0,
@@ -3320,36 +3320,36 @@
             "width": 16,
             "height": 16,
             "texture": {
-              "filePath": "/home/davidalmarinho/Documents/Programming/GitHub/TheBeaver/assets/images/spritesheets/decorationsAndBlocks.png",
+              "filePath": "assets/images/spritesheets/decorationsAndBlocks.png",
               "width": 112,
               "height": 192
             },
             "textureCoordinates": [
               {
-                "x": 0.14285715,
-                "y": 1.0
+                "x": 0.85714287,
+                "y": 0.33333334
               },
               {
-                "x": 0.14285715,
-                "y": 0.9166667
+                "x": 0.85714287,
+                "y": 0.25
               },
               {
-                "x": 0.0,
-                "y": 0.9166667
+                "x": 0.71428573,
+                "y": 0.25
               },
               {
-                "x": 0.0,
-                "y": 1.0
+                "x": 0.71428573,
+                "y": 0.33333334
               }
             ]
           },
-          "uid": 67
+          "uid": 63
         }
       }
     ],
     "transform": {
       "position": {
-        "x": -96.0,
+        "x": 96.0,
         "y": 192.0
       },
       "scale": {
@@ -3376,37 +3376,37 @@
             "width": 16,
             "height": 16,
             "texture": {
-              "filePath": "/home/davidalmarinho/Documents/Programming/GitHub/TheBeaver/assets/images/spritesheets/decorationsAndBlocks.png",
+              "filePath": "assets/images/spritesheets/decorationsAndBlocks.png",
               "width": 112,
               "height": 192
             },
             "textureCoordinates": [
               {
-                "x": 0.14285715,
-                "y": 1.0
+                "x": 0.2857143,
+                "y": 0.25
+              },
+              {
+                "x": 0.2857143,
+                "y": 0.16666667
               },
               {
                 "x": 0.14285715,
-                "y": 0.9166667
+                "y": 0.16666667
               },
               {
-                "x": 0.0,
-                "y": 0.9166667
-              },
-              {
-                "x": 0.0,
-                "y": 1.0
+                "x": 0.14285715,
+                "y": 0.25
               }
             ]
           },
-          "uid": 68
+          "uid": 64
         }
       }
     ],
     "transform": {
       "position": {
-        "x": -64.0,
-        "y": 192.0
+        "x": 832.0,
+        "y": 288.0
       },
       "scale": {
         "x": 32.0,
@@ -3432,37 +3432,37 @@
             "width": 16,
             "height": 16,
             "texture": {
-              "filePath": "/home/davidalmarinho/Documents/Programming/GitHub/TheBeaver/assets/images/spritesheets/decorationsAndBlocks.png",
+              "filePath": "assets/images/spritesheets/decorationsAndBlocks.png",
               "width": 112,
               "height": 192
             },
             "textureCoordinates": [
               {
-                "x": 0.14285715,
-                "y": 1.0
+                "x": 0.2857143,
+                "y": 0.25
+              },
+              {
+                "x": 0.2857143,
+                "y": 0.16666667
               },
               {
                 "x": 0.14285715,
-                "y": 0.9166667
+                "y": 0.16666667
               },
               {
-                "x": 0.0,
-                "y": 0.9166667
-              },
-              {
-                "x": 0.0,
-                "y": 1.0
+                "x": 0.14285715,
+                "y": 0.25
               }
             ]
           },
-          "uid": 69
+          "uid": 65
         }
       }
     ],
     "transform": {
       "position": {
-        "x": -128.0,
-        "y": 192.0
+        "x": 864.0,
+        "y": 288.0
       },
       "scale": {
         "x": 32.0,
@@ -3488,7 +3488,231 @@
             "width": 16,
             "height": 16,
             "texture": {
-              "filePath": "/home/davidalmarinho/Documents/Programming/GitHub/TheBeaver/assets/images/spritesheets/decorationsAndBlocks.png",
+              "filePath": "assets/images/spritesheets/decorationsAndBlocks.png",
+              "width": 112,
+              "height": 192
+            },
+            "textureCoordinates": [
+              {
+                "x": 0.42857143,
+                "y": 0.16666667
+              },
+              {
+                "x": 0.42857143,
+                "y": 0.083333336
+              },
+              {
+                "x": 0.2857143,
+                "y": 0.083333336
+              },
+              {
+                "x": 0.2857143,
+                "y": 0.16666667
+              }
+            ]
+          },
+          "uid": 66
+        }
+      }
+    ],
+    "transform": {
+      "position": {
+        "x": 800.0,
+        "y": 288.0
+      },
+      "scale": {
+        "x": 32.0,
+        "y": 32.0
+      }
+    },
+    "zIndex": 0
+  },
+  {
+    "uid": 64,
+    "NAME": "Sprite_Object_Gen",
+    "componentList": [
+      {
+        "type": "gameobjects.components.SpriteRenderer",
+        "properties": {
+          "color": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0,
+            "w": 1.0
+          },
+          "sprite": {
+            "width": 16,
+            "height": 16,
+            "texture": {
+              "filePath": "assets/images/spritesheets/decorationsAndBlocks.png",
+              "width": 112,
+              "height": 192
+            },
+            "textureCoordinates": [
+              {
+                "x": 0.2857143,
+                "y": 0.16666667
+              },
+              {
+                "x": 0.2857143,
+                "y": 0.083333336
+              },
+              {
+                "x": 0.14285715,
+                "y": 0.083333336
+              },
+              {
+                "x": 0.14285715,
+                "y": 0.16666667
+              }
+            ]
+          },
+          "uid": 67
+        }
+      }
+    ],
+    "transform": {
+      "position": {
+        "x": 800.0,
+        "y": 256.0
+      },
+      "scale": {
+        "x": 32.0,
+        "y": 32.0
+      }
+    },
+    "zIndex": 0
+  },
+  {
+    "uid": 65,
+    "NAME": "Sprite_Object_Gen",
+    "componentList": [
+      {
+        "type": "gameobjects.components.SpriteRenderer",
+        "properties": {
+          "color": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0,
+            "w": 1.0
+          },
+          "sprite": {
+            "width": 16,
+            "height": 16,
+            "texture": {
+              "filePath": "assets/images/spritesheets/decorationsAndBlocks.png",
+              "width": 112,
+              "height": 192
+            },
+            "textureCoordinates": [
+              {
+                "x": 0.14285715,
+                "y": 0.25
+              },
+              {
+                "x": 0.14285715,
+                "y": 0.16666667
+              },
+              {
+                "x": 0.0,
+                "y": 0.16666667
+              },
+              {
+                "x": 0.0,
+                "y": 0.25
+              }
+            ]
+          },
+          "uid": 68
+        }
+      }
+    ],
+    "transform": {
+      "position": {
+        "x": 832.0,
+        "y": 256.0
+      },
+      "scale": {
+        "x": 32.0,
+        "y": 32.0
+      }
+    },
+    "zIndex": 0
+  },
+  {
+    "uid": 66,
+    "NAME": "Sprite_Object_Gen",
+    "componentList": [
+      {
+        "type": "gameobjects.components.SpriteRenderer",
+        "properties": {
+          "color": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0,
+            "w": 1.0
+          },
+          "sprite": {
+            "width": 16,
+            "height": 16,
+            "texture": {
+              "filePath": "assets/images/spritesheets/decorationsAndBlocks.png",
+              "width": 112,
+              "height": 192
+            },
+            "textureCoordinates": [
+              {
+                "x": 0.14285715,
+                "y": 0.25
+              },
+              {
+                "x": 0.14285715,
+                "y": 0.16666667
+              },
+              {
+                "x": 0.0,
+                "y": 0.16666667
+              },
+              {
+                "x": 0.0,
+                "y": 0.25
+              }
+            ]
+          },
+          "uid": 69
+        }
+      }
+    ],
+    "transform": {
+      "position": {
+        "x": 864.0,
+        "y": 256.0
+      },
+      "scale": {
+        "x": 32.0,
+        "y": 32.0
+      }
+    },
+    "zIndex": 0
+  },
+  {
+    "uid": 67,
+    "NAME": "Sprite_Object_Gen",
+    "componentList": [
+      {
+        "type": "gameobjects.components.SpriteRenderer",
+        "properties": {
+          "color": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0,
+            "w": 1.0
+          },
+          "sprite": {
+            "width": 16,
+            "height": 16,
+            "texture": {
+              "filePath": "assets/images/spritesheets/decorationsAndBlocks.png",
               "width": 112,
               "height": 192
             },
@@ -3517,7 +3741,7 @@
     ],
     "transform": {
       "position": {
-        "x": -160.0,
+        "x": 896.0,
         "y": 192.0
       },
       "scale": {
@@ -3528,7 +3752,7 @@
     "zIndex": 0
   },
   {
-    "uid": 64,
+    "uid": 68,
     "NAME": "Sprite_Object_Gen",
     "componentList": [
       {
@@ -3544,7 +3768,7 @@
             "width": 16,
             "height": 16,
             "texture": {
-              "filePath": "/home/davidalmarinho/Documents/Programming/GitHub/TheBeaver/assets/images/spritesheets/decorationsAndBlocks.png",
+              "filePath": "assets/images/spritesheets/decorationsAndBlocks.png",
               "width": 112,
               "height": 192
             },
@@ -3573,8 +3797,8 @@
     ],
     "transform": {
       "position": {
-        "x": -192.0,
-        "y": 192.0
+        "x": 896.0,
+        "y": 224.0
       },
       "scale": {
         "x": 32.0,
@@ -3584,7 +3808,7 @@
     "zIndex": 0
   },
   {
-    "uid": 65,
+    "uid": 69,
     "NAME": "Sprite_Object_Gen",
     "componentList": [
       {
@@ -3600,7 +3824,7 @@
             "width": 16,
             "height": 16,
             "texture": {
-              "filePath": "/home/davidalmarinho/Documents/Programming/GitHub/TheBeaver/assets/images/spritesheets/decorationsAndBlocks.png",
+              "filePath": "assets/images/spritesheets/decorationsAndBlocks.png",
               "width": 112,
               "height": 192
             },
@@ -3629,8 +3853,8 @@
     ],
     "transform": {
       "position": {
-        "x": -224.0,
-        "y": 192.0
+        "x": 896.0,
+        "y": 256.0
       },
       "scale": {
         "x": 32.0,
@@ -3640,7 +3864,7 @@
     "zIndex": 0
   },
   {
-    "uid": 66,
+    "uid": 70,
     "NAME": "Sprite_Object_Gen",
     "componentList": [
       {
@@ -3656,7 +3880,7 @@
             "width": 16,
             "height": 16,
             "texture": {
-              "filePath": "/home/davidalmarinho/Documents/Programming/GitHub/TheBeaver/assets/images/spritesheets/decorationsAndBlocks.png",
+              "filePath": "assets/images/spritesheets/decorationsAndBlocks.png",
               "width": 112,
               "height": 192
             },
@@ -3685,1184 +3909,8 @@
     ],
     "transform": {
       "position": {
-        "x": 928.0,
-        "y": 192.0
-      },
-      "scale": {
-        "x": 32.0,
-        "y": 32.0
-      }
-    },
-    "zIndex": 0
-  },
-  {
-    "uid": 67,
-    "NAME": "Sprite_Object_Gen",
-    "componentList": [
-      {
-        "type": "gameobjects.components.SpriteRenderer",
-        "properties": {
-          "color": {
-            "x": 1.0,
-            "y": 1.0,
-            "z": 1.0,
-            "w": 1.0
-          },
-          "sprite": {
-            "width": 16,
-            "height": 16,
-            "texture": {
-              "filePath": "/home/davidalmarinho/Documents/Programming/GitHub/TheBeaver/assets/images/spritesheets/decorationsAndBlocks.png",
-              "width": 112,
-              "height": 192
-            },
-            "textureCoordinates": [
-              {
-                "x": 1.0,
-                "y": 0.5833333
-              },
-              {
-                "x": 1.0,
-                "y": 0.5
-              },
-              {
-                "x": 0.85714287,
-                "y": 0.5
-              },
-              {
-                "x": 0.85714287,
-                "y": 0.5833333
-              }
-            ]
-          },
-          "uid": 74
-        }
-      }
-    ],
-    "transform": {
-      "position": {
-        "x": 832.0,
-        "y": 224.0
-      },
-      "scale": {
-        "x": 32.0,
-        "y": 32.0
-      }
-    },
-    "zIndex": 0
-  },
-  {
-    "uid": 68,
-    "NAME": "Sprite_Object_Gen",
-    "componentList": [
-      {
-        "type": "gameobjects.components.SpriteRenderer",
-        "properties": {
-          "color": {
-            "x": 1.0,
-            "y": 1.0,
-            "z": 1.0,
-            "w": 1.0
-          },
-          "sprite": {
-            "width": 16,
-            "height": 16,
-            "texture": {
-              "filePath": "/home/davidalmarinho/Documents/Programming/GitHub/TheBeaver/assets/images/spritesheets/decorationsAndBlocks.png",
-              "width": 112,
-              "height": 192
-            },
-            "textureCoordinates": [
-              {
-                "x": 1.0,
-                "y": 0.5
-              },
-              {
-                "x": 1.0,
-                "y": 0.41666666
-              },
-              {
-                "x": 0.85714287,
-                "y": 0.41666666
-              },
-              {
-                "x": 0.85714287,
-                "y": 0.5
-              }
-            ]
-          },
-          "uid": 75
-        }
-      }
-    ],
-    "transform": {
-      "position": {
-        "x": 800.0,
-        "y": 224.0
-      },
-      "scale": {
-        "x": 32.0,
-        "y": 32.0
-      }
-    },
-    "zIndex": 0
-  },
-  {
-    "uid": 69,
-    "NAME": "Sprite_Object_Gen",
-    "componentList": [
-      {
-        "type": "gameobjects.components.SpriteRenderer",
-        "properties": {
-          "color": {
-            "x": 1.0,
-            "y": 1.0,
-            "z": 1.0,
-            "w": 1.0
-          },
-          "sprite": {
-            "width": 16,
-            "height": 16,
-            "texture": {
-              "filePath": "/home/davidalmarinho/Documents/Programming/GitHub/TheBeaver/assets/images/spritesheets/decorationsAndBlocks.png",
-              "width": 112,
-              "height": 192
-            },
-            "textureCoordinates": [
-              {
-                "x": 1.0,
-                "y": 0.6666667
-              },
-              {
-                "x": 1.0,
-                "y": 0.5833333
-              },
-              {
-                "x": 0.85714287,
-                "y": 0.5833333
-              },
-              {
-                "x": 0.85714287,
-                "y": 0.6666667
-              }
-            ]
-          },
-          "uid": 76
-        }
-      }
-    ],
-    "transform": {
-      "position": {
-        "x": 864.0,
-        "y": 224.0
-      },
-      "scale": {
-        "x": 32.0,
-        "y": 32.0
-      }
-    },
-    "zIndex": 0
-  },
-  {
-    "uid": 70,
-    "NAME": "Sprite_Object_Gen",
-    "componentList": [
-      {
-        "type": "gameobjects.components.SpriteRenderer",
-        "properties": {
-          "color": {
-            "x": 1.0,
-            "y": 1.0,
-            "z": 1.0,
-            "w": 1.0
-          },
-          "sprite": {
-            "width": 16,
-            "height": 16,
-            "texture": {
-              "filePath": "/home/davidalmarinho/Documents/Programming/GitHub/TheBeaver/assets/images/spritesheets/decorationsAndBlocks.png",
-              "width": 112,
-              "height": 192
-            },
-            "textureCoordinates": [
-              {
-                "x": 0.5714286,
-                "y": 0.25
-              },
-              {
-                "x": 0.5714286,
-                "y": 0.16666667
-              },
-              {
-                "x": 0.42857143,
-                "y": 0.16666667
-              },
-              {
-                "x": 0.42857143,
-                "y": 0.25
-              }
-            ]
-          },
-          "uid": 77
-        }
-      }
-    ],
-    "transform": {
-      "position": {
-        "x": 0.0,
+        "x": 896.0,
         "y": 288.0
-      },
-      "scale": {
-        "x": 32.0,
-        "y": 32.0
-      }
-    },
-    "zIndex": 0
-  },
-  {
-    "uid": 71,
-    "NAME": "Sprite_Object_Gen",
-    "componentList": [
-      {
-        "type": "gameobjects.components.SpriteRenderer",
-        "properties": {
-          "color": {
-            "x": 1.0,
-            "y": 1.0,
-            "z": 1.0,
-            "w": 1.0
-          },
-          "sprite": {
-            "width": 16,
-            "height": 16,
-            "texture": {
-              "filePath": "/home/davidalmarinho/Documents/Programming/GitHub/TheBeaver/assets/images/spritesheets/decorationsAndBlocks.png",
-              "width": 112,
-              "height": 192
-            },
-            "textureCoordinates": [
-              {
-                "x": 1.0,
-                "y": 0.33333334
-              },
-              {
-                "x": 1.0,
-                "y": 0.25
-              },
-              {
-                "x": 0.85714287,
-                "y": 0.25
-              },
-              {
-                "x": 0.85714287,
-                "y": 0.33333334
-              }
-            ]
-          },
-          "uid": 78
-        }
-      }
-    ],
-    "transform": {
-      "position": {
-        "x": 0.0,
-        "y": 256.0
-      },
-      "scale": {
-        "x": 32.0,
-        "y": 32.0
-      }
-    },
-    "zIndex": 0
-  },
-  {
-    "uid": 72,
-    "NAME": "Sprite_Object_Gen",
-    "componentList": [
-      {
-        "type": "gameobjects.components.SpriteRenderer",
-        "properties": {
-          "color": {
-            "x": 1.0,
-            "y": 1.0,
-            "z": 1.0,
-            "w": 1.0
-          },
-          "sprite": {
-            "width": 16,
-            "height": 16,
-            "texture": {
-              "filePath": "/home/davidalmarinho/Documents/Programming/GitHub/TheBeaver/assets/images/spritesheets/decorationsAndBlocks.png",
-              "width": 112,
-              "height": 192
-            },
-            "textureCoordinates": [
-              {
-                "x": 1.0,
-                "y": 0.33333334
-              },
-              {
-                "x": 1.0,
-                "y": 0.25
-              },
-              {
-                "x": 0.85714287,
-                "y": 0.25
-              },
-              {
-                "x": 0.85714287,
-                "y": 0.33333334
-              }
-            ]
-          },
-          "uid": 79
-        }
-      }
-    ],
-    "transform": {
-      "position": {
-        "x": 0.0,
-        "y": 224.0
-      },
-      "scale": {
-        "x": 32.0,
-        "y": 32.0
-      }
-    },
-    "zIndex": 0
-  },
-  {
-    "uid": 73,
-    "NAME": "Sprite_Object_Gen",
-    "componentList": [
-      {
-        "type": "gameobjects.components.SpriteRenderer",
-        "properties": {
-          "color": {
-            "x": 1.0,
-            "y": 1.0,
-            "z": 1.0,
-            "w": 1.0
-          },
-          "sprite": {
-            "width": 16,
-            "height": 16,
-            "texture": {
-              "filePath": "/home/davidalmarinho/Documents/Programming/GitHub/TheBeaver/assets/images/spritesheets/decorationsAndBlocks.png",
-              "width": 112,
-              "height": 192
-            },
-            "textureCoordinates": [
-              {
-                "x": 0.71428573,
-                "y": 0.25
-              },
-              {
-                "x": 0.71428573,
-                "y": 0.16666667
-              },
-              {
-                "x": 0.5714286,
-                "y": 0.16666667
-              },
-              {
-                "x": 0.5714286,
-                "y": 0.25
-              }
-            ]
-          },
-          "uid": 80
-        }
-      }
-    ],
-    "transform": {
-      "position": {
-        "x": 960.0,
-        "y": 576.0
-      },
-      "scale": {
-        "x": 32.0,
-        "y": 32.0
-      }
-    },
-    "zIndex": 0
-  },
-  {
-    "uid": 74,
-    "NAME": "Sprite_Object_Gen",
-    "componentList": [
-      {
-        "type": "gameobjects.components.SpriteRenderer",
-        "properties": {
-          "color": {
-            "x": 1.0,
-            "y": 1.0,
-            "z": 1.0,
-            "w": 1.0
-          },
-          "sprite": {
-            "width": 16,
-            "height": 16,
-            "texture": {
-              "filePath": "/home/davidalmarinho/Documents/Programming/GitHub/TheBeaver/assets/images/spritesheets/decorationsAndBlocks.png",
-              "width": 112,
-              "height": 192
-            },
-            "textureCoordinates": [
-              {
-                "x": 1.0,
-                "y": 0.33333334
-              },
-              {
-                "x": 1.0,
-                "y": 0.25
-              },
-              {
-                "x": 0.85714287,
-                "y": 0.25
-              },
-              {
-                "x": 0.85714287,
-                "y": 0.33333334
-              }
-            ]
-          },
-          "uid": 83
-        }
-      }
-    ],
-    "transform": {
-      "position": {
-        "x": 960.0,
-        "y": 576.0
-      },
-      "scale": {
-        "x": 32.0,
-        "y": 32.0
-      }
-    },
-    "zIndex": 0
-  },
-  {
-    "uid": 75,
-    "NAME": "Sprite_Object_Gen",
-    "componentList": [
-      {
-        "type": "gameobjects.components.SpriteRenderer",
-        "properties": {
-          "color": {
-            "x": 1.0,
-            "y": 1.0,
-            "z": 1.0,
-            "w": 1.0
-          },
-          "sprite": {
-            "width": 16,
-            "height": 16,
-            "texture": {
-              "filePath": "/home/davidalmarinho/Documents/Programming/GitHub/TheBeaver/assets/images/spritesheets/decorationsAndBlocks.png",
-              "width": 112,
-              "height": 192
-            },
-            "textureCoordinates": [
-              {
-                "x": 0.85714287,
-                "y": 0.33333334
-              },
-              {
-                "x": 0.85714287,
-                "y": 0.25
-              },
-              {
-                "x": 0.71428573,
-                "y": 0.25
-              },
-              {
-                "x": 0.71428573,
-                "y": 0.33333334
-              }
-            ]
-          },
-          "uid": 84
-        }
-      }
-    ],
-    "transform": {
-      "position": {
-        "x": 960.0,
-        "y": 576.0
-      },
-      "scale": {
-        "x": 32.0,
-        "y": 32.0
-      }
-    },
-    "zIndex": 0
-  },
-  {
-    "uid": 76,
-    "NAME": "Sprite_Object_Gen",
-    "componentList": [
-      {
-        "type": "gameobjects.components.SpriteRenderer",
-        "properties": {
-          "color": {
-            "x": 1.0,
-            "y": 1.0,
-            "z": 1.0,
-            "w": 1.0
-          },
-          "sprite": {
-            "width": 16,
-            "height": 16,
-            "texture": {
-              "filePath": "/home/davidalmarinho/Documents/Programming/GitHub/TheBeaver/assets/images/spritesheets/decorationsAndBlocks.png",
-              "width": 112,
-              "height": 192
-            },
-            "textureCoordinates": [
-              {
-                "x": 0.42857143,
-                "y": 0.25
-              },
-              {
-                "x": 0.42857143,
-                "y": 0.16666667
-              },
-              {
-                "x": 0.2857143,
-                "y": 0.16666667
-              },
-              {
-                "x": 0.2857143,
-                "y": 0.25
-              }
-            ]
-          },
-          "uid": 85
-        }
-      }
-    ],
-    "transform": {
-      "position": {
-        "x": -32.0,
-        "y": 288.0
-      },
-      "scale": {
-        "x": 32.0,
-        "y": 32.0
-      }
-    },
-    "zIndex": 0
-  },
-  {
-    "uid": 77,
-    "NAME": "Sprite_Object_Gen",
-    "componentList": [
-      {
-        "type": "gameobjects.components.SpriteRenderer",
-        "properties": {
-          "color": {
-            "x": 1.0,
-            "y": 1.0,
-            "z": 1.0,
-            "w": 1.0
-          },
-          "sprite": {
-            "width": 16,
-            "height": 16,
-            "texture": {
-              "filePath": "/home/davidalmarinho/Documents/Programming/GitHub/TheBeaver/assets/images/spritesheets/decorationsAndBlocks.png",
-              "width": 112,
-              "height": 192
-            },
-            "textureCoordinates": [
-              {
-                "x": 0.85714287,
-                "y": 0.33333334
-              },
-              {
-                "x": 0.85714287,
-                "y": 0.25
-              },
-              {
-                "x": 0.71428573,
-                "y": 0.25
-              },
-              {
-                "x": 0.71428573,
-                "y": 0.33333334
-              }
-            ]
-          },
-          "uid": 86
-        }
-      }
-    ],
-    "transform": {
-      "position": {
-        "x": -32.0,
-        "y": 256.0
-      },
-      "scale": {
-        "x": 32.0,
-        "y": 32.0
-      }
-    },
-    "zIndex": 0
-  },
-  {
-    "uid": 78,
-    "NAME": "Sprite_Object_Gen",
-    "componentList": [
-      {
-        "type": "gameobjects.components.SpriteRenderer",
-        "properties": {
-          "color": {
-            "x": 1.0,
-            "y": 1.0,
-            "z": 1.0,
-            "w": 1.0
-          },
-          "sprite": {
-            "width": 16,
-            "height": 16,
-            "texture": {
-              "filePath": "/home/davidalmarinho/Documents/Programming/GitHub/TheBeaver/assets/images/spritesheets/decorationsAndBlocks.png",
-              "width": 112,
-              "height": 192
-            },
-            "textureCoordinates": [
-              {
-                "x": 0.85714287,
-                "y": 0.33333334
-              },
-              {
-                "x": 0.85714287,
-                "y": 0.25
-              },
-              {
-                "x": 0.71428573,
-                "y": 0.25
-              },
-              {
-                "x": 0.71428573,
-                "y": 0.33333334
-              }
-            ]
-          },
-          "uid": 87
-        }
-      }
-    ],
-    "transform": {
-      "position": {
-        "x": -32.0,
-        "y": 224.0
-      },
-      "scale": {
-        "x": 32.0,
-        "y": 32.0
-      }
-    },
-    "zIndex": 0
-  },
-  {
-    "uid": 79,
-    "NAME": "Sprite_Object_Gen",
-    "componentList": [
-      {
-        "type": "gameobjects.components.SpriteRenderer",
-        "properties": {
-          "color": {
-            "x": 1.0,
-            "y": 1.0,
-            "z": 1.0,
-            "w": 1.0
-          },
-          "sprite": {
-            "width": 16,
-            "height": 16,
-            "texture": {
-              "filePath": "/home/davidalmarinho/Documents/Programming/GitHub/TheBeaver/assets/images/spritesheets/decorationsAndBlocks.png",
-              "width": 112,
-              "height": 192
-            },
-            "textureCoordinates": [
-              {
-                "x": 0.14285715,
-                "y": 0.33333334
-              },
-              {
-                "x": 0.14285715,
-                "y": 0.25
-              },
-              {
-                "x": 0.0,
-                "y": 0.25
-              },
-              {
-                "x": 0.0,
-                "y": 0.33333334
-              }
-            ]
-          },
-          "uid": 90
-        }
-      }
-    ],
-    "transform": {
-      "position": {
-        "x": 544.0,
-        "y": 448.0
-      },
-      "scale": {
-        "x": 32.0,
-        "y": 32.0
-      }
-    },
-    "zIndex": 0
-  },
-  {
-    "uid": 80,
-    "NAME": "Sprite_Object_Gen",
-    "componentList": [
-      {
-        "type": "gameobjects.components.SpriteRenderer",
-        "properties": {
-          "color": {
-            "x": 1.0,
-            "y": 1.0,
-            "z": 1.0,
-            "w": 1.0
-          },
-          "sprite": {
-            "width": 16,
-            "height": 16,
-            "texture": {
-              "filePath": "/home/davidalmarinho/Documents/Programming/GitHub/TheBeaver/assets/images/spritesheets/decorationsAndBlocks.png",
-              "width": 112,
-              "height": 192
-            },
-            "textureCoordinates": [
-              {
-                "x": 1.0,
-                "y": 0.41666666
-              },
-              {
-                "x": 1.0,
-                "y": 0.33333334
-              },
-              {
-                "x": 0.85714287,
-                "y": 0.33333334
-              },
-              {
-                "x": 0.85714287,
-                "y": 0.41666666
-              }
-            ]
-          },
-          "uid": 91
-        }
-      }
-    ],
-    "transform": {
-      "position": {
-        "x": 512.0,
-        "y": 448.0
-      },
-      "scale": {
-        "x": 32.0,
-        "y": 32.0
-      }
-    },
-    "zIndex": 0
-  },
-  {
-    "uid": 81,
-    "NAME": "Sprite_Object_Gen",
-    "componentList": [
-      {
-        "type": "gameobjects.components.SpriteRenderer",
-        "properties": {
-          "color": {
-            "x": 1.0,
-            "y": 1.0,
-            "z": 1.0,
-            "w": 1.0
-          },
-          "sprite": {
-            "width": 16,
-            "height": 16,
-            "texture": {
-              "filePath": "/home/davidalmarinho/Documents/Programming/GitHub/TheBeaver/assets/images/spritesheets/decorationsAndBlocks.png",
-              "width": 112,
-              "height": 192
-            },
-            "textureCoordinates": [
-              {
-                "x": 0.2857143,
-                "y": 0.33333334
-              },
-              {
-                "x": 0.2857143,
-                "y": 0.25
-              },
-              {
-                "x": 0.14285715,
-                "y": 0.25
-              },
-              {
-                "x": 0.14285715,
-                "y": 0.33333334
-              }
-            ]
-          },
-          "uid": 92
-        }
-      }
-    ],
-    "transform": {
-      "position": {
-        "x": 576.0,
-        "y": 448.0
-      },
-      "scale": {
-        "x": 32.0,
-        "y": 32.0
-      }
-    },
-    "zIndex": 0
-  },
-  {
-    "uid": 82,
-    "NAME": "Sprite_Object_Gen",
-    "componentList": [
-      {
-        "type": "gameobjects.components.SpriteRenderer",
-        "properties": {
-          "color": {
-            "x": 1.0,
-            "y": 1.0,
-            "z": 1.0,
-            "w": 1.0
-          },
-          "sprite": {
-            "width": 16,
-            "height": 16,
-            "texture": {
-              "filePath": "/home/davidalmarinho/Documents/Programming/GitHub/TheBeaver/assets/images/spritesheets/decorationsAndBlocks.png",
-              "width": 112,
-              "height": 192
-            },
-            "textureCoordinates": [
-              {
-                "x": 0.71428573,
-                "y": 0.41666666
-              },
-              {
-                "x": 0.71428573,
-                "y": 0.33333334
-              },
-              {
-                "x": 0.5714286,
-                "y": 0.33333334
-              },
-              {
-                "x": 0.5714286,
-                "y": 0.41666666
-              }
-            ]
-          },
-          "uid": 93
-        }
-      }
-    ],
-    "transform": {
-      "position": {
-        "x": 768.0,
-        "y": 480.0
-      },
-      "scale": {
-        "x": 32.0,
-        "y": 32.0
-      }
-    },
-    "zIndex": 0
-  },
-  {
-    "uid": 83,
-    "NAME": "Sprite_Object_Gen",
-    "componentList": [
-      {
-        "type": "gameobjects.components.SpriteRenderer",
-        "properties": {
-          "color": {
-            "x": 1.0,
-            "y": 1.0,
-            "z": 1.0,
-            "w": 1.0
-          },
-          "sprite": {
-            "width": 16,
-            "height": 16,
-            "texture": {
-              "filePath": "/home/davidalmarinho/Documents/Programming/GitHub/TheBeaver/assets/images/spritesheets/decorationsAndBlocks.png",
-              "width": 112,
-              "height": 192
-            },
-            "textureCoordinates": [
-              {
-                "x": 0.5714286,
-                "y": 0.41666666
-              },
-              {
-                "x": 0.5714286,
-                "y": 0.33333334
-              },
-              {
-                "x": 0.42857143,
-                "y": 0.33333334
-              },
-              {
-                "x": 0.42857143,
-                "y": 0.41666666
-              }
-            ]
-          },
-          "uid": 94
-        }
-      }
-    ],
-    "transform": {
-      "position": {
-        "x": 736.0,
-        "y": 480.0
-      },
-      "scale": {
-        "x": 32.0,
-        "y": 32.0
-      }
-    },
-    "zIndex": 0
-  },
-  {
-    "uid": 84,
-    "NAME": "Sprite_Object_Gen",
-    "componentList": [
-      {
-        "type": "gameobjects.components.SpriteRenderer",
-        "properties": {
-          "color": {
-            "x": 1.0,
-            "y": 1.0,
-            "z": 1.0,
-            "w": 1.0
-          },
-          "sprite": {
-            "width": 16,
-            "height": 16,
-            "texture": {
-              "filePath": "/home/davidalmarinho/Documents/Programming/GitHub/TheBeaver/assets/images/spritesheets/decorationsAndBlocks.png",
-              "width": 112,
-              "height": 192
-            },
-            "textureCoordinates": [
-              {
-                "x": 0.85714287,
-                "y": 0.41666666
-              },
-              {
-                "x": 0.85714287,
-                "y": 0.33333334
-              },
-              {
-                "x": 0.71428573,
-                "y": 0.33333334
-              },
-              {
-                "x": 0.71428573,
-                "y": 0.41666666
-              }
-            ]
-          },
-          "uid": 95
-        }
-      }
-    ],
-    "transform": {
-      "position": {
-        "x": 800.0,
-        "y": 480.0
-      },
-      "scale": {
-        "x": 32.0,
-        "y": 32.0
-      }
-    },
-    "zIndex": 0
-  },
-  {
-    "uid": 85,
-    "NAME": "Sprite_Object_Gen",
-    "componentList": [
-      {
-        "type": "gameobjects.components.SpriteRenderer",
-        "properties": {
-          "color": {
-            "x": 1.0,
-            "y": 1.0,
-            "z": 1.0,
-            "w": 1.0
-          },
-          "sprite": {
-            "width": 16,
-            "height": 16,
-            "texture": {
-              "filePath": "/home/davidalmarinho/Documents/Programming/GitHub/TheBeaver/assets/images/spritesheets/decorationsAndBlocks.png",
-              "width": 112,
-              "height": 192
-            },
-            "textureCoordinates": [
-              {
-                "x": 0.5714286,
-                "y": 0.33333334
-              },
-              {
-                "x": 0.5714286,
-                "y": 0.25
-              },
-              {
-                "x": 0.42857143,
-                "y": 0.25
-              },
-              {
-                "x": 0.42857143,
-                "y": 0.33333334
-              }
-            ]
-          },
-          "uid": 96
-        }
-      }
-    ],
-    "transform": {
-      "position": {
-        "x": 768.0,
-        "y": 448.0
-      },
-      "scale": {
-        "x": 32.0,
-        "y": 32.0
-      }
-    },
-    "zIndex": 0
-  },
-  {
-    "uid": 86,
-    "NAME": "Sprite_Object_Gen",
-    "componentList": [
-      {
-        "type": "gameobjects.components.SpriteRenderer",
-        "properties": {
-          "color": {
-            "x": 1.0,
-            "y": 1.0,
-            "z": 1.0,
-            "w": 1.0
-          },
-          "sprite": {
-            "width": 16,
-            "height": 16,
-            "texture": {
-              "filePath": "/home/davidalmarinho/Documents/Programming/GitHub/TheBeaver/assets/images/spritesheets/decorationsAndBlocks.png",
-              "width": 112,
-              "height": 192
-            },
-            "textureCoordinates": [
-              {
-                "x": 0.42857143,
-                "y": 0.33333334
-              },
-              {
-                "x": 0.42857143,
-                "y": 0.25
-              },
-              {
-                "x": 0.2857143,
-                "y": 0.25
-              },
-              {
-                "x": 0.2857143,
-                "y": 0.33333334
-              }
-            ]
-          },
-          "uid": 97
-        }
-      }
-    ],
-    "transform": {
-      "position": {
-        "x": 736.0,
-        "y": 448.0
-      },
-      "scale": {
-        "x": 32.0,
-        "y": 32.0
-      }
-    },
-    "zIndex": 0
-  },
-  {
-    "uid": 87,
-    "NAME": "Sprite_Object_Gen",
-    "componentList": [
-      {
-        "type": "gameobjects.components.SpriteRenderer",
-        "properties": {
-          "color": {
-            "x": 1.0,
-            "y": 1.0,
-            "z": 1.0,
-            "w": 1.0
-          },
-          "sprite": {
-            "width": 16,
-            "height": 16,
-            "texture": {
-              "filePath": "/home/davidalmarinho/Documents/Programming/GitHub/TheBeaver/assets/images/spritesheets/decorationsAndBlocks.png",
-              "width": 112,
-              "height": 192
-            },
-            "textureCoordinates": [
-              {
-                "x": 0.71428573,
-                "y": 0.33333334
-              },
-              {
-                "x": 0.71428573,
-                "y": 0.25
-              },
-              {
-                "x": 0.5714286,
-                "y": 0.25
-              },
-              {
-                "x": 0.5714286,
-                "y": 0.33333334
-              }
-            ]
-          },
-          "uid": 98
-        }
-      }
-    ],
-    "transform": {
-      "position": {
-        "x": 800.0,
-        "y": 448.0
       },
       "scale": {
         "x": 32.0,
