@@ -147,12 +147,6 @@ public class Window {
 
             DebugDraw.beginFrame();
 
-            // System.out.println("Position x: " + MouseListener.getXPos());
-            // System.out.println("Position y " + MouseListener.getYPos());
-            // if (KeyListener.isKeyUp(GLFW_KEY_SPACE)) {
-            //     System.out.println("Hello World!");
-            // }
-
             // Limpar a frame com uma cor
             glClearColor(1f, 1f, 1f, 1f); /* Especifica a cor que o glClear vai usar para
             limpar a color buffers */
