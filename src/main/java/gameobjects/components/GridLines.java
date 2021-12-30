@@ -1,7 +1,7 @@
 package gameobjects.components;
 
 import jade.Window;
-import jade.rendering.Colors;
+import jade.rendering.Color;
 import jade.rendering.debug.DebugDraw;
 import jade.utils.Settings;
 import org.joml.Vector2f;
@@ -29,7 +29,7 @@ public class GridLines extends Component {
 
         // final int MAX_LINES = numVerticalLines > numHorizontalLines ? numVerticalLines : numHorizontalLines;
         final int MAX_LINES = Math.max(numVerticalLines, numHorizontalLines);
-        final Vector3f color = new Vector3f(0.2f, 0.2f, 0.2f);
+        final Color color = new Color(0.2f, 0.2f, 0.2f);
         for (int i = 0; i < MAX_LINES; i++) {
             int x = firstX + (Settings.GRID_WIDTH * i);
             int y = firstY + (Settings.GRID_HEIGHT * i);

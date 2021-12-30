@@ -1,7 +1,7 @@
 package jade.rendering.debug;
 
 import jade.Window;
-import jade.rendering.Colors;
+import jade.rendering.Color;
 import jade.rendering.Shader;
 import jade.utils.AssetPool;
 import org.joml.Vector2f;
@@ -117,41 +117,47 @@ public class DebugDraw {
     // ===================================================================
     
     public static void addLine2D(Vector2f from, Vector2f to) {
-        addLine2D(from, to, new Vector3f(0, 1, 0), 1);
+        addLine2D(from, to, Color.GREEN, 1);
     }
 
-    public static void addLine2D(Vector2f from, Vector2f to, Vector3f color) {
+    public static void addLine2D(Vector2f from, Vector2f to, Color color) {
         addLine2D(from, to, color, 1);
     }
 
-    public static void addLine2D(Vector2f from, Vector2f to, Vector3f color, int lifetime) {
-        if (line2DList.size() >= MAX_LINES) return;
-        DebugDraw.line2DList.add(new Line2D(from, to, color, lifetime));
+    public static void addLine2D(Vector2f from, Vector2f to, int lifetime) {
+        addLine2D(from, to, Color.GREEN, lifetime);
     }
 
-    public static void addLine2D(Vector2f from, Vector2f to, Colors color, int lifetime) {
+    public static void addLine2D(Vector2f from, Vector2f to, Color color, int lifetime) {
         if (line2DList.size() >= MAX_LINES) return;
-        DebugDraw.line2DList.add(new Line2D(from, to, color.getColor(), lifetime));
+        DebugDraw.line2DList.add(new Line2D(from, to, color, lifetime));
     }
 
     // ===================================================================
     // Add Box2D
     // ===================================================================
 
-    public static void addBox2D(Vector2f center, Vector2f dimension) {
-        addLine2D(center, dimension, new Vector3f(0, 1, 0), 1);
+    public static void addBox2D(Vector2f center, Vector2f dimensions) {
+        addBox2D(center, dimensions, 0.0f, Color.GREEN, 1);
     }
 
-    public static void addBox2D(Vector2f center, Vector2f dimension, Vector3f color) {
-        addLine2D(center, dimension, color, 1);
+    public static void addBox2D(Vector2f center, Vector2f dimensions, float rotation) {
+        addBox2D(center, dimensions, rotation, Color.GREEN, 1);
     }
 
-    public static void addBox2D(Vector2f center, Vector2f dimension, Vector3f color, int lifetime) {
-        if (line2DList.size() >= MAX_LINES) return;
-        DebugDraw.line2DList.add(new Line2D(center, dimension, color, lifetime));
+    public static void addBox2D(Vector2f center, Vector2f dimensions, float rotation, int lifetime) {
+        addBox2D(center, dimensions, rotation, Color.GREEN, lifetime);
     }
 
-    public static void addBox2D(Vector2f center, Vector2f dimensions, float rotation, Colors color, int lifetime) {
+    public static void addBox2D(Vector2f center, Vector2f dimensions, Color color) {
+        addBox2D(center, dimensions, 0.0f, color, 1);
+    }
+
+    public static void addBox2D(Vector2f center, Vector2f dimensions, Color color, int lifetime) {
+        addBox2D(center, dimensions, 0.0f, color, lifetime);
+    }
+
+    public static void addBox2D(Vector2f center, Vector2f dimensions, float rotation, Color color, int lifetime) {
         Vector2f bottomLeftCorner = new Vector2f(center).sub(new Vector2f(dimensions)).mul(0.5f);
         Vector2f topRightCorner = new Vector2f(center).add(new Vector2f(dimensions)).mul(0.5f);
 

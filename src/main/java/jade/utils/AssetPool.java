@@ -33,7 +33,7 @@ public class AssetPool {
     }
 
     public static Texture getTexture(String filePath) {
-        return textures.computeIfAbsent(new File(filePath).getAbsolutePath(), Texture::new);
+        return textures.computeIfAbsent(filePath, Texture::new);
     }
 
     public static void addSpritesheet(String filePath, Spritesheet spritesheet) {
