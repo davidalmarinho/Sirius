@@ -7,6 +7,8 @@ import gameobjects.GameObject;
 import gameobjects.Transform;
 import gameobjects.components.*;
 import jade.rendering.Camera;
+import jade.rendering.Color;
+import jade.rendering.debug.DebugDraw;
 import jade.rendering.spritesheet.Images;
 import jade.rendering.spritesheet.Spritesheet;
 import jade.utils.AssetPool;
@@ -65,6 +67,7 @@ public class LevelEditorScene extends Scene {
     @Override
     public void update(float dt) {
         levelEditorStuff.update(dt);
+        DebugDraw.addBox2D(new Vector2f(400, 200), new Vector2f(64, 32), 30f, Color.GREEN, 1);
 
         for (GameObject go : gameObjectList) {
             go.update(dt);
