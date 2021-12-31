@@ -33,7 +33,7 @@ public class AABB {
     /**
      * Gets the top right corner coordinates of the box
      *
-     * @@return box's top right corner coordinates
+     * @return box's top right corner coordinates
      */
     public Vector2f getTopRightCorner() {
         return new Vector2f(this.rigidBody.getPosition().add(this.halfSize));

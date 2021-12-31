@@ -8,15 +8,31 @@ public class Box2D {
     private final Vector2f halfSize;
     private RigidBody2D rigidBody2D = null;
 
+    /**
+     * Constructor method
+     *
+     * @param width wished of the box
+     * @param height wished of the box
+     */
     public Box2D(float width, float height) {
         this.size = new Vector2f(width, height);
         this.halfSize = new Vector2f(size.mul(0.5f));
     }
 
+    /**
+     * Gets the bottom left corner coordinates of the box
+     *
+     * @return box's bottom left corner coordinates
+     */
     public Vector2f getBottomLeftCorner() {
         return rigidBody2D.getPosition().sub(halfSize);
     }
 
+    /**
+     * Gets the top right corner coordinates of the box
+     *
+     * @return box's top right corner coordinates
+     */
     public Vector2f getTopRightCorner() {
         return rigidBody2D.getPosition().add(halfSize);
     }
@@ -42,6 +58,7 @@ public class Box2D {
                 new Vector2f(topRightCorner)                         // Top right corner
         };
 
+        // Check if the box is rotated
         if (rigidBody2D.getRotation() != 0.0f) {
             for (Vector2f currentVertex : vertices) {
                 // TODO: 31/12/2021 Implement me
