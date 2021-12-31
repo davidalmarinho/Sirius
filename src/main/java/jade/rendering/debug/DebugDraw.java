@@ -71,7 +71,7 @@ public class DebugDraw {
         int index = 0;
         for (Line2D line : line2DList) {
             for (int i = 0; i < 2; i++) {
-                Vector2f position = i == 0 ? line.getFrom() : line.getTo();
+                Vector2f position = i == 0 ? line.getBegin() : line.getEnd();
                 Vector3f color = line.getColor();
 
                 // Load position
