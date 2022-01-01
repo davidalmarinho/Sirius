@@ -1,6 +1,7 @@
 package physics2d.rigidBody;
 
 import jade.rendering.debug.Line2D;
+import jade.utils.JMath;
 import org.joml.Vector2f;
 import physics2d.primitives.AABB;
 import physics2d.primitives.Box2D;
@@ -54,7 +55,8 @@ public class IntersectionDetector2D {
     }
 
     /**
-     * Checks if the point is inside a box
+     * Checks if a point is inside a non-rotated box
+     * If the box is rotated, use {@link #pointInBox2D(Vector2f point, Box2D box) instead}
      *
      * @param point coordinates of the point
      * @param box AABB object
@@ -65,6 +67,27 @@ public class IntersectionDetector2D {
         Vector2f topRightCorner = box.getTopRightCorner();
 
         return (point.x >= leftBottomCorner.x && point.x <= topRightCorner.x) && (point.y <= topRightCorner.y && point.y >= leftBottomCorner.y);
+    }
+
+    /**
+     * Checks if a point is inside a box
+     * If the box isn't rotated, you should use {@link #isPointInAABB(Vector2f point, AABB box)}  instead, since it does less calculus,
+     * but this method is fine too for non-rotated boxs.
+     *
+     * @param point coordinates of the point
+     * @param box AABB object
+     * @return if the point is inside the AABB
+     */
+    public static boolean pointInBox2D(Vector2f point, Box2D box) {
+        // Rotate the point based on object rotation
+        Vector2f localPointBoxSpace = new Vector2f(point);
+        JMath.rotate(localPointBoxSpace, box.getRigidBody2D().getRotation(), box.getRigidBody2D().getPosition());
+
+        Vector2f leftBottomCorner = box.getBottomLeftCorner();
+        Vector2f topRightCorner = box.getTopRightCorner();
+
+        return (localPointBoxSpace.x >= leftBottomCorner.x && localPointBoxSpace.x <= topRightCorner.x)
+                && (localPointBoxSpace.y <= topRightCorner.y && localPointBoxSpace.y >= leftBottomCorner.y);
     }
 
     // ==================================================
