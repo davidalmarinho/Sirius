@@ -6,6 +6,7 @@ import jade.rendering.Shader;
 import jade.utils.AssetPool;
 import org.joml.Vector2f;
 import org.joml.Vector3f;
+import jade.utils.JMath;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -171,7 +172,7 @@ public class DebugDraw {
         // If it has been rotated
         if (rotation != 0.0f) {
             for (Vector2f vert : vertices) {
-                // JMath.rotate(vert, rotation, center);
+                JMath.rotate(vert, rotation, center);
             }
         }
 
