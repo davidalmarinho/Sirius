@@ -181,4 +181,48 @@ public class DebugDraw {
         addLine2D(vertices[1], vertices[3], color, lifetime); // TR -> TL
         addLine2D(vertices[1], vertices[2], color, lifetime); // TR -> BR
     }
+
+    // ===================================================================
+    // Add Circle2D
+    // ===================================================================
+
+    public static void addCircle(Vector2f center, float radius, int lifeTime) {
+        addCircle(center, radius, Color.GREEN, lifeTime);
+    }
+
+    public static void addCircle(Vector2f center, float radius, Color color) {
+        addCircle(center, radius, color, 1);
+    }
+
+    /**
+     * Adds a circle to the screen
+     *
+     * @param center center's coordinates of the circle
+     * @param radius how big the circle is
+     * @param color its color
+     * @param lifeTime how much time it will take to disappear in fps/second units
+     */
+    public static void addCircle(Vector2f center, float radius, Color color, int lifeTime) {
+        // How many points the circle is going to have
+        Vector2f[] points = new Vector2f[20];
+
+        // Increment in degrees per segment
+        int increment = 360 / points.length;
+        int currentAngle = 0;
+
+        for (int i = 0; i < points.length; i++) {
+            Vector2f tmp = new Vector2f(radius, 0);
+            JMath.rotate(tmp, currentAngle, new Vector2f());
+
+            points[i] = new Vector2f(tmp).add(center);
+
+            if (i > 0) {
+                addLine2D(points[i - 1], points[i], color, lifeTime);
+            }
+
+            currentAngle += increment;
+        }
+
+        addLine2D(points[points.length - 1], points[0], color, lifeTime);
+    }
 }
