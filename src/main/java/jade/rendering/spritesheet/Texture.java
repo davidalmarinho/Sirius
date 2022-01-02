@@ -71,6 +71,16 @@ public class Texture {
         STBImage.stbi_image_free(image);
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (o == null) return false;
+        if (!(o instanceof Texture)) return false;
+
+        Texture oTex = (Texture) o;
+        return oTex.getWidth() == this.width && oTex.getHeight() == this.height
+                && oTex.getTextureID() == this.textureID && oTex.getFilePath().equals(this.filePath);
+    }
+
     public String getFilePath() {
         return filePath;
     }
