@@ -1,0 +1,2 @@
+Frame buffers are treated like textures.
+Is like put all we have into an image.
