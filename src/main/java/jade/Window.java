@@ -159,7 +159,7 @@ public class Window {
             glClear(GL_COLOR_BUFFER_BIT); /* Contar para o OpenGL como limpar a frame (Indicates the buffers
             currently enabled for color writing).*/
 
-            frameBuffer.bind();
+            // frameBuffer.bind();
 
             if (dt >= 0) {
                 DebugDraw.draw();
