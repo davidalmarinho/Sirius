@@ -1,5 +1,6 @@
 package jade;
 
+import gameobjects.components.editor.GameViewWindow;
 import imgui.ImFontAtlas;
 import imgui.ImFontConfig;
 import imgui.ImGui;
@@ -192,7 +193,8 @@ public class ImGuiLayer {
         ImGui.newFrame();
         setupDockSpace();
         currentScene.sceneImgui();
-        ImGui.showDemoWindow();
+        // ImGui.showDemoWindow();
+        GameViewWindow.imgui();
 
         // We have to end ImGui before we render ImGui
         ImGui.end();

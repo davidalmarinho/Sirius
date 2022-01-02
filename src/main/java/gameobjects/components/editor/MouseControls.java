@@ -1,6 +1,7 @@
-package gameobjects.components;
+package gameobjects.components.editor;
 
 import gameobjects.GameObject;
+import gameobjects.components.Component;
 import jade.Window;
 import jade.input.MouseListener;
 import jade.utils.Settings;

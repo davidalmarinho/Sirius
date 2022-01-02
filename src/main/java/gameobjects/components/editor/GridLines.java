@@ -1,5 +1,6 @@
-package gameobjects.components;
+package gameobjects.components.editor;
 
+import gameobjects.components.Component;
 import jade.Window;
 import jade.rendering.Color;
 import jade.rendering.debug.DebugDraw;
