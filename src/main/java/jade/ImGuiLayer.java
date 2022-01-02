@@ -192,7 +192,7 @@ public class ImGuiLayer {
         ImGui.newFrame();
         setupDockSpace();
         currentScene.sceneImgui();
-        // ImGui.showDemoWindow();
+        ImGui.showDemoWindow();
 
         // We have to end ImGui before we render ImGui
         ImGui.end();
@@ -243,6 +243,7 @@ public class ImGuiLayer {
         ImGui.setNextWindowSize(Window.getWidth(), Window.getHeight());
         ImGui.pushStyleVar(ImGuiStyleVar.WindowRounding, 0.0f);
         ImGui.pushStyleVar(ImGuiStyleVar.WindowBorderSize, 0.0f);
+        // |= same as doing windowFlags = windowFlags | ImGuiWindowFlags.NoTileBar...
         windowFlags |= ImGuiWindowFlags.NoTitleBar | ImGuiWindowFlags.NoCollapse
                 | ImGuiWindowFlags.NoResize
                 | ImGuiWindowFlags.NoMove
