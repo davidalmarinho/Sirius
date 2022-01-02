@@ -175,7 +175,7 @@ public class RenderBatch implements Comparable<RenderBatch> {
         // Verify if we have textures
         if (sprite.getTexture() != null) {
             for (int i = 0; i < textureList.size(); i++) {
-                if (textureList.get(i) == sprite.getTexture()) {
+                if (textureList.get(i).equals(sprite.getTexture())) {
                     textID = i + 1;
                     break;
                 }

@@ -23,6 +23,24 @@ public class Texture {
         init();
     }
 
+    /**
+     * Allocates just the space of a texture.
+     * Created for especially {@link jade.rendering.FrameBuffer}
+     *
+     * @param width width of the nonexistence image
+     * @param height height of the nonexistence image
+     */
+    public Texture(int width, int height) {
+        this.filePath = "Generated texture";
+
+        // Generate texture
+        this.textureID = GL11.glGenTextures();
+        GL11.glBindTexture(GL_TEXTURE_2D, textureID);
+
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height,
+                0, GL_RGB, GL_UNSIGNED_BYTE, 0);
+    }
+
     private void init() {
         // Criar a textura
         this.textureID = GL11.glGenTextures();
@@ -69,6 +87,16 @@ public class Texture {
 
         // Limpar a memória no GPU
         STBImage.stbi_image_free(image);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null) return false;
+        if (!(o instanceof Texture)) return false;
+
+        Texture oTex = (Texture) o;
+        return oTex.getWidth() == this.width && oTex.getHeight() == this.height
+                && oTex.getTextureID() == this.textureID && oTex.getFilePath().equals(this.filePath);
     }
 
     public String getFilePath() {
