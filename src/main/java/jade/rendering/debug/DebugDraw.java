@@ -159,8 +159,8 @@ public class DebugDraw {
     }
 
     public static void addBox2D(Vector2f center, Vector2f dimensions, float rotation, Color color, int lifetime) {
-        Vector2f bottomLeftCorner = new Vector2f(center).sub(new Vector2f(dimensions)).mul(0.5f);
-        Vector2f topRightCorner = new Vector2f(center).add(new Vector2f(dimensions)).mul(0.5f);
+        Vector2f bottomLeftCorner = new Vector2f(center).sub(new Vector2f(dimensions).mul(0.5f));
+        Vector2f topRightCorner = new Vector2f(center).add(new Vector2f(dimensions).mul(0.5f));
 
         Vector2f[] vertices = {
                 new Vector2f(bottomLeftCorner.x, bottomLeftCorner.y),  // Bottom left corner
