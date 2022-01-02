@@ -2,6 +2,7 @@ package jade;
 
 import jade.input.KeyListener;
 import jade.input.MouseListener;
+import jade.rendering.FrameBuffer;
 import jade.rendering.debug.DebugDraw;
 import jade.scenes.LevelEditorScene;
 import jade.scenes.LevelScene;
@@ -23,6 +24,7 @@ public class Window {
     private long glfwWindow; // Vai agir como se fosse um ponteiro
     private static Scene currentScene;
     private ImGuiLayer imGuiLayer;
+    private FrameBuffer frameBuffer;
 
     private Window() {
         this.width  = 1920;
@@ -130,6 +132,9 @@ public class Window {
         imGuiLayer = new ImGuiLayer(glfwWindow);
         imGuiLayer.initImGui();
 
+        // TODO: 02/01/2022 Gets the full window size and put that here
+        frameBuffer = new FrameBuffer(1920, 1080);
+
         // Colocar a scene
         changeScene(Scenes.LEVEL_EDITOR_SCENE);
     }
@@ -154,6 +159,8 @@ public class Window {
             glClear(GL_COLOR_BUFFER_BIT); /* Contar para o OpenGL como limpar a frame (Indicates the buffers
             currently enabled for color writing).*/
 
+            frameBuffer.bind();
+
             if (dt >= 0) {
                 DebugDraw.draw();
                 // System.out.println("FPS: " + 1.0f / dt);
@@ -161,6 +168,8 @@ public class Window {
 
                 glViewport(0, 0, width, height);
             }
+
+            frameBuffer.unbind();
 
             imGuiLayer.update(dt, currentScene);
             glfwSwapBuffers(glfwWindow); /* Faz o mesmo que o Bufferstrategy, aquela parte de já termos uma

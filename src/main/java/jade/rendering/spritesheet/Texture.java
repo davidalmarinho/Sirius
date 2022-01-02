@@ -23,6 +23,24 @@ public class Texture {
         init();
     }
 
+    /**
+     * Allocates just the space of a texture.
+     * Created for especially {@link jade.rendering.FrameBuffer}
+     *
+     * @param width width of the nonexistence image
+     * @param height height of the nonexistence image
+     */
+    public Texture(int width, int height) {
+        this.filePath = "Generated texture";
+
+        // Generate texture
+        this.textureID = GL11.glGenTextures();
+        GL11.glBindTexture(GL_TEXTURE_2D, textureID);
+
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height,
+                0, GL_RGB, GL_UNSIGNED_BYTE, 0);
+    }
+
     private void init() {
         // Criar a textura
         this.textureID = GL11.glGenTextures();
