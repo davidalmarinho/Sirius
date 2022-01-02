@@ -1,6 +1,8 @@
 package jade.scenes;
 
 import gameobjects.Prefabs;
+import gameobjects.components.editor.GridLines;
+import gameobjects.components.editor.MouseControls;
 import imgui.ImGui;
 import imgui.ImVec2;
 import gameobjects.GameObject;
