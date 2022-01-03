@@ -1,6 +1,9 @@
 package jade.input;
 
 import jade.Window;
+import jade.rendering.Camera;
+import org.joml.Matrix4f;
+import org.joml.Vector2f;
 import org.joml.Vector4f;
 
 import static org.lwjgl.glfw.GLFW.GLFW_PRESS;
@@ -12,6 +15,10 @@ public class MouseListener {
     private double scrollX, scrollY;
     private final boolean[] mouseButtons = new boolean[9];
     private boolean dragging;
+
+    // Game viewport
+    private Vector2f gameViewportPos  = new Vector2f();
+    private Vector2f gameViewportSize = new Vector2f();
 
     private MouseListener() {
         // Definir os valores
@@ -100,15 +107,17 @@ public class MouseListener {
     }
 
     public static float getOrthoX() {
-        float currentX = getX();
+        float currentX = getX() - get().gameViewportPos.x;
 
         // This will convert the currentX's range, [0, 1], to [-1, 1]
-        currentX = (currentX / (float) Window.getWidth()) * 2.0f - 1.0f;
+        currentX = (currentX / get().gameViewportSize.x) * 2.0f - 1.0f;
         Vector4f tmp = new Vector4f(currentX, 0, 0, 1); // 1 IS VERY IMPORTANT TO MAINTAIN THE INTEGRITY OF MATRIX MULTIPLICATION
 
         // See explanation of this in Camera.java file in its constructor method.
-        tmp.mul(Window.getCurrentScene().getCamera().getInverseProjection())
-                .mul(Window.getCurrentScene().getCamera().getInverseView());
+        Camera camera = Window.getCurrentScene().getCamera();
+        Matrix4f viewProjection = new Matrix4f();
+        camera.getInverseView().mul(camera.getInverseProjection(), viewProjection);
+        tmp.mul(viewProjection);
 
         currentX = tmp.x;
 
@@ -116,15 +125,17 @@ public class MouseListener {
     }
 
     public static float getOrthoY() {
-        float currentY = Window.getHeight() - getY();
+        float currentY = getY() - get().gameViewportPos.y;
 
         // This will convert the currentX's range, [0, 1], to [-1, 1]
-        currentY = (currentY / (float) Window.getHeight()) * 2.0f - 1.0f;
+        currentY = -((currentY / get().gameViewportSize.y) * 2.0f - 1.0f); // Use '-' because ImGui has y coordinates flipped comparing to our project
         Vector4f tmp = new Vector4f(0, currentY, 0, 1); // 1 IS VERY IMPORTANT TO MAINTAIN THE INTEGRITY OF MATRIX MULTIPLICATION
 
         // See explanation of this in Camera.java file in its constructor method.
-        tmp.mul(Window.getCurrentScene().getCamera().getInverseProjection())
-                .mul(Window.getCurrentScene().getCamera().getInverseView());
+        Camera camera = Window.getCurrentScene().getCamera();
+        Matrix4f viewProjection = new Matrix4f();
+        camera.getInverseView().mul(camera.getInverseProjection(), viewProjection);
+        tmp.mul(viewProjection);
 
         currentY = tmp.y;
 
@@ -149,6 +160,14 @@ public class MouseListener {
 
     public static boolean isDragging() {
         return get().dragging;
+    }
+
+    public static void setGameViewportPos(Vector2f gameViewportPos) {
+        get().gameViewportPos.set(gameViewportPos);
+    }
+
+    public static void setGameViewportSize(Vector2f gameViewportSize) {
+        get().gameViewportSize.set(gameViewportSize);
     }
 
     public static boolean mouseButtonDown(int button) {
