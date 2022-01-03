@@ -127,7 +127,7 @@ public class ImGuiLayer {
             }
 
             // Set a personalized callback when we are with the cursor outside an ImGui window
-            if (!io.getWantCaptureMouse()) {
+            if (!io.getWantCaptureMouse() || GameViewWindow.getWantCaptureMouse()) {
                 MouseListener.mouseButtonCallback(w, button, action, mods);
             }
         });
