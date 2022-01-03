@@ -22,6 +22,12 @@ public class GameViewWindow {
     }
 
     private static ImVec2 getLargestSizeForViewport() {
+        /*
+         *      Required to know:
+         *          ratio = width / height
+         *          width = ratio / height
+         *          height = width / ratio
+         */
         ImVec2 windowSize = new ImVec2();
         ImGui.getContentRegionAvail(windowSize);
 
