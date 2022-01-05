@@ -169,6 +169,7 @@ public class Window {
                 DebugDraw.draw();
                 // System.out.println("FPS: " + 1.0f / dt);
                 currentScene.update(dt);
+                currentScene.render();
             }
 
             frameBuffer.unbind();
