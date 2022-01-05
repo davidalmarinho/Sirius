@@ -3,11 +3,15 @@ package jade;
 import jade.input.KeyListener;
 import jade.input.MouseListener;
 import jade.rendering.FrameBuffer;
+import jade.rendering.PickingTexture;
+import jade.rendering.Renderer;
+import jade.rendering.Shader;
 import jade.rendering.debug.DebugDraw;
 import jade.scenes.LevelEditorScene;
 import jade.scenes.LevelScene;
 import jade.scenes.Scene;
 import jade.scenes.Scenes;
+import jade.utils.AssetPool;
 import org.lwjgl.Version;
 import org.lwjgl.glfw.GLFWErrorCallback;
 import org.lwjgl.opengl.GL;
@@ -25,6 +29,7 @@ public class Window {
     private static Scene currentScene;
     private ImGuiLayer imGuiLayer;
     private FrameBuffer frameBuffer;
+    private PickingTexture pickingTexture;
 
     private Window() {
         this.width  = 1920;
@@ -134,6 +139,7 @@ public class Window {
 
         // TODO: 02/01/2022 Gets the full window size and put that here
         frameBuffer = new FrameBuffer(1920, 1080);
+        pickingTexture = new PickingTexture(1920, 1080);
         glViewport(0, 0, 1920, 1080);
 
         // Colocar a scene
@@ -145,11 +151,40 @@ public class Window {
         float endTime;
         float dt = -1.0f;
 
+        Shader defaultShader = AssetPool.getShader("assets/shaders/default.glsl");
+        Shader pickingShader = AssetPool.getShader("assets/shaders/pickingShader.glsl");
+
         while (!glfwWindowShouldClose(glfwWindow)) {
             KeyListener.updateLastKeys();
 
             // Carregar os eventos (teclado...)
             glfwPollEvents();
+
+            // ========================================
+            // Render pass 1. render to picking texture
+            // ========================================
+            glDisable(GL_BLEND);
+            pickingTexture.enableWriting();
+            glViewport(0, 0, 1920, 1080);
+            glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+            glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+            Renderer.bindShader(pickingShader);
+
+            currentScene.render();
+
+            if (MouseListener.mouseButtonDown(GLFW_MOUSE_BUTTON_LEFT)) {
+                int x = (int) MouseListener.getScreenX();
+                int y = (int) MouseListener.getScreenY();
+                System.out.println("Pixel: " + pickingTexture.readPixed(x, y));
+            }
+
+            pickingTexture.disableWriting();
+            glEnable(GL_BLEND);
+
+            // ========================================
+            // Render pass 2. render actual game
+            // ========================================
+            Renderer.bindShader(defaultShader);
 
             DebugDraw.beginFrame();
 
@@ -166,6 +201,7 @@ public class Window {
                 DebugDraw.draw();
                 // System.out.println("FPS: " + 1.0f / dt);
                 currentScene.update(dt);
+                currentScene.render();
             }
 
             frameBuffer.unbind();

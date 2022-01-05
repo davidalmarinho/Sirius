@@ -142,6 +142,26 @@ public class MouseListener {
         return currentY;
     }
 
+    public static float getScreenX() {
+        float currentX = getX() - get().gameViewportPos.x;
+
+        // This will convert the currentX's range, [0, 1], to [-1, 1]
+        // TODO: 05/01/2022 Change 1920.0f to the size of the monitor
+        currentX = (currentX / get().gameViewportSize.x) * 1920.0f;
+
+        return currentX;
+    }
+
+    public static float getScreenY() {
+        float currentY = getY() - get().gameViewportPos.y;
+
+        // This will convert the currentX's range, [0, 1], to [-1, 1]
+        // TODO: 05/01/2022 Change 1080.0f to the size of the monitor
+        currentY = 1080.0f - ((currentY / get().gameViewportSize.y) * 1080.0f); // Use '-' because ImGui has y coordinates flipped comparing to our project
+
+        return currentY;
+    }
+
     public static float getDeltaX() {
         return (float) (get().lastXPos - get().xPos);
     }
