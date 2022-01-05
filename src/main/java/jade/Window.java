@@ -3,6 +3,7 @@ package jade;
 import jade.input.KeyListener;
 import jade.input.MouseListener;
 import jade.rendering.FrameBuffer;
+import jade.rendering.PickingTexture;
 import jade.rendering.debug.DebugDraw;
 import jade.scenes.LevelEditorScene;
 import jade.scenes.LevelScene;
@@ -25,6 +26,7 @@ public class Window {
     private static Scene currentScene;
     private ImGuiLayer imGuiLayer;
     private FrameBuffer frameBuffer;
+    private PickingTexture pickingTexture;
 
     private Window() {
         this.width  = 1920;
@@ -134,6 +136,7 @@ public class Window {
 
         // TODO: 02/01/2022 Gets the full window size and put that here
         frameBuffer = new FrameBuffer(1920, 1080);
+        pickingTexture = new PickingTexture(1920, 1080);
         glViewport(0, 0, 1920, 1080);
 
         // Colocar a scene
