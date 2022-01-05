@@ -134,13 +134,13 @@ public class Window {
         glEnable(GL_BLEND);
         glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
 
-        imGuiLayer = new ImGuiLayer(glfwWindow);
-        imGuiLayer.initImGui();
-
         // TODO: 02/01/2022 Gets the full window size and put that here
         frameBuffer = new FrameBuffer(1920, 1080);
         pickingTexture = new PickingTexture(1920, 1080);
         glViewport(0, 0, 1920, 1080);
+
+        imGuiLayer = new ImGuiLayer(glfwWindow, pickingTexture);
+        imGuiLayer.initImGui();
 
         // Colocar a scene
         changeScene(Scenes.LEVEL_EDITOR_SCENE);
@@ -171,12 +171,6 @@ public class Window {
             Renderer.bindShader(pickingShader);
 
             currentScene.render();
-
-            if (MouseListener.mouseButtonDown(GLFW_MOUSE_BUTTON_LEFT)) {
-                int x = (int) MouseListener.getScreenX();
-                int y = (int) MouseListener.getScreenY();
-                System.out.println("Pixel: " + pickingTexture.readPixed(x, y));
-            }
 
             pickingTexture.disableWriting();
             glEnable(GL_BLEND);

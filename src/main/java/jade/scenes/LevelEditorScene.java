@@ -36,14 +36,6 @@ public class LevelEditorScene extends Scene {
         loadResources();
         this.camera = new Camera(new Vector3f(-250, 0, 1));
         sprites = AssetPool.getSpritesheet(Images.DECORATIONS_AND_BLOCKS.getSpritesheet());
-
-        // We have a level already created, so we don't want to create a new one
-        if (levelLoaded) {
-            if (gameObjectList.size() > 0) {
-                this.activeGameObject = gameObjectList.get(0);
-            }
-            return;
-        }
     }
 
     @Override
