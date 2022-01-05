@@ -8,9 +8,9 @@ import jade.input.MouseListener;
 import org.joml.Vector2f;
 
 public class GameViewWindow {
-    private static float leftX, rightX, topY, bottomY;
+    private float leftX, rightX, topY, bottomY;
 
-    public static void imgui() {
+    public void imgui() {
         ImGui.begin("Game Viewport", ImGuiWindowFlags.NoScrollbar | ImGuiWindowFlags.NoScrollWithMouse);
 
         // Size of the game viewport
@@ -38,7 +38,7 @@ public class GameViewWindow {
         ImGui.end();
     }
 
-    private static ImVec2 getLargestSizeForViewport() {
+    private ImVec2 getLargestSizeForViewport() {
         /*
          *      Required to know:
          *          ratio = width / height
@@ -63,7 +63,7 @@ public class GameViewWindow {
         return new ImVec2(aspectWidth, aspectHeight);
     }
 
-    private static ImVec2 getCenteredPositionForViewport(ImVec2 aspectSize) {
+    private ImVec2 getCenteredPositionForViewport(ImVec2 aspectSize) {
         ImVec2 windowSize = new ImVec2();
         ImGui.getContentRegionAvail(windowSize);
 
@@ -79,7 +79,7 @@ public class GameViewWindow {
         // ImGui.getCursorPosX() to count with the title bar
     }
 
-    public static boolean getWantCaptureMouse() {
+    public boolean getWantCaptureMouse() {
         return MouseListener.getX() >= leftX && MouseListener.getX() <= rightX
                 && MouseListener.getY() >= bottomY && MouseListener.getY() <= topY;
     }

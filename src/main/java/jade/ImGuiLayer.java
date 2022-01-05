@@ -24,8 +24,11 @@ public class ImGuiLayer {
     // LWJGL3 renderer (SHOULD be initialized)
     private final ImGuiImplGl3 imGuiGl3 = new ImGuiImplGl3();
 
+    private final GameViewWindow gameViewWindow;
+
     public ImGuiLayer(long glfwWindow) {
         this.glfwWindow = glfwWindow;
+        this.gameViewWindow = new GameViewWindow();
     }
 
     // Initialize Dear ImGui.
@@ -127,7 +130,7 @@ public class ImGuiLayer {
             }
 
             // Set a personalized callback when we are with the cursor outside an ImGui window
-            if (!io.getWantCaptureMouse() || GameViewWindow.getWantCaptureMouse()) {
+            if (!io.getWantCaptureMouse() || gameViewWindow.getWantCaptureMouse()) {
                 MouseListener.mouseButtonCallback(w, button, action, mods);
             }
         });
@@ -194,7 +197,7 @@ public class ImGuiLayer {
         setupDockSpace();
         currentScene.sceneImgui();
         // ImGui.showDemoWindow();
-        GameViewWindow.imgui();
+        gameViewWindow.imgui();
 
         // We have to end ImGui before we render ImGui
         ImGui.end();
