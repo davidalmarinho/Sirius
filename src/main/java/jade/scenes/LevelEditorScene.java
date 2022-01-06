@@ -1,6 +1,7 @@
 package jade.scenes;
 
 import gameobjects.Prefabs;
+import gameobjects.components.editor.EditorCamera;
 import gameobjects.components.editor.GridLines;
 import gameobjects.components.editor.MouseControls;
 import imgui.ImGui;
@@ -15,7 +16,6 @@ import jade.rendering.spritesheet.Images;
 import jade.rendering.spritesheet.Spritesheet;
 import jade.utils.AssetPool;
 import org.joml.Vector2f;
-import org.joml.Vector3f;
 
 /**
  * Lógica para editar níveis
@@ -30,11 +30,12 @@ public class LevelEditorScene extends Scene {
 
     @Override
     public void init() {
+        this.camera = new Camera(new Vector2f(-250, 0));
         levelEditorStuff.addComponent(new MouseControls());
         levelEditorStuff.addComponent(new GridLines());
+        levelEditorStuff.addComponent(new EditorCamera(camera));
 
         loadResources();
-        this.camera = new Camera(new Vector3f(-250, 0, 1));
         sprites = AssetPool.getSpritesheet(Images.DECORATIONS_AND_BLOCKS.getSpritesheet());
     }
 
@@ -61,6 +62,7 @@ public class LevelEditorScene extends Scene {
     @Override
     public void update(float dt) {
         levelEditorStuff.update(dt);
+        camera.adjustProjection();
         DebugDraw.addBox2D(new Vector2f(400, 200), new Vector2f(64, 32), 30.0f, Color.GREEN, 1);
         DebugDraw.addBox2D(new Vector2f(400, 200), new Vector2f(64, 32), 0.0f, Color.BLUE, 1);
         DebugDraw.addCircle(new Vector2f(600, 400), 64, Color.BLUE, 1);
