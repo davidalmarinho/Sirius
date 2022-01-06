@@ -1,6 +1,7 @@
 package jade.scenes;
 
 import gameobjects.Prefabs;
+import gameobjects.components.editor.EditorCamera;
 import gameobjects.components.editor.GridLines;
 import gameobjects.components.editor.MouseControls;
 import imgui.ImGui;
@@ -29,11 +30,12 @@ public class LevelEditorScene extends Scene {
 
     @Override
     public void init() {
+        this.camera = new Camera(new Vector2f(-250, 0));
         levelEditorStuff.addComponent(new MouseControls());
         levelEditorStuff.addComponent(new GridLines());
+        levelEditorStuff.addComponent(new EditorCamera(camera));
 
         loadResources();
-        this.camera = new Camera(new Vector2f(-250, 0));
         sprites = AssetPool.getSpritesheet(Images.DECORATIONS_AND_BLOCKS.getSpritesheet());
     }
 
