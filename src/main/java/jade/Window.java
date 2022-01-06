@@ -204,6 +204,8 @@ public class Window {
             glfwSwapBuffers(glfwWindow); /* Faz o mesmo que o Bufferstrategy, aquela parte de já termos uma
             imagem pronta para mostrar antes de apagarmos a outra. */
 
+            MouseListener.endFrame();
+
             // Gameloop
             endTime = (float) glfwGetTime();
             dt = endTime - beginTime;

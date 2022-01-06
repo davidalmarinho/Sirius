@@ -2,6 +2,7 @@ package gameobjects.components.editor;
 
 import gameobjects.components.Component;
 import jade.Window;
+import jade.rendering.Camera;
 import jade.rendering.Color;
 import jade.rendering.debug.DebugDraw;
 import jade.utils.Settings;
@@ -12,8 +13,10 @@ public class GridLines extends Component {
 
     @Override
     public void update(float dt) {
-        Vector2f cameraPos = Window.getCurrentScene().getCamera().position;
-        Vector2f projectionSize = Window.getCurrentScene().getCamera().getProjectionSize();
+        Camera camera = Window.getCurrentScene().getCamera();
+
+        Vector2f cameraPos = camera.position;
+        Vector2f projectionSize = camera.getProjectionSize();
 
         // Snap to Grid
         final int firstX = ((int) (cameraPos.x / Settings.GRID_WIDTH) - 1) * Settings.GRID_WIDTH; // -1 to move back 1 grid space
@@ -21,11 +24,11 @@ public class GridLines extends Component {
 
         // Number of vertical and horizontal lines
         // int numVerticalLines = (int) (Window.getWidth() / projectionSize.x);
-        final int numVerticalLines = (int) (projectionSize.x / Settings.GRID_WIDTH) + 2;
-        final int numHorizontalLines = (int) (projectionSize.y / Settings.GRID_HEIGHT) + 2;
+        final int numVerticalLines = (int) (projectionSize.x * camera.getZoom() / Settings.GRID_WIDTH) + 2;
+        final int numHorizontalLines = (int) (projectionSize.y * camera.getZoom() / Settings.GRID_HEIGHT) + 2;
 
-        final int WIDTH = (int) projectionSize.x + Settings.GRID_WIDTH * 2;
-        final int HEIGHT = (int) projectionSize.y + Settings.GRID_HEIGHT * 2;
+        final int WIDTH = (int) (projectionSize.x * camera.getZoom()) + Settings.GRID_WIDTH * 2;
+        final int HEIGHT = (int) (projectionSize.y * camera.getZoom()) + Settings.GRID_HEIGHT * 2;
 
         // final int MAX_LINES = numVerticalLines > numHorizontalLines ? numVerticalLines : numHorizontalLines;
         final int MAX_LINES = Math.max(numVerticalLines, numHorizontalLines);

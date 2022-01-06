@@ -1,11 +1,12 @@
 package gameobjects.components.editor;
 
 import gameobjects.components.Component;
+import jade.input.KeyListener;
 import jade.input.MouseListener;
 import jade.rendering.Camera;
 import org.joml.Vector2f;
 
-import static org.lwjgl.glfw.GLFW.GLFW_MOUSE_BUTTON_MIDDLE;
+import static org.lwjgl.glfw.GLFW.*;
 
 public class EditorCamera extends Component {
 
@@ -13,6 +14,12 @@ public class EditorCamera extends Component {
 
     private final Camera LEVEL_EDITOR_CAMERA;
     private Vector2f clickOrigin;
+
+    private final float SCROLL_SENSITIVITY = 0.1f;
+    private final float DRAG_SENSIBILITY = 30.0f;
+    private boolean reset;
+
+    private float lerpTime = 0.0f;
 
     public EditorCamera(Camera LEVEL_EDITOR_CAMERA) {
         this.LEVEL_EDITOR_CAMERA = LEVEL_EDITOR_CAMERA;
@@ -31,7 +38,6 @@ public class EditorCamera extends Component {
             Vector2f mousePos = new Vector2f(MouseListener.getOrthoX(), MouseListener.getOrthoY());
 
             Vector2f delta = new Vector2f(mousePos).sub(this.clickOrigin);
-            final float DRAG_SENSIBILITY = 30.0f;
             LEVEL_EDITOR_CAMERA.position.sub(delta.mul(dt).mul(DRAG_SENSIBILITY));
 
             // Lerp
@@ -40,6 +46,31 @@ public class EditorCamera extends Component {
 
         if (dragDebounce <= 0.0f && !MouseListener.mouseButtonDown(BUTTON)) {
             dragDebounce = 0.032f;
+        }
+
+        // Zoom in and zoom out
+        if (MouseListener.getScreenY() != 0.0f) {
+            float addValue = (float) Math.pow(Math.abs(MouseListener.getScrollY() * SCROLL_SENSITIVITY),
+                    1 / LEVEL_EDITOR_CAMERA.getZoom());
+            addValue *= -Math.signum(MouseListener.getScrollY());
+            LEVEL_EDITOR_CAMERA.addZoom(addValue);
+        }
+
+        if (KeyListener.isKeyPressed(GLFW_KEY_0)) {
+            reset = true;
+        }
+
+        if (reset) {
+            LEVEL_EDITOR_CAMERA.position.lerp(new Vector2f(), lerpTime);
+            LEVEL_EDITOR_CAMERA.setZoom(LEVEL_EDITOR_CAMERA.getZoom()
+                    + ((1.0f - LEVEL_EDITOR_CAMERA.getZoom())) * lerpTime);
+            lerpTime += 0.1f * dt;
+            if (Math.abs(LEVEL_EDITOR_CAMERA.position.x) <= 5.0f && Math.abs(LEVEL_EDITOR_CAMERA.position.y) <= 5.0f) {
+                lerpTime = 0.0f;
+                LEVEL_EDITOR_CAMERA.position.set(0.0f, 0.0f);
+                LEVEL_EDITOR_CAMERA.setZoom(1.0f);
+                reset = false;
+            }
         }
     }
 }
