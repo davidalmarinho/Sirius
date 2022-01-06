@@ -6,14 +6,13 @@ import jade.rendering.Color;
 import jade.rendering.debug.DebugDraw;
 import jade.utils.Settings;
 import org.joml.Vector2f;
-import org.joml.Vector3f;
 
 public class GridLines extends Component {
 
 
     @Override
     public void update(float dt) {
-        Vector3f cameraPos = Window.getCurrentScene().getCamera().position;
+        Vector2f cameraPos = Window.getCurrentScene().getCamera().position;
         Vector2f projectionSize = Window.getCurrentScene().getCamera().getProjectionSize();
 
         // Snap to Grid

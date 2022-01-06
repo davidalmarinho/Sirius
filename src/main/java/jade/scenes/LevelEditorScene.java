@@ -15,7 +15,6 @@ import jade.rendering.spritesheet.Images;
 import jade.rendering.spritesheet.Spritesheet;
 import jade.utils.AssetPool;
 import org.joml.Vector2f;
-import org.joml.Vector3f;
 
 /**
  * Lógica para editar níveis
@@ -34,7 +33,7 @@ public class LevelEditorScene extends Scene {
         levelEditorStuff.addComponent(new GridLines());
 
         loadResources();
-        this.camera = new Camera(new Vector3f(-250, 0, 1));
+        this.camera = new Camera(new Vector2f(-250, 0));
         sprites = AssetPool.getSpritesheet(Images.DECORATIONS_AND_BLOCKS.getSpritesheet());
     }
 
