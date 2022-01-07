@@ -3,6 +3,7 @@ package gameobjects.components;
 import imgui.ImGui;
 import gameobjects.GameObject;
 import jade.rendering.Color;
+import org.joml.Vector2f;
 import org.joml.Vector3f;
 import org.joml.Vector4f;
 
@@ -77,6 +78,12 @@ public abstract class Component {
                     if (ImGui.checkbox(name + ": ", val)) {
                         field.set(this, !val);
                     }
+                } else if (type == Vector2f.class) {
+                    Vector2f val = (Vector2f) value;
+                    float[] imVec = {val.x, val.y};
+                    if (ImGui.dragFloat2(name + ": ", imVec)) {
+                        val.set(imVec[0], imVec[1]);
+                    }
                 } else if (type == Vector3f.class) {
                     Vector3f val = (Vector3f) value;
                     float[] imVec = {val.x, val.y, val.z};
@@ -86,13 +93,13 @@ public abstract class Component {
                 } else if (type == Vector4f.class) {
                     Vector4f val = (Vector4f) value;
                     float[] imVec = {val.x, val.y, val.z, val.w};
-                    if (ImGui.dragFloat3(name + ": ", imVec)) {
+                    if (ImGui.dragFloat4(name + ": ", imVec)) {
                         val.set(imVec[0], imVec[1], imVec[2], imVec[3]);
                     }
                 } else if (type == Color.class) {
                     Vector4f vec4Color = ((Color) value).getColor();
                     float[] colors = {vec4Color.x, vec4Color.y, vec4Color.z, vec4Color.w};
-                    if (ImGui.dragFloat3(name + ": ", colors)) {
+                    if (ImGui.dragFloat4(name + ": ", colors)) {
                         ((Color) value).setColor(colors[0], colors[1], colors[2], colors[3]);
                     }
                 }

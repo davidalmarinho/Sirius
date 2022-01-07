@@ -7,11 +7,11 @@ import gameobjects.components.Sprite;
 import gameobjects.components.SpriteRenderer;
 import jade.Window;
 import jade.rendering.Color;
-import jade.rendering.spritesheet.Images;
+import org.joml.Vector2f;
 
 public class TranslateGizmo extends Component {
-    private final Color X_AXIS_COLOR = new Color(1, 0, 0 ,1);
-    private final Color Y_AXIS_COLOR = new Color(0, 0, 1, 1);
+    private Color xAxisColor = new Color(1, 0, 0 ,1);
+    private Color yAxisColor = new Color(0, 0, 1, 1);
     private Color xAxisColorMove = new Color();
     private Color yAxisColorMove = new Color();
 
@@ -22,6 +22,9 @@ public class TranslateGizmo extends Component {
     private SpriteRenderer yAxisSprite;
 
     private GameObject activeGameObject;
+
+    private Vector2f xAxisOffset = new Vector2f(64.0f, 5.0f);
+    private Vector2f yAxisOffset = new Vector2f(23.0f, 63.0f);
 
     private PropertiesWindow propertiesWindow;
 
@@ -38,7 +41,10 @@ public class TranslateGizmo extends Component {
 
     @Override
     public void start() {
-
+        this.xAxisObject.transform.rotation = 90.0f;
+        this.yAxisObject.transform.rotation = 180.0f;
+        this.xAxisObject.setNoSerialize();
+        this.yAxisObject.setNoSerialize();
     }
 
     @Override
@@ -46,6 +52,8 @@ public class TranslateGizmo extends Component {
         if (this.activeGameObject != null) {
             this.xAxisObject.transform.position.set(this.activeGameObject.transform.position);
             this.yAxisObject.transform.position.set(this.activeGameObject.transform.position);
+            this.xAxisObject.transform.position.add(this.xAxisOffset);
+            this.yAxisObject.transform.position.add(this.yAxisOffset);
         }
 
         activeGameObject = propertiesWindow.getActiveGameObject();
@@ -57,8 +65,8 @@ public class TranslateGizmo extends Component {
     }
 
     private void setActive() {
-        this.xAxisSprite.setColor(X_AXIS_COLOR);
-        this.yAxisSprite.setColor(Y_AXIS_COLOR);
+        this.xAxisSprite.setColor(xAxisColor);
+        this.yAxisSprite.setColor(yAxisColor);
     }
 
     private void setInactive() {
