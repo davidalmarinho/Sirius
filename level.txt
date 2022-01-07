@@ -2574,5 +2574,1461 @@
       }
     },
     "zIndex": 0
+  },
+  {
+    "uid": 47,
+    "NAME": "Sprite_Object_Gen",
+    "componentList": [
+      {
+        "type": "gameobjects.components.SpriteRenderer",
+        "properties": {
+          "color": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0,
+            "w": 1.0
+          },
+          "sprite": {
+            "width": 24,
+            "height": 48,
+            "texture": {
+              "filePath": "assets/images/gizmos.png",
+              "width": 72,
+              "height": 48
+            },
+            "textureCoordinates": [
+              {
+                "x": 0.6666667,
+                "y": 1.0
+              },
+              {
+                "x": 0.6666667,
+                "y": 0.0
+              },
+              {
+                "x": 0.33333334,
+                "y": 0.0
+              },
+              {
+                "x": 0.33333334,
+                "y": 1.0
+              }
+            ]
+          },
+          "uid": 85
+        }
+      }
+    ],
+    "transform": {
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "scale": {
+        "x": 16.0,
+        "y": 48.0
+      }
+    },
+    "zIndex": 0
+  },
+  {
+    "uid": 48,
+    "NAME": "Sprite_Object_Gen",
+    "componentList": [
+      {
+        "type": "gameobjects.components.SpriteRenderer",
+        "properties": {
+          "color": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0,
+            "w": 1.0
+          },
+          "sprite": {
+            "width": 24,
+            "height": 48,
+            "texture": {
+              "filePath": "assets/images/gizmos.png",
+              "width": 72,
+              "height": 48
+            },
+            "textureCoordinates": [
+              {
+                "x": 0.6666667,
+                "y": 1.0
+              },
+              {
+                "x": 0.6666667,
+                "y": 0.0
+              },
+              {
+                "x": 0.33333334,
+                "y": 0.0
+              },
+              {
+                "x": 0.33333334,
+                "y": 1.0
+              }
+            ]
+          },
+          "uid": 86
+        }
+      }
+    ],
+    "transform": {
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "scale": {
+        "x": 16.0,
+        "y": 48.0
+      }
+    },
+    "zIndex": 0
+  },
+  {
+    "uid": 49,
+    "NAME": "Sprite_Object_Gen",
+    "componentList": [
+      {
+        "type": "gameobjects.components.SpriteRenderer",
+        "properties": {
+          "color": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0,
+            "w": 1.0
+          },
+          "sprite": {
+            "width": 24,
+            "height": 48,
+            "texture": {
+              "filePath": "assets/images/gizmos.png",
+              "width": 72,
+              "height": 48
+            },
+            "textureCoordinates": [
+              {
+                "x": 0.6666667,
+                "y": 1.0
+              },
+              {
+                "x": 0.6666667,
+                "y": 0.0
+              },
+              {
+                "x": 0.33333334,
+                "y": 0.0
+              },
+              {
+                "x": 0.33333334,
+                "y": 1.0
+              }
+            ]
+          },
+          "uid": 90
+        }
+      }
+    ],
+    "transform": {
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "scale": {
+        "x": 16.0,
+        "y": 48.0
+      }
+    },
+    "zIndex": 0
+  },
+  {
+    "uid": 50,
+    "NAME": "Sprite_Object_Gen",
+    "componentList": [
+      {
+        "type": "gameobjects.components.SpriteRenderer",
+        "properties": {
+          "color": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0,
+            "w": 1.0
+          },
+          "sprite": {
+            "width": 24,
+            "height": 48,
+            "texture": {
+              "filePath": "assets/images/gizmos.png",
+              "width": 72,
+              "height": 48
+            },
+            "textureCoordinates": [
+              {
+                "x": 0.6666667,
+                "y": 1.0
+              },
+              {
+                "x": 0.6666667,
+                "y": 0.0
+              },
+              {
+                "x": 0.33333334,
+                "y": 0.0
+              },
+              {
+                "x": 0.33333334,
+                "y": 1.0
+              }
+            ]
+          },
+          "uid": 91
+        }
+      }
+    ],
+    "transform": {
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "scale": {
+        "x": 16.0,
+        "y": 48.0
+      }
+    },
+    "zIndex": 0
+  },
+  {
+    "uid": 51,
+    "NAME": "Sprite_Object_Gen",
+    "componentList": [
+      {
+        "type": "gameobjects.components.SpriteRenderer",
+        "properties": {
+          "color": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0,
+            "w": 1.0
+          },
+          "sprite": {
+            "width": 24,
+            "height": 48,
+            "texture": {
+              "filePath": "assets/images/gizmos.png",
+              "width": 72,
+              "height": 48
+            },
+            "textureCoordinates": [
+              {
+                "x": 0.6666667,
+                "y": 1.0
+              },
+              {
+                "x": 0.6666667,
+                "y": 0.0
+              },
+              {
+                "x": 0.33333334,
+                "y": 0.0
+              },
+              {
+                "x": 0.33333334,
+                "y": 1.0
+              }
+            ]
+          },
+          "uid": 95
+        }
+      }
+    ],
+    "transform": {
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "scale": {
+        "x": 16.0,
+        "y": 48.0
+      }
+    },
+    "zIndex": 0
+  },
+  {
+    "uid": 52,
+    "NAME": "Sprite_Object_Gen",
+    "componentList": [
+      {
+        "type": "gameobjects.components.SpriteRenderer",
+        "properties": {
+          "color": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0,
+            "w": 1.0
+          },
+          "sprite": {
+            "width": 24,
+            "height": 48,
+            "texture": {
+              "filePath": "assets/images/gizmos.png",
+              "width": 72,
+              "height": 48
+            },
+            "textureCoordinates": [
+              {
+                "x": 0.6666667,
+                "y": 1.0
+              },
+              {
+                "x": 0.6666667,
+                "y": 0.0
+              },
+              {
+                "x": 0.33333334,
+                "y": 0.0
+              },
+              {
+                "x": 0.33333334,
+                "y": 1.0
+              }
+            ]
+          },
+          "uid": 96
+        }
+      }
+    ],
+    "transform": {
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "scale": {
+        "x": 16.0,
+        "y": 48.0
+      }
+    },
+    "zIndex": 0
+  },
+  {
+    "uid": 53,
+    "NAME": "Sprite_Object_Gen",
+    "componentList": [
+      {
+        "type": "gameobjects.components.SpriteRenderer",
+        "properties": {
+          "color": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0,
+            "w": 1.0
+          },
+          "sprite": {
+            "width": 24,
+            "height": 48,
+            "texture": {
+              "filePath": "assets/images/gizmos.png",
+              "width": 72,
+              "height": 48
+            },
+            "textureCoordinates": [
+              {
+                "x": 0.6666667,
+                "y": 1.0
+              },
+              {
+                "x": 0.6666667,
+                "y": 0.0
+              },
+              {
+                "x": 0.33333334,
+                "y": 0.0
+              },
+              {
+                "x": 0.33333334,
+                "y": 1.0
+              }
+            ]
+          },
+          "uid": 100
+        }
+      }
+    ],
+    "transform": {
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "scale": {
+        "x": 16.0,
+        "y": 48.0
+      }
+    },
+    "zIndex": 0
+  },
+  {
+    "uid": 54,
+    "NAME": "Sprite_Object_Gen",
+    "componentList": [
+      {
+        "type": "gameobjects.components.SpriteRenderer",
+        "properties": {
+          "color": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0,
+            "w": 1.0
+          },
+          "sprite": {
+            "width": 24,
+            "height": 48,
+            "texture": {
+              "filePath": "assets/images/gizmos.png",
+              "width": 72,
+              "height": 48
+            },
+            "textureCoordinates": [
+              {
+                "x": 0.6666667,
+                "y": 1.0
+              },
+              {
+                "x": 0.6666667,
+                "y": 0.0
+              },
+              {
+                "x": 0.33333334,
+                "y": 0.0
+              },
+              {
+                "x": 0.33333334,
+                "y": 1.0
+              }
+            ]
+          },
+          "uid": 101
+        }
+      }
+    ],
+    "transform": {
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "scale": {
+        "x": 16.0,
+        "y": 48.0
+      }
+    },
+    "zIndex": 0
+  },
+  {
+    "uid": 55,
+    "NAME": "Sprite_Object_Gen",
+    "componentList": [
+      {
+        "type": "gameobjects.components.SpriteRenderer",
+        "properties": {
+          "color": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0,
+            "w": 1.0
+          },
+          "sprite": {
+            "width": 24,
+            "height": 48,
+            "texture": {
+              "filePath": "assets/images/gizmos.png",
+              "width": 72,
+              "height": 48
+            },
+            "textureCoordinates": [
+              {
+                "x": 0.6666667,
+                "y": 1.0
+              },
+              {
+                "x": 0.6666667,
+                "y": 0.0
+              },
+              {
+                "x": 0.33333334,
+                "y": 0.0
+              },
+              {
+                "x": 0.33333334,
+                "y": 1.0
+              }
+            ]
+          },
+          "uid": 105
+        }
+      }
+    ],
+    "transform": {
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "scale": {
+        "x": 16.0,
+        "y": 48.0
+      }
+    },
+    "zIndex": 0
+  },
+  {
+    "uid": 56,
+    "NAME": "Sprite_Object_Gen",
+    "componentList": [
+      {
+        "type": "gameobjects.components.SpriteRenderer",
+        "properties": {
+          "color": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0,
+            "w": 1.0
+          },
+          "sprite": {
+            "width": 24,
+            "height": 48,
+            "texture": {
+              "filePath": "assets/images/gizmos.png",
+              "width": 72,
+              "height": 48
+            },
+            "textureCoordinates": [
+              {
+                "x": 0.6666667,
+                "y": 1.0
+              },
+              {
+                "x": 0.6666667,
+                "y": 0.0
+              },
+              {
+                "x": 0.33333334,
+                "y": 0.0
+              },
+              {
+                "x": 0.33333334,
+                "y": 1.0
+              }
+            ]
+          },
+          "uid": 106
+        }
+      }
+    ],
+    "transform": {
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "scale": {
+        "x": 16.0,
+        "y": 48.0
+      }
+    },
+    "zIndex": 0
+  },
+  {
+    "uid": 57,
+    "NAME": "Sprite_Object_Gen",
+    "componentList": [
+      {
+        "type": "gameobjects.components.SpriteRenderer",
+        "properties": {
+          "color": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0,
+            "w": 1.0
+          },
+          "sprite": {
+            "width": 24,
+            "height": 48,
+            "texture": {
+              "filePath": "assets/images/gizmos.png",
+              "width": 72,
+              "height": 48
+            },
+            "textureCoordinates": [
+              {
+                "x": 0.6666667,
+                "y": 1.0
+              },
+              {
+                "x": 0.6666667,
+                "y": 0.0
+              },
+              {
+                "x": 0.33333334,
+                "y": 0.0
+              },
+              {
+                "x": 0.33333334,
+                "y": 1.0
+              }
+            ]
+          },
+          "uid": 110
+        }
+      }
+    ],
+    "transform": {
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "scale": {
+        "x": 16.0,
+        "y": 48.0
+      }
+    },
+    "zIndex": 0
+  },
+  {
+    "uid": 58,
+    "NAME": "Sprite_Object_Gen",
+    "componentList": [
+      {
+        "type": "gameobjects.components.SpriteRenderer",
+        "properties": {
+          "color": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0,
+            "w": 1.0
+          },
+          "sprite": {
+            "width": 24,
+            "height": 48,
+            "texture": {
+              "filePath": "assets/images/gizmos.png",
+              "width": 72,
+              "height": 48
+            },
+            "textureCoordinates": [
+              {
+                "x": 0.6666667,
+                "y": 1.0
+              },
+              {
+                "x": 0.6666667,
+                "y": 0.0
+              },
+              {
+                "x": 0.33333334,
+                "y": 0.0
+              },
+              {
+                "x": 0.33333334,
+                "y": 1.0
+              }
+            ]
+          },
+          "uid": 111
+        }
+      }
+    ],
+    "transform": {
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "scale": {
+        "x": 16.0,
+        "y": 48.0
+      }
+    },
+    "zIndex": 0
+  },
+  {
+    "uid": 59,
+    "NAME": "Sprite_Object_Gen",
+    "componentList": [
+      {
+        "type": "gameobjects.components.SpriteRenderer",
+        "properties": {
+          "color": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0,
+            "w": 1.0
+          },
+          "sprite": {
+            "width": 24,
+            "height": 48,
+            "texture": {
+              "filePath": "assets/images/gizmos.png",
+              "width": 72,
+              "height": 48
+            },
+            "textureCoordinates": [
+              {
+                "x": 0.6666667,
+                "y": 1.0
+              },
+              {
+                "x": 0.6666667,
+                "y": 0.0
+              },
+              {
+                "x": 0.33333334,
+                "y": 0.0
+              },
+              {
+                "x": 0.33333334,
+                "y": 1.0
+              }
+            ]
+          },
+          "uid": 115
+        }
+      }
+    ],
+    "transform": {
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "scale": {
+        "x": 16.0,
+        "y": 48.0
+      }
+    },
+    "zIndex": 0
+  },
+  {
+    "uid": 60,
+    "NAME": "Sprite_Object_Gen",
+    "componentList": [
+      {
+        "type": "gameobjects.components.SpriteRenderer",
+        "properties": {
+          "color": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0,
+            "w": 1.0
+          },
+          "sprite": {
+            "width": 24,
+            "height": 48,
+            "texture": {
+              "filePath": "assets/images/gizmos.png",
+              "width": 72,
+              "height": 48
+            },
+            "textureCoordinates": [
+              {
+                "x": 0.6666667,
+                "y": 1.0
+              },
+              {
+                "x": 0.6666667,
+                "y": 0.0
+              },
+              {
+                "x": 0.33333334,
+                "y": 0.0
+              },
+              {
+                "x": 0.33333334,
+                "y": 1.0
+              }
+            ]
+          },
+          "uid": 116
+        }
+      }
+    ],
+    "transform": {
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "scale": {
+        "x": 16.0,
+        "y": 48.0
+      }
+    },
+    "zIndex": 0
+  },
+  {
+    "uid": 61,
+    "NAME": "Sprite_Object_Gen",
+    "componentList": [
+      {
+        "type": "gameobjects.components.SpriteRenderer",
+        "properties": {
+          "color": {
+            "x": 1.0,
+            "y": 0.0,
+            "z": 0.0,
+            "w": 1.0
+          },
+          "sprite": {
+            "width": 24,
+            "height": 48,
+            "texture": {
+              "filePath": "assets/images/gizmos.png",
+              "width": 72,
+              "height": 48
+            },
+            "textureCoordinates": [
+              {
+                "x": 0.6666667,
+                "y": 1.0
+              },
+              {
+                "x": 0.6666667,
+                "y": 0.0
+              },
+              {
+                "x": 0.33333334,
+                "y": 0.0
+              },
+              {
+                "x": 0.33333334,
+                "y": 1.0
+              }
+            ]
+          },
+          "uid": 120
+        }
+      }
+    ],
+    "transform": {
+      "position": {
+        "x": -64.0,
+        "y": -64.0
+      },
+      "scale": {
+        "x": 16.0,
+        "y": 48.0
+      }
+    },
+    "zIndex": 0
+  },
+  {
+    "uid": 62,
+    "NAME": "Sprite_Object_Gen",
+    "componentList": [
+      {
+        "type": "gameobjects.components.SpriteRenderer",
+        "properties": {
+          "color": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 1.0,
+            "w": 1.0
+          },
+          "sprite": {
+            "width": 24,
+            "height": 48,
+            "texture": {
+              "filePath": "assets/images/gizmos.png",
+              "width": 72,
+              "height": 48
+            },
+            "textureCoordinates": [
+              {
+                "x": 0.6666667,
+                "y": 1.0
+              },
+              {
+                "x": 0.6666667,
+                "y": 0.0
+              },
+              {
+                "x": 0.33333334,
+                "y": 0.0
+              },
+              {
+                "x": 0.33333334,
+                "y": 1.0
+              }
+            ]
+          },
+          "uid": 121
+        }
+      }
+    ],
+    "transform": {
+      "position": {
+        "x": 224.0,
+        "y": 224.0
+      },
+      "scale": {
+        "x": 16.0,
+        "y": 48.0
+      }
+    },
+    "zIndex": 0
+  },
+  {
+    "uid": 63,
+    "NAME": "Sprite_Object_Gen",
+    "componentList": [
+      {
+        "type": "gameobjects.components.SpriteRenderer",
+        "properties": {
+          "color": {
+            "x": 1.0,
+            "y": 0.0,
+            "z": 0.0,
+            "w": 1.0
+          },
+          "sprite": {
+            "width": 24,
+            "height": 48,
+            "texture": {
+              "filePath": "assets/images/gizmos.png",
+              "width": 72,
+              "height": 48
+            },
+            "textureCoordinates": [
+              {
+                "x": 0.6666667,
+                "y": 1.0
+              },
+              {
+                "x": 0.6666667,
+                "y": 0.0
+              },
+              {
+                "x": 0.33333334,
+                "y": 0.0
+              },
+              {
+                "x": 0.33333334,
+                "y": 1.0
+              }
+            ]
+          },
+          "uid": 125
+        }
+      }
+    ],
+    "transform": {
+      "position": {
+        "x": 64.0,
+        "y": 192.0
+      },
+      "scale": {
+        "x": 16.0,
+        "y": 48.0
+      }
+    },
+    "zIndex": 0
+  },
+  {
+    "uid": 64,
+    "NAME": "Sprite_Object_Gen",
+    "componentList": [
+      {
+        "type": "gameobjects.components.SpriteRenderer",
+        "properties": {
+          "color": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 1.0,
+            "w": 1.0
+          },
+          "sprite": {
+            "width": 24,
+            "height": 48,
+            "texture": {
+              "filePath": "assets/images/gizmos.png",
+              "width": 72,
+              "height": 48
+            },
+            "textureCoordinates": [
+              {
+                "x": 0.6666667,
+                "y": 1.0
+              },
+              {
+                "x": 0.6666667,
+                "y": 0.0
+              },
+              {
+                "x": 0.33333334,
+                "y": 0.0
+              },
+              {
+                "x": 0.33333334,
+                "y": 1.0
+              }
+            ]
+          },
+          "uid": 126
+        }
+      }
+    ],
+    "transform": {
+      "position": {
+        "x": 64.0,
+        "y": 192.0
+      },
+      "scale": {
+        "x": 16.0,
+        "y": 48.0
+      }
+    },
+    "zIndex": 0
+  },
+  {
+    "uid": 65,
+    "NAME": "Sprite_Object_Gen",
+    "componentList": [
+      {
+        "type": "gameobjects.components.SpriteRenderer",
+        "properties": {
+          "color": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0,
+            "w": 0.0
+          },
+          "sprite": {
+            "width": 24,
+            "height": 48,
+            "texture": {
+              "filePath": "assets/images/gizmos.png",
+              "width": 72,
+              "height": 48
+            },
+            "textureCoordinates": [
+              {
+                "x": 0.6666667,
+                "y": 1.0
+              },
+              {
+                "x": 0.6666667,
+                "y": 0.0
+              },
+              {
+                "x": 0.33333334,
+                "y": 0.0
+              },
+              {
+                "x": 0.33333334,
+                "y": 1.0
+              }
+            ]
+          },
+          "uid": 130
+        }
+      }
+    ],
+    "transform": {
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "scale": {
+        "x": 16.0,
+        "y": 48.0
+      }
+    },
+    "zIndex": 0
+  },
+  {
+    "uid": 66,
+    "NAME": "Sprite_Object_Gen",
+    "componentList": [
+      {
+        "type": "gameobjects.components.SpriteRenderer",
+        "properties": {
+          "color": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0,
+            "w": 0.0
+          },
+          "sprite": {
+            "width": 24,
+            "height": 48,
+            "texture": {
+              "filePath": "assets/images/gizmos.png",
+              "width": 72,
+              "height": 48
+            },
+            "textureCoordinates": [
+              {
+                "x": 0.6666667,
+                "y": 1.0
+              },
+              {
+                "x": 0.6666667,
+                "y": 0.0
+              },
+              {
+                "x": 0.33333334,
+                "y": 0.0
+              },
+              {
+                "x": 0.33333334,
+                "y": 1.0
+              }
+            ]
+          },
+          "uid": 131
+        }
+      }
+    ],
+    "transform": {
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "scale": {
+        "x": 16.0,
+        "y": 48.0
+      }
+    },
+    "zIndex": 0
+  },
+  {
+    "uid": 67,
+    "NAME": "Sprite_Object_Gen",
+    "componentList": [
+      {
+        "type": "gameobjects.components.SpriteRenderer",
+        "properties": {
+          "color": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0,
+            "w": 0.0
+          },
+          "sprite": {
+            "width": 24,
+            "height": 48,
+            "texture": {
+              "filePath": "assets/images/gizmos.png",
+              "width": 72,
+              "height": 48
+            },
+            "textureCoordinates": [
+              {
+                "x": 0.6666667,
+                "y": 1.0
+              },
+              {
+                "x": 0.6666667,
+                "y": 0.0
+              },
+              {
+                "x": 0.33333334,
+                "y": 0.0
+              },
+              {
+                "x": 0.33333334,
+                "y": 1.0
+              }
+            ]
+          },
+          "uid": 135
+        }
+      }
+    ],
+    "transform": {
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "scale": {
+        "x": 16.0,
+        "y": 48.0
+      }
+    },
+    "zIndex": 0
+  },
+  {
+    "uid": 68,
+    "NAME": "Sprite_Object_Gen",
+    "componentList": [
+      {
+        "type": "gameobjects.components.SpriteRenderer",
+        "properties": {
+          "color": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0,
+            "w": 0.0
+          },
+          "sprite": {
+            "width": 24,
+            "height": 48,
+            "texture": {
+              "filePath": "assets/images/gizmos.png",
+              "width": 72,
+              "height": 48
+            },
+            "textureCoordinates": [
+              {
+                "x": 0.6666667,
+                "y": 1.0
+              },
+              {
+                "x": 0.6666667,
+                "y": 0.0
+              },
+              {
+                "x": 0.33333334,
+                "y": 0.0
+              },
+              {
+                "x": 0.33333334,
+                "y": 1.0
+              }
+            ]
+          },
+          "uid": 136
+        }
+      }
+    ],
+    "transform": {
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "scale": {
+        "x": 16.0,
+        "y": 48.0
+      }
+    },
+    "zIndex": 0
+  },
+  {
+    "uid": 69,
+    "NAME": "Sprite_Object_Gen",
+    "componentList": [
+      {
+        "type": "gameobjects.components.SpriteRenderer",
+        "properties": {
+          "color": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0,
+            "w": 0.0
+          },
+          "sprite": {
+            "width": 24,
+            "height": 48,
+            "texture": {
+              "filePath": "assets/images/gizmos.png",
+              "width": 72,
+              "height": 48
+            },
+            "textureCoordinates": [
+              {
+                "x": 0.6666667,
+                "y": 1.0
+              },
+              {
+                "x": 0.6666667,
+                "y": 0.0
+              },
+              {
+                "x": 0.33333334,
+                "y": 0.0
+              },
+              {
+                "x": 0.33333334,
+                "y": 1.0
+              }
+            ]
+          },
+          "uid": 140
+        }
+      }
+    ],
+    "transform": {
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "scale": {
+        "x": 16.0,
+        "y": 48.0
+      }
+    },
+    "zIndex": 0
+  },
+  {
+    "uid": 70,
+    "NAME": "Sprite_Object_Gen",
+    "componentList": [
+      {
+        "type": "gameobjects.components.SpriteRenderer",
+        "properties": {
+          "color": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0,
+            "w": 0.0
+          },
+          "sprite": {
+            "width": 24,
+            "height": 48,
+            "texture": {
+              "filePath": "assets/images/gizmos.png",
+              "width": 72,
+              "height": 48
+            },
+            "textureCoordinates": [
+              {
+                "x": 0.6666667,
+                "y": 1.0
+              },
+              {
+                "x": 0.6666667,
+                "y": 0.0
+              },
+              {
+                "x": 0.33333334,
+                "y": 0.0
+              },
+              {
+                "x": 0.33333334,
+                "y": 1.0
+              }
+            ]
+          },
+          "uid": 141
+        }
+      }
+    ],
+    "transform": {
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "scale": {
+        "x": 16.0,
+        "y": 48.0
+      }
+    },
+    "zIndex": 0
+  },
+  {
+    "uid": 71,
+    "NAME": "Sprite_Object_Gen",
+    "componentList": [
+      {
+        "type": "gameobjects.components.SpriteRenderer",
+        "properties": {
+          "color": {
+            "x": 1.0,
+            "y": 0.0,
+            "z": 0.0,
+            "w": 1.0
+          },
+          "sprite": {
+            "width": 24,
+            "height": 48,
+            "texture": {
+              "filePath": "assets/images/gizmos.png",
+              "width": 72,
+              "height": 48
+            },
+            "textureCoordinates": [
+              {
+                "x": 0.6666667,
+                "y": 1.0
+              },
+              {
+                "x": 0.6666667,
+                "y": 0.0
+              },
+              {
+                "x": 0.33333334,
+                "y": 0.0
+              },
+              {
+                "x": 0.33333334,
+                "y": 1.0
+              }
+            ]
+          },
+          "uid": 145
+        }
+      }
+    ],
+    "transform": {
+      "position": {
+        "x": 544.0,
+        "y": 256.0
+      },
+      "scale": {
+        "x": 16.0,
+        "y": 48.0
+      }
+    },
+    "zIndex": 0
+  },
+  {
+    "uid": 72,
+    "NAME": "Sprite_Object_Gen",
+    "componentList": [
+      {
+        "type": "gameobjects.components.SpriteRenderer",
+        "properties": {
+          "color": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 1.0,
+            "w": 1.0
+          },
+          "sprite": {
+            "width": 24,
+            "height": 48,
+            "texture": {
+              "filePath": "assets/images/gizmos.png",
+              "width": 72,
+              "height": 48
+            },
+            "textureCoordinates": [
+              {
+                "x": 0.6666667,
+                "y": 1.0
+              },
+              {
+                "x": 0.6666667,
+                "y": 0.0
+              },
+              {
+                "x": 0.33333334,
+                "y": 0.0
+              },
+              {
+                "x": 0.33333334,
+                "y": 1.0
+              }
+            ]
+          },
+          "uid": 146
+        }
+      }
+    ],
+    "transform": {
+      "position": {
+        "x": 544.0,
+        "y": 256.0
+      },
+      "scale": {
+        "x": 16.0,
+        "y": 48.0
+      }
+    },
+    "zIndex": 0
   }
 ]

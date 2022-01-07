@@ -4,11 +4,13 @@ import gameobjects.Prefabs;
 import gameobjects.components.editor.EditorCamera;
 import gameobjects.components.editor.GridLines;
 import gameobjects.components.editor.MouseControls;
+import gameobjects.components.editor.TranslateGizmo;
 import imgui.ImGui;
 import imgui.ImVec2;
 import gameobjects.GameObject;
 import gameobjects.Transform;
 import gameobjects.components.*;
+import jade.Window;
 import jade.rendering.Camera;
 import jade.rendering.Color;
 import jade.rendering.debug.DebugDraw;
@@ -30,13 +32,16 @@ public class LevelEditorScene extends Scene {
 
     @Override
     public void init() {
+        loadResources();
+        sprites = AssetPool.getSpritesheet(Images.DECORATIONS_AND_BLOCKS.getSpritesheet());
+        Spritesheet gizmos = AssetPool.getSpritesheet(Images.GIZMOS.getTexture());
+
         this.camera = new Camera(new Vector2f(-250, 0));
         levelEditorStuff.addComponent(new MouseControls());
         levelEditorStuff.addComponent(new GridLines());
         levelEditorStuff.addComponent(new EditorCamera(camera));
-
-        loadResources();
-        sprites = AssetPool.getSpritesheet(Images.DECORATIONS_AND_BLOCKS.getSpritesheet());
+        levelEditorStuff.addComponent(new TranslateGizmo(gizmos.getSprite(1),
+                Window.get().getImGuiLayer().getPropertiesWindow()));
     }
 
     @Override
@@ -46,6 +51,10 @@ public class LevelEditorScene extends Scene {
                 new Spritesheet(
                         AssetPool.getTexture(Images.DECORATIONS_AND_BLOCKS.getSpritesheet()),
                         16, 16, 81, 0));
+        AssetPool.addSpritesheet(Images.GIZMOS.getTexture(),
+                new Spritesheet(
+                        AssetPool.getTexture(Images.GIZMOS.getTexture()),
+                        24, 48, 2, 0));
         AssetPool.getTexture(Images.BLEND_IMAGE_2.getTexture());
 
         // Get the texture that was already loaded after saving the saving file with Gson
@@ -79,6 +88,13 @@ public class LevelEditorScene extends Scene {
 
     @Override
     public void imgui() {
+        // ================
+        // For debug purposes
+        ImGui.begin("Level Editor Stuff");
+        levelEditorStuff.imgui();
+        ImGui.end();
+        // ================
+
         ImGui.begin("Icons");
 
         // Gets the window's positions

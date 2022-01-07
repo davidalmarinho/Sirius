@@ -2,6 +2,7 @@ package gameobjects.components;
 
 import imgui.ImGui;
 import gameobjects.GameObject;
+import jade.rendering.Color;
 import org.joml.Vector3f;
 import org.joml.Vector4f;
 
@@ -33,6 +34,12 @@ public abstract class Component {
             // Get the variables (field) of some component
             Field[] fields = this.getClass().getDeclaredFields();
             for (Field field : fields) {
+                // We can't change final variables, so we shouldn't dispose them
+                boolean isFinal = Modifier.isFinal(field.getModifiers());
+                if (isFinal) {
+                    continue;
+                }
+
                 // We don't want that transient variables to show up in LevelEditorScene
                 boolean isTransient = Modifier.isTransient(field.getModifiers());
                 if (isTransient) {
@@ -41,7 +48,8 @@ public abstract class Component {
 
                 // Change the access of private variables to public variables to the program be able to change its data
                 boolean isPrivate = Modifier.isPrivate(field.getModifiers());
-                if (isPrivate) {
+                boolean isProtected = Modifier.isProtected(field.getModifiers()) | field.getModifiers() == 0;
+                if (isPrivate || isProtected) {
                     field.setAccessible(true);
                 }
 
@@ -81,10 +89,16 @@ public abstract class Component {
                     if (ImGui.dragFloat3(name + ": ", imVec)) {
                         val.set(imVec[0], imVec[1], imVec[2], imVec[3]);
                     }
+                } else if (type == Color.class) {
+                    Vector4f vec4Color = ((Color) value).getColor();
+                    float[] colors = {vec4Color.x, vec4Color.y, vec4Color.z, vec4Color.w};
+                    if (ImGui.dragFloat3(name + ": ", colors)) {
+                        ((Color) value).setColor(colors[0], colors[1], colors[2], colors[3]);
+                    }
                 }
 
                 // Change the access of the formerly private variables to private again
-                if (isPrivate) {
+                if (isPrivate || isProtected) {
                     field.setAccessible(false);
                 }
             }

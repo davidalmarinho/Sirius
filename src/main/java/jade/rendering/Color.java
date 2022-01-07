@@ -26,4 +26,8 @@ public class Color {
     public Vector4f getColor() {
         return this.color;
     }
+
+    public void setColor(float r, float g, float b, float a) {
+        this.color.set(r, g, b, a);
+    }
 }
