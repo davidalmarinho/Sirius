@@ -7,6 +7,7 @@ import jade.utils.AssetPool;
 import org.joml.Vector2f;
 import org.joml.Vector3f;
 import jade.utils.JMath;
+import org.joml.Vector4f;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -73,7 +74,7 @@ public class DebugDraw {
         for (Line2D line : line2DList) {
             for (int i = 0; i < 2; i++) {
                 Vector2f position = i == 0 ? line.getBegin() : line.getEnd();
-                Vector3f color = line.getColor();
+                Vector4f color = line.getColor();
 
                 // Load position
                 vertexArray[index] = position.x;
