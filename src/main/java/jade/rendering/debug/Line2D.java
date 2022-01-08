@@ -3,6 +3,7 @@ package jade.rendering.debug;
 import jade.rendering.Color;
 import org.joml.Vector2f;
 import org.joml.Vector3f;
+import org.joml.Vector4f;
 
 import javax.sound.sampled.Line;
 
@@ -49,7 +50,7 @@ public class Line2D {
         return to;
     }
 
-    public Vector3f getColor() {
+    public Vector4f getColor() {
         return color.getColor();
     }
 

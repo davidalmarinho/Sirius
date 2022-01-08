@@ -268,4 +268,8 @@ public class Window {
     public static Scene getCurrentScene() {
         return currentScene;
     }
+
+    public ImGuiLayer getImGuiLayer() {
+        return imGuiLayer;
+    }
 }

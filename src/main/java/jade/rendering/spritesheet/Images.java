@@ -6,6 +6,7 @@ public enum Images {
     BLEND_IMAGE_2("blendImage2.png"),
     TEST_IMAGE("testImage.png"),
     TEST_IMAGE_2("testImage2.png"),
+    GIZMOS("gizmos.png"),
 
     DECORATIONS_AND_BLOCKS("decorationsAndBlocks.png"),
     ICONS("icons.png");

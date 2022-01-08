@@ -2,6 +2,7 @@ package gameobjects.components;
 
 import imgui.ImGui;
 import gameobjects.Transform;
+import jade.rendering.Color;
 import jade.rendering.spritesheet.Texture;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
@@ -65,6 +66,14 @@ public class SpriteRenderer extends Component {
     public void setColor(Vector4f color) {
         if (!this.color.equals(color)) {
             this.color.set(color);
+            this.dirty = true;
+        }
+    }
+
+    public void setColor(Color color) {
+        Vector4f vec4Color = color.getColor();
+        if (!this.color.equals(vec4Color)) {
+            this.color.set(vec4Color);
             this.dirty = true;
         }
     }

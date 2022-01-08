@@ -4,6 +4,7 @@ import jade.Window;
 import gameobjects.components.SpriteRenderer;
 import jade.rendering.spritesheet.Texture;
 import jade.utils.AssetPool;
+import org.joml.Matrix4f;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
 
@@ -186,6 +187,14 @@ public class RenderBatch implements Comparable<RenderBatch> {
             }
         }
 
+        boolean isRotated = sprite.gameObject.transform.rotation != 0.0f;
+        Matrix4f transformMatrix = new Matrix4f().identity();
+        if (isRotated) {
+            transformMatrix.translate(sprite.gameObject.transform.position.x, sprite.gameObject.transform.position.y, 0.0f);
+            transformMatrix.rotate((float) Math.toRadians(sprite.gameObject.transform.rotation), 0, 0, 1);
+            transformMatrix.scale(sprite.gameObject.transform.scale.x, sprite.gameObject.transform.scale.y, 1);
+        }
+
         // Add the 4 vertices with its properties
 
         /*
@@ -208,11 +217,18 @@ public class RenderBatch implements Comparable<RenderBatch> {
                 yAdd = 1.0f;
             }
 
+            Vector4f currentPos = new Vector4f(
+                    sprite.gameObject.transform.position.x + (xAdd * sprite.gameObject.transform.scale.x),
+                    sprite.gameObject.transform.position.y + (yAdd * sprite.gameObject.transform.scale.y),
+                    0, 1);
+
+            if (isRotated) {
+                currentPos = new Vector4f(xAdd, yAdd, 0, 1).mul(transformMatrix);
+            }
+
             // Load positions
-            vertices[offset] = sprite.gameObject.transform.position.x
-                    + (xAdd * sprite.gameObject.transform.scale.x);
-            vertices[offset + 1] = sprite.gameObject.transform.position.y
-                    + (yAdd * sprite.gameObject.transform.scale.y);
+            vertices[offset] = currentPos.x;
+            vertices[offset + 1] = currentPos.y;
 
             // Load color
             vertices[offset + 2] = color.x;

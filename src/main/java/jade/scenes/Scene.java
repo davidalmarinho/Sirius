@@ -92,7 +92,13 @@ public abstract class Scene {
         try {
             // Save gameObjectList in a txt file
             FileWriter writer = new FileWriter("level.txt");
-            writer.write(gson.toJson(this.gameObjectList));
+            List<GameObject> objsToSerialize = new ArrayList<>();
+            for (GameObject obj: gameObjectList) {
+                if (obj.isDoSerialization()) {
+                    objsToSerialize.add(obj);
+                }
+            }
+            writer.write(gson.toJson(objsToSerialize));
             writer.flush();
             writer.close();
         } catch (IOException e) {
