@@ -6,6 +6,7 @@ import gameobjects.components.Component;
 import gameobjects.components.Sprite;
 import gameobjects.components.SpriteRenderer;
 import jade.Window;
+import jade.input.MouseListener;
 import jade.rendering.Color;
 import org.joml.Vector2f;
 
@@ -54,6 +55,10 @@ public class TranslateGizmo extends Component {
             this.yAxisObject.transform.position.set(this.activeGameObject.transform.position);
             this.xAxisObject.transform.position.add(this.xAxisOffset);
             this.yAxisObject.transform.position.add(this.yAxisOffset);
+        }
+
+        if (MouseListener.isDragging()) {
+            System.out.println("Dragging");
         }
 
         activeGameObject = propertiesWindow.getActiveGameObject();
