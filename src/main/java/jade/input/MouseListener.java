@@ -11,10 +11,12 @@ import static org.lwjgl.glfw.GLFW.GLFW_RELEASE;
 
 public class MouseListener {
     private static MouseListener instance;
-    private double xPos, yPos, lastXPos, lastYPos;
+    private double xPos, yPos, lastXPos, lastYPos, worldX, worldY, lastWorldX, lastWorldY;
     private double scrollX, scrollY;
     private final boolean[] mouseButtons = new boolean[9];
     private boolean dragging;
+
+    private int mouseButtonsDown;
 
     // Game viewport
     private Vector2f gameViewportPos  = new Vector2f();
@@ -32,30 +34,31 @@ public class MouseListener {
     }
 
     /**
-     * Para receber as coordenadas do rato
-     * Vamos usar get().lastX, get().lastY()... Para futuramente pudermos chamar
-     * MouseListener.mousePositionCallback() ao invés de MouseListener.get().mousePositionCallback(),
-     * pois está tudo corretamente instanciado/estático.
-     * @param xPos (Posição) x atual do rato
-     * @param yPos (Posição) y atual do rato
+     * To get the mouse coordinates
+     * We will use get().lastX, get().lastY()... To, in the future, we may call
+     * MouseListener.mousePositionCallback() instead of MouseListener.get().mousePositionCallback(),
+     *
+     * @param xPos (Position) x mouse's actual coordinates
+     * @param yPos (Position) y mouse's actual coordinates
      */
     public static void mousePosCallback(long window, double xPos, double yPos) {
-        // Copiar os valores antigos para não os perdermos -- neste caso, coordenadas da última posição do rato
+        if (get().mouseButtonsDown > 0) {
+            get().dragging = true;
+        }
+
+        // Copy the old values to don't lost them -- in this case, last mouse coordinates
         get().lastXPos = get().xPos;
         get().lastYPos = get().yPos;
 
-        // Receber os valores atuais -- coordenadas atuais
+        // Receive actual values -- actual coordinates
         get().xPos = xPos;
         get().yPos = yPos;
 
-        // Verificar se estamos a arrastar algum elemento
-        for (int indexButton = 0; indexButton < get().mouseButtons.length; indexButton++) {
-            // Se estivermos a clicar em algum botão do rato, então dragging tem que ser true
-            if (get().mouseButtons[indexButton]) {
-                get().dragging = true;
-                break;
-            }
-        }
+        // World coordinates
+        get().lastWorldX = get().worldX;
+        get().lastWorldY = get().worldY;
+        calculateOrthoX();
+        calculateOrthoY();
     }
 
     /**
@@ -69,10 +72,12 @@ public class MouseListener {
         if (action == GLFW_PRESS) {
             // Verificar se "temos as teclas todas"
             if (button < get().mouseButtons.length) {
+                get().mouseButtonsDown++;
                 get().mouseButtons[button] = true;
             }
         } else if (action == GLFW_RELEASE) {
             if (button < get().mouseButtons.length) {
+                get().mouseButtonsDown--;
                 get().mouseButtons[button] = false;
 
                 // Como não clicamos em nenhum botão, sabemos que também não há dragging
@@ -107,6 +112,10 @@ public class MouseListener {
     }
 
     public static float getOrthoX() {
+        return (float) get().worldX;
+    }
+
+    private static void calculateOrthoX() {
         float currentX = getX() - get().gameViewportPos.x;
 
         // This will convert the currentX's range, [0, 1], to [-1, 1]
@@ -119,12 +128,14 @@ public class MouseListener {
         camera.getInverseView().mul(camera.getInverseProjection(), viewProjection);
         tmp.mul(viewProjection);
 
-        currentX = tmp.x;
-
-        return currentX;
+        get().worldX = tmp.x;
     }
 
     public static float getOrthoY() {
+        return (float) get().worldY;
+    }
+
+    private static void calculateOrthoY() {
         float currentY = getY() - get().gameViewportPos.y;
 
         // This will convert the currentX's range, [0, 1], to [-1, 1]
@@ -137,9 +148,7 @@ public class MouseListener {
         camera.getInverseView().mul(camera.getInverseProjection(), viewProjection);
         tmp.mul(viewProjection);
 
-        currentY = tmp.y;
-
-        return currentY;
+        get().worldY = tmp.y;
     }
 
     public static float getScreenX() {
@@ -168,6 +177,14 @@ public class MouseListener {
 
     public static float getDeltaY() {
         return (float) (get().lastYPos - get().yPos);
+    }
+
+    public static float getWorldDeltaX() {
+        return (float) (get().lastWorldX - get().worldX);
+    }
+
+    public static float getWorldDeltaY() {
+        return (float) (get().lastWorldY - get().worldY);
     }
 
     public static float getScrollX() {
