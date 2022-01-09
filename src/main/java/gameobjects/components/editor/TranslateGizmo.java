@@ -11,10 +11,10 @@ import jade.rendering.Color;
 import org.joml.Vector2f;
 
 public class TranslateGizmo extends Component {
-    private Color xAxisColor = new Color(1, 0, 0 ,1);
-    private Color yAxisColor = new Color(0, 0, 1, 1);
-    private Color xAxisColorMove = new Color();
-    private Color yAxisColorMove = new Color();
+    private Color xAxisColor = new Color(1, 0.3f, 0.3f, 1);
+    private Color xAxisColorHover = new Color(1, 0, 0, 1);
+    private Color yAxisColor = new Color(0.3f, 1, 0.3f, 1);
+    private Color yAxisColorHover = new Color(0, 1, 0, 1);
 
     private GameObject xAxisObject;
     private GameObject yAxisObject;
@@ -27,6 +27,9 @@ public class TranslateGizmo extends Component {
     private Vector2f xAxisOffset = new Vector2f(64.0f, 5.0f);
     private Vector2f yAxisOffset = new Vector2f(23.0f, 63.0f);
 
+    private int gizmoWidth = 16;
+    private int gizmoHeight = 48;
+
     private PropertiesWindow propertiesWindow;
 
     public TranslateGizmo(Sprite arrowSprite, PropertiesWindow propertiesWindow) {
@@ -35,6 +38,9 @@ public class TranslateGizmo extends Component {
         this.xAxisSprite = xAxisObject.getComponent(SpriteRenderer.class);
         this.yAxisSprite = yAxisObject.getComponent(SpriteRenderer.class);
         this.propertiesWindow = propertiesWindow;
+
+        this.xAxisObject.addComponent(new NonPickable());
+        this.yAxisObject.addComponent(new NonPickable());
 
         Window.getCurrentScene().addGameObject(xAxisObject);
         Window.getCurrentScene().addGameObject(yAxisObject);
@@ -57,15 +63,22 @@ public class TranslateGizmo extends Component {
             this.yAxisObject.transform.position.add(this.yAxisOffset);
         }
 
-        if (MouseListener.isDragging()) {
-            System.out.println("Dragging");
-        }
-
         activeGameObject = propertiesWindow.getActiveGameObject();
         if (activeGameObject != null) {
             setActive();
         } else {
             setInactive();
+            return;
+        }
+
+        boolean xAxisHot = checkXHoverState();
+        boolean yAxisHot = checkYHoverState();
+
+        if (this.activeGameObject != null) {
+            this.xAxisObject.transform.position.set(this.activeGameObject.transform.position);
+            this.yAxisObject.transform.position.set(this.activeGameObject.transform.position);
+            this.xAxisObject.transform.position.add(this.xAxisOffset);
+            this.yAxisObject.transform.position.add(this.yAxisOffset);
         }
     }
 
@@ -78,5 +91,33 @@ public class TranslateGizmo extends Component {
         this.activeGameObject = null;
         this.xAxisSprite.setColor(new Color());
         this.yAxisSprite.setColor(new Color());
+    }
+
+    private boolean checkXHoverState() {
+        Vector2f mousePos = new Vector2f(MouseListener.getOrthoX(), MouseListener.getOrthoY());
+        if (mousePos.x <= xAxisObject.transform.position.x &&
+                mousePos.x >= xAxisObject.transform.position.x - gizmoHeight &&
+                mousePos.y >= xAxisObject.transform.position.y &&
+                mousePos.y <= xAxisObject.transform.position.y + gizmoWidth) {
+            xAxisSprite.setColor(xAxisColorHover);
+            return true;
+        }
+
+        xAxisSprite.setColor(xAxisColor);
+        return false;
+    }
+
+    private boolean checkYHoverState() {
+        Vector2f mousePos = new Vector2f(MouseListener.getOrthoX(), MouseListener.getOrthoY());
+        if (mousePos.x <= yAxisObject.transform.position.x &&
+                mousePos.x >= yAxisObject.transform.position.x - gizmoWidth &&
+                mousePos.y <= yAxisObject.transform.position.y &&
+                mousePos.y >= yAxisObject.transform.position.y - gizmoHeight) {
+            yAxisSprite.setColor(yAxisColorHover);
+            return true;
+        }
+
+        yAxisSprite.setColor(yAxisColor);
+        return false;
     }
 }
