@@ -25,8 +25,8 @@ public class GameObject {
     }
 
     public void start() {
-        for (Component c : componentList) {
-            c.start();
+        for (int i = 0; i < componentList.size(); i++) {
+            componentList.get(i).start();
         }
     }
 

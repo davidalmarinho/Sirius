@@ -50,13 +50,14 @@ public class MouseListener {
         get().lastXPos = get().xPos;
         get().lastYPos = get().yPos;
 
+        // World coordinates
+        get().lastWorldX = get().worldX;
+        get().lastWorldY = get().worldY;
+
         // Receive actual values -- actual coordinates
         get().xPos = xPos;
         get().yPos = yPos;
 
-        // World coordinates
-        get().lastWorldX = get().worldX;
-        get().lastWorldY = get().worldY;
         calculateOrthoX();
         calculateOrthoY();
     }
@@ -97,6 +98,8 @@ public class MouseListener {
         get().lastYPos = get().yPos;
         get().scrollX  = 0.0;
         get().scrollY  = 0.0;
+        get().lastWorldX = get().worldX;
+        get().lastWorldY = get().worldY;
     }
 
     public static float getX() {
