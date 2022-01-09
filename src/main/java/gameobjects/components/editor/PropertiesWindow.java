@@ -2,6 +2,7 @@ package gameobjects.components.editor;
 
 import gameobjects.GameObject;
 import imgui.ImGui;
+import jade.Window;
 import jade.input.MouseListener;
 import jade.rendering.PickingTexture;
 import jade.scenes.Scene;
@@ -24,7 +25,13 @@ public class PropertiesWindow {
             int x = (int) MouseListener.getScreenX();
             int y = (int) MouseListener.getScreenY();
             int gameObjectId = pickingTexture.readPixed(x, y);
-            activeGameObject = currentScene.getGameObject(gameObjectId);
+            GameObject pickedObj = Window.getCurrentScene().getGameObject(gameObjectId);
+            // activeGameObject = currentScene.getGameObject(gameObjectId);
+            if (pickedObj != null && pickedObj.getComponent(NonPickable.class) == null) {
+                activeGameObject = pickedObj;
+            } else if (pickedObj == null && !MouseListener.isDragging()) {
+                activeGameObject = null;
+            }
             this.debounce = 0.2f;
         }
     }

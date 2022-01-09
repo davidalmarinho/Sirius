@@ -1,10 +1,7 @@
 package jade.scenes;
 
 import gameobjects.Prefabs;
-import gameobjects.components.editor.EditorCamera;
-import gameobjects.components.editor.GridLines;
-import gameobjects.components.editor.MouseControls;
-import gameobjects.components.editor.TranslateGizmo;
+import gameobjects.components.editor.*;
 import imgui.ImGui;
 import imgui.ImVec2;
 import gameobjects.GameObject;
@@ -40,8 +37,8 @@ public class LevelEditorScene extends Scene {
         levelEditorStuff.addComponent(new MouseControls());
         levelEditorStuff.addComponent(new GridLines());
         levelEditorStuff.addComponent(new EditorCamera(camera));
-        levelEditorStuff.addComponent(new TranslateGizmo(gizmos.getSprite(1),
-                Window.get().getImGuiLayer().getPropertiesWindow()));
+
+        levelEditorStuff.addComponent(new GizmoSystem(gizmos));
 
         levelEditorStuff.start();
     }
@@ -56,7 +53,7 @@ public class LevelEditorScene extends Scene {
         AssetPool.addSpritesheet(Images.GIZMOS.getTexture(),
                 new Spritesheet(
                         AssetPool.getTexture(Images.GIZMOS.getTexture()),
-                        24, 48, 2, 0));
+                        24, 48, 3, 0));
         AssetPool.getTexture(Images.BLEND_IMAGE_2.getTexture());
 
         // Get the texture that was already loaded after saving the saving file with Gson
