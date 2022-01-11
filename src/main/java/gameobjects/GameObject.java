@@ -13,7 +13,6 @@ public class GameObject {
     public final String NAME;
     public List<Component> componentList;
     public transient Transform transform;
-    private int zIndex;
     private boolean doSerialization = true;
 
     public GameObject(String name) {
