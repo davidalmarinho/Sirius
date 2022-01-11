@@ -2,6 +2,7 @@ package gameobjects;
 
 import gameobjects.components.Component;
 import gameobjects.components.Transform;
+import imgui.ImGui;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -69,7 +70,8 @@ public class GameObject {
 
     public void imgui() {
         for (Component c : componentList) {
-            c.imgui();
+            if (ImGui.collapsingHeader(c.getClass().getSimpleName()))
+                c.imgui();
         }
     }
 
