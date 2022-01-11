@@ -2,6 +2,7 @@ package jade.scenes;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import gameobjects.Transform;
 import imgui.ImGui;
 import gameobjects.GameObject;
 import gameobjects.GameObjectDeserializer;
@@ -80,6 +81,13 @@ public abstract class Scene {
      */
     public void imgui() {
 
+    }
+
+    public GameObject createGameObject(String name) {
+        GameObject go = new GameObject(name);
+        go.addComponent(new Transform());
+        go.transform = go.getComponent(Transform.class);
+        return go;
     }
 
     public void saveExit() {

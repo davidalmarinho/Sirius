@@ -21,7 +21,7 @@ import org.joml.Vector2f;
  */
 public class LevelEditorScene extends Scene {
     private Spritesheet sprites;
-    private final GameObject levelEditorStuff = new GameObject("LevelEditor", new Transform(), 0);
+    private final GameObject levelEditorStuff = this.createGameObject("LevelEditor");
 
     public LevelEditorScene() {
 
