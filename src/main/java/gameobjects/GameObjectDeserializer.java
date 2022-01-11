@@ -2,6 +2,7 @@ package gameobjects;
 
 import com.google.gson.*;
 import gameobjects.components.Component;
+import gameobjects.components.Transform;
 
 import java.lang.reflect.Type;
 

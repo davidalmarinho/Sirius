@@ -1,6 +1,5 @@
-package gameobjects;
+package gameobjects.components;
 
-import gameobjects.components.Component;
 import org.joml.Vector2f;
 
 public class Transform extends Component {

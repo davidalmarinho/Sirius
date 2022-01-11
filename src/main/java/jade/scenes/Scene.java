@@ -2,8 +2,7 @@ package jade.scenes;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import gameobjects.Transform;
-import imgui.ImGui;
+import gameobjects.components.Transform;
 import gameobjects.GameObject;
 import gameobjects.GameObjectDeserializer;
 import gameobjects.components.Component;
