@@ -1,5 +1,6 @@
 package gameobjects.components;
 
+import gameobjects.components.editor.JImGui;
 import imgui.ImGui;
 import gameobjects.GameObject;
 import jade.rendering.Color;
@@ -63,16 +64,10 @@ public abstract class Component {
 
                 if (type == int.class) {
                     int val = (int) value;
-                    int[] imInt = {val};
-                    if (ImGui.dragInt(name + ": ", imInt)) {
-                        field.set(this, imInt[0]);
-                    }
+                    field.set(this, JImGui.dragInt(name, val));
                 } else if (type == float.class) {
                     float val = (float) value;
-                    float[] imFloat = {val};
-                    if (ImGui.dragFloat(name + ": ", imFloat)) {
-                        field.set(this, imFloat[0]);
-                    }
+                    field.set(this, JImGui.dragFloat(name, val));
                 } else if (type == boolean.class) {
                     boolean val = (boolean) value;
                     if (ImGui.checkbox(name + ": ", val)) {
@@ -80,10 +75,7 @@ public abstract class Component {
                     }
                 } else if (type == Vector2f.class) {
                     Vector2f val = (Vector2f) value;
-                    float[] imVec = {val.x, val.y};
-                    if (ImGui.dragFloat2(name + ": ", imVec)) {
-                        val.set(imVec[0], imVec[1]);
-                    }
+                    JImGui.drawVec2Control(name, val);
                 } else if (type == Vector3f.class) {
                     Vector3f val = (Vector3f) value;
                     float[] imVec = {val.x, val.y, val.z};

@@ -1,5 +1,6 @@
 package gameobjects.components;
 
+import gameobjects.components.editor.JImGui;
 import imgui.ImGui;
 import jade.rendering.Color;
 import jade.rendering.spritesheet.Texture;
@@ -34,9 +35,13 @@ public class SpriteRenderer extends Component {
 
     @Override
     public void imgui() {
-        final float[] imColors = {color.x, color.y, color.z, color.w};
+        /*final float[] imColors = {color.x, color.y, color.z, color.w};
         if (ImGui.colorPicker4("Color Picker: ", imColors)) {
             this.color.set(imColors[0], imColors[1], imColors[2], imColors[3]);
+            this.dirty = true;
+        }*/
+
+        if (JImGui.colorPicker4("Color Picker", this.color)) {
             this.dirty = true;
         }
     }
