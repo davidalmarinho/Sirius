@@ -1,6 +1,7 @@
 package gameobjects;
 
 import gameobjects.components.Component;
+import gameobjects.components.Transform;
 
 import java.util.ArrayList;
 import java.util.List;
