@@ -11,15 +11,13 @@ public class GameObject {
 
     public final String NAME;
     public List<Component> componentList;
-    public Transform transform;
+    public transient Transform transform;
     private int zIndex;
     private boolean doSerialization = true;
 
-    public GameObject(String name, Transform transform, int zIndex) {
+    public GameObject(String name) {
         this.NAME = name;
         componentList = new ArrayList<>();
-        this.transform = transform;
-        this.zIndex = zIndex;
 
         this.uid = ID_COUNTER++;
     }
@@ -77,10 +75,6 @@ public class GameObject {
 
     public static void init(int maxId) {
         ID_COUNTER = maxId;
-    }
-
-    public int getzIndex() {
-        return zIndex;
     }
 
     public int getUid() {

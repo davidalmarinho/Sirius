@@ -1,35 +1,31 @@
 package gameobjects;
 
+import gameobjects.components.Component;
 import org.joml.Vector2f;
 
-public class Transform {
+public class Transform extends Component {
     public Vector2f position, scale;
     public float rotation;
+    public int zIndex;
 
-    public Transform() {
-       init(new Vector2f(), new Vector2f());
-    }
-
-    public Transform(Vector2f position) {
-        init(position, new Vector2f());
-    }
-
-    public Transform(Vector2f position, Vector2f scale) {
-        init(position, scale);
-    }
-
-    private void init(Vector2f position, Vector2f scale) {
+    public Transform(Vector2f position, Vector2f scale, int zIndex) {
         this.position = position;
         this.scale = scale;
+        this.zIndex = zIndex;
+    }
+
+    public Transform() {
+        this(new Vector2f(), new Vector2f(), 0);
     }
 
     public Transform copy() {
-        return new Transform(new Vector2f(this.position), new Vector2f(this.scale));
+        return new Transform(new Vector2f(this.position), new Vector2f(this.scale), this.zIndex);
     }
 
     public void copy(Transform to) {
         to.position.set(this.position);
         to.scale.set(this.scale);
+        to.zIndex = this.zIndex;
     }
 
     // All classes have this method, but we can change it
@@ -39,7 +35,8 @@ public class Transform {
 
         if (o instanceof Transform) {
             Transform transform = (Transform) o;
-            return transform.position.equals(this.position) && transform.scale.equals(this.scale);
+            return transform.position.equals(this.position) && transform.scale.equals(this.scale)
+                    && transform.rotation == this.rotation && transform.zIndex == this.zIndex;
         }
 
         return false;

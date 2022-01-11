@@ -57,6 +57,9 @@ class Gizmo extends Component {
     public void start() {
         this.xAxisObject.transform.rotation = 90.0f;
         this.yAxisObject.transform.rotation = 180.0f;
+        // TODO: 11/01/2022 Make Gizmos have the greatest zIndex by another way
+        this.xAxisObject.transform.zIndex = 100;
+        this.yAxisObject.transform.zIndex = 100;
         this.xAxisObject.setNoSerialize();
         this.yAxisObject.setNoSerialize();
     }
