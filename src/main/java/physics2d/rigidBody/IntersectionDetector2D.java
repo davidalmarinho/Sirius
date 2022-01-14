@@ -32,6 +32,10 @@ public class IntersectionDetector2D {
 
         float dy = end.y - begin.y;
         float dx = end.x - begin.x;
+
+        // Can't divide y/0 -- When lines are horizontal, a y/0 division happens
+        if (dx == 0.0f) return JMath.compare(point.x, line.getStart().x);
+
         float m = dy / dx;
         float b = end.y - m * end.x;
 
