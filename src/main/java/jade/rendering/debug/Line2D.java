@@ -42,7 +42,7 @@ public class Line2D {
     }
 
 
-    public Vector2f getBegin() {
+    public Vector2f getStart() {
         return from;
     }
 

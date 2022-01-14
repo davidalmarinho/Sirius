@@ -27,7 +27,7 @@ public class IntersectionDetector2D {
          *      b = y - mx
          */
 
-        Vector2f begin = line.getBegin();
+        Vector2f begin = line.getStart();
         Vector2f end = line.getEnd();
 
         float dy = end.y - begin.y;
@@ -45,7 +45,7 @@ public class IntersectionDetector2D {
      * @param circle circle itself
      * @return if the point is inside the circle
      */
-    public static boolean isPointOnCircle(Vector2f point, Circle circle) {
+    public static boolean isPointInCircle(Vector2f point, Circle circle) {
         // If the radius length is lower than the line length, means that the point belongs to the circle
         Vector2f circleCenter = circle.getCenter();
         Vector2f centerToPoint = new Vector2f(point).sub(circleCenter);
@@ -56,7 +56,7 @@ public class IntersectionDetector2D {
 
     /**
      * Checks if a point is inside a non-rotated box
-     * If the box is rotated, use {@link #pointInBox2D(Vector2f point, Box2D box) instead}
+     * If the box is rotated, use {@link #isPointInBox2D(Vector2f point, Box2D box) instead}
      *
      * @param point coordinates of the point
      * @param box AABB object
@@ -78,7 +78,7 @@ public class IntersectionDetector2D {
      * @param box AABB object
      * @return if the point is inside the AABB
      */
-    public static boolean pointInBox2D(Vector2f point, Box2D box) {
+    public static boolean isPointInBox2D(Vector2f point, Box2D box) {
         // Rotate the point based on object rotation
         Vector2f localPointBoxSpace = new Vector2f(point);
         JMath.rotate(localPointBoxSpace, box.getRigidBody2D().getRotation(), box.getRigidBody2D().getPosition());
@@ -88,6 +88,52 @@ public class IntersectionDetector2D {
 
         return (localPointBoxSpace.x >= leftBottomCorner.x && localPointBoxSpace.x <= topRightCorner.x)
                 && (localPointBoxSpace.y <= topRightCorner.y && localPointBoxSpace.y >= leftBottomCorner.y);
+    }
+
+    public static boolean isLineIntersectingCircle(Line2D line, Circle circle) {
+        // If one of the extremes of the line is already inside the circle, means that the line is intersecting the circle
+        if (isPointInCircle(line.getStart(), circle) || isPointInCircle(line.getEnd(), circle))  {
+            return true;
+        }
+
+        // point(A) = line.getStart()
+        // point(B) = line.getEnd()
+        // vec(AB) -> lineStartToLineEnd
+        // vec(AB) = point(B) - point (A)
+        Vector2f ab = new Vector2f(line.getEnd()).sub(line.getStart());
+
+        // Project the point (circle position) onto ab (line segment) parameterized position t
+        Vector2f circleCenter = circle.getCenter();
+
+        // point(C) = circleCenter
+        // vec(AC) -> centerToLineStart
+        // vec(AC) = point(C) - point(A)
+        Vector2f centerToLineStart = new Vector2f(circleCenter).sub(line.getStart());
+
+        // Get the line's nearest point of the circle
+        /*
+         * Formula:
+         *
+         *   (A . B) / (B . B) =
+         * = (|A| * |B| * cos(alpha)) / ((|B| * |B| * cos(alpha)) =
+         * = |A| / |B|
+         *
+         * This will give a percentage of 0 to 1. If we don't get a value in [0, 1] range,
+         * means that the nearest point isn't inside of the circle and,
+         * consequently, means that the line isn't intersecting the circle
+         * todo explain better this result
+         */
+        float t = centerToLineStart.dot(ab) / ab.dot(ab);
+
+        // It is not in the line segment
+        if (t < 0.0f || t > 1.0f) {
+            return false;
+        }
+
+        // Find the closest point to the line segment
+        Vector2f closestPoint = new Vector2f(line.getStart()).add(ab.mul(t));
+
+        return isPointInCircle(closestPoint, circle);
     }
 
     // ==================================================
