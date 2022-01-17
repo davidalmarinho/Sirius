@@ -94,6 +94,17 @@ public class IntersectionDetector2D {
                 && (localPointBoxSpace.y <= topRightCorner.y && localPointBoxSpace.y >= leftBottomCorner.y);
     }
 
+    // ==================================================
+    // Line vs. Primitive tests
+    // ==================================================
+
+    /**
+     * Checks if a line is intersecting a circle
+     *
+     * @param line Line that is desired to check if it is intersecting a circle
+     * @param circle Circle that is desired to check if it is intersecting a line
+     * @return true if a line is intersecting with a circle
+     */
     public static boolean isLineIntersectingCircle(Line2D line, Circle circle) {
         // If one of the extremes of the line is already inside the circle, means that the line is intersecting the circle
         if (isPointInCircle(line.getStart(), circle) || isPointInCircle(line.getEnd(), circle))  {
@@ -139,10 +150,6 @@ public class IntersectionDetector2D {
 
         return isPointInCircle(closestPoint, circle);
     }
-
-    // ==================================================
-    // Line vs. Primitive tests
-    // ==================================================
 
     /**
      * Checks if a line is intersecting a box
