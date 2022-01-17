@@ -1,5 +1,6 @@
 package physics2d.primitives;
 
+import jade.utils.JMath;
 import org.joml.Vector2f;
 import physics2d.rigidBody.RigidBody2D;
 
@@ -17,6 +18,7 @@ public class Box2D {
     public Box2D(float width, float height) {
         this.size = new Vector2f(width, height);
         this.halfSize = new Vector2f(size.mul(0.5f));
+        rigidBody2D = new RigidBody2D();
     }
 
     /**
@@ -61,9 +63,8 @@ public class Box2D {
         // Check if the box is rotated
         if (rigidBody2D.getRotation() != 0.0f) {
             for (Vector2f currentVertex : vertices) {
-                // TODO: 31/12/2021 Implement me
                 // Rotates point(vec2f) about center (vec2f) by rotation (float in degrees)
-                // JMath.rotate(currentVertex, rigidBody2D.getRotation(), rigidBody2D.getRotation());
+                JMath.rotate(currentVertex, rigidBody2D.getRotation(), rigidBody2D.getPosition());
             }
         }
 

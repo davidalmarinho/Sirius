@@ -2,10 +2,7 @@ package jade.rendering.debug;
 
 import jade.rendering.Color;
 import org.joml.Vector2f;
-import org.joml.Vector3f;
 import org.joml.Vector4f;
-
-import javax.sound.sampled.Line;
 
 public class Line2D {
     private final Vector2f from, to;
