@@ -41,6 +41,9 @@ public class Line2D {
         return this.lifeTime;
     }
 
+    public float lengthSquared() {
+        return new Vector2f(to).sub(from).lengthSquared();
+    }
 
     public Vector2f getStart() {
         return from;

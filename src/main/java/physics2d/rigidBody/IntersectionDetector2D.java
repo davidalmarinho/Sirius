@@ -143,4 +143,58 @@ public class IntersectionDetector2D {
     // ==================================================
     // Line vs. Primitive tests
     // ==================================================
+
+    /**
+     * Checks if a line is intersecting a box
+     * If the box is rotated, you should use {@link #isLineIntersectingBox2D(Line2D, Box2D)} instead
+     *
+     * @param line Line that may be intersecting a box
+     * @param box Box that may be intersected by a line
+     * @return true if the line is intersecting a box
+     */
+    public static boolean isLineIntersectingAABB(Line2D line, AABB box) {
+        // Check if the points are in the box -- if they are already in the box, means that the line is intersecting the box
+        if (isPointInAABB(line.getStart(), box) || isPointInAABB(line.getEnd(), box)) {
+            return true;
+        }
+
+        // Unit vector -- will show us the direction of the line
+        Vector2f unitVec = new Vector2f(line.getEnd()).sub(line.getStart());
+        unitVec.normalize();
+        unitVec.x = (unitVec.x != 0) ? 1.0f / unitVec.x : 0;
+        unitVec.y = (unitVec.y != 0) ? 1.0f / unitVec.y : 0;
+
+        Vector2f boxLeftBottomCorner = box.getBottomLeftCorner();
+        Vector2f boxTopRightCorner = box.getTopRightCorner();
+
+        // Parse to unit vectors the line.getStart() and the both corner of the boxes
+        boxLeftBottomCorner.sub(line.getStart()).mul(unitVec);
+        boxTopRightCorner.sub(line.getStart()).mul(unitVec);
+
+        float tmin = Math.max(Math.min(boxLeftBottomCorner.x, boxTopRightCorner.x), Math.min(boxLeftBottomCorner.y, boxTopRightCorner.y));
+        float tmax = Math.max(Math.max(boxLeftBottomCorner.x, boxTopRightCorner.x), Math.max(boxLeftBottomCorner.y, boxTopRightCorner.y));
+
+        // Means that the line isn't intersecting the box
+        if (tmax < 0 || tmin > tmax) {
+            return false;
+        }
+
+        float t = (tmin < 0f) ? tmax : tmin;
+
+        return t > 0f && t * t < line.lengthSquared();
+    }
+
+    public static boolean isLineIntersectingBox2D(Line2D line, Box2D box) {
+        float theta = box.getRigidBody2D().getRotation();
+        Vector2f center = box.getRigidBody2D().getPosition();
+        Vector2f localStart = new Vector2f(line.getStart());
+        Vector2f localEnd = new Vector2f(line.getEnd());
+        JMath.rotate(localStart, theta, center);
+        JMath.rotate(localEnd, theta, center);
+
+        Line2D localLine = new Line2D(localStart, localEnd);
+        AABB aabb = new AABB(box.getBottomLeftCorner(), box.getTopRightCorner());
+
+        return isLineIntersectingAABB(localLine, aabb);
+    }
 }
