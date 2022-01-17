@@ -94,6 +94,17 @@ public class IntersectionDetector2D {
                 && (localPointBoxSpace.y <= topRightCorner.y && localPointBoxSpace.y >= leftBottomCorner.y);
     }
 
+    // ==================================================
+    // Line vs. Primitive tests
+    // ==================================================
+
+    /**
+     * Checks if a line is intersecting a circle
+     *
+     * @param line Line that is desired to check if it is intersecting a circle
+     * @param circle Circle that is desired to check if it is intersecting a line
+     * @return true if a line is intersecting with a circle
+     */
     public static boolean isLineIntersectingCircle(Line2D line, Circle circle) {
         // If one of the extremes of the line is already inside the circle, means that the line is intersecting the circle
         if (isPointInCircle(line.getStart(), circle) || isPointInCircle(line.getEnd(), circle))  {
@@ -140,7 +151,74 @@ public class IntersectionDetector2D {
         return isPointInCircle(closestPoint, circle);
     }
 
-    // ==================================================
-    // Line vs. Primitive tests
-    // ==================================================
+    /**
+     * Checks if a line is intersecting a box
+     * If the box is rotated, you should use {@link #isLineIntersectingBox2D(Line2D, Box2D)} instead
+     *
+     * @param line Line that may be intersecting a box
+     * @param box Box that may be intersected by a line
+     * @return true if the line is intersecting a box
+     */
+    public static boolean isLineIntersectingAABB(Line2D line, AABB box) {
+        // Check if the points are in the box -- if they are already in the box, means that the line is intersecting the box
+        if (isPointInAABB(line.getStart(), box) || isPointInAABB(line.getEnd(), box)) {
+            return true;
+        }
+
+        // Unit vector -- will show us the direction of the line
+        Vector2f unitVec = new Vector2f(line.getEnd()).sub(line.getStart());
+        unitVec.normalize();
+        unitVec.x = (unitVec.x != 0) ? 1.0f / unitVec.x : 0f;
+        unitVec.y = (unitVec.y != 0) ? 1.0f / unitVec.y : 0f;
+
+        Vector2f boxLeftBottomCorner = box.getBottomLeftCorner();
+        Vector2f boxTopRightCorner = box.getTopRightCorner();
+
+        // Parse to unit vectors the line.getStart() and the both corner of the boxes
+        boxLeftBottomCorner.sub(line.getStart()).mul(unitVec);
+        boxTopRightCorner.sub(line.getStart()).mul(unitVec);
+
+        float tmin = Math.max(Math.min(boxLeftBottomCorner.x, boxTopRightCorner.x), Math.min(boxLeftBottomCorner.y, boxTopRightCorner.y));
+        float tmax = Math.max(Math.max(boxLeftBottomCorner.x, boxTopRightCorner.x), Math.max(boxLeftBottomCorner.y, boxTopRightCorner.y));
+
+        // Means that the line isn't intersecting the box
+        if (tmax < 0 || tmin > tmax) {
+            return false;
+        }
+
+        float t = (tmin < 0f) ? tmax : tmin;
+
+        return t > 0f && t * t < line.lengthSquared();
+    }
+
+    /**
+     * Checks if a line is intersecting with a box.
+     * If the box doesn't rotate, you should use {@link #isLineIntersectingAABB(Line2D, AABB)} instead
+     * since this method heavier than the one mentioned before
+     *
+     * @param line Line that may be intersecting a box
+     * @param box Box (maybe rotated or not) that may be intersected by a line
+     * @return true if the line is intersecting a box
+     */
+    public static boolean isLineIntersectingBox2D(Line2D line, Box2D box) {
+        // Gets box's rotation angle in degrees
+        float theta = box.getRigidBody2D().getRotation();
+        Vector2f center = box.getRigidBody2D().getPosition();
+
+        // Gets the lineStart and the lineEnd
+        Vector2f localStart = new Vector2f(line.getStart());
+        Vector2f localEnd = new Vector2f(line.getEnd());
+
+        // Rotates the lines according to box's angle
+        JMath.rotate(localStart, theta, center);
+        JMath.rotate(localEnd, theta, center);
+
+        /* Now we have all what we need to check if a line is intersecting with a rotated box,
+         * since we rotated the lines too
+         */
+        Line2D localLine = new Line2D(localStart, localEnd);
+        AABB aabb = new AABB(box.getBottomLeftCorner(), box.getTopRightCorner());
+
+        return isLineIntersectingAABB(localLine, aabb);
+    }
 }

@@ -19,6 +19,7 @@ public class AABB {
         // this.size = new Vector2f(topRightCorner.x - bottomLeftCorner.x, topRightCorner.y - bottomLeftCorner.y);
         this.size = new Vector2f(topRightCorner).sub(bottomLeftCorner);
         this.halfSize = new Vector2f(size.mul(0.5f));
+        this.rigidBody = new RigidBody2D();
     }
 
     /**
