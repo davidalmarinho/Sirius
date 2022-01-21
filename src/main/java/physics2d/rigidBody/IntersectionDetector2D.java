@@ -179,7 +179,7 @@ public class IntersectionDetector2D {
         boxTopRightCorner.sub(line.getStart()).mul(unitVec);
 
         float tmin = Math.max(Math.min(boxLeftBottomCorner.x, boxTopRightCorner.x), Math.min(boxLeftBottomCorner.y, boxTopRightCorner.y));
-        float tmax = Math.max(Math.max(boxLeftBottomCorner.x, boxTopRightCorner.x), Math.max(boxLeftBottomCorner.y, boxTopRightCorner.y));
+        float tmax = Math.min(Math.max(boxLeftBottomCorner.x, boxTopRightCorner.x), Math.max(boxLeftBottomCorner.y, boxTopRightCorner.y));
 
         // Means that the line isn't intersecting the box
         if (tmax < 0 || tmin > tmax) {
