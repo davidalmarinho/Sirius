@@ -53,7 +53,13 @@ public class EditorCamera extends Component {
             float addValue = (float) Math.pow(Math.abs(MouseListener.getScrollY() * SCROLL_SENSITIVITY),
                     1 / LEVEL_EDITOR_CAMERA.getZoom());
             addValue *= -Math.signum(MouseListener.getScrollY());
-            LEVEL_EDITOR_CAMERA.addZoom(addValue);
+
+            // Bug fix for zoom camera
+            if (LEVEL_EDITOR_CAMERA.getZoom() < 3.8f) {
+                LEVEL_EDITOR_CAMERA.addZoom(addValue);
+            } else if (LEVEL_EDITOR_CAMERA.getZoom() > 3.8f) {
+                LEVEL_EDITOR_CAMERA.addZoom(-addValue);
+            }
         }
 
         if (KeyListener.isKeyPressed(GLFW_KEY_0)) {
