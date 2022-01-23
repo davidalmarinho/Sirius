@@ -5,6 +5,8 @@ import org.joml.Vector2f;
 import org.junit.jupiter.api.Test;
 import physics2d.primitives.AABB;
 import physics2d.primitives.Box2D;
+import physics2d.primitives.Circle;
+import physics2d.primitives.Ray2D;
 import physics2d.rigidBody.IntersectionDetector2D;
 
 import javax.swing.*;
@@ -86,4 +88,6 @@ public class CollisionDetectorTest {
                 && IntersectionDetector2D.isLineIntersectingBox2D(line2, box)
                 && IntersectionDetector2D.isLineIntersectingBox2D(line3, box));
     }*/
+
+    // TODO: 23/01/2022 Make a test for circle and raycast
 }
