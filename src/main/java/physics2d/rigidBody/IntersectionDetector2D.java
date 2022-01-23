@@ -3,9 +3,7 @@ package physics2d.rigidBody;
 import jade.rendering.debug.Line2D;
 import jade.utils.JMath;
 import org.joml.Vector2f;
-import physics2d.primitives.AABB;
-import physics2d.primitives.Box2D;
-import physics2d.primitives.Circle;
+import physics2d.primitives.*;
 
 // Detects 2 objects when they are intersecting
 public class IntersectionDetector2D {
@@ -220,5 +218,51 @@ public class IntersectionDetector2D {
         AABB aabb = new AABB(box.getBottomLeftCorner(), box.getTopRightCorner());
 
         return isLineIntersectingAABB(localLine, aabb);
+    }
+
+    // ==================================================
+    // Ray-casts
+    // ==================================================
+
+    /**
+     * Checks if a circle is being ray-casting
+     *
+     * @param circle The circle that will be checked the ray-cast
+     * @param ray A ray-cast
+     * @param result Optional, if you aren't really ray-casting, this value might be null.
+     * @return true if a circle is being ray-casted.
+     */
+    public static boolean raycast(Circle circle, Ray2D ray, RaycastResult result) {
+        RaycastResult.reset(result);
+
+        Vector2f originToCircle = new Vector2f(circle.getCenter()).sub(ray.getOrigin());
+        float radiusSquared = circle.getRadius() * circle.getRadius();
+        float originToCircleLengthSquared = originToCircle.lengthSquared();
+
+        // Project the vector from the ray origin onto the direction of the ray
+        float a = originToCircle.dot(ray.getDirection());
+        float bSquare = originToCircleLengthSquared - (a * a);
+
+        // Indicates that the circle wasn't hit
+        if (radiusSquared - bSquare < 0.0f) {
+            return false;
+        }
+
+        // This is what makes ray-casting slow. 5x slower than square the length
+        float f = (float) Math.sqrt(radiusSquared - bSquare);
+        float t = 0;
+
+        // if originToCircleLengthSquared is less than radiusSquared, means that the ray starts inside the circle
+        t = originToCircleLengthSquared < radiusSquared ? (a + f) : a - f;
+
+        if (result != null) {
+            Vector2f point = new Vector2f(ray.getOrigin()).add(ray.getDirection().mul(t));
+            Vector2f normal = new Vector2f(point).sub(circle.getCenter());
+            normal.normalize();
+
+            result.init(point, normal, t, true);
+        }
+
+        return true;
     }
 }
