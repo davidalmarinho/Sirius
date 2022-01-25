@@ -71,6 +71,10 @@ public class Box2D {
         return vertices;
     }
 
+    public Vector2f getHalfSize() {
+        return halfSize;
+    }
+
     public RigidBody2D getRigidBody2D() {
         return rigidBody2D;
     }
