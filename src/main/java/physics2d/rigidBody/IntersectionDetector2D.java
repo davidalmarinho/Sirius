@@ -266,6 +266,15 @@ public class IntersectionDetector2D {
         return true;
     }
 
+    /**
+     * Ray-cast against an un-rotated box.
+     * If you want to ray-cast against a rotated box you might use {@link #raycast(Box2D, Ray2D, RaycastResult)} method.
+     *
+     * @param box Un-rotated box itself
+     * @param ray Ray that will be checked collision against the box
+     * @param result Ray-casting result
+     * @return true if the ray-cast happens
+     */
     public static boolean raycast(AABB box, Ray2D ray, RaycastResult result) {
         RaycastResult.reset(result);
 
@@ -306,7 +315,16 @@ public class IntersectionDetector2D {
 
         return true;
     }
-
+    /**
+     * Ray-cast against a rotated box.
+     * If you want to ray-cast against an un-rotated box you might use
+     * {@link #raycast(AABB, Ray2D, RaycastResult)} method.
+     *
+     * @param box Rotated box itself
+     * @param ray Ray that will be checked collision against the box
+     * @param result Ray-casting result
+     * @return true if the ray-cast happens
+     */
     public static boolean raycast(Box2D box, Ray2D ray, RaycastResult result) {
         RaycastResult.reset(result);
 
