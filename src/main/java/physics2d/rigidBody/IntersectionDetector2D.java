@@ -378,4 +378,34 @@ public class IntersectionDetector2D {
 
         return true;
     }
+
+    // ==================================================
+    // Circle vs. Primitive tests
+    // ==================================================
+    public static boolean isCircleIntersectingLine(Circle circle, Line2D line) {
+        return isLineIntersectingCircle(line, circle);
+    }
+
+    /**
+     * Checks if 2 circles are intersecting.
+     *
+     * @param c1 First circle
+     * @param c2 Second circle
+     * @return true if the 2 circles are intersecting
+     */
+    public static boolean isCircleIntersectingCircle(Circle c1, Circle c2) {
+        // c1 center
+        Vector2f A = new Vector2f(c1.getCenter());
+
+        // c2 center
+        Vector2f B = new Vector2f(c2.getCenter());
+
+        // Vector between the centers
+        Vector2f AB = new Vector2f(B).sub(A);
+
+        float radiiSum = c1.getRadius() + c2.getRadius();
+
+        // If vector's length is less than the sum of the 2 radius, means that the circles are intersecting
+        return AB.lengthSquared() <= radiiSum * radiiSum;
+    }
 }
