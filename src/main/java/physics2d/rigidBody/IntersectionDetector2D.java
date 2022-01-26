@@ -266,6 +266,15 @@ public class IntersectionDetector2D {
         return true;
     }
 
+    /**
+     * Ray-cast against an un-rotated box.
+     * If you want to ray-cast against a rotated box you might use {@link #raycast(Box2D, Ray2D, RaycastResult)} method.
+     *
+     * @param box Un-rotated box itself
+     * @param ray Ray that will be checked collision against the box
+     * @param result Ray-casting result
+     * @return true if the ray-cast happens
+     */
     public static boolean raycast(AABB box, Ray2D ray, RaycastResult result) {
         RaycastResult.reset(result);
 
@@ -306,7 +315,16 @@ public class IntersectionDetector2D {
 
         return true;
     }
-
+    /**
+     * Ray-cast against a rotated box.
+     * If you want to ray-cast against an un-rotated box you might use
+     * {@link #raycast(AABB, Ray2D, RaycastResult)} method.
+     *
+     * @param box Rotated box itself
+     * @param ray Ray that will be checked collision against the box
+     * @param result Ray-casting result
+     * @return true if the ray-cast happens
+     */
     public static boolean raycast(Box2D box, Ray2D ray, RaycastResult result) {
         RaycastResult.reset(result);
 
@@ -359,5 +377,99 @@ public class IntersectionDetector2D {
         }
 
         return true;
+    }
+
+    // ==================================================
+    // Circle vs. Primitive tests
+    // ==================================================
+    public static boolean isCircleIntersectingLine(Circle circle, Line2D line) {
+        return isLineIntersectingCircle(line, circle);
+    }
+
+    /**
+     * Checks if 2 circles are intersecting.
+     *
+     * @param c1 First circle
+     * @param c2 Second circle
+     * @return true if the 2 circles are intersecting
+     */
+    public static boolean isCircleIntersectingCircle(Circle c1, Circle c2) {
+        // c1 center
+        Vector2f A = new Vector2f(c1.getCenter());
+
+        // c2 center
+        Vector2f B = new Vector2f(c2.getCenter());
+
+        // Vector between the centers
+        Vector2f AB = new Vector2f(B).sub(A);
+
+        float radiiSum = c1.getRadius() + c2.getRadius();
+
+        // If vector's length is less than the sum of the 2 radius, means that the circles are intersecting
+        return AB.lengthSquared() <= radiiSum * radiiSum;
+    }
+
+    /**
+     * Checks if a circle is intersecting with an un-rotated box.
+     * If you want to test collision between a box that is able to rotate and a circle, you might use
+     * {@link #isCircleIntersectingBox2D(Circle, Box2D)} instead.
+     *
+     * @param circle Circle that will be tested the collision.
+     * @param box Box that will be tested the collision.
+     * @return true if they are intersecting with each other
+     */
+    public static boolean isCircleIntersectingAABB(Circle circle, AABB box) {
+        Vector2f bottomLeftCorner = box.getBottomLeftCorner();
+        Vector2f topRightCorner = box.getTopRightCorner();
+
+        // The closest point to circle, for now, is the circle's center itself
+        Vector2f closestPointToCircle = new Vector2f(circle.getCenter());
+
+        // Put x-axis in box's boundaries
+        if (closestPointToCircle.x < bottomLeftCorner.x) closestPointToCircle.x = bottomLeftCorner.x;
+        else if (closestPointToCircle.x > topRightCorner.x) closestPointToCircle.x = topRightCorner.x;
+
+        // Put y-axis in box's boundaries
+        if (closestPointToCircle.y < bottomLeftCorner.y) closestPointToCircle.y = bottomLeftCorner.y;
+        else if (closestPointToCircle.y > topRightCorner.y) closestPointToCircle.y = topRightCorner.y;
+
+        // Catch the closest point between the circle and the box
+        Vector2f circleToBox = new Vector2f(circle.getCenter()).sub(closestPointToCircle);
+        return circleToBox.lengthSquared() <= circle.getRadius() * circle.getRadius();
+    }
+
+    /**
+     * Checks if a circle is intersecting with an un-rotated box.
+     * If you want to test collision between an un-rotated box and a circle, you might use
+     * {@link #isCircleIntersectingAABB(Circle, AABB)} instead, since it is quicker than this one.
+     *
+     * @param circle Circle that will be tested the collision.
+     * @param box Box that will be tested the collision.
+     * @return true if they are intersecting with each other
+     */
+    public static boolean isCircleIntersectingBox2D(Circle circle, Box2D box) {
+        // Treat the box just like an AABB, after we rotate the stuff
+        Vector2f bottomLeftCorner = new Vector2f();
+        Vector2f topRightCorner = new Vector2f(box.getHalfSize()).mul(2.0f);
+
+        // Create a circle in box's local space
+        Vector2f rotat = new Vector2f(circle.getCenter()).sub(box.getRigidBody2D().getPosition());
+        JMath.rotate(rotat, -box.getRigidBody2D().getRotation(), new Vector2f());
+        Vector2f localCirclePos = new Vector2f(rotat).add(box.getHalfSize());
+
+        // The closest point to circle, for now, is the circle's center itself
+        Vector2f closestPointToCircle = new Vector2f(localCirclePos);
+
+        // Put x-axis in box's boundaries
+        if (closestPointToCircle.x < bottomLeftCorner.x) closestPointToCircle.x = bottomLeftCorner.x;
+        else if (closestPointToCircle.x > topRightCorner.x) closestPointToCircle.x = topRightCorner.x;
+
+        // Put y-axis in box's boundaries
+        if (closestPointToCircle.y < bottomLeftCorner.y) closestPointToCircle.y = bottomLeftCorner.y;
+        else if (closestPointToCircle.y > topRightCorner.y) closestPointToCircle.y = topRightCorner.y;
+
+        // Catch the closest point between the circle and the box
+        Vector2f circleToBox = new Vector2f(localCirclePos).sub(closestPointToCircle);
+        return circleToBox.lengthSquared() <= circle.getRadius() * circle.getRadius();
     }
 }
