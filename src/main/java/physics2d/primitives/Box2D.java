@@ -22,12 +22,25 @@ public class Box2D {
     }
 
     /**
+     * Constructor method
+     *
+     * @param width wished of the box
+     * @param height wished of the box
+     */
+    public Box2D(Vector2f position, float width, float height) {
+        this.size = new Vector2f(width, height);
+        this.halfSize = new Vector2f(size.mul(0.5f));
+        rigidBody2D = new RigidBody2D();
+        rigidBody2D.setPosition(position);
+    }
+
+    /**
      * Gets the bottom left corner coordinates of the box
      *
      * @return box's bottom left corner coordinates
      */
     public Vector2f getBottomLeftCorner() {
-        return rigidBody2D.getPosition().sub(halfSize);
+        return new Vector2f(rigidBody2D.getPosition()).sub(halfSize);
     }
 
     /**
@@ -36,7 +49,7 @@ public class Box2D {
      * @return box's top right corner coordinates
      */
     public Vector2f getTopRightCorner() {
-        return rigidBody2D.getPosition().add(halfSize);
+        return new Vector2f(rigidBody2D.getPosition()).add(halfSize);
     }
 
 
@@ -54,15 +67,16 @@ public class Box2D {
         Vector2f bottomLeftCorner = getBottomLeftCorner();
 
         Vector2f[] vertices = {
-                new Vector2f(bottomLeftCorner),                      // Bottom left corner
-                new Vector2f(bottomLeftCorner.x, topRightCorner.y),  // Top left corner
-                new Vector2f(topRightCorner.x, bottomLeftCorner.y),  // Bottom right corner
-                new Vector2f(topRightCorner)                         // Top right corner
+                new Vector2f(bottomLeftCorner.x, bottomLeftCorner.y),  // Bottom left corner
+                new Vector2f(bottomLeftCorner.x, topRightCorner.y),    // Top left corner
+                new Vector2f(topRightCorner.x, bottomLeftCorner.y),    // Bottom right corner
+                new Vector2f(topRightCorner.x, topRightCorner.y)       // Top right corner
         };
 
         // Check if the box is rotated
         if (rigidBody2D.getRotation() != 0.0f) {
-            for (Vector2f currentVertex : vertices) {
+            for (int i = 0; i < vertices.length; i++) {
+                Vector2f currentVertex = vertices[i];
                 // Rotates point(vec2f) about center (vec2f) by rotation (float in degrees)
                 JMath.rotate(currentVertex, rigidBody2D.getRotation(), rigidBody2D.getPosition());
             }

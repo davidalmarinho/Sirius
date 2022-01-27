@@ -439,7 +439,7 @@ public class IntersectionDetector2D {
     }
 
     /**
-     * Checks if a circle is intersecting with an un-rotated box.
+     * Checks if a circle is intersecting with a rotated box.
      * If you want to test collision between an un-rotated box and a circle, you might use
      * {@link #isCircleIntersectingAABB(Circle, AABB)} instead, since it is quicker than this one.
      *
@@ -476,14 +476,40 @@ public class IntersectionDetector2D {
     // ==================================================
     // AABB vs. Primitive tests
     // ==================================================
-    public static boolean isAABBIntersectingCircle(Circle circle, AABB box) {
+
+    /**
+     * Checks if an un-rotated box is intersecting with a circle.
+     * If you want to test collision between a box that is able to rotate and a circle, you might use
+     * {@link #isBox2DIntersectingCircle(Box2D, Circle)} instead.
+     *
+     * @param box Box that will be tested the collision.
+     * @param circle Circle that will be tested the collision.
+     * @return true if they are intersecting with each other
+     */
+    public static boolean isAABBIntersectingCircle(AABB box, Circle circle) {
         return isCircleIntersectingAABB(circle, box);
     }
 
-    public static boolean isBox2DIntersectingCircle(Circle circle, Box2D box) {
+    /**
+     * Checks if a circle is intersecting with a rotated box.
+     * If you want to test collision between an un-rotated box and a circle, you might use
+     * {@link #isAABBIntersectingCircle(AABB, Circle)} instead, since it is quicker than this one.
+     *
+     * @param box Box that will be tested the collision.
+     * @param circle Circle that will be tested the collision.
+     * @return true if they are intersecting with each other
+     */
+    public static boolean isBox2DIntersectingCircle(Box2D box, Circle circle) {
         return isCircleIntersectingBox2D(circle, box);
     }
 
+    /**
+     * Checks collisions between 2 un-rotated boxes.
+     *
+     * @param box1 First un-rotated box
+     * @param box2 Second un-rotated box
+     * @return true if the 2 boxes are intersecting with each other
+     */
     public static boolean isAABBIntersectingAABB(AABB box1, AABB box2) {
         // Axis aligned (1, 0) (0, 1)
         Vector2f[] axisToTest = {new Vector2f(0, 1), new Vector2f(1, 0)};
@@ -494,6 +520,13 @@ public class IntersectionDetector2D {
         return true;
     }
 
+    /**
+     * Checks collision between an un-rotated box and with a rotated box
+     *
+     * @param aabb Un-rotated box
+     * @param box2D Rotated box
+     * @return true if are intersecting with each other
+     */
     public static boolean isAABBIntersectingBox2D(AABB aabb, Box2D box2D) {
         Vector2f[] axisToTest = {
                 new Vector2f(0, 1), new Vector2f(1, 0),
@@ -502,13 +535,21 @@ public class IntersectionDetector2D {
         JMath.rotate(axisToTest[2], box2D.getRigidBody2D().getRotation(), new Vector2f());
         JMath.rotate(axisToTest[3], box2D.getRigidBody2D().getRotation(), new Vector2f());
 
-        for (Vector2f vector2f : axisToTest) {
-            if (!isOverlappingOnAxis(aabb, box2D, vector2f))
+        for (int i=0; i < axisToTest.length; i++) {
+            if (!isOverlappingOnAxis(aabb, box2D, axisToTest[i])) {
                 return false;
+            }
         }
         return true;
     }
 
+    /**
+     * Checks collision between an un-rotated box and with a rotated box
+     *
+     * @param box1 First rotated box
+     * @param box2 Second rotated box
+     * @return true if are intersecting with each other
+     */
     public static boolean isBox2DIntersectingBox2D(Box2D box1, Box2D box2) {
         Vector2f[] axisToTest = {
                 new Vector2f(0, 1), new Vector2f(1, 0),
@@ -535,7 +576,7 @@ public class IntersectionDetector2D {
     private static boolean isOverlappingOnAxis(AABB box1, Box2D box2, Vector2f axis) {
         Vector2f interval1 = getInterval(box1, axis);
         Vector2f interval2 = getInterval(box2, axis);
-        return (interval2.x <= interval1.y) && (interval1.x <= interval2.y);
+        return ((interval2.x <= interval1.y) && (interval1.x <= interval2.y));
     }
 
     private static boolean isOverlappingOnAxis(Box2D box1, Box2D box2, Vector2f axis) {
@@ -559,7 +600,7 @@ public class IntersectionDetector2D {
 
         result.x = axis.dot(squareVertices[0]);
         result.y = result.x;
-        for (int i = 0; i < 4; i++) {
+        for (int i = 1; i < 4; i++) {
             float projection = axis.dot(squareVertices[i]);
             if (projection < result.x) result.x = projection;
             if (projection > result.y) result.y = projection;
@@ -575,7 +616,7 @@ public class IntersectionDetector2D {
 
         result.x = axis.dot(squareVertices[0]);
         result.y = result.x;
-        for (int i = 0; i < 4; i++) {
+        for (int i = 1; i < 4; i++) {
             float projection = axis.dot(squareVertices[i]);
             if (projection < result.x) result.x = projection;
             if (projection > result.y) result.y = projection;
