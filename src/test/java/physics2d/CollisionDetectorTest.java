@@ -9,8 +9,6 @@ import physics2d.primitives.Circle;
 import physics2d.primitives.Ray2D;
 import physics2d.rigidBody.IntersectionDetector2D;
 
-import javax.swing.*;
-
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class CollisionDetectorTest {
@@ -90,4 +88,22 @@ public class CollisionDetectorTest {
     }*/
 
     // TODO: 23/01/2022 Make a test for circle and raycast
+    // TODO: 27/01/2022 Make a test for box and raycast
+
+    /*@Test
+    public void aabbIntersectingAabb() {
+        AABB aabb1 = new AABB(new Vector2f(1, 1), new Vector2f(4, 4));
+        AABB aabb2 = new AABB(new Vector2f(50, 50), new Vector2f(51, 51));
+
+        assertTrue(IntersectionDetector2D.isAABBIntersectingAABB(aabb1, aabb2));
+    }
+
+    @Test
+    public void rotated45degreesBoxIntersectingAabb() {
+        Box2D box2D = new Box2D(new Vector2f(0, 0), 4, 4);
+        // box2D.getRigidBody2D().setRotation(45f);
+        AABB aabb = new AABB(new Vector2f(50, 50), new Vector2f(52, 52));
+
+        assertTrue(IntersectionDetector2D.isAABBIntersectingBox2D(aabb, box2D));
+    }*/
 }
