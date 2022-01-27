@@ -472,4 +472,115 @@ public class IntersectionDetector2D {
         Vector2f circleToBox = new Vector2f(localCirclePos).sub(closestPointToCircle);
         return circleToBox.lengthSquared() <= circle.getRadius() * circle.getRadius();
     }
+
+    // ==================================================
+    // AABB vs. Primitive tests
+    // ==================================================
+    public static boolean isAABBIntersectingCircle(Circle circle, AABB box) {
+        return isCircleIntersectingAABB(circle, box);
+    }
+
+    public static boolean isBox2DIntersectingCircle(Circle circle, Box2D box) {
+        return isCircleIntersectingBox2D(circle, box);
+    }
+
+    public static boolean isAABBIntersectingAABB(AABB box1, AABB box2) {
+        // Axis aligned (1, 0) (0, 1)
+        Vector2f[] axisToTest = {new Vector2f(0, 1), new Vector2f(1, 0)};
+        for (Vector2f vector2f : axisToTest) {
+            if (!isOverlappingOnAxis(box1, box2, vector2f))
+                return false;
+        }
+        return true;
+    }
+
+    public static boolean isAABBIntersectingBox2D(AABB aabb, Box2D box2D) {
+        Vector2f[] axisToTest = {
+                new Vector2f(0, 1), new Vector2f(1, 0),
+                new Vector2f(0, 1), new Vector2f(1, 0)
+        };
+        JMath.rotate(axisToTest[2], box2D.getRigidBody2D().getRotation(), new Vector2f());
+        JMath.rotate(axisToTest[3], box2D.getRigidBody2D().getRotation(), new Vector2f());
+
+        for (Vector2f vector2f : axisToTest) {
+            if (!isOverlappingOnAxis(aabb, box2D, vector2f))
+                return false;
+        }
+        return true;
+    }
+
+    public static boolean isBox2DIntersectingBox2D(Box2D box1, Box2D box2) {
+        Vector2f[] axisToTest = {
+                new Vector2f(0, 1), new Vector2f(1, 0),
+                new Vector2f(0, 1), new Vector2f(1, 0)
+        };
+        JMath.rotate(axisToTest[0], box1.getRigidBody2D().getRotation(), new Vector2f());
+        JMath.rotate(axisToTest[1], box1.getRigidBody2D().getRotation(), new Vector2f());
+        JMath.rotate(axisToTest[2], box2.getRigidBody2D().getRotation(), new Vector2f());
+        JMath.rotate(axisToTest[3], box2.getRigidBody2D().getRotation(), new Vector2f());
+
+        for (Vector2f vector2f : axisToTest) {
+            if (!isOverlappingOnAxis(box1, box2, vector2f))
+                return false;
+        }
+        return true;
+    }
+
+    private static boolean isOverlappingOnAxis(AABB box1, AABB box2, Vector2f axis) {
+        Vector2f interval1 = getInterval(box1, axis);
+        Vector2f interval2 = getInterval(box2, axis);
+        return (interval2.x <= interval1.y) && (interval1.x <= interval2.y);
+    }
+
+    private static boolean isOverlappingOnAxis(AABB box1, Box2D box2, Vector2f axis) {
+        Vector2f interval1 = getInterval(box1, axis);
+        Vector2f interval2 = getInterval(box2, axis);
+        return (interval2.x <= interval1.y) && (interval1.x <= interval2.y);
+    }
+
+    private static boolean isOverlappingOnAxis(Box2D box1, Box2D box2, Vector2f axis) {
+        Vector2f interval1 = getInterval(box1, axis);
+        Vector2f interval2 = getInterval(box2, axis);
+        return (interval2.x <= interval1.y) && (interval1.x <= interval2.y);
+    }
+
+    private static Vector2f getInterval(AABB rect, Vector2f axis) {
+        Vector2f result = new Vector2f();
+
+        Vector2f bottomLeftCorner = rect.getBottomLeftCorner();
+        Vector2f topRightCorner = rect.getTopRightCorner();
+
+        Vector2f squareVertices[] = {
+                new Vector2f(bottomLeftCorner.x, bottomLeftCorner.y),
+                new Vector2f(bottomLeftCorner.x, topRightCorner.y),
+                new Vector2f(topRightCorner.x, bottomLeftCorner.y),
+                new Vector2f(topRightCorner.x, topRightCorner.y)
+        };
+
+        result.x = axis.dot(squareVertices[0]);
+        result.y = result.x;
+        for (int i = 0; i < 4; i++) {
+            float projection = axis.dot(squareVertices[i]);
+            if (projection < result.x) result.x = projection;
+            if (projection > result.y) result.y = projection;
+        }
+
+        return result;
+    }
+
+    private static Vector2f getInterval(Box2D rect, Vector2f axis) {
+        Vector2f result = new Vector2f();
+
+        Vector2f[] squareVertices = rect.getVertices();
+
+        result.x = axis.dot(squareVertices[0]);
+        result.y = result.x;
+        for (int i = 0; i < 4; i++) {
+            float projection = axis.dot(squareVertices[i]);
+            if (projection < result.x) result.x = projection;
+            if (projection > result.y) result.y = projection;
+        }
+
+        return result;
+    }
 }
