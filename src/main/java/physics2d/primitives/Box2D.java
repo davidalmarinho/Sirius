@@ -7,7 +7,7 @@ import physics2d.rigidBody.RigidBody2D;
 public class Box2D {
     private final Vector2f size;
     private final Vector2f halfSize;
-    private RigidBody2D rigidBody2D = null;
+    private RigidBody2D rigidBody2D;
 
     /**
      * Constructor method
@@ -28,10 +28,8 @@ public class Box2D {
      * @param height wished of the box
      */
     public Box2D(Vector2f position, float width, float height) {
-        this.size = new Vector2f(width, height);
-        this.halfSize = new Vector2f(size.mul(0.5f));
-        rigidBody2D = new RigidBody2D();
-        rigidBody2D.setPosition(position);
+        this(width, height);
+        rigidBody2D.setTransform(position);
     }
 
     /**
@@ -91,5 +89,9 @@ public class Box2D {
 
     public RigidBody2D getRigidBody2D() {
         return rigidBody2D;
+    }
+
+    public void setRigidBody2D(RigidBody2D rigidBody2D) {
+        this.rigidBody2D = rigidBody2D;
     }
 }

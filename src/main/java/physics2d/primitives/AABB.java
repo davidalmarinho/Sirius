@@ -39,4 +39,24 @@ public class AABB {
     public Vector2f getTopRightCorner() {
         return new Vector2f(this.rigidBody.getPosition().add(this.halfSize));
     }
+
+    /**
+     * Sets the rigid body of the box
+     *
+     * @param rigidBody Box's rigid body
+     */
+    public void setRigidBody(RigidBody2D rigidBody) {
+        this.rigidBody = rigidBody;
+    }
+
+    /**
+     * Sets the size of the box.
+     *
+     * @param width Box's width
+     * @param height Box's height
+     */
+    public void setSize(float width, float height) {
+        this.size.set(width, height);
+        this.halfSize.set(width / 2.0f, height / 2.0f);
+    }
 }
