@@ -16,6 +16,10 @@ public class Circle {
         return radius;
     }
 
+    public void setRadius(float radius) {
+        this.radius = radius;
+    }
+
     public Vector2f getCenter() {
         return rigidBody2D.getPosition();
     }

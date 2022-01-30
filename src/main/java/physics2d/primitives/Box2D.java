@@ -39,7 +39,7 @@ public class Box2D {
      *
      * @return box's bottom left corner coordinates
      */
-    public Vector2f getBottomLeftCorner() {
+    public Vector2f getLocalBottomLeftCorner() {
         return new Vector2f(rigidBody2D.getPosition()).sub(halfSize);
     }
 
@@ -48,7 +48,7 @@ public class Box2D {
      *
      * @return box's top right corner coordinates
      */
-    public Vector2f getTopRightCorner() {
+    public Vector2f getLocalTopRightCorner() {
         return new Vector2f(rigidBody2D.getPosition()).add(halfSize);
     }
 
@@ -63,8 +63,8 @@ public class Box2D {
      *         getVertices()[3]; -> returns the top right corner position
      */
     public Vector2f[] getVertices() {
-        Vector2f topRightCorner = getTopRightCorner();
-        Vector2f bottomLeftCorner = getBottomLeftCorner();
+        Vector2f topRightCorner = getLocalTopRightCorner();
+        Vector2f bottomLeftCorner = getLocalBottomLeftCorner();
 
         Vector2f[] vertices = {
                 new Vector2f(bottomLeftCorner.x, bottomLeftCorner.y),  // Bottom left corner
