@@ -85,8 +85,8 @@ public class IntersectionDetector2D {
         Vector2f localPointBoxSpace = new Vector2f(point);
         JMath.rotate(localPointBoxSpace, box.getRigidBody2D().getRotation(), box.getRigidBody2D().getPosition());
 
-        Vector2f leftBottomCorner = box.getBottomLeftCorner();
-        Vector2f topRightCorner = box.getTopRightCorner();
+        Vector2f leftBottomCorner = box.getLocalBottomLeftCorner();
+        Vector2f topRightCorner = box.getLocalTopRightCorner();
 
         return (localPointBoxSpace.x >= leftBottomCorner.x && localPointBoxSpace.x <= topRightCorner.x)
                 && (localPointBoxSpace.y <= topRightCorner.y && localPointBoxSpace.y >= leftBottomCorner.y);
@@ -215,7 +215,7 @@ public class IntersectionDetector2D {
          * since we rotated the lines too
          */
         Line2D localLine = new Line2D(localStart, localEnd);
-        AABB aabb = new AABB(box.getBottomLeftCorner(), box.getTopRightCorner());
+        AABB aabb = new AABB(box.getLocalBottomLeftCorner(), box.getLocalTopRightCorner());
 
         return isLineIntersectingAABB(localLine, aabb);
     }

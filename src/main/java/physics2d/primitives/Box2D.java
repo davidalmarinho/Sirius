@@ -5,9 +5,16 @@ import org.joml.Vector2f;
 import physics2d.rigidBody.RigidBody2D;
 
 public class Box2D {
-    private final Vector2f size;
+    private Vector2f size;
     private final Vector2f halfSize;
-    private RigidBody2D rigidBody2D = null;
+    private RigidBody2D rigidBody2D;
+
+    /**
+     * Constructor method
+     */
+    public Box2D() {
+        this(1, 1);
+    }
 
     /**
      * Constructor method
@@ -17,7 +24,7 @@ public class Box2D {
      */
     public Box2D(float width, float height) {
         this.size = new Vector2f(width, height);
-        this.halfSize = new Vector2f(size.mul(0.5f));
+        this.halfSize = new Vector2f(size).mul(0.5f);
         rigidBody2D = new RigidBody2D();
     }
 
@@ -28,10 +35,8 @@ public class Box2D {
      * @param height wished of the box
      */
     public Box2D(Vector2f position, float width, float height) {
-        this.size = new Vector2f(width, height);
-        this.halfSize = new Vector2f(size.mul(0.5f));
-        rigidBody2D = new RigidBody2D();
-        rigidBody2D.setPosition(position);
+        this(width, height);
+        rigidBody2D.setTransform(position);
     }
 
     /**
@@ -39,7 +44,7 @@ public class Box2D {
      *
      * @return box's bottom left corner coordinates
      */
-    public Vector2f getBottomLeftCorner() {
+    public Vector2f getLocalBottomLeftCorner() {
         return new Vector2f(rigidBody2D.getPosition()).sub(halfSize);
     }
 
@@ -48,7 +53,7 @@ public class Box2D {
      *
      * @return box's top right corner coordinates
      */
-    public Vector2f getTopRightCorner() {
+    public Vector2f getLocalTopRightCorner() {
         return new Vector2f(rigidBody2D.getPosition()).add(halfSize);
     }
 
@@ -63,8 +68,8 @@ public class Box2D {
      *         getVertices()[3]; -> returns the top right corner position
      */
     public Vector2f[] getVertices() {
-        Vector2f topRightCorner = getTopRightCorner();
-        Vector2f bottomLeftCorner = getBottomLeftCorner();
+        Vector2f topRightCorner = getLocalTopRightCorner();
+        Vector2f bottomLeftCorner = getLocalBottomLeftCorner();
 
         Vector2f[] vertices = {
                 new Vector2f(bottomLeftCorner.x, bottomLeftCorner.y),  // Bottom left corner
@@ -91,5 +96,23 @@ public class Box2D {
 
     public RigidBody2D getRigidBody2D() {
         return rigidBody2D;
+    }
+
+    public void setRigidBody2D(RigidBody2D rigidBody2D) {
+        this.rigidBody2D = rigidBody2D;
+    }
+
+    public Vector2f getSize() {
+        return size;
+    }
+
+    public void setSize(float width, float height) {
+        this.size.set(width, height);
+        this.halfSize.set(width / 2.0f, height / 2.0f);
+    }
+
+    public void setSize(Vector2f size) {
+        this.size = size;
+        this.halfSize.set(size.x / 2.0f, size.y / 2.0f);
     }
 }
