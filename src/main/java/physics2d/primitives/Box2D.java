@@ -5,9 +5,16 @@ import org.joml.Vector2f;
 import physics2d.rigidBody.RigidBody2D;
 
 public class Box2D {
-    private final Vector2f size;
+    private Vector2f size;
     private final Vector2f halfSize;
     private RigidBody2D rigidBody2D;
+
+    /**
+     * Constructor method
+     */
+    public Box2D() {
+        this(1, 1);
+    }
 
     /**
      * Constructor method
@@ -17,7 +24,7 @@ public class Box2D {
      */
     public Box2D(float width, float height) {
         this.size = new Vector2f(width, height);
-        this.halfSize = new Vector2f(size.mul(0.5f));
+        this.halfSize = new Vector2f(size).mul(0.5f);
         rigidBody2D = new RigidBody2D();
     }
 
@@ -93,5 +100,19 @@ public class Box2D {
 
     public void setRigidBody2D(RigidBody2D rigidBody2D) {
         this.rigidBody2D = rigidBody2D;
+    }
+
+    public Vector2f getSize() {
+        return size;
+    }
+
+    public void setSize(float width, float height) {
+        this.size.set(width, height);
+        this.halfSize.set(width / 2.0f, height / 2.0f);
+    }
+
+    public void setSize(Vector2f size) {
+        this.size = size;
+        this.halfSize.set(size.x / 2.0f, size.y / 2.0f);
     }
 }
