@@ -182,7 +182,7 @@ public class Window {
 
             DebugDraw.beginFrame();
 
-            // frameBuffer.bind();
+            frameBuffer.bind();
 
             // Limpar a frame com uma cor
             glClearColor(1f, 1f, 1f, 1f); /* Especifica a cor que o glClear vai usar para
@@ -200,7 +200,7 @@ public class Window {
 
             frameBuffer.unbind();
 
-            // imGuiLayer.update(dt, currentScene);
+            imGuiLayer.update(dt, currentScene);
             glfwSwapBuffers(glfwWindow); /* Faz o mesmo que o Bufferstrategy, aquela parte de já termos uma
             imagem pronta para mostrar antes de apagarmos a outra. */
 
