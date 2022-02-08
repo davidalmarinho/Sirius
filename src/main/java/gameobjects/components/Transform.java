@@ -14,6 +14,14 @@ public class Transform extends Component {
         this.zIndex = zIndex;
     }
 
+    public Transform(Vector2f position, float scale, int zIndex) {
+        this(position, new Vector2f(scale, scale), zIndex);
+    }
+
+    public Transform(Vector2f position) {
+        this(position, 1.0f, 0);
+    }
+
     public Transform() {
         this(new Vector2f(), new Vector2f(), 0);
     }
