@@ -2,6 +2,7 @@ package physics2d;
 
 import org.joml.Vector2f;
 import physics2d.forces.ForceRegistry;
+import physics2d.forces.Gravity2D;
 import physics2d.rigidBody.RigidBody2D;
 
 import java.util.ArrayList;
@@ -13,11 +14,13 @@ public class PhysicsSystem2D {
     private ForceRegistry forceRegistry;
 
     private List<RigidBody2D> rigidBodyList;
+    private Gravity2D gravity;
     private float fixedUpdate;
 
     public PhysicsSystem2D(float fixedUpdateDt, Vector2f gravity) {
-        forceRegistry = new ForceRegistry();
-        rigidBodyList = new ArrayList<>();
+        this.forceRegistry = new ForceRegistry();
+        this.rigidBodyList = new ArrayList<>();
+        this.gravity = new Gravity2D(gravity);
         this.fixedUpdate = fixedUpdateDt;
     }
 
@@ -38,5 +41,8 @@ public class PhysicsSystem2D {
 
     public void addRigidBody2D(RigidBody2D rigidBody2D) {
         this.rigidBodyList.add(rigidBody2D);
+
+        // Register gravity
+        this.forceRegistry.add(rigidBody2D, gravity);
     }
 }
