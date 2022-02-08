@@ -13,6 +13,8 @@ import jade.rendering.spritesheet.Images;
 import jade.rendering.spritesheet.Spritesheet;
 import jade.utils.AssetPool;
 import org.joml.Vector2f;
+import physics2d.PhysicsSystem2D;
+import physics2d.rigidBody.RigidBody2D;
 
 /**
  * Lógica para editar níveis
@@ -20,6 +22,9 @@ import org.joml.Vector2f;
 public class LevelEditorScene extends Scene {
     private Spritesheet sprites;
     private final GameObject levelEditorStuff = this.createGameObject("LevelEditor");
+    PhysicsSystem2D physicsSystem2D = new PhysicsSystem2D(1.0f / 60.0f, new Vector2f(0, -10));
+    Transform obj1, obj2;
+    RigidBody2D rb1, rb2;
 
     public LevelEditorScene() {
 
@@ -27,6 +32,18 @@ public class LevelEditorScene extends Scene {
 
     @Override
     public void init() {
+        obj1 = new Transform(new Vector2f(100, 500), 1.0f, 1);
+        obj2 = new Transform(new Vector2f(200, 500), 1.0f, 1);
+        rb1 = new RigidBody2D();
+        rb2 = new RigidBody2D();
+        rb1.setRawTransform(obj1);
+        rb2.setRawTransform(obj2);
+        rb1.setMass(100.0f);
+        rb2.setMass(200.0f);
+
+        physicsSystem2D.addRigidBody2D(rb1);
+        physicsSystem2D.addRigidBody2D(rb2);
+
         loadResources();
         sprites = AssetPool.getSpritesheet(Images.DECORATIONS_AND_BLOCKS.getSpritesheet());
         Spritesheet gizmos = AssetPool.getSpritesheet(Images.GIZMOS.getTexture());
@@ -69,13 +86,14 @@ public class LevelEditorScene extends Scene {
     public void update(float dt) {
         levelEditorStuff.update(dt);
         camera.adjustProjection();
-        // DebugDraw.addBox2D(new Vector2f(400, 200), new Vector2f(64, 32), 30.0f, Color.GREEN, 1);
-        // DebugDraw.addBox2D(new Vector2f(400, 200), new Vector2f(64, 32), 0.0f, Color.BLUE, 1);
-        // DebugDraw.addCircle(new Vector2f(600, 400), 64, Color.BLUE, 1);
 
         for (GameObject go : gameObjectList) {
             go.update(dt);
         }
+
+        DebugDraw.addBox2D(obj1.position, new Vector2f(32, 32), Color.DARK_GREEN);
+        DebugDraw.addBox2D(obj2.position, new Vector2f(32, 32), Color.BLUE);
+        physicsSystem2D.update(dt);
     }
 
     @Override

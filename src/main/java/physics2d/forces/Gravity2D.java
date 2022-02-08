@@ -12,7 +12,7 @@ public class Gravity2D implements IForceGenerator {
      * @param force Amount of gravity that our game world will have
      */
     public Gravity2D(Vector2f force) {
-        this.gravity.set(force);
+        this.gravity = new Vector2f(force);
     }
 
     @Override

@@ -69,6 +69,11 @@ public class RigidBody2D extends Component {
         this.position = position;
     }
 
+    public void setRawTransform(Transform rawTransform) {
+        this.rawTransform = rawTransform;
+        this.position.set(rawTransform.position);
+    }
+
     /**
      * Gets objects' position
      *
