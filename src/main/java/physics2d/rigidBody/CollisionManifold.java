@@ -37,4 +37,8 @@ public class CollisionManifold {
     public float getCollisionDepth() {
         return collisionDepth;
     }
+
+    public boolean isColliding() {
+        return colliding;
+    }
 }
