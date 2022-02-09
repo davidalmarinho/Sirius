@@ -12,8 +12,10 @@ import jade.rendering.debug.DebugDraw;
 import jade.rendering.spritesheet.Images;
 import jade.rendering.spritesheet.Spritesheet;
 import jade.utils.AssetPool;
+import jdk.nashorn.internal.runtime.Debug;
 import org.joml.Vector2f;
 import physics2d.PhysicsSystem2D;
+import physics2d.primitives.Circle;
 import physics2d.rigidBody.RigidBody2D;
 
 /**
@@ -33,7 +35,7 @@ public class LevelEditorScene extends Scene {
     @Override
     public void init() {
         obj1 = new Transform(new Vector2f(100, 500), 1.0f, 1);
-        obj2 = new Transform(new Vector2f(200, 500), 1.0f, 1);
+        obj2 = new Transform(new Vector2f(100, 300), 1.0f, 1);
         rb1 = new RigidBody2D();
         rb2 = new RigidBody2D();
         rb1.setRawTransform(obj1);
@@ -41,8 +43,17 @@ public class LevelEditorScene extends Scene {
         rb1.setMass(100.0f);
         rb2.setMass(200.0f);
 
-        physicsSystem2D.addRigidBody2D(rb1);
-        physicsSystem2D.addRigidBody2D(rb2);
+        Circle c1 = new Circle();
+        c1.setRadius(10.0f);
+        c1.setRigidBody2D(rb1);
+        Circle c2 = new Circle();
+        c2.setRadius(20.0f);
+        c2.setRigidBody2D(rb2);
+        rb1.setCollider(c1);
+        rb2.setCollider(c2);
+
+        physicsSystem2D.addRigidBody2D(rb1, true);
+        physicsSystem2D.addRigidBody2D(rb2, false);
 
         loadResources();
         sprites = AssetPool.getSpritesheet(Images.DECORATIONS_AND_BLOCKS.getSpritesheet());
@@ -51,8 +62,7 @@ public class LevelEditorScene extends Scene {
         this.camera = new Camera(new Vector2f(-250, 0));
         levelEditorStuff.addComponent(new MouseControls());
 
-        // TODO: 08/02/2022 Don't forget to uncomment this
-        // levelEditorStuff.addComponent(new GridLines());
+        levelEditorStuff.addComponent(new GridLines());
         levelEditorStuff.addComponent(new EditorCamera(camera));
 
         levelEditorStuff.addComponent(new GizmoSystem(gizmos));
@@ -93,8 +103,8 @@ public class LevelEditorScene extends Scene {
             go.update(dt);
         }
 
-        DebugDraw.addBox2D(obj1.position, new Vector2f(32, 32), Color.DARK_GREEN);
-        DebugDraw.addBox2D(obj2.position, new Vector2f(32, 32), Color.BLUE);
+        DebugDraw.addCircle(obj1.position, 10.0f, Color.DARK_GREEN);
+        DebugDraw.addCircle(obj2.position, 20.0f, Color.BLUE);
         physicsSystem2D.update(dt);
     }
 

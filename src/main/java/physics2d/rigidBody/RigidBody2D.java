@@ -3,10 +3,12 @@ package physics2d.rigidBody;
 import gameobjects.components.Component;
 import gameobjects.components.Transform;
 import org.joml.Vector2f;
+import physics2d.primitives.Collider2D;
 
 public class RigidBody2D extends Component {
     // Transform attached to the object
     private Transform rawTransform;
+    private Collider2D collider2D;
 
     private Vector2f position = new Vector2f();
     private float mass = 0.0f;
@@ -18,6 +20,9 @@ public class RigidBody2D extends Component {
     private float angularVelocity;
     private float linearDamping;
     private float angularDamping;
+
+    // Coefficient of restitution
+    private float cor = 1.0f;
 
     private boolean fixedPosition;
 
@@ -60,6 +65,10 @@ public class RigidBody2D extends Component {
         this.forceAccumulator.add(force);
     }
 
+    public boolean hasInfiniteMass() {
+        return mass == 0.0f;
+    }
+
     public void setTransform(Vector2f position, float rotation) {
         this.position = position;
         this.rotation = rotation;
@@ -81,6 +90,14 @@ public class RigidBody2D extends Component {
      */
     public Vector2f getPosition() {
         return position;
+    }
+
+    public Vector2f getLinearVelocity() {
+        return linearVelocity;
+    }
+
+    public void setLinearVelocity(Vector2f linearVelocity) {
+        this.linearVelocity = linearVelocity;
     }
 
     public float getMass() {
@@ -109,5 +126,21 @@ public class RigidBody2D extends Component {
      */
     public float getRotation() {
         return rotation;
+    }
+
+    public Collider2D getCollider() {
+        return collider2D;
+    }
+
+    public void setCollider(Collider2D collider2D) {
+        this.collider2D = collider2D;
+    }
+
+    public float getCor() {
+        return cor;
+    }
+
+    public void setCor(float cor) {
+        this.cor = cor;
     }
 }
