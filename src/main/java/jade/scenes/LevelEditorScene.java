@@ -62,8 +62,7 @@ public class LevelEditorScene extends Scene {
         this.camera = new Camera(new Vector2f(-250, 0));
         levelEditorStuff.addComponent(new MouseControls());
 
-        // TODO: 08/02/2022 Don't forget to uncomment this
-        // levelEditorStuff.addComponent(new GridLines());
+        levelEditorStuff.addComponent(new GridLines());
         levelEditorStuff.addComponent(new EditorCamera(camera));
 
         levelEditorStuff.addComponent(new GizmoSystem(gizmos));
