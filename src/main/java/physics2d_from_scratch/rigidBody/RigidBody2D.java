@@ -1,9 +1,9 @@
-package physics2d.rigidBody;
+package physics2d_from_scratch.rigidBody;
 
 import gameobjects.components.Component;
 import gameobjects.components.Transform;
 import org.joml.Vector2f;
-import physics2d.primitives.Collider2D;
+import physics2d_from_scratch.primitives.Collider2D;
 
 public class RigidBody2D extends Component {
     // Transform attached to the object

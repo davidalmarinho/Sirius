@@ -1,12 +1,12 @@
-package physics2d;
+package physics2d_from_scratch;
 
 import jade.rendering.debug.Line2D;
 import org.joml.Vector2f;
 import org.junit.jupiter.api.Test;
-import physics2d.primitives.Box2D;
-import physics2d.primitives.Circle;
-import physics2d.rigidBody.IntersectionDetector2D;
-import physics2d.rigidBody.RigidBody2D;
+import physics2d_from_scratch.primitives.Box2D;
+import physics2d_from_scratch.primitives.Circle;
+import physics2d_from_scratch.rigidBody.IntersectionDetector2D;
+import physics2d_from_scratch.rigidBody.RigidBody2D;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;

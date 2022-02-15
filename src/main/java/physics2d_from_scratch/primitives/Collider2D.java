@@ -1,4 +1,4 @@
-package physics2d.primitives;
+package physics2d_from_scratch.primitives;
 
 import gameobjects.components.Component;
 import org.joml.Vector2f;

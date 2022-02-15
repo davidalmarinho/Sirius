@@ -1,6 +1,6 @@
-package physics2d.forces;
+package physics2d_from_scratch.forces;
 
-import physics2d.rigidBody.RigidBody2D;
+import physics2d_from_scratch.rigidBody.RigidBody2D;
 
 public class ForceRegistration {
     public IForceGenerator forceGenerator;

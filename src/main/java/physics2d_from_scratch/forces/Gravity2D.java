@@ -1,7 +1,7 @@
-package physics2d.forces;
+package physics2d_from_scratch.forces;
 
 import org.joml.Vector2f;
-import physics2d.rigidBody.RigidBody2D;
+import physics2d_from_scratch.rigidBody.RigidBody2D;
 
 public class Gravity2D implements IForceGenerator {
 

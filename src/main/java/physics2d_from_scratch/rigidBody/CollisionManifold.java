@@ -1,4 +1,4 @@
-package physics2d.rigidBody;
+package physics2d_from_scratch.rigidBody;
 
 import org.joml.Vector2f;
 
