@@ -1,8 +1,8 @@
-package physics2d.primitives;
+package physics2d_from_scratch.primitives;
 
 import jade.utils.JMath;
 import org.joml.Vector2f;
-import physics2d.rigidBody.RigidBody2D;
+import physics2d_from_scratch.rigidBody.RigidBody2D;
 
 public class Box2D {
     private Vector2f size;

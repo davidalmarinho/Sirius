@@ -1,9 +1,9 @@
-package physics2d.rigidBody;
+package physics2d_from_scratch.rigidBody;
 
 import jade.rendering.debug.Line2D;
 import jade.utils.JMath;
 import org.joml.Vector2f;
-import physics2d.primitives.*;
+import physics2d_from_scratch.primitives.*;
 
 // Detects 2 objects when they are intersecting
 public class IntersectionDetector2D {

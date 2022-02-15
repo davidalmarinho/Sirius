@@ -12,11 +12,10 @@ import jade.rendering.debug.DebugDraw;
 import jade.rendering.spritesheet.Images;
 import jade.rendering.spritesheet.Spritesheet;
 import jade.utils.AssetPool;
-import jdk.nashorn.internal.runtime.Debug;
 import org.joml.Vector2f;
-import physics2d.PhysicsSystem2D;
-import physics2d.primitives.Circle;
-import physics2d.rigidBody.RigidBody2D;
+import physics2d_from_scratch.PhysicsSystem2D;
+import physics2d_from_scratch.primitives.Circle;
+import physics2d_from_scratch.rigidBody.RigidBody2D;
 
 /**
  * Lógica para editar níveis
