@@ -8,6 +8,9 @@ group 'org.davidalmarinho'
 version '1.0-SNAPSHOT'
 
 repositories {
+    flatDir {
+        dirs "libs"
+    }
     mavenCentral()
     maven {
         url "https://github.com/SpaiR/imgui-java/releases/tag/v1.85.0"
@@ -77,6 +80,9 @@ def getImplementationBasedOnOS(String implWithoutNatives, String version) {
 }
 
 dependencies {
+    // Box2D
+    implementation name: 'jbox2d-library'
+
     // JUnit
     implementation 'org.junit.jupiter:junit-jupiter:5.8.2'
 
