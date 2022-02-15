@@ -6,6 +6,8 @@ import imgui.ImGui;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class GameObject {
     private static int ID_COUNTER = 0;
@@ -35,6 +37,14 @@ public class GameObject {
         }
     }
 
+    /**
+     * Gets the game object desirable component if it exists.
+     *
+     * @param ComponentClass The class of the component that you are looking for.
+     * @return The desirable component if it exists.
+     *
+     * Example: gameObject.getComponent(SpriteRenderer.class);
+     */
     public <T extends Component> T getComponent(Class<T> ComponentClass) {
         for (Component component : componentList) {
             if (ComponentClass.isAssignableFrom(component.getClass())) {
@@ -50,6 +60,13 @@ public class GameObject {
         return null;
     }
 
+    /**
+     * Removes a component from the game object.
+     *
+     * @param ComponentClass The class of the component that you want to remove.
+     *
+     * Example: gameObject.removeComponent(RigidBody2d.class);
+     */
     public <T extends Component> void removeComponent(Class<T> ComponentClass) {
         for (int i = 0; i < componentList.size(); i++) {
             Component component = componentList.get(i);
@@ -60,6 +77,23 @@ public class GameObject {
         }
     }
 
+    /**
+     * Checks if a game object has the component you are looking for.
+     *
+     * @param ComponentClass The class of the component that you are looking for.
+     * @return true if the game object has the component.
+     *
+     * Example: boolean haveComponent = gameObject.hasComponent(SpriteRenderer.class)
+     */
+    public <T extends Component> boolean hasComponent(Class<T> ComponentClass) {
+        return componentList.stream().anyMatch(component -> ComponentClass.isAssignableFrom(component.getClass()));
+    }
+
+    /**
+     * Adds a component to game object.
+     *
+     * @param component Desirable component.
+     */
     public void addComponent(Component component) {
         // Set an ID
         component.generateId();
