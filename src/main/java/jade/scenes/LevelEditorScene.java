@@ -13,14 +13,12 @@ import jade.rendering.spritesheet.Images;
 import jade.rendering.spritesheet.Spritesheet;
 import jade.utils.AssetPool;
 import org.joml.Vector2f;
-import physcis2d.components.RigidBody2d;
 import physics2d_from_scratch.PhysicsSystem2D;
-import physics2d_from_scratch.primitives.Box2D;
 import physics2d_from_scratch.primitives.Circle;
 import physics2d_from_scratch.rigidBody.RigidBody2D;
 
 /**
- * Lógica para editar níveis
+ * Logic to edit levels
  */
 public class LevelEditorScene extends Scene {
     private Spritesheet sprites;
@@ -102,9 +100,6 @@ public class LevelEditorScene extends Scene {
 
         for (GameObject go : gameObjectList) {
             go.update(dt);
-            if (go.hasComponent(SpriteRenderer.class)) {
-                System.out.println("It has!");
-            }
         }
 
         DebugDraw.addCircle(obj1.position, 10.0f, Color.DARK_GREEN);
