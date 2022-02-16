@@ -6,6 +6,9 @@ import jade.Window;
 import jade.input.MouseListener;
 import jade.rendering.PickingTexture;
 import jade.scenes.Scene;
+import physcis2d.components.Box2DCollider;
+import physcis2d.components.CircleCollider;
+import physcis2d.components.RigidBody2d;
 
 import static org.lwjgl.glfw.GLFW.GLFW_MOUSE_BUTTON_LEFT;
 
@@ -40,6 +43,31 @@ public class PropertiesWindow {
         if (activeGameObject != null) {
             // Creates a Window
             ImGui.begin("Properties");
+
+            if (ImGui.beginPopupContextWindow("ComponentAdder")) {
+                if (ImGui.menuItem("Add Rigidbody")) {
+                    if (!activeGameObject.hasComponent(RigidBody2d.class)) {
+                        activeGameObject.addComponent(new RigidBody2d());
+                    }
+                }
+
+                if (ImGui.menuItem("Add Box Collider")) {
+                    if (!activeGameObject.hasComponent(Box2DCollider.class)
+                            && !activeGameObject.hasComponent(CircleCollider.class)) {
+                        activeGameObject.addComponent(new Box2DCollider());
+                    }
+                }
+
+                if (ImGui.menuItem("Add Circle Collider")) {
+                    if (!activeGameObject.hasComponent(CircleCollider.class)
+                            && !activeGameObject.hasComponent(Box2DCollider.class)) {
+                        activeGameObject.addComponent(new CircleCollider());
+                    }
+                }
+
+                ImGui.endPopup();
+            }
+
             activeGameObject.imgui();
             ImGui.end();
         }

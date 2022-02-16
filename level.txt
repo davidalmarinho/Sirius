@@ -57,6 +57,40 @@
           },
           "uid": 19
         }
+      },
+      {
+        "type": "physcis2d.components.RigidBody2d",
+        "properties": {
+          "velocity": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "angularDamping": 0.8,
+          "linearDamping": 0.9,
+          "eBodyType": "DYNAMIC",
+          "mass": 0.0,
+          "fixedRotation": false,
+          "continuousCollision": true,
+          "uid": 38
+        }
+      },
+      {
+        "type": "physcis2d.components.Box2DCollider",
+        "properties": {
+          "halfSize": {
+            "x": 1.0,
+            "y": 1.0
+          },
+          "origin": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "offset": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "uid": 57
+        }
       }
     ],
     "doSerialization": true
