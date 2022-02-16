@@ -1,9 +1,9 @@
-package physcis2d.components;
+package physics2d.components;
 
 import gameobjects.components.Component;
 import org.jbox2d.dynamics.Body;
 import org.joml.Vector2f;
-import physcis2d.EBodyType;
+import physics2d.EBodyType;
 
 public class RigidBody2d extends Component {
     private Vector2f velocity    = new Vector2f();

@@ -59,7 +59,7 @@
         }
       },
       {
-        "type": "physcis2d.components.RigidBody2d",
+        "type": "physics2d.components.RigidBody2d",
         "properties": {
           "velocity": {
             "x": 0.0,
@@ -75,7 +75,7 @@
         }
       },
       {
-        "type": "physcis2d.components.Box2DCollider",
+        "type": "physics2d.components.Box2DCollider",
         "properties": {
           "halfSize": {
             "x": 1.0,

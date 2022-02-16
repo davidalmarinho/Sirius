@@ -13,9 +13,6 @@ import jade.rendering.spritesheet.Images;
 import jade.rendering.spritesheet.Spritesheet;
 import jade.utils.AssetPool;
 import org.joml.Vector2f;
-import physics2d_from_scratch.PhysicsSystem2D;
-import physics2d_from_scratch.primitives.Circle;
-import physics2d_from_scratch.rigidBody.RigidBody2D;
 
 /**
  * Logic to edit levels
@@ -23,9 +20,6 @@ import physics2d_from_scratch.rigidBody.RigidBody2D;
 public class LevelEditorScene extends Scene {
     private Spritesheet sprites;
     private final GameObject levelEditorStuff = this.createGameObject("LevelEditor");
-    PhysicsSystem2D physicsSystem2D = new PhysicsSystem2D(1.0f / 60.0f, new Vector2f(0, -10));
-    Transform obj1, obj2;
-    RigidBody2D rb1, rb2;
 
     public LevelEditorScene() {
 
@@ -33,27 +27,6 @@ public class LevelEditorScene extends Scene {
 
     @Override
     public void init() {
-        obj1 = new Transform(new Vector2f(100, 500), 1.0f, 1);
-        obj2 = new Transform(new Vector2f(100, 300), 1.0f, 1);
-        rb1 = new RigidBody2D();
-        rb2 = new RigidBody2D();
-        rb1.setRawTransform(obj1);
-        rb2.setRawTransform(obj2);
-        rb1.setMass(100.0f);
-        rb2.setMass(200.0f);
-
-        Circle c1 = new Circle();
-        c1.setRadius(10.0f);
-        c1.setRigidBody2D(rb1);
-        Circle c2 = new Circle();
-        c2.setRadius(20.0f);
-        c2.setRigidBody2D(rb2);
-        rb1.setCollider(c1);
-        rb2.setCollider(c2);
-
-        physicsSystem2D.addRigidBody2D(rb1, true);
-        physicsSystem2D.addRigidBody2D(rb2, false);
-
         loadResources();
         sprites = AssetPool.getSpritesheet(Images.DECORATIONS_AND_BLOCKS.getSpritesheet());
         Spritesheet gizmos = AssetPool.getSpritesheet(Images.GIZMOS.getTexture());
@@ -101,10 +74,6 @@ public class LevelEditorScene extends Scene {
         for (GameObject go : gameObjectList) {
             go.update(dt);
         }
-
-        DebugDraw.addCircle(obj1.position, 10.0f, Color.DARK_GREEN);
-        DebugDraw.addCircle(obj2.position, 20.0f, Color.BLUE);
-        physicsSystem2D.update(dt);
     }
 
     @Override
