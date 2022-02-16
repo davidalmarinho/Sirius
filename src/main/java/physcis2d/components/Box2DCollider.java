@@ -1,10 +1,10 @@
 package physcis2d.components;
 
-import gameobjects.components.Component;
 import org.joml.Vector2f;
 
-public class Box2DCollider extends Component {
+public class Box2DCollider extends Collider2d {
     private Vector2f halfSize = new Vector2f(1.0f);
+    private Vector2f origin = new Vector2f();
 
     /**
      * Gets the half width and the half height
@@ -29,5 +29,13 @@ public class Box2DCollider extends Component {
      */
     public void setHalfSize(float halfWidth, float halfHeight) {
         this.halfSize.set(halfWidth, halfHeight);
+    }
+
+    public Vector2f getOrigin() {
+        return origin;
+    }
+
+    public void setOrigin(Vector2f origin) {
+        this.origin = origin;
     }
 }
