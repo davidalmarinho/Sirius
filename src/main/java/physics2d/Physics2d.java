@@ -1,4 +1,4 @@
-package physcis2d;
+package physics2d;
 
 import gameobjects.GameObject;
 import gameobjects.components.Transform;
@@ -9,9 +9,9 @@ import org.jbox2d.dynamics.BodyDef;
 import org.jbox2d.dynamics.BodyType;
 import org.jbox2d.dynamics.World;
 import org.joml.Vector2f;
-import physcis2d.components.Box2DCollider;
-import physcis2d.components.CircleCollider;
-import physcis2d.components.RigidBody2d;
+import physics2d.components.Box2DCollider;
+import physics2d.components.CircleCollider;
+import physics2d.components.RigidBody2d;
 
 public class Physics2d {
     private Vec2 gravity = new Vec2(0, -10.0f);

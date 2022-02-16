@@ -6,9 +6,9 @@ import jade.Window;
 import jade.input.MouseListener;
 import jade.rendering.PickingTexture;
 import jade.scenes.Scene;
-import physcis2d.components.Box2DCollider;
-import physcis2d.components.CircleCollider;
-import physcis2d.components.RigidBody2d;
+import physics2d.components.Box2DCollider;
+import physics2d.components.CircleCollider;
+import physics2d.components.RigidBody2d;
 
 import static org.lwjgl.glfw.GLFW.GLFW_MOUSE_BUTTON_LEFT;
 

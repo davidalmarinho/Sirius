@@ -1,4 +1,4 @@
-package physcis2d.components;
+package physics2d.components;
 
 import org.joml.Vector2f;
 

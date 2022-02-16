@@ -1,4 +1,4 @@
-package physcis2d;
+package physics2d;
 
 public enum EBodyType {
     STATIC,
