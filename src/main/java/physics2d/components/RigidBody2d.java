@@ -15,7 +15,7 @@ public class RigidBody2d extends Component {
     private boolean fixedRotation      = false;
     private boolean continuousCollision = true;
 
-    private Body rawBody = null;
+    private transient Body rawBody = null;
 
     @Override
     public void update(float dt) {
