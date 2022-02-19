@@ -27,7 +27,7 @@ public class EditorCamera extends Component {
     }
 
     @Override
-    public void update(float dt) {
+    public void editorUpdate(float dt) {
         // Moving camera
         final int BUTTON = GLFW_MOUSE_BUTTON_MIDDLE;
         if (MouseListener.mouseButtonDown(BUTTON) && dragDebounce > 0) {

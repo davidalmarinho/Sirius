@@ -1,6 +1,7 @@
 package jade;
 
 import gameobjects.components.editor.GameViewWindow;
+import gameobjects.components.editor.MenuBar;
 import gameobjects.components.editor.PropertiesWindow;
 import imgui.ImFontAtlas;
 import imgui.ImFontConfig;
@@ -28,11 +29,13 @@ public class ImGuiLayer {
 
     private final GameViewWindow gameViewWindow;
     private final PropertiesWindow propertiesWindow;
+    private MenuBar menuBar;
 
     public ImGuiLayer(long glfwWindow, PickingTexture pickingTexture) {
         this.glfwWindow = glfwWindow;
         this.gameViewWindow = new GameViewWindow();
         this.propertiesWindow = new PropertiesWindow(pickingTexture);
+        this.menuBar = new MenuBar();
     }
 
     // Initialize Dear ImGui.
@@ -201,10 +204,10 @@ public class ImGuiLayer {
         ImGui.newFrame();
         setupDockSpace();
         currentScene.imgui();
+        gameViewWindow.imgui();
         propertiesWindow.update(dt, currentScene);
         propertiesWindow.imgui();
-        // ImGui.showDemoWindow();
-        gameViewWindow.imgui();
+        menuBar.imgui();
 
         // We have to end ImGui before we render ImGui
         ImGui.end();

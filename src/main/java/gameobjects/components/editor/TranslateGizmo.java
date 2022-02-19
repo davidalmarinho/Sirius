@@ -10,7 +10,7 @@ class TranslateGizmo extends Gizmo {
     }
 
     @Override
-    public void update(float dt) {
+    public void editorUpdate(float dt) {
         if (activeGameObject != null) {
             // Dragging x axis gizmo
             if (xAxisActive && !yAxisActive) {
@@ -20,6 +20,6 @@ class TranslateGizmo extends Gizmo {
                 activeGameObject.transform.position.y -= MouseListener.getWorldDeltaY();
             }
         }
-        super.update(dt);
+        super.editorUpdate(dt);
     }
 }

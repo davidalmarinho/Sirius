@@ -32,6 +32,12 @@ public class GameObject {
         }
     }
 
+    public void editorUpdate(float dt) {
+        for (Component c : componentList) {
+            c.editorUpdate(dt);
+        }
+    }
+
     public void update(float dt) {
         for (Component c : componentList) {
             c.update(dt);

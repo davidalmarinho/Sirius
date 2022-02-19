@@ -28,7 +28,7 @@ public class GizmoSystem extends Component {
     }
 
     @Override
-    public void update(float dt) {
+    public void editorUpdate(float dt) {
         // Attach and dis-attach gizmos according our calls
         if (usingGizmo == 0) {
             gameObject.getComponent(TranslateGizmo.class).setUsing();

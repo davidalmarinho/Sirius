@@ -27,6 +27,10 @@ public abstract class Component {
 
     }
 
+    public void editorUpdate(float dt) {
+
+    }
+
     public void update(float dt) {
 
     }
