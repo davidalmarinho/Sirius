@@ -1,5 +1,6 @@
 package jade;
 
+import gameobjects.GameObject;
 import jade.input.KeyListener;
 import jade.input.MouseListener;
 import jade.rendering.FrameBuffer;
@@ -12,6 +13,10 @@ import jade.scenes.LevelScene;
 import jade.scenes.Scene;
 import jade.scenes.Scenes;
 import jade.utils.AssetPool;
+import observers.EventSystem;
+import observers.Observer;
+import observers.events.EEventType;
+import observers.events.Event;
 import org.lwjgl.Version;
 import org.lwjgl.glfw.GLFWErrorCallback;
 import org.lwjgl.opengl.GL;
@@ -21,7 +26,7 @@ import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.system.MemoryUtil.NULL;
 
-public class Window {
+public class Window implements Observer {
     private int width, height;
     private final String title;
     private static Window window;
@@ -35,6 +40,7 @@ public class Window {
         this.width  = 1920;
         this.height = 1080;
         this.title  = "Mario";
+        EventSystem.addObserver(this);
     }
 
     public void run() {
@@ -271,5 +277,14 @@ public class Window {
 
     public ImGuiLayer getImGuiLayer() {
         return imGuiLayer;
+    }
+
+    @Override
+    public void onNotify(GameObject gameObject, Event event) {
+        if (event.type == EEventType.GAME_ENGINE_START_PLAY) {
+            System.out.println("Starting ");
+        } else if (event.type == EEventType.GAME_ENGINE_STOP_PLAY) {
+            System.out.println("Stopping...");
+        }
     }
 }
