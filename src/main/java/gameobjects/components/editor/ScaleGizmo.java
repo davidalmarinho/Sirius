@@ -10,7 +10,7 @@ class ScaleGizmo extends Gizmo {
     }
 
     @Override
-    public void update(float dt) {
+    public void editorUpdate(float dt) {
         if (activeGameObject != null) {
             // Dragging x axis gizmo
             if (xAxisActive && !yAxisActive) {
@@ -20,6 +20,6 @@ class ScaleGizmo extends Gizmo {
                 activeGameObject.transform.scale.y -= MouseListener.getWorldDeltaY();
             }
         }
-        super.update(dt);
+        super.editorUpdate(dt);
     }
 }

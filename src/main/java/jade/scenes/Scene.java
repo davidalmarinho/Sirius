@@ -7,8 +7,11 @@ import gameobjects.GameObject;
 import gameobjects.GameObjectDeserializer;
 import gameobjects.components.Component;
 import gameobjects.components.ComponentDeserializer;
+import jade.input.KeyListener;
 import jade.rendering.Camera;
 import jade.rendering.Renderer;
+import org.joml.Vector2f;
+import physics2d.Physics2d;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -19,31 +22,85 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public abstract class Scene {
+import static org.lwjgl.glfw.GLFW.*;
 
-    protected Renderer renderer = new Renderer();
-    protected Camera camera;
-    protected List<GameObject> gameObjectList;
+public class Scene {
+    private Renderer renderer;
+    private Camera camera;
+    private Physics2d physics2d;
+    private List<GameObject> gameObjectList;
     // Game object that we are inspecting
     private boolean running;
 
-    protected boolean levelLoaded;
+    private SceneInitializer sceneInitializer;
 
-    public Scene() {
+    public Scene(SceneInitializer sceneInitializer) {
         gameObjectList = new ArrayList<>();
+        this.sceneInitializer = sceneInitializer;
+        this.physics2d = new Physics2d();
+        this.renderer = new Renderer();
     }
 
-    public abstract void init();
+    public void init() {
+        this.camera = new Camera(new Vector2f(-250, 0));
+        this.sceneInitializer.loadResources(this);
+        this.sceneInitializer.init(this);
+    }
 
-    public abstract void update(float dt);
-    public abstract void render();
+    public void editorUpdate(float dt) {
+        // Save and load file
+        if (KeyListener.isKeyPressed(GLFW_KEY_LEFT_CONTROL) && KeyListener.isKeyDown(GLFW_KEY_S)) {
+            save();
+        } else if (KeyListener.isKeyDown(GLFW_KEY_LEFT_CONTROL) && KeyListener.isKeyDown(GLFW_KEY_O)) {
+            load();
+        }
 
-    public abstract void loadResources();
+        this.camera.adjustProjection();
+
+        for (int i = 0; i < gameObjectList.size(); i++) {
+            GameObject go = gameObjectList.get(i);
+            go.editorUpdate(dt);
+
+            if (go.isDead()) {
+                gameObjectList.remove(go);
+                this.renderer.destroyGameObject(go);
+                this.physics2d.destroyGameObject(go);
+
+                // To prevent from skipping another game objects
+                i--;
+            }
+        }
+    }
+
+    public void update(float dt) {
+        this.camera.adjustProjection();
+        this.physics2d.update(dt);
+
+        for (int i = 0; i < gameObjectList.size(); i++) {
+            GameObject go = gameObjectList.get(i);
+            go.update(dt);
+
+            if (go.isDead()) {
+                gameObjectList.remove(go);
+                this.renderer.destroyGameObject(go);
+                this.physics2d.destroyGameObject(go);
+
+                // To prevent from skipping another game objects
+                i--;
+            }
+        }
+    }
+
+    public void render() {
+        this.renderer.render();
+    }
 
     public void start() {
-        for (GameObject g : gameObjectList) {
+        for (int i = 0; i < gameObjectList.size(); i++) {
+            GameObject g = gameObjectList.get(i);
             g.start();
             this.renderer.add(g);
+            this.physics2d.add(g);
         }
         running = true;
     }
@@ -51,10 +108,11 @@ public abstract class Scene {
     public void addGameObject(GameObject gameObject) {
         gameObjectList.add(gameObject);
 
-        // Vamos supor que spawnamos um inimigo a meio do jogo, temos que lhe dar start também
+        // Let's suppose that we spawn an enemy while the game is running, we have to add it too
         if (running) {
             gameObject.start();
             this.renderer.add(gameObject);
+            this.physics2d.add(gameObject);
         }
     }
 
@@ -79,7 +137,7 @@ public abstract class Scene {
      * Create custom scene integration ImGui
      */
     public void imgui() {
-
+        this.sceneInitializer.imgui();
     }
 
     public GameObject createGameObject(String name) {
@@ -89,7 +147,13 @@ public abstract class Scene {
         return go;
     }
 
-    public void saveExit() {
+    public void destroy() {
+        for (GameObject go : gameObjectList) {
+            go.destroy();
+        }
+    }
+
+    public void save() {
         Gson gson = new GsonBuilder()
                 .setPrettyPrinting()
                 .registerTypeAdapter(Component.class, new ComponentDeserializer())
@@ -154,8 +218,10 @@ public abstract class Scene {
             maxGoId++;
             GameObject.init(maxGoId);
             Component.init(maxCompId);
-
-            this.levelLoaded = true;
         }
+    }
+
+    public List<GameObject> getGameObjectList() {
+        return gameObjectList;
     }
 }

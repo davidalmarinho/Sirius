@@ -8,14 +8,12 @@ import jade.rendering.PickingTexture;
 import jade.rendering.Renderer;
 import jade.rendering.Shader;
 import jade.rendering.debug.DebugDraw;
-import jade.scenes.LevelEditorScene;
-import jade.scenes.LevelScene;
+import jade.scenes.LevelEditorSceneInitializer;
 import jade.scenes.Scene;
-import jade.scenes.Scenes;
+import jade.scenes.SceneInitializer;
 import jade.utils.AssetPool;
 import observers.EventSystem;
 import observers.Observer;
-import observers.events.EEventType;
 import observers.events.Event;
 import org.lwjgl.Version;
 import org.lwjgl.glfw.GLFWErrorCallback;
@@ -35,6 +33,8 @@ public class Window implements Observer {
     private ImGuiLayer imGuiLayer;
     private FrameBuffer frameBuffer;
     private PickingTexture pickingTexture;
+
+    private boolean runtimePlaying;
 
     private Window() {
         this.width  = 1920;
@@ -149,7 +149,7 @@ public class Window implements Observer {
         imGuiLayer.initImGui();
 
         // Colocar a scene
-        changeScene(Scenes.LEVEL_EDITOR_SCENE);
+        changeScene(new LevelEditorSceneInitializer());
     }
 
     public void loop() {
@@ -200,7 +200,11 @@ public class Window implements Observer {
             if (dt >= 0) {
                 DebugDraw.draw();
                 // System.out.println("FPS: " + 1.0f / dt);
-                currentScene.update(dt);
+                if (runtimePlaying)
+                    currentScene.update(dt);
+                else
+                    currentScene.editorUpdate(dt);
+
                 currentScene.render();
             }
 
@@ -217,22 +221,14 @@ public class Window implements Observer {
             dt = endTime - beginTime;
             beginTime = endTime;
         }
-        currentScene.saveExit();
     }
 
-    private void changeScene(Scenes scene) {
-        switch (scene) {
-            case LEVEL_EDITOR_SCENE:
-                currentScene = new LevelEditorScene();
-                break;
-            case LEVEL_SCENE:
-                currentScene = new LevelScene();
-                break;
-            default:
-                assert false : "Unknown scene '" + scene + "'";
-                break;
+    private void changeScene(SceneInitializer sceneInitializer) {
+        if (currentScene != null) {
+            currentScene.destroy();
         }
-
+        getImGuiLayer().getPropertiesWindow().setActiveGameObject(null);
+        currentScene = new Scene(sceneInitializer);
         currentScene.load();
         currentScene.init();
         currentScene.start();
@@ -281,10 +277,22 @@ public class Window implements Observer {
 
     @Override
     public void onNotify(GameObject gameObject, Event event) {
-        if (event.type == EEventType.GAME_ENGINE_START_PLAY) {
-            System.out.println("Starting ");
-        } else if (event.type == EEventType.GAME_ENGINE_STOP_PLAY) {
-            System.out.println("Stopping...");
+        switch (event.type) {
+            case GAME_ENGINE_START_PLAY:
+                this.runtimePlaying = true;
+                currentScene.save();
+                changeScene(new LevelEditorSceneInitializer());
+                break;
+            case GAME_ENGINE_STOP_PLAY:
+                this.runtimePlaying = false;
+                changeScene(new LevelEditorSceneInitializer());
+                break;
+            case LOAD_LEVEL:
+                changeScene(new LevelEditorSceneInitializer());
+                break;
+            case SAVE_LEVEL:
+                currentScene.save();
+                break;
         }
     }
 }

@@ -1,5 +1,6 @@
 package jade.rendering;
 
+import gameobjects.GameObject;
 import jade.Window;
 import gameobjects.components.SpriteRenderer;
 import jade.rendering.spritesheet.Texture;
@@ -297,6 +298,21 @@ public class RenderBatch implements Comparable<RenderBatch> {
         }
 
         shader.detach();
+    }
+
+    public boolean destroyIfExists(GameObject gameObject) {
+        SpriteRenderer spriteRenderer = gameObject.getComponent(SpriteRenderer.class);
+        for (int i = 0; i < numSprites; i++) {
+            if (sprites[i] == spriteRenderer) {
+                for(int j = i; j < numSprites; j++) {
+                    sprites[j] = sprites[j + 1];
+                    sprites[j].setDirty(true);
+                }
+                numSprites--;
+                return true;
+            }
+        }
+        return false;
     }
 
     public boolean hasRoom() {

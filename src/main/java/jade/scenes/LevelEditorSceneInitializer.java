@@ -6,9 +6,6 @@ import imgui.ImGui;
 import imgui.ImVec2;
 import gameobjects.GameObject;
 import gameobjects.components.*;
-import jade.rendering.Camera;
-import jade.rendering.Color;
-import jade.rendering.debug.DebugDraw;
 import jade.rendering.spritesheet.Images;
 import jade.rendering.spritesheet.Spritesheet;
 import jade.utils.AssetPool;
@@ -17,33 +14,32 @@ import org.joml.Vector2f;
 /**
  * Logic to edit levels
  */
-public class LevelEditorScene extends Scene {
+public class LevelEditorSceneInitializer extends SceneInitializer {
     private Spritesheet sprites;
-    private final GameObject levelEditorStuff = this.createGameObject("LevelEditor");
+    private GameObject levelEditorStuff;
 
-    public LevelEditorScene() {
+    public LevelEditorSceneInitializer() {
 
     }
 
     @Override
-    public void init() {
-        loadResources();
+    public void init(Scene scene) {
         sprites = AssetPool.getSpritesheet(Images.DECORATIONS_AND_BLOCKS.getSpritesheet());
         Spritesheet gizmos = AssetPool.getSpritesheet(Images.GIZMOS.getTexture());
 
-        this.camera = new Camera(new Vector2f(-250, 0));
+        levelEditorStuff = scene.createGameObject("LevelEditor");
+        levelEditorStuff.setNoSerialize();
         levelEditorStuff.addComponent(new MouseControls());
 
         levelEditorStuff.addComponent(new GridLines());
-        levelEditorStuff.addComponent(new EditorCamera(camera));
+        levelEditorStuff.addComponent(new EditorCamera(scene.getCamera()));
 
         levelEditorStuff.addComponent(new GizmoSystem(gizmos));
-
-        levelEditorStuff.start();
+        scene.addGameObject(levelEditorStuff);
     }
 
     @Override
-    public void loadResources() {
+    public void loadResources(Scene scene) {
         AssetPool.getShader("assets/shaders/default.glsl");
         AssetPool.addSpritesheet(Images.DECORATIONS_AND_BLOCKS.getSpritesheet(),
                 new Spritesheet(
@@ -56,7 +52,7 @@ public class LevelEditorScene extends Scene {
         AssetPool.getTexture(Images.BLEND_IMAGE_2.getTexture());
 
         // Get the texture that was already loaded after saving the saving file with Gson
-        for (GameObject g : gameObjectList) {
+        for (GameObject g : scene.getGameObjectList()) {
             if (g.getComponent(SpriteRenderer.class) != null) {
                 SpriteRenderer spr = g.getComponent(SpriteRenderer.class);
                 if (spr.getTexture() != null) {
@@ -64,21 +60,6 @@ public class LevelEditorScene extends Scene {
                 }
             }
         }
-    }
-
-    @Override
-    public void update(float dt) {
-        levelEditorStuff.update(dt);
-        camera.adjustProjection();
-
-        for (GameObject go : gameObjectList) {
-            go.update(dt);
-        }
-    }
-
-    @Override
-    public void render() {
-        this.renderer.render();
     }
 
     @Override

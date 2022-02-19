@@ -27,6 +27,10 @@ public abstract class Component {
 
     }
 
+    public void editorUpdate(float dt) {
+
+    }
+
     public void update(float dt) {
 
     }
@@ -108,6 +112,10 @@ public abstract class Component {
 
     public static void init(int maxId) {
         ID_COUNTER = maxId;
+    }
+
+    public void destroy() {
+        // TODO: 19/02/2022 Some feature to show that they are dead, a sound, visual effect... Or just erase me and do nothing
     }
 
     public void generateId() {
