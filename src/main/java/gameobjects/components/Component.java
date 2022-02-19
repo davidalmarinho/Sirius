@@ -110,6 +110,10 @@ public abstract class Component {
         ID_COUNTER = maxId;
     }
 
+    public void destroy() {
+        // TODO: 19/02/2022 Some feature to show that they are dead, a sound, visual effect... Or just erase me and do nothing
+    }
+
     public void generateId() {
         if (this.uid == -1) {
             this.uid = ID_COUNTER++;

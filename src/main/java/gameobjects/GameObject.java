@@ -16,6 +16,7 @@ public class GameObject {
     public final String NAME;
     public List<Component> componentList;
     public transient Transform transform;
+    private boolean dead;
     private boolean doSerialization = true;
 
     public GameObject(String name) {
@@ -61,6 +62,18 @@ public class GameObject {
     }
 
     /**
+     * Checks if a game object has the component you are looking for.
+     *
+     * @param ComponentClass The class of the component that you are looking for.
+     * @return true if the game object has the component.
+     *
+     * Example: boolean haveComponent = gameObject.hasComponent(SpriteRenderer.class)
+     */
+    public <T extends Component> boolean hasComponent(Class<T> ComponentClass) {
+        return componentList.stream().anyMatch(component -> ComponentClass.isAssignableFrom(component.getClass()));
+    }
+
+    /**
      * Removes a component from the game object.
      *
      * @param ComponentClass The class of the component that you want to remove.
@@ -77,16 +90,11 @@ public class GameObject {
         }
     }
 
-    /**
-     * Checks if a game object has the component you are looking for.
-     *
-     * @param ComponentClass The class of the component that you are looking for.
-     * @return true if the game object has the component.
-     *
-     * Example: boolean haveComponent = gameObject.hasComponent(SpriteRenderer.class)
-     */
-    public <T extends Component> boolean hasComponent(Class<T> ComponentClass) {
-        return componentList.stream().anyMatch(component -> ComponentClass.isAssignableFrom(component.getClass()));
+    public void destroy() {
+        dead = true;
+        for (int i = 0; i < componentList.size(); i++) {
+            componentList.get(i).destroy();
+        }
     }
 
     /**
@@ -123,5 +131,9 @@ public class GameObject {
 
     public boolean isDoSerialization() {
         return this.doSerialization;
+    }
+
+    public boolean isDead() {
+        return dead;
     }
 }

@@ -1,6 +1,6 @@
 [
   {
-    "uid": 1,
+    "uid": 0,
     "NAME": "Sprite_Object_Gen",
     "componentList": [
       {

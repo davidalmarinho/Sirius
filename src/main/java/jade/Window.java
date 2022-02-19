@@ -8,10 +8,9 @@ import jade.rendering.PickingTexture;
 import jade.rendering.Renderer;
 import jade.rendering.Shader;
 import jade.rendering.debug.DebugDraw;
-import jade.scenes.LevelEditorScene;
-import jade.scenes.LevelScene;
+import jade.scenes.LevelEditorSceneInitializer;
 import jade.scenes.Scene;
-import jade.scenes.Scenes;
+import jade.scenes.SceneInitializer;
 import jade.utils.AssetPool;
 import observers.EventSystem;
 import observers.Observer;
@@ -149,7 +148,7 @@ public class Window implements Observer {
         imGuiLayer.initImGui();
 
         // Colocar a scene
-        changeScene(Scenes.LEVEL_EDITOR_SCENE);
+        changeScene(new LevelEditorSceneInitializer());
     }
 
     public void loop() {
@@ -220,19 +219,11 @@ public class Window implements Observer {
         currentScene.saveExit();
     }
 
-    private void changeScene(Scenes scene) {
-        switch (scene) {
-            case LEVEL_EDITOR_SCENE:
-                currentScene = new LevelEditorScene();
-                break;
-            case LEVEL_SCENE:
-                currentScene = new LevelScene();
-                break;
-            default:
-                assert false : "Unknown scene '" + scene + "'";
-                break;
+    private void changeScene(SceneInitializer sceneInitializer) {
+        if (currentScene != null) {
+            // TODO: 19/02/2022 Destroy scene
         }
-
+        currentScene = new Scene(sceneInitializer);
         currentScene.load();
         currentScene.init();
         currentScene.start();

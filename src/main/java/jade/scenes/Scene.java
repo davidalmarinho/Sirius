@@ -9,6 +9,8 @@ import gameobjects.components.Component;
 import gameobjects.components.ComponentDeserializer;
 import jade.rendering.Camera;
 import jade.rendering.Renderer;
+import org.joml.Vector2f;
+import physics2d.Physics2d;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -19,29 +21,54 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public abstract class Scene {
-
-    protected Renderer renderer = new Renderer();
-    protected Camera camera;
-    protected List<GameObject> gameObjectList;
+public class Scene {
+    private Renderer renderer = new Renderer();
+    private Camera camera;
+    private Physics2d physics2d;
+    private List<GameObject> gameObjectList;
     // Game object that we are inspecting
     private boolean running;
 
-    protected boolean levelLoaded;
+    private boolean levelLoaded;
 
-    public Scene() {
+    private SceneInitializer sceneInitializer;
+
+    public Scene(SceneInitializer sceneInitializer) {
         gameObjectList = new ArrayList<>();
+        this.sceneInitializer = sceneInitializer;
     }
 
-    public abstract void init();
+    public void init() {
+        this.camera = new Camera(new Vector2f(-250, 0));
+        this.sceneInitializer.loadResources(this);
+        this.sceneInitializer.init(this);
+    }
 
-    public abstract void update(float dt);
-    public abstract void render();
+    public void update(float dt) {
+        this.camera.adjustProjection();
 
-    public abstract void loadResources();
+        for (int i = 0; i < gameObjectList.size(); i++) {
+            GameObject go = gameObjectList.get(i);
+            go.update(dt);
+
+            if (go.isDead()) {
+                gameObjectList.remove(go);
+                this.renderer.destroyGameObject(go);
+                this.physics2d.destroyGameObject(go);
+
+                // To prevent from skipping another game objects
+                i--;
+            }
+        }
+    }
+
+    public void render() {
+        this.renderer.render();
+    }
 
     public void start() {
-        for (GameObject g : gameObjectList) {
+        for (int i = 0; i < gameObjectList.size(); i++) {
+            GameObject g = gameObjectList.get(i);
             g.start();
             this.renderer.add(g);
         }
@@ -51,7 +78,7 @@ public abstract class Scene {
     public void addGameObject(GameObject gameObject) {
         gameObjectList.add(gameObject);
 
-        // Vamos supor que spawnamos um inimigo a meio do jogo, temos que lhe dar start também
+        // Let's suppose that we spawn an enemy while the game is running, we have to add it too
         if (running) {
             gameObject.start();
             this.renderer.add(gameObject);
@@ -79,7 +106,7 @@ public abstract class Scene {
      * Create custom scene integration ImGui
      */
     public void imgui() {
-
+        this.sceneInitializer.imgui();
     }
 
     public GameObject createGameObject(String name) {
@@ -87,6 +114,12 @@ public abstract class Scene {
         go.addComponent(new Transform());
         go.transform = go.getComponent(Transform.class);
         return go;
+    }
+
+    public void destroy() {
+        for (GameObject go : gameObjectList) {
+            go.destroy();
+        }
     }
 
     public void saveExit() {
@@ -157,5 +190,9 @@ public abstract class Scene {
 
             this.levelLoaded = true;
         }
+    }
+
+    public List<GameObject> getGameObjectList() {
+        return gameObjectList;
     }
 }
