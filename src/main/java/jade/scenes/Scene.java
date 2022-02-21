@@ -35,10 +35,10 @@ public class Scene {
     private SceneInitializer sceneInitializer;
 
     public Scene(SceneInitializer sceneInitializer) {
-        gameObjectList = new ArrayList<>();
         this.sceneInitializer = sceneInitializer;
         this.physics2d = new Physics2d();
         this.renderer = new Renderer();
+        gameObjectList = new ArrayList<>();
     }
 
     public void init() {
