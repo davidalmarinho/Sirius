@@ -3,6 +3,7 @@ package gameobjects.components;
 import gameobjects.components.editor.JImGui;
 import imgui.ImGui;
 import gameobjects.GameObject;
+import imgui.type.ImInt;
 import jade.rendering.Color;
 import org.joml.Vector2f;
 import org.joml.Vector3f;
@@ -108,12 +109,39 @@ public abstract class Component {
             if (ImGui.dragFloat4(name + ": ", colors)) {
                 ((Color) value).setColor(colors[0], colors[1], colors[2], colors[3]);
             }
+        } else if (type.isEnum()) {
+            String[] enumValues = getEnumValues(type);
+            String enumType = ((Enum<?>) value).name();
+            ImInt index = new ImInt(indexOf(enumType, enumValues));
+
+            if (ImGui.combo(field.getName(), index, enumValues, enumValues.length)) {
+                field.set(this, type.getEnumConstants()[index.get()]);
+            }
         }
 
         // Change the access of the formerly private variables to private again
         if (isPrivate || isProtected) {
             field.setAccessible(false);
         }
+    }
+
+    private String[] getEnumValues(Class<?> enumType) {
+        String[] enumValues = new String[enumType.getEnumConstants().length];
+
+        for (int i = 0; i < enumType.getEnumConstants().length; i++) {
+            Object enumIntegerValue = enumType.getEnumConstants()[i];
+            enumValues[i] = enumIntegerValue.toString();
+        }
+
+        return enumValues;
+    }
+
+    private int indexOf(String str, String[] arr) {
+        for (int i = 0; i < arr.length; i++) {
+            if (str.equals(arr[i])) return i;
+        }
+
+        return -1;
     }
 
     public static void init(int maxId) {

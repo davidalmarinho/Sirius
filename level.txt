@@ -1,6 +1,6 @@
 [
   {
-    "uid": 18,
+    "uid": 0,
     "NAME": "Sprite_Object_Gen",
     "componentList": [
       {
@@ -93,7 +93,7 @@
     "doSerialization": true
   },
   {
-    "uid": 19,
+    "uid": 1,
     "NAME": "Sprite_Object_Gen",
     "componentList": [
       {
@@ -154,7 +154,7 @@
     "doSerialization": true
   },
   {
-    "uid": 20,
+    "uid": 2,
     "NAME": "Sprite_Object_Gen",
     "componentList": [
       {
@@ -215,7 +215,7 @@
     "doSerialization": true
   },
   {
-    "uid": 21,
+    "uid": 3,
     "NAME": "Sprite_Object_Gen",
     "componentList": [
       {
