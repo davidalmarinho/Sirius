@@ -3,7 +3,6 @@ package gameobjects.components.editor;
 import imgui.ImGui;
 import imgui.flag.ImGuiCol;
 import imgui.flag.ImGuiStyleVar;
-import jade.rendering.Color;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
 

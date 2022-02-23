@@ -118,6 +118,7 @@ public class GameObject {
 
     public void imgui() {
         for (Component c : componentList) {
+            // When a bar is opened, we parse to ImGui the fields of that class
             if (ImGui.collapsingHeader(c.getClass().getSimpleName()))
                 c.imgui();
         }
