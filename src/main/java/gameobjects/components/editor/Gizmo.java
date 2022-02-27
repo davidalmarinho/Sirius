@@ -6,11 +6,12 @@ import gameobjects.components.Component;
 import gameobjects.components.Sprite;
 import gameobjects.components.SpriteRenderer;
 import jade.Window;
+import jade.input.KeyListener;
 import jade.input.MouseListener;
 import jade.rendering.Color;
 import org.joml.Vector2f;
 
-import static org.lwjgl.glfw.GLFW.GLFW_MOUSE_BUTTON_LEFT;
+import static org.lwjgl.glfw.GLFW.*;
 
 class Gizmo extends Component {
     private Color xAxisColor = new Color(1, 0.3f, 0.3f, 1);
@@ -75,6 +76,20 @@ class Gizmo extends Component {
         activeGameObject = propertiesWindow.getActiveGameObject();
         if (activeGameObject != null) {
             setActive();
+
+            // TODO: 27/02/2022 Move this into it's own keyEditorBinding component class
+            if (KeyListener.isBindPressed(GLFW_KEY_LEFT_CONTROL, GLFW_KEY_D)) {
+                GameObject newObj = activeGameObject.copy();
+                newObj.transform.position.add(10.0f, 10.0f);
+                Window.getCurrentScene().addGameObject(newObj);
+                this.propertiesWindow.setActiveGameObject(newObj);
+                return;
+            } else if (KeyListener.isKeyDown(GLFW_KEY_DELETE)) {
+                activeGameObject.destroy();
+                this.setInactive();
+                this.propertiesWindow.setActiveGameObject(null);
+                return;
+            }
         } else {
             setInactive();
             return;

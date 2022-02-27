@@ -27,9 +27,9 @@ public class Physics2d {
 
     public Physics2d() {
         this.gravity = new Vec2(0, -100.0f);
-         this.world = new World(gravity);
+        this.world = new World(gravity);
         // TODO: 27/02/2022 Test the code with this line of code and test it without this line of code
-         world.setSleepingAllowed(false);
+        // world.setSleepingAllowed(false);
     }
 
     /**
@@ -42,15 +42,17 @@ public class Physics2d {
         // Updates 60 times per second
         if (physicsTime >= 0.0f) {
             physicsTime -= physicsTimeStep;
-            world.step(physicsTime, velocityIterations, positionIterations);
+            world.step(physicsTimeStep, velocityIterations, positionIterations);
          }
     }
 
     public void destroyGameObject(GameObject go) {
         RigidBody2d rigidBody2d = go.getComponent(RigidBody2d.class);
         if (rigidBody2d != null) {
-            world.destroyBody(rigidBody2d.getRawBody());
-            rigidBody2d.setRawBody(null);
+            if (rigidBody2d.getRawBody() != null) {
+                world.destroyBody(rigidBody2d.getRawBody());
+                rigidBody2d.setRawBody(null);
+            }
         }
     }
 

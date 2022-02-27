@@ -1,13 +1,16 @@
 package gameobjects;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import gameobjects.components.Component;
+import gameobjects.components.ComponentDeserializer;
+import gameobjects.components.SpriteRenderer;
 import gameobjects.components.Transform;
 import imgui.ImGui;
+import jade.utils.AssetPool;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
-import java.util.stream.Collectors;
 
 public class GameObject {
     private static int ID_COUNTER = 0;
@@ -103,6 +106,29 @@ public class GameObject {
         }
     }
 
+    public GameObject copy() {
+        // TODO: 27/02/2022 Make this better please
+        Gson gson = new GsonBuilder()
+                .setPrettyPrinting()
+                .registerTypeAdapter(Component.class, new ComponentDeserializer())
+                .registerTypeAdapter(GameObject.class, new GameObjectDeserializer())
+                .create();
+
+        String objAsJson = gson.toJson(this);
+        GameObject obj = gson.fromJson(objAsJson, GameObject.class);
+        obj.generateUid();
+
+        for (Component c : obj.componentList) {
+            c.generateId();
+        }
+
+        SpriteRenderer spriteRenderer = obj.getComponent(SpriteRenderer.class);
+        if (spriteRenderer != null && spriteRenderer.getTexture() != null) {
+            spriteRenderer.setTexture(AssetPool.getTexture(spriteRenderer.getTexture().getFilePath()));
+        }
+        return obj;
+    }
+
     /**
      * Adds a component to game object.
      *
@@ -122,6 +148,10 @@ public class GameObject {
             if (ImGui.collapsingHeader(c.getClass().getSimpleName()))
                 c.imgui();
         }
+    }
+
+    public void generateUid() {
+        this.uid = ID_COUNTER++;
     }
 
     public static void init(int maxId) {
