@@ -14,8 +14,8 @@ import physics2d.components.CircleCollider;
 import physics2d.components.RigidBody2d;
 
 public class Physics2d {
-    private Vec2 gravity = new Vec2(0, -10.0f);
-    private World world = new World(gravity);
+    private Vec2 gravity;
+    private World world;
 
     private float physicsTime = 0.0f;
     private float physicsTimeStep = 1.0f / 60.0f;
@@ -24,6 +24,13 @@ public class Physics2d {
     // The more we have, the more precise the physics engine will be, but slower too
     private int velocityIterations = 8;
     private int positionIterations = 3;
+
+    public Physics2d() {
+        this.gravity = new Vec2(0, -100.0f);
+         this.world = new World(gravity);
+        // TODO: 27/02/2022 Test the code with this line of code and test it without this line of code
+         world.setSleepingAllowed(false);
+    }
 
     /**
      * Updates Physics' code powered by JBox2D
@@ -36,7 +43,7 @@ public class Physics2d {
         if (physicsTime >= 0.0f) {
             physicsTime -= physicsTimeStep;
             world.step(physicsTime, velocityIterations, positionIterations);
-        }
+         }
     }
 
     public void destroyGameObject(GameObject go) {

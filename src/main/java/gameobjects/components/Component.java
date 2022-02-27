@@ -66,7 +66,7 @@ public abstract class Component {
 
         // Change the access of private variables to public variables to the program be able to change its data
         boolean isPrivate = Modifier.isPrivate(field.getModifiers());
-        boolean isProtected = Modifier.isProtected(field.getModifiers()) | field.getModifiers() == 0;
+        boolean isProtected = Modifier.isProtected(field.getModifiers()) || field.getModifiers() == 0;
         if (isPrivate || isProtected)
             field.setAccessible(true);
 

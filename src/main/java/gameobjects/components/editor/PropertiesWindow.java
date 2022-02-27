@@ -28,8 +28,7 @@ public class PropertiesWindow {
             int x = (int) MouseListener.getScreenX();
             int y = (int) MouseListener.getScreenY();
             int gameObjectId = pickingTexture.readPixed(x, y);
-            GameObject pickedObj = Window.getCurrentScene().getGameObject(gameObjectId);
-            // activeGameObject = currentScene.getGameObject(gameObjectId);
+            GameObject pickedObj = currentScene.getGameObject(gameObjectId);
             if (pickedObj != null && pickedObj.getComponent(NonPickable.class) == null) {
                 activeGameObject = pickedObj;
             } else if (pickedObj == null && !MouseListener.isDragging()) {
