@@ -39,6 +39,7 @@ public class Scene {
         this.physics2d = new Physics2d();
         this.renderer = new Renderer();
         gameObjectList = new ArrayList<>();
+        running = false;
     }
 
     public void init() {
@@ -170,7 +171,7 @@ public class Scene {
                 }
             }
             writer.write(gson.toJson(objsToSerialize));
-            writer.flush();
+            // writer.flush();
             writer.close();
         } catch (IOException e) {
             e.printStackTrace();

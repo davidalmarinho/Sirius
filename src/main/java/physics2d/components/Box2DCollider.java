@@ -4,7 +4,7 @@ import jade.rendering.debug.DebugDraw;
 import org.joml.Vector2f;
 
 public class Box2DCollider extends Collider2d {
-    private Vector2f halfSize = new Vector2f(1.0f);
+    private Vector2f halfSize = new Vector2f(32.0f, 32.0f);
     private Vector2f origin = new Vector2f();
 
     @Override

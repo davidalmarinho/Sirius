@@ -76,7 +76,7 @@ public class JImGui {
 
         ImGui.columns(2);
         ImGui.setColumnWidth(0, defaultColumnWidth);
-        ImGui.text(label);;
+        ImGui.text(label);
         ImGui.nextColumn();
 
         float[] valArray = {value};
