@@ -52,10 +52,14 @@ public class RenderBatch implements Comparable<RenderBatch> {
 
     private int zIndex;
 
+    private Renderer renderer;
+
     /**
      * @param maxBatchSize Quantos tiles desenhamos de uma só vez
      */
-    public RenderBatch(int maxBatchSize, int zIndex) {
+    public RenderBatch(int maxBatchSize, int zIndex, Renderer renderer) {
+        this.renderer = renderer;
+
         this.zIndex = zIndex;
 
         // 1 sprite per each batch
@@ -259,6 +263,13 @@ public class RenderBatch implements Comparable<RenderBatch> {
                 sprite.setDirty(false);
                 rebuffer = true;
             }
+
+            // TODO: 27/02/2022 Get better solution
+            if (sprite.gameObject.transform.zIndex != this.zIndex) {
+                destroyIfExists(sprite.gameObject);
+                renderer.add(sprite.gameObject);
+                i--;
+            }
         }
 
         // We rebuffer if the sprite is dirty
@@ -302,9 +313,10 @@ public class RenderBatch implements Comparable<RenderBatch> {
 
     public boolean destroyIfExists(GameObject gameObject) {
         SpriteRenderer spriteRenderer = gameObject.getComponent(SpriteRenderer.class);
+
         for (int i = 0; i < numSprites; i++) {
             if (sprites[i] == spriteRenderer) {
-                for(int j = i; j < numSprites; j++) {
+                for (int j = i; j < numSprites - 1; j++) {
                     sprites[j] = sprites[j + 1];
                     sprites[j].setDirty(true);
                 }
@@ -312,6 +324,7 @@ public class RenderBatch implements Comparable<RenderBatch> {
                 return true;
             }
         }
+
         return false;
     }
 

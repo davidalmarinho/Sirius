@@ -60,6 +60,22 @@ public class KeyListener {
         return false;
     }
 
+    /**
+     * Automatic binds 2 keys.
+     *
+     * @param keycode1 Should be the key we press first, like 'LEFT_CONTROL'
+     * @param keycode2 Should be the key we press after, like 'D'
+     * @return true if the bind is pressed.
+     *
+     * Example:
+     *     if (KeyListener.isBindPressed(GLFW_KEY_LEFT_CONTROL, GLFW_KEY_D)) {
+     *         doStuff();
+     *     }
+     */
+    public static boolean isBindPressed(int keycode1, int keycode2) {
+        return isKeyPressed(keycode1) && isKeyDown(keycode2);
+    }
+
     public static KeyListener get() {
         if (instance == null) {
             instance = new KeyListener();
