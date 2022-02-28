@@ -145,7 +145,15 @@ public class ImGuiLayer {
         glfwSetScrollCallback(glfwWindow, (w, xOffset, yOffset) -> {
             io.setMouseWheelH(io.getMouseWheelH() + (float) xOffset);
             io.setMouseWheel(io.getMouseWheel() + (float) yOffset);
-            MouseListener.mouseScrollCallback(w, xOffset, yOffset);
+
+            // Just use the personalized scroll when inside of game viewport window
+            boolean insideGameViewportX = MouseListener.getX() > gameViewWindow.getLeftX()
+                    && MouseListener.getX() < gameViewWindow.getRightX();
+            boolean insideGameViewportY = MouseListener.getY() > gameViewWindow.getBottomY()
+                    && MouseListener.getY() < gameViewWindow.getTopY();
+
+            if (insideGameViewportX && insideGameViewportY)
+                MouseListener.mouseScrollCallback(w, xOffset, yOffset);
         });
 
         io.setSetClipboardTextFn(new ImStrConsumer() {

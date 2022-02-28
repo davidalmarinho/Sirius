@@ -103,4 +103,20 @@ public class GameViewWindow {
         return MouseListener.getX() >= leftX && MouseListener.getX() <= rightX
                 && MouseListener.getY() >= bottomY && MouseListener.getY() <= topY;
     }
+
+    public float getLeftX() {
+        return leftX;
+    }
+
+    public float getRightX() {
+        return rightX;
+    }
+
+    public float getTopY() {
+        return topY;
+    }
+
+    public float getBottomY() {
+        return bottomY;
+    }
 }
