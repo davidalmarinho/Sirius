@@ -1,11 +1,14 @@
 package jade.scenes;
 
 import gameobjects.Prefabs;
-import gameobjects.components.editor.*;
 import imgui.ImGui;
 import imgui.ImVec2;
 import gameobjects.GameObject;
 import gameobjects.components.*;
+import jade.editor.EditorCamera;
+import jade.editor.GizmoSystem;
+import jade.editor.GridLines;
+import jade.editor.MouseControls;
 import jade.rendering.spritesheet.Images;
 import jade.rendering.spritesheet.Spritesheet;
 import jade.utils.AssetPool;

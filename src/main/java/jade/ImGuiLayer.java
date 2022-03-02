@@ -1,8 +1,8 @@
 package jade;
 
-import gameobjects.components.editor.GameViewWindow;
-import gameobjects.components.editor.MenuBar;
-import gameobjects.components.editor.PropertiesWindow;
+import jade.editor.GameViewWindow;
+import jade.editor.MenuBar;
+import jade.editor.PropertiesWindow;
 import imgui.*;
 import imgui.callback.ImStrConsumer;
 import imgui.callback.ImStrSupplier;
