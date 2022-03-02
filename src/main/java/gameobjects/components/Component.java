@@ -1,6 +1,6 @@
 package gameobjects.components;
 
-import gameobjects.components.editor.JImGui;
+import jade.editor.JImGui;
 import imgui.ImGui;
 import gameobjects.GameObject;
 import imgui.type.ImInt;

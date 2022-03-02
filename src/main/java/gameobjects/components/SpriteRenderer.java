@@ -1,7 +1,6 @@
 package gameobjects.components;
 
-import gameobjects.components.editor.JImGui;
-import imgui.ImGui;
+import jade.editor.JImGui;
 import jade.rendering.Color;
 import jade.rendering.spritesheet.Texture;
 import org.joml.Vector2f;

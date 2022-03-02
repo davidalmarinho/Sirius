@@ -1,6 +1,6 @@
 [
   {
-    "uid": 0,
+    "uid": 36,
     "NAME": "Sprite_Object_Gen",
     "componentList": [
       {
@@ -89,7 +89,7 @@
     "doSerialization": true
   },
   {
-    "uid": 1,
+    "uid": 37,
     "NAME": "Sprite_Object_Gen",
     "componentList": [
       {
@@ -178,7 +178,7 @@
     "doSerialization": true
   },
   {
-    "uid": 2,
+    "uid": 38,
     "NAME": "Sprite_Object_Gen",
     "componentList": [
       {
@@ -267,7 +267,7 @@
     "doSerialization": true
   },
   {
-    "uid": 3,
+    "uid": 39,
     "NAME": "Sprite_Object_Gen",
     "componentList": [
       {
@@ -356,7 +356,7 @@
     "doSerialization": true
   },
   {
-    "uid": 4,
+    "uid": 40,
     "NAME": "Sprite_Object_Gen",
     "componentList": [
       {
@@ -445,7 +445,7 @@
     "doSerialization": true
   },
   {
-    "uid": 5,
+    "uid": 41,
     "NAME": "Sprite_Object_Gen",
     "componentList": [
       {
@@ -534,7 +534,7 @@
     "doSerialization": true
   },
   {
-    "uid": 6,
+    "uid": 42,
     "NAME": "Sprite_Object_Gen",
     "componentList": [
       {
@@ -623,7 +623,7 @@
     "doSerialization": true
   },
   {
-    "uid": 7,
+    "uid": 43,
     "NAME": "Sprite_Object_Gen",
     "componentList": [
       {
@@ -684,7 +684,7 @@
     "doSerialization": true
   },
   {
-    "uid": 8,
+    "uid": 44,
     "NAME": "Sprite_Object_Gen",
     "componentList": [
       {
@@ -745,7 +745,7 @@
     "doSerialization": true
   },
   {
-    "uid": 9,
+    "uid": 45,
     "NAME": "Sprite_Object_Gen",
     "componentList": [
       {
@@ -806,7 +806,7 @@
     "doSerialization": true
   },
   {
-    "uid": 10,
+    "uid": 46,
     "NAME": "Sprite_Object_Gen",
     "componentList": [
       {
@@ -867,7 +867,7 @@
     "doSerialization": true
   },
   {
-    "uid": 11,
+    "uid": 47,
     "NAME": "Sprite_Object_Gen",
     "componentList": [
       {
@@ -928,7 +928,7 @@
     "doSerialization": true
   },
   {
-    "uid": 12,
+    "uid": 48,
     "NAME": "Sprite_Object_Gen",
     "componentList": [
       {
@@ -981,6 +981,95 @@
                 "y": 0.9166667
               }
             ]
+          }
+        }
+      }
+    ],
+    "dead": false,
+    "doSerialization": true
+  },
+  {
+    "uid": 54,
+    "NAME": "Sprite_Object_Gen",
+    "componentList": [
+      {
+        "type": "gameobjects.components.Transform",
+        "properties": {
+          "position": {
+            "x": 32.0,
+            "y": 512.0
+          },
+          "scale": {
+            "x": 32.0,
+            "y": 32.0
+          },
+          "rotation": 11.8,
+          "zIndex": 0
+        }
+      },
+      {
+        "type": "gameobjects.components.SpriteRenderer",
+        "properties": {
+          "color": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0,
+            "w": 1.0
+          },
+          "sprite": {
+            "width": 16,
+            "height": 16,
+            "texture": {
+              "filePath": "assets/images/spritesheets/decorationsAndBlocks.png",
+              "width": 112,
+              "height": 192
+            },
+            "textureCoordinates": [
+              {
+                "x": 0.2857143,
+                "y": 0.6666667
+              },
+              {
+                "x": 0.2857143,
+                "y": 0.5833333
+              },
+              {
+                "x": 0.14285715,
+                "y": 0.5833333
+              },
+              {
+                "x": 0.14285715,
+                "y": 0.6666667
+              }
+            ]
+          }
+        }
+      },
+      {
+        "type": "physics2d.components.RigidBody2d",
+        "properties": {
+          "velocity": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "angularDamping": 0.8,
+          "linearDamping": 0.9,
+          "eBodyType": "DYNAMIC",
+          "mass": 0.0,
+          "fixedRotation": false,
+          "continuousCollision": true
+        }
+      },
+      {
+        "type": "physics2d.components.Box2DCollider",
+        "properties": {
+          "halfSize": {
+            "x": 32.0,
+            "y": 32.0
+          },
+          "origin": {
+            "x": 0.0,
+            "y": 0.0
           }
         }
       }

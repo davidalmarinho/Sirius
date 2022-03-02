@@ -1,6 +1,6 @@
 package gameobjects.components;
 
-import gameobjects.components.editor.JImGui;
+import jade.editor.JImGui;
 import org.joml.Vector2f;
 
 public class Transform extends Component {

@@ -1,4 +1,4 @@
-package gameobjects.components.editor;
+package jade.editor;
 
 import gameobjects.GameObject;
 import gameobjects.Prefabs;
