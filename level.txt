@@ -1,7 +1,7 @@
 [
   {
-    "uid": 36,
-    "NAME": "Sprite_Object_Gen",
+    "uid": 0,
+    "name": "Sprite_Object_Gen",
     "componentList": [
       {
         "type": "gameobjects.components.Transform",
@@ -89,8 +89,8 @@
     "doSerialization": true
   },
   {
-    "uid": 37,
-    "NAME": "Sprite_Object_Gen",
+    "uid": 1,
+    "name": "Sprite_Object_Gen",
     "componentList": [
       {
         "type": "gameobjects.components.Transform",
@@ -178,8 +178,8 @@
     "doSerialization": true
   },
   {
-    "uid": 38,
-    "NAME": "Sprite_Object_Gen",
+    "uid": 2,
+    "name": "Sprite_Object_Gen",
     "componentList": [
       {
         "type": "gameobjects.components.Transform",
@@ -267,8 +267,8 @@
     "doSerialization": true
   },
   {
-    "uid": 39,
-    "NAME": "Sprite_Object_Gen",
+    "uid": 3,
+    "name": "Sprite_Object_Gen",
     "componentList": [
       {
         "type": "gameobjects.components.Transform",
@@ -356,8 +356,8 @@
     "doSerialization": true
   },
   {
-    "uid": 40,
-    "NAME": "Sprite_Object_Gen",
+    "uid": 4,
+    "name": "Sprite_Object_Gen",
     "componentList": [
       {
         "type": "gameobjects.components.Transform",
@@ -445,8 +445,8 @@
     "doSerialization": true
   },
   {
-    "uid": 41,
-    "NAME": "Sprite_Object_Gen",
+    "uid": 5,
+    "name": "Sprite_Object_Gen",
     "componentList": [
       {
         "type": "gameobjects.components.Transform",
@@ -534,8 +534,8 @@
     "doSerialization": true
   },
   {
-    "uid": 42,
-    "NAME": "Sprite_Object_Gen",
+    "uid": 6,
+    "name": "Sprite_Object_Gen",
     "componentList": [
       {
         "type": "gameobjects.components.Transform",
@@ -623,8 +623,8 @@
     "doSerialization": true
   },
   {
-    "uid": 43,
-    "NAME": "Sprite_Object_Gen",
+    "uid": 7,
+    "name": "Sprite_Object_Gen",
     "componentList": [
       {
         "type": "gameobjects.components.Transform",
@@ -684,8 +684,8 @@
     "doSerialization": true
   },
   {
-    "uid": 44,
-    "NAME": "Sprite_Object_Gen",
+    "uid": 8,
+    "name": "Sprite_Object_Gen",
     "componentList": [
       {
         "type": "gameobjects.components.Transform",
@@ -745,8 +745,8 @@
     "doSerialization": true
   },
   {
-    "uid": 45,
-    "NAME": "Sprite_Object_Gen",
+    "uid": 9,
+    "name": "Sprite_Object_Gen",
     "componentList": [
       {
         "type": "gameobjects.components.Transform",
@@ -806,8 +806,8 @@
     "doSerialization": true
   },
   {
-    "uid": 46,
-    "NAME": "Sprite_Object_Gen",
+    "uid": 10,
+    "name": "Sprite_Object_Gen",
     "componentList": [
       {
         "type": "gameobjects.components.Transform",
@@ -867,8 +867,8 @@
     "doSerialization": true
   },
   {
-    "uid": 47,
-    "NAME": "Sprite_Object_Gen",
+    "uid": 11,
+    "name": "Sprite_Object_Gen",
     "componentList": [
       {
         "type": "gameobjects.components.Transform",
@@ -928,8 +928,8 @@
     "doSerialization": true
   },
   {
-    "uid": 48,
-    "NAME": "Sprite_Object_Gen",
+    "uid": 12,
+    "name": "Sprite_Object_Gen",
     "componentList": [
       {
         "type": "gameobjects.components.Transform",
@@ -989,8 +989,8 @@
     "doSerialization": true
   },
   {
-    "uid": 54,
-    "NAME": "Sprite_Object_Gen",
+    "uid": 13,
+    "name": "Blue Block",
     "componentList": [
       {
         "type": "gameobjects.components.Transform",

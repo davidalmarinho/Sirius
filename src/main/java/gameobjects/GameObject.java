@@ -16,14 +16,14 @@ public class GameObject {
     private static int ID_COUNTER = 0;
     private int uid = -1;
 
-    public final String NAME;
+    public String name;
     public List<Component> componentList;
     public transient Transform transform;
     private boolean dead;
     private boolean doSerialization = true;
 
     public GameObject(String name) {
-        this.NAME = name;
+        this.name = name;
         componentList = new ArrayList<>();
 
         this.uid = ID_COUNTER++;
