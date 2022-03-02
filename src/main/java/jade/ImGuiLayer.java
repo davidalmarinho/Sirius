@@ -10,6 +10,7 @@ import imgui.flag.*;
 import imgui.gl3.ImGuiImplGl3;
 import imgui.glfw.ImGuiImplGlfw;
 import imgui.type.ImBoolean;
+import jade.editor.SceneHierarchy;
 import jade.input.KeyListener;
 import jade.input.MouseListener;
 import jade.rendering.PickingTexture;
@@ -30,12 +31,14 @@ public class ImGuiLayer {
     private final GameViewWindow gameViewWindow;
     private final PropertiesWindow propertiesWindow;
     private MenuBar menuBar;
+    private SceneHierarchy sceneHierarchy;
 
     public ImGuiLayer(long glfwWindow, PickingTexture pickingTexture) {
         this.glfwWindow = glfwWindow;
         this.gameViewWindow = new GameViewWindow();
         this.propertiesWindow = new PropertiesWindow(pickingTexture);
         this.menuBar = new MenuBar();
+        this.sceneHierarchy = new SceneHierarchy();
     }
 
     // Initialize Dear ImGui.
@@ -175,6 +178,7 @@ public class ImGuiLayer {
         gameViewWindow.imgui();
         propertiesWindow.update(dt, currentScene);
         propertiesWindow.imgui();
+        sceneHierarchy.imgui();
 
         // We have to end ImGui before we render ImGui
 
