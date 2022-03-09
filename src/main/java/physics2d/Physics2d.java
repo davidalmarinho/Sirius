@@ -26,7 +26,7 @@ public class Physics2d {
     private int positionIterations = 3;
 
     public Physics2d() {
-        this.gravity = new Vec2(0, -100.0f);
+        this.gravity = new Vec2(0, -10.0f);
         this.world = new World(gravity);
         // TODO: 27/02/2022 Test the code with this line of code and test it without this line of code
         // world.setSleepingAllowed(false);
