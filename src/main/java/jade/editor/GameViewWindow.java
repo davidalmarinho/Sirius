@@ -68,10 +68,6 @@ public class GameViewWindow {
         ImVec2 windowSize = new ImVec2();
         ImGui.getContentRegionAvail(windowSize);
 
-        // For safe
-        windowSize.x -= ImGui.getScrollX();
-        windowSize.y -= ImGui.getScrollY();
-
         float aspectWidth = windowSize.x;
         float aspectHeight = aspectWidth / Window.getTargetAspectRatio();
         if (aspectHeight > windowSize.y) {
@@ -86,10 +82,6 @@ public class GameViewWindow {
     private ImVec2 getCenteredPositionForViewport(ImVec2 aspectSize) {
         ImVec2 windowSize = new ImVec2();
         ImGui.getContentRegionAvail(windowSize);
-
-        // For safe
-        windowSize.x -= ImGui.getScrollX();
-        windowSize.y -= ImGui.getScrollY();
 
         // Taking the center and subtracting half size of the small rectangle that we can fit inside
         float viewportX = (windowSize.x / 2.0f) - (aspectSize.x / 2.0f);

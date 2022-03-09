@@ -31,11 +31,11 @@ public class EditorCamera extends Component {
         // Moving camera
         final int BUTTON = GLFW_MOUSE_BUTTON_MIDDLE;
         if (MouseListener.mouseButtonDown(BUTTON) && dragDebounce > 0) {
-            this.clickOrigin = new Vector2f(MouseListener.getOrthoX(), MouseListener.getOrthoY());
+            this.clickOrigin = new Vector2f(MouseListener.getWorld());
             dragDebounce -= dt;
             return;
         } else if (MouseListener.mouseButtonDown(BUTTON)) {
-            Vector2f mousePos = new Vector2f(MouseListener.getOrthoX(), MouseListener.getOrthoY());
+            Vector2f mousePos = new Vector2f(MouseListener.getWorld());
 
             Vector2f delta = new Vector2f(mousePos).sub(this.clickOrigin);
             LEVEL_EDITOR_CAMERA.position.sub(delta.mul(dt).mul(DRAG_SENSIBILITY));
@@ -53,13 +53,7 @@ public class EditorCamera extends Component {
             float addValue = (float) Math.pow(Math.abs(MouseListener.getScrollY() * SCROLL_SENSITIVITY),
                     1 / LEVEL_EDITOR_CAMERA.getZoom());
             addValue *= -Math.signum(MouseListener.getScrollY());
-
-            // Bug fix for zoom camera
-            if (LEVEL_EDITOR_CAMERA.getZoom() < 3.8f) {
-                LEVEL_EDITOR_CAMERA.addZoom(addValue);
-            } else if (LEVEL_EDITOR_CAMERA.getZoom() > 3.8f) {
-                LEVEL_EDITOR_CAMERA.addZoom(-addValue);
-            }
+            LEVEL_EDITOR_CAMERA.addZoom(addValue);
         }
 
         if (KeyListener.isKeyPressed(GLFW_KEY_0)) {

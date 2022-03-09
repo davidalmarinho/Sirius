@@ -11,7 +11,7 @@ import static org.lwjgl.glfw.GLFW.GLFW_RELEASE;
 
 public class MouseListener {
     private static MouseListener instance;
-    private double xPos, yPos, lastXPos, lastYPos, worldX, worldY, lastWorldX, lastWorldY;
+    private double xPos, yPos;
     private double scrollX, scrollY;
     private final boolean[] mouseButtons = new boolean[9];
     private boolean dragging;
@@ -26,8 +26,6 @@ public class MouseListener {
         // Definir os valores
         this.xPos     = 0.0;
         this.yPos     = 0.0;
-        this.lastXPos = 0.0;
-        this.lastYPos = 0.0;
         this.scrollX  = 0.0;
         this.scrollY  = 0.0;
         this.dragging = false;
@@ -46,20 +44,9 @@ public class MouseListener {
             get().dragging = true;
         }
 
-        // Copy the old values to don't lost them -- in this case, last mouse coordinates
-        get().lastXPos = get().xPos;
-        get().lastYPos = get().yPos;
-
-        // World coordinates
-        get().lastWorldX = get().worldX;
-        get().lastWorldY = get().worldY;
-
         // Receive actual values -- actual coordinates
         get().xPos = xPos;
         get().yPos = yPos;
-
-        calculateOrthoX();
-        calculateOrthoY();
     }
 
     /**
@@ -94,12 +81,8 @@ public class MouseListener {
 
     public static void endFrame() {
         // Guardar e dar reset a valores
-        get().lastXPos = get().xPos;
-        get().lastYPos = get().yPos;
         get().scrollX  = 0.0;
         get().scrollY  = 0.0;
-        get().lastWorldX = get().worldX;
-        get().lastWorldY = get().worldY;
     }
 
     public static float getX() {
@@ -114,44 +97,24 @@ public class MouseListener {
         return (float) get().yPos;
     }
 
-    public static float getOrthoX() {
-        return (float) get().worldX;
-    }
-
-    private static void calculateOrthoX() {
+    public static Vector2f getWorld() {
         float currentX = getX() - get().gameViewportPos.x;
-
-        // This will convert the currentX's range, [0, 1], to [-1, 1]
-        currentX = (currentX / get().gameViewportSize.x) * 2.0f - 1.0f;
-        Vector4f tmp = new Vector4f(currentX, 0, 0, 1); // 1 IS VERY IMPORTANT TO MAINTAIN THE INTEGRITY OF MATRIX MULTIPLICATION
-
-        // See explanation of this in Camera.java file in its constructor method.
-        Camera camera = Window.getCurrentScene().getCamera();
-        Matrix4f viewProjection = new Matrix4f();
-        camera.getInverseView().mul(camera.getInverseProjection(), viewProjection);
-        tmp.mul(viewProjection);
-
-        get().worldX = tmp.x;
-    }
-
-    public static float getOrthoY() {
-        return (float) get().worldY;
-    }
-
-    private static void calculateOrthoY() {
         float currentY = getY() - get().gameViewportPos.y;
 
-        // This will convert the currentX's range, [0, 1], to [-1, 1]
+        // This will convert the currentX's and currentY's range, [0, 1], to [-1, 1]
+        currentX = (currentX / get().gameViewportSize.x) * 2.0f - 1.0f;
         currentY = -((currentY / get().gameViewportSize.y) * 2.0f - 1.0f); // Use '-' because ImGui has y coordinates flipped comparing to our project
-        Vector4f tmp = new Vector4f(0, currentY, 0, 1); // 1 IS VERY IMPORTANT TO MAINTAIN THE INTEGRITY OF MATRIX MULTIPLICATION
+
+        Vector4f tmp = new Vector4f(currentX, currentY, 0, 1); // 1 IS VERY IMPORTANT TO MAINTAIN THE INTEGRITY OF MATRIX MULTIPLICATION
 
         // See explanation of this in Camera.java file in its constructor method.
-        Camera camera = Window.getCurrentScene().getCamera();
-        Matrix4f viewProjection = new Matrix4f();
-        camera.getInverseView().mul(camera.getInverseProjection(), viewProjection);
-        tmp.mul(viewProjection);
+        Camera camera                    = Window.getCurrentScene().getCamera();
+        Matrix4f inverseViewMatrix       = new Matrix4f(camera.getInverseView());
+        Matrix4f inverseProjectionMatrix = new Matrix4f(camera.getInverseProjection());
 
-        get().worldY = tmp.y;
+        tmp.mul(inverseViewMatrix.mul(inverseProjectionMatrix));
+
+        return new Vector2f(tmp.x, tmp.y);
     }
 
     public static float getScreenX() {
@@ -172,22 +135,6 @@ public class MouseListener {
         currentY = 1080.0f - ((currentY / get().gameViewportSize.y) * 1080.0f); // Use '-' because ImGui has y coordinates flipped comparing to our project
 
         return currentY;
-    }
-
-    public static float getDeltaX() {
-        return (float) (get().lastXPos - get().xPos);
-    }
-
-    public static float getDeltaY() {
-        return (float) (get().lastYPos - get().yPos);
-    }
-
-    public static float getWorldDeltaX() {
-        return (float) (get().lastWorldX - get().worldX);
-    }
-
-    public static float getWorldDeltaY() {
-        return (float) (get().lastWorldY - get().worldY);
     }
 
     public static float getScrollX() {
@@ -219,10 +166,7 @@ public class MouseListener {
     }
 
     public static MouseListener get() {
-        if (instance == null) {
-            instance = new MouseListener();
-        }
-
+        if (instance == null) instance = new MouseListener();
         return instance;
     }
 }

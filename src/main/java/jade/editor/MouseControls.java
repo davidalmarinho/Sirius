@@ -2,35 +2,56 @@ package jade.editor;
 
 import gameobjects.GameObject;
 import gameobjects.components.Component;
+import gameobjects.components.SpriteRenderer;
 import jade.Window;
+import jade.input.KeyListener;
 import jade.input.MouseListener;
+import jade.rendering.Color;
 import jade.utils.Settings;
+import org.joml.Vector4f;
 
+import static org.lwjgl.glfw.GLFW.GLFW_KEY_ESCAPE;
 import static org.lwjgl.glfw.GLFW.GLFW_MOUSE_BUTTON_LEFT;
 
 public class MouseControls extends Component {
     GameObject holdingGameObject = null;
+    private float debounceTime = 0.05f;
+    private float debounce = debounceTime;
 
     public void pickupObject(GameObject go) {
+        if (holdingGameObject != null) holdingGameObject.destroy();
+
         holdingGameObject = go;
+        holdingGameObject.getComponent(SpriteRenderer.class).setColor(new Color(0.8f, 0.8f, 0.8f, 0.8f));
+        this.holdingGameObject.addComponent(new NonPickable());
         Window.getCurrentScene().addGameObject(go);
     }
 
     public void place() {
-        holdingGameObject = null;
+        GameObject newObj = this.holdingGameObject.copy();
+        newObj.getComponent(SpriteRenderer.class).setColor(new Color(1.0f, 1.0f, 1.0f, 1.0f));
+        newObj.removeComponent(NonPickable.class);
+        Window.getCurrentScene().addGameObject(newObj);
     }
 
     @Override
     public void editorUpdate(float dt) {
-        if (holdingGameObject != null) {
-            holdingGameObject.transform.position.x = MouseListener.getOrthoX();
-            holdingGameObject.transform.position.y = MouseListener.getOrthoY();
+        debounce -= dt;
+        if (holdingGameObject != null && debounce <= 0) {
+            holdingGameObject.transform.position.x = MouseListener.getWorld().x;
+            holdingGameObject.transform.position.y = MouseListener.getWorld().y;
 
-            holdingGameObject.transform.position.x = (int) (holdingGameObject.transform.position.x / Settings.GRID_WIDTH) * Settings.GRID_WIDTH;
-            holdingGameObject.transform.position.y = (int) (holdingGameObject.transform.position.y / Settings.GRID_HEIGHT) * Settings.GRID_HEIGHT;
+            holdingGameObject.transform.position.x = ((int) Math.floor(holdingGameObject.transform.position.x / Settings.GRID_WIDTH) * Settings.GRID_WIDTH) + Settings.GRID_WIDTH / 2.0f;
+            holdingGameObject.transform.position.y = ((int) Math.floor(holdingGameObject.transform.position.y / Settings.GRID_HEIGHT) * Settings.GRID_HEIGHT) + Settings.GRID_HEIGHT / 2.0f;
 
             if (MouseListener.mouseButtonDown(GLFW_MOUSE_BUTTON_LEFT)) {
                 place();
+                debounce = debounceTime;
+            }
+
+            if (KeyListener.isKeyDown(GLFW_KEY_ESCAPE)) {
+                holdingGameObject.destroy();
+                holdingGameObject = null;
             }
         }
     }
