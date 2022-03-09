@@ -14,10 +14,11 @@ class ScaleGizmo extends Gizmo {
         if (activeGameObject != null) {
             // Dragging x axis gizmo
             if (xAxisActive && !yAxisActive) {
-                activeGameObject.transform.scale.x -= MouseListener.getWorldDeltaX();
+                // TODO: 09/03/2022 Fix gizmos
+                activeGameObject.transform.scale.x -= MouseListener.getWorld().x;
                 // Dragging x axis gizmo
             } else if (yAxisActive) {
-                activeGameObject.transform.scale.y -= MouseListener.getWorldDeltaY();
+                activeGameObject.transform.scale.y -= MouseListener.getWorld().y;
             }
         }
         super.editorUpdate(dt);

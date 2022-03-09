@@ -9,6 +9,7 @@ import jade.editor.EditorCamera;
 import jade.editor.GizmoSystem;
 import jade.editor.GridLines;
 import jade.editor.MouseControls;
+import jade.input.MouseListener;
 import jade.rendering.spritesheet.Images;
 import jade.rendering.spritesheet.Spritesheet;
 import jade.utils.AssetPool;
