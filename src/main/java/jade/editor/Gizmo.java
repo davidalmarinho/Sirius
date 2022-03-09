@@ -27,11 +27,11 @@ class Gizmo extends Component {
 
     protected GameObject activeGameObject = null;
 
-    private Vector2f xAxisOffset = new Vector2f(29.8f, 0.0f);
-    private Vector2f yAxisOffset = new Vector2f(-0.1f, 26.7f);
+    private Vector2f xAxisOffset = new Vector2f(24f / 80f, -6.0f /80.0f);
+    private Vector2f yAxisOffset = new Vector2f(-7f / 80f, 21f / 80f);
 
-    private transient int gizmoWidth = 16;
-    private transient int gizmoHeight = 48;
+    private transient float gizmoWidth = 16f / 80f;
+    private transient float gizmoHeight = 48f / 80f;
 
     protected boolean xAxisActive;
     protected boolean yAxisActive;

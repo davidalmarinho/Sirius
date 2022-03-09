@@ -19,23 +19,23 @@ public class GridLines extends Component {
         Vector2f projectionSize = camera.getProjectionSize();
 
         // Snap to Grid
-        final int firstX = ((int) (cameraPos.x / Settings.GRID_WIDTH) - 1) * Settings.GRID_WIDTH; // -1 to move back 1 grid space
-        final int firstY = ((int) (cameraPos.y / Settings.GRID_HEIGHT) - 1) * Settings.GRID_HEIGHT;
+        final float firstX = ((int) (cameraPos.x / Settings.GRID_WIDTH) - 1) * Settings.GRID_WIDTH; // -1 to move back 1 grid space
+        final float firstY = ((int) (cameraPos.y / Settings.GRID_HEIGHT) - 1) * Settings.GRID_HEIGHT;
 
         // Number of vertical and horizontal lines
         // int numVerticalLines = (int) (Window.getWidth() / projectionSize.x);
         final int numVerticalLines = (int) (projectionSize.x * camera.getZoom() / Settings.GRID_WIDTH) + 2;
         final int numHorizontalLines = (int) (projectionSize.y * camera.getZoom() / Settings.GRID_HEIGHT) + 2;
 
-        final int WIDTH = (int) (projectionSize.x * camera.getZoom()) + Settings.GRID_WIDTH * 2;
-        final int HEIGHT = (int) (projectionSize.y * camera.getZoom()) + Settings.GRID_HEIGHT * 2;
+        final float WIDTH = (int) (projectionSize.x * camera.getZoom()) + Settings.GRID_WIDTH * 2;
+        final float HEIGHT = (int) (projectionSize.y * camera.getZoom()) + Settings.GRID_HEIGHT * 2;
 
         // final int MAX_LINES = numVerticalLines > numHorizontalLines ? numVerticalLines : numHorizontalLines;
         final int MAX_LINES = Math.max(numVerticalLines, numHorizontalLines);
         final Color color = new Color(0.2f, 0.2f, 0.2f);
         for (int i = 0; i < MAX_LINES; i++) {
-            int x = firstX + (Settings.GRID_WIDTH * i);
-            int y = firstY + (Settings.GRID_HEIGHT * i);
+            float x = firstX + (Settings.GRID_WIDTH * i);
+            float y = firstY + (Settings.GRID_HEIGHT * i);
 
             if (i < numVerticalLines) {
                 DebugDraw.addLine2D(new Vector2f(x, firstY), new Vector2f(x, firstY + HEIGHT), color);
