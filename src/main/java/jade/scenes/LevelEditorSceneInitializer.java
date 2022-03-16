@@ -5,6 +5,7 @@ import imgui.ImGui;
 import imgui.ImVec2;
 import gameobjects.GameObject;
 import gameobjects.components.*;
+import jade.animations.StateMachine;
 import jade.editor.EditorCamera;
 import jade.editor.GizmoSystem;
 import jade.editor.GridLines;
@@ -49,6 +50,17 @@ public class LevelEditorSceneInitializer extends SceneInitializer {
                 new Spritesheet(
                         AssetPool.getTexture(Images.DECORATIONS_AND_BLOCKS.getSpritesheet()),
                         16, 16, 81, 0));
+
+        AssetPool.addSpritesheet(Images.SPRITE_SHEET.getSpritesheet(),
+                new Spritesheet(
+                        AssetPool.getTexture(Images.SPRITE_SHEET.getSpritesheet()),
+                        16, 16, 26, 0));
+
+        AssetPool.addSpritesheet(Images.ITEMS.getSpritesheet(),
+                new Spritesheet(
+                        AssetPool.getTexture(Images.ITEMS.getSpritesheet()),
+                        16, 16, 43, 0));
+
         AssetPool.addSpritesheet(Images.GIZMOS.getTexture(),
                 new Spritesheet(
                         AssetPool.getTexture(Images.GIZMOS.getTexture()),
@@ -63,7 +75,13 @@ public class LevelEditorSceneInitializer extends SceneInitializer {
                     spr.setTexture(AssetPool.getTexture(spr.getTexture().getFilePath()));
                 }
             }
+
+            if (g.getComponent(StateMachine.class) != null) {
+                StateMachine stateMachine = g.getComponent(StateMachine.class);
+                stateMachine.refreshTextures();
+            }
         }
+
     }
 
     @Override
@@ -127,6 +145,36 @@ public class LevelEditorSceneInitializer extends SceneInitializer {
             }
 
             if (ImGui.beginTabItem("Prefabs")) {
+                Spritesheet playerSprites = AssetPool.getSpritesheet("assets/images/spritesheets/spritesheet.png");
+                Sprite sprite = playerSprites.getSprite(0);
+
+                float spriteWidth = sprite.getWidth() * 2;
+                float spriteHeight = sprite.getHeight() * 2;
+
+                int id = sprite.getTextureID();
+                Vector2f[] texCoords = sprite.getTextureCoordinates();
+
+                if (ImGui.imageButton(id, spriteWidth, spriteHeight, texCoords[2].x, texCoords[0].y, texCoords[0].x, texCoords[2].y)) {
+                    GameObject object = Prefabs.generateMario(sprite, 0.25f, 0.25f);
+                    // Attach object to the mouse cursor
+                    levelEditorStuff.getComponent(MouseControls.class).pickupObject(object);
+                }
+                ImGui.sameLine();
+                Spritesheet items = AssetPool.getSpritesheet("assets/images/spritesheets/items.png");
+                sprite = items.getSprite(0);
+
+                spriteWidth = sprite.getWidth() * 2;
+                spriteHeight = sprite.getHeight() * 2;
+
+                id = sprite.getTextureID();
+                texCoords = sprite.getTextureCoordinates();
+
+                if (ImGui.imageButton(id, spriteWidth, spriteHeight, texCoords[2].x, texCoords[0].y, texCoords[0].x, texCoords[2].y)) {
+                    GameObject object = Prefabs.generateQuestionMarkBlock(sprite, 0.25f, 0.25f);
+                    // Attach object to the mouse cursor
+                    levelEditorStuff.getComponent(MouseControls.class).pickupObject(object);
+                }
+
                 ImGui.endTabItem();
             }
 

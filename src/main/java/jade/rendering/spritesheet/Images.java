@@ -7,6 +7,7 @@ public enum Images {
     TEST_IMAGE("testImage.png"),
     TEST_IMAGE_2("testImage2.png"),
     GIZMOS("gizmos.png"),
+    ITEMS("items.png"),
 
     DECORATIONS_AND_BLOCKS("decorationsAndBlocks.png"),
     ICONS("icons.png");

@@ -1,13 +1,14 @@
 package jade.animations;
 
 import gameobjects.components.Sprite;
+import jade.utils.AssetPool;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class AnimationState {
     public String title;
-    public List<Frame> animationFramesList = new ArrayList<>();
+    public List<Frame> animationFrameList = new ArrayList<>();
 
     // Show something if the animation system crashes
     private static Sprite defaultSprite = Sprite.Builder.newInstance().build();
@@ -17,7 +18,7 @@ public class AnimationState {
     private boolean doesLoop = false;
 
     public void addFrame(Sprite sprite, float frameTime) {
-        animationFramesList.add(new Frame(sprite, frameTime));
+        animationFrameList.add(new Frame(sprite, frameTime));
     }
 
     public boolean isDoesLoop() {
@@ -28,22 +29,28 @@ public class AnimationState {
         this.doesLoop = doesLoop;
     }
 
+    public void refreshTextures() {
+        for (Frame frame : animationFrameList) {
+            frame.sprite.setTexture(AssetPool.getTexture(frame.sprite.getTexture().getFilePath()));
+        }
+    }
+
     public void update(float dt) {
         // Make sure to not get ArrayIndexOutOfBoundsException
-        if (currentSprite >= animationFramesList.size()) return;
+        if (currentSprite >= animationFrameList.size()) return;
 
         timeTracker -= dt;
 
         if (timeTracker <= 0) {
-            if (currentSprite == animationFramesList.size() - 1 || !doesLoop)
-                currentSprite = (currentSprite + 1) % animationFramesList.size();
+            if (currentSprite != animationFrameList.size() - 1 || doesLoop)
+                currentSprite = (currentSprite + 1) % animationFrameList.size();
 
-            timeTracker = animationFramesList.get(currentSprite).frameTime;
+            timeTracker = animationFrameList.get(currentSprite).frameTime;
         }
     }
 
     public Sprite getCurrentSprite() {
-        if (currentSprite < animationFramesList.size()) return animationFramesList.get(currentSprite).sprite;
+        if (currentSprite < animationFrameList.size()) return animationFrameList.get(currentSprite).sprite;
 
         return defaultSprite;
     }

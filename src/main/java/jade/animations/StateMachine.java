@@ -5,6 +5,7 @@ import gameobjects.components.SpriteRenderer;
 import imgui.ImGui;
 import imgui.type.ImBoolean;
 import imgui.type.ImString;
+import jade.rendering.Color;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -16,6 +17,12 @@ public class StateMachine extends Component {
     private List<AnimationState> animationStateList = new ArrayList<>();
     private transient AnimationState currentState = null;
     private String defaultStateTitle = "";
+
+    public void refreshTextures() {
+        for (AnimationState animationState : animationStateList) {
+            animationState.refreshTextures();
+        }
+    }
 
     public void addStateTrigger(String from, String to, String onTrigger) {
         this.stateTransfers.put(new StateTrigger(from, onTrigger), to);
@@ -62,13 +69,28 @@ public class StateMachine extends Component {
         }
     }
 
+    public void setDefaultState(String animationTitle) {
+        for (AnimationState animationState : animationStateList) {
+            if (animationState.title.equals(animationTitle)) {
+                defaultStateTitle = animationTitle;
+                if (currentState == null) {
+                    currentState = animationState;
+                    return;
+                }
+            }
+        }
+
+        System.err.println("Unable to find state '" + animationTitle + "' in set default state.");
+    }
+
     @Override
     public void update(float dt) {
         if (currentState != null) {
             currentState.update(dt);
             SpriteRenderer spriteRenderer = gameObject.getComponent(SpriteRenderer.class);
 
-            if (spriteRenderer != null) spriteRenderer.setSprite(currentState.getCurrentSprite());
+            if (spriteRenderer != null)
+                spriteRenderer.setSprite(currentState.getCurrentSprite());
         }
     }
 
@@ -78,7 +100,8 @@ public class StateMachine extends Component {
             currentState.update(dt);
             SpriteRenderer spriteRenderer = gameObject.getComponent(SpriteRenderer.class);
 
-            if (spriteRenderer != null) spriteRenderer.setSprite(currentState.getCurrentSprite());
+            if (spriteRenderer != null)
+                spriteRenderer.setSprite(currentState.getCurrentSprite());
         }
     }
 
@@ -95,7 +118,7 @@ public class StateMachine extends Component {
             ImGui.checkbox("Does Loop", doesLoop);
             animationState.setLoop(doesLoop.get());
 
-            for (Frame frame : animationState.animationFramesList) {
+            for (Frame frame : animationState.animationFrameList) {
                 float[] tmp = new float[1];
                 tmp[0] = frame.frameTime;
                 ImGui.dragFloat("Frame (" + index + ") Time: ", tmp, 0.01f);
@@ -105,7 +128,7 @@ public class StateMachine extends Component {
         }
     }
 
-    private class StateTrigger {
+    private static class StateTrigger {
         public String state;
         public String trigger;
 

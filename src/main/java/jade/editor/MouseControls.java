@@ -4,14 +4,14 @@ import gameobjects.GameObject;
 import gameobjects.components.Component;
 import gameobjects.components.SpriteRenderer;
 import jade.Window;
+import jade.animations.StateMachine;
 import jade.input.KeyListener;
 import jade.input.MouseListener;
 import jade.rendering.Color;
 import jade.utils.Settings;
 import org.joml.Vector4f;
 
-import static org.lwjgl.glfw.GLFW.GLFW_KEY_ESCAPE;
-import static org.lwjgl.glfw.GLFW.GLFW_MOUSE_BUTTON_LEFT;
+import static org.lwjgl.glfw.GLFW.*;
 
 public class MouseControls extends Component {
     GameObject holdingGameObject = null;
@@ -29,6 +29,9 @@ public class MouseControls extends Component {
 
     public void place() {
         GameObject newObj = this.holdingGameObject.copy();
+
+        if (newObj.hasComponent(StateMachine.class)) newObj.getComponent(StateMachine.class).refreshTextures();
+
         newObj.getComponent(SpriteRenderer.class).setColor(new Color(1.0f, 1.0f, 1.0f, 1.0f));
         newObj.removeComponent(NonPickable.class);
         Window.getCurrentScene().addGameObject(newObj);
@@ -49,7 +52,7 @@ public class MouseControls extends Component {
                 debounce = debounceTime;
             }
 
-            if (KeyListener.isKeyDown(GLFW_KEY_ESCAPE)) {
+            if (KeyListener.isKeyDown(GLFW_KEY_ESCAPE) || KeyListener.isKeyDown(GLFW_KEY_DELETE)) {
                 holdingGameObject.destroy();
                 holdingGameObject = null;
             }

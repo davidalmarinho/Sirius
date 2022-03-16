@@ -67,6 +67,9 @@ class Gizmo extends Component {
     @Override
     public void update(float dt) {
         if (using) setInactive();
+
+        // xAxisObject.getComponent(SpriteRenderer.class).setColor(new Vector4f(0, 0, 0, 0));
+        // yAxisObject.getComponent(SpriteRenderer.class).setColor(new Vector4f(0, 0, 0, 0));
     }
 
     @Override
