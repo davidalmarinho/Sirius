@@ -9,7 +9,6 @@ import jade.input.KeyListener;
 import jade.input.MouseListener;
 import jade.rendering.Color;
 import jade.utils.Settings;
-import org.joml.Vector4f;
 
 import static org.lwjgl.glfw.GLFW.*;
 

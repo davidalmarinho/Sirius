@@ -10,8 +10,4 @@ public class Frame {
         this.sprite = sprite;
         this.frameTime = time;
     }
-
-    public Frame() {
-
-    }
 }
