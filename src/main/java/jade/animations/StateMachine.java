@@ -5,7 +5,6 @@ import gameobjects.components.SpriteRenderer;
 import imgui.ImGui;
 import imgui.type.ImBoolean;
 import imgui.type.ImString;
-import jade.rendering.Color;
 
 import java.util.ArrayList;
 import java.util.HashMap;

@@ -7,7 +7,6 @@ import jade.animations.AnimationState;
 import jade.animations.StateMachine;
 import jade.rendering.spritesheet.Spritesheet;
 import jade.utils.AssetPool;
-import org.joml.Vector2f;
 
 public class Prefabs {
 

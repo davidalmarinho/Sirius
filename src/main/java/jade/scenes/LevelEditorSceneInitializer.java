@@ -5,12 +5,12 @@ import imgui.ImGui;
 import imgui.ImVec2;
 import gameobjects.GameObject;
 import gameobjects.components.*;
+import gameobjects.IPrefabs;
 import jade.animations.StateMachine;
 import jade.editor.EditorCamera;
 import jade.editor.GizmoSystem;
 import jade.editor.GridLines;
 import jade.editor.MouseControls;
-import jade.input.MouseListener;
 import jade.rendering.spritesheet.Images;
 import jade.rendering.spritesheet.Spritesheet;
 import jade.utils.AssetPool;
@@ -145,35 +145,9 @@ public class LevelEditorSceneInitializer extends SceneInitializer {
             }
 
             if (ImGui.beginTabItem("Prefabs")) {
-                Spritesheet playerSprites = AssetPool.getSpritesheet("assets/images/spritesheets/spritesheet.png");
-                Sprite sprite = playerSprites.getSprite(0);
-
-                float spriteWidth = sprite.getWidth() * 2;
-                float spriteHeight = sprite.getHeight() * 2;
-
-                int id = sprite.getTextureID();
-                Vector2f[] texCoords = sprite.getTextureCoordinates();
-
-                if (ImGui.imageButton(id, spriteWidth, spriteHeight, texCoords[2].x, texCoords[0].y, texCoords[0].x, texCoords[2].y)) {
-                    GameObject object = Prefabs.generateMario(sprite, 0.25f, 0.25f);
-                    // Attach object to the mouse cursor
-                    levelEditorStuff.getComponent(MouseControls.class).pickupObject(object);
-                }
+                addPrefabImGui(Prefabs::generateMario, "assets/images/spritesheets/spritesheet.png");
                 ImGui.sameLine();
-                Spritesheet items = AssetPool.getSpritesheet("assets/images/spritesheets/items.png");
-                sprite = items.getSprite(0);
-
-                spriteWidth = sprite.getWidth() * 2;
-                spriteHeight = sprite.getHeight() * 2;
-
-                id = sprite.getTextureID();
-                texCoords = sprite.getTextureCoordinates();
-
-                if (ImGui.imageButton(id, spriteWidth, spriteHeight, texCoords[2].x, texCoords[0].y, texCoords[0].x, texCoords[2].y)) {
-                    GameObject object = Prefabs.generateQuestionMarkBlock(sprite, 0.25f, 0.25f);
-                    // Attach object to the mouse cursor
-                    levelEditorStuff.getComponent(MouseControls.class).pickupObject(object);
-                }
+                addPrefabImGui(Prefabs::generateQuestionMarkBlock,"assets/images/spritesheets/items.png");
 
                 ImGui.endTabItem();
             }
@@ -182,5 +156,23 @@ public class LevelEditorSceneInitializer extends SceneInitializer {
         }
 
         ImGui.end();
+    }
+
+    private void addPrefabImGui(IPrefabs prefabs, String spriteSheetPath) {
+        Spritesheet sprites = AssetPool.getSpritesheet(spriteSheetPath);
+        Sprite sprite = sprites.getSprite(0);
+
+        float spriteWidth = sprite.getWidth() * 2;
+        float spriteHeight = sprite.getHeight() * 2;
+
+        int id = sprite.getTextureID();
+        Vector2f[] texCoords = sprite.getTextureCoordinates();
+
+        if (ImGui.imageButton(id, spriteWidth, spriteHeight, texCoords[2].x, texCoords[0].y, texCoords[0].x, texCoords[2].y)) {
+
+            GameObject object = prefabs.generate(sprite, 0.25f, 0.25f);
+            // Attach object to the mouse cursor
+            levelEditorStuff.getComponent(MouseControls.class).pickupObject(object);
+        }
     }
 }
