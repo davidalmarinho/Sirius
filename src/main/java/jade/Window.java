@@ -17,10 +17,15 @@ import observers.Observer;
 import observers.events.Event;
 import org.lwjgl.Version;
 import org.lwjgl.glfw.GLFWErrorCallback;
+import org.lwjgl.openal.AL;
+import org.lwjgl.openal.ALC;
+import org.lwjgl.openal.ALCCapabilities;
+import org.lwjgl.openal.ALCapabilities;
 import org.lwjgl.opengl.GL;
 
 import static org.lwjgl.glfw.Callbacks.glfwFreeCallbacks;
 import static org.lwjgl.glfw.GLFW.*;
+import static org.lwjgl.openal.ALC10.*;
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.system.MemoryUtil.NULL;
 
@@ -36,6 +41,9 @@ public class Window implements Observer {
 
     private boolean runtimePlaying;
 
+    private long audioContext;
+    private long audioDevice;
+
     private Window() {
         this.width  = 1920;
         this.height = 1080;
@@ -49,17 +57,21 @@ public class Window implements Observer {
         init();
         loop();
 
-        /* Esta parte não é estritamente necessária, porque o, sistema operativo,
-         * já costuma limpar a memória, mas podemos ser nós a limpar o nosso lixo :)
+        /* This part isn't strictly necessary because the operative system usually cleans up the memory for us. But
+         * just for safe, we will clean it by ourselves and because this is good practice.
          */
 
-        // Libertar a memória
-        glfwFreeCallbacks(glfwWindow); // Limpar os erros --Dá reset aos erros da janela
-        glfwDestroyWindow(glfwWindow); // Destruir a janela
+        // Destroy audio context
+        alcDestroyContext(audioContext);
+        alcCloseDevice(audioDevice);
 
-        // Terminar todas as execuções da janela
-        glfwTerminate(); // Termina a biblioteca glfwWindowHint
-        glfwSetErrorCallback(null).free(); // Libertar o error callback
+        // Free the memory
+        glfwFreeCallbacks(glfwWindow); // Clean up the errors --Gives reset to the window errors
+        glfwDestroyWindow(glfwWindow); // Destroys the window
+
+        // Finish window's executions
+        glfwTerminate(); // Terminates glfwWindowHint library
+        glfwSetErrorCallback(null).free(); // Free the error callback
     }
 
     public void init() {
@@ -128,6 +140,24 @@ public class Window implements Observer {
 
         // Agora vamos tornar a janela visível
         glfwShowWindow(glfwWindow);
+
+        // Initialize audio device
+        String defaultDeviceName = alcGetString(0, ALC_DEFAULT_DEVICE_SPECIFIER);
+        audioDevice = alcOpenDevice(defaultDeviceName);
+
+        // Set up audio context
+        int[] attributes = {0};
+                alcCreateContext(audioDevice, attributes);
+        audioContext = alcCreateContext(audioDevice, attributes);
+        alcMakeContextCurrent(audioContext);
+
+        ALCCapabilities alcCapabilities = ALC.createCapabilities(audioDevice);
+        ALCapabilities alCapabilities = AL.createCapabilities(alcCapabilities);
+
+        // If audio library isn't supported
+        assert !alCapabilities.OpenAL10 : "Audio library not suppoerted.";
+
+
 
         // This line is critical for LWJGL's interoperation with GLFW's
         // OpenGL context, or any context that is managed externally.
