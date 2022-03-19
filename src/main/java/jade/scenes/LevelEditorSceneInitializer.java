@@ -6,6 +6,7 @@ import imgui.ImVec2;
 import gameobjects.GameObject;
 import gameobjects.components.*;
 import gameobjects.IPrefabs;
+import jade.Sound;
 import jade.animations.StateMachine;
 import jade.editor.EditorCamera;
 import jade.editor.GizmoSystem;
@@ -15,6 +16,9 @@ import jade.rendering.spritesheet.Images;
 import jade.rendering.spritesheet.Spritesheet;
 import jade.utils.AssetPool;
 import org.joml.Vector2f;
+
+import java.io.File;
+import java.util.Collection;
 
 /**
  * Logic to edit levels
@@ -66,6 +70,22 @@ public class LevelEditorSceneInitializer extends SceneInitializer {
                         AssetPool.getTexture(Images.GIZMOS.getTexture()),
                         24, 48, 3, 0));
         AssetPool.getTexture(Images.BLEND_IMAGE_2.getTexture());
+
+        AssetPool.addSound("assets/sounds/main-theme-overworld.ogg", true);
+        AssetPool.addSound("assets/sounds/flagpole.ogg", false);
+        AssetPool.addSound("assets/sounds/break_block.ogg", false);
+        AssetPool.addSound("assets/sounds/bump.ogg", false);
+        AssetPool.addSound("assets/sounds/coin.ogg", false);
+        AssetPool.addSound("assets/sounds/gameover.ogg", false);
+        AssetPool.addSound("assets/sounds/jump-small.ogg", false);
+        AssetPool.addSound("assets/sounds/mario_die.ogg", false);
+        AssetPool.addSound("assets/sounds/pipe.ogg", false);
+        AssetPool.addSound("assets/sounds/powerup.ogg", false);
+        AssetPool.addSound("assets/sounds/powerup_appears.ogg", false);
+        AssetPool.addSound("assets/sounds/stage_clear.ogg", false);
+        AssetPool.addSound("assets/sounds/stomp.ogg", false);
+        AssetPool.addSound("assets/sounds/kick.ogg", false);
+        AssetPool.addSound("assets/sounds/invincible.ogg", false);
 
         // Get the texture that was already loaded after saving the saving file with Gson
         for (GameObject g : scene.getGameObjectList()) {
@@ -147,7 +167,22 @@ public class LevelEditorSceneInitializer extends SceneInitializer {
             if (ImGui.beginTabItem("Prefabs")) {
                 addPrefabImGui(Prefabs::generateMario, "assets/images/spritesheets/spritesheet.png");
                 ImGui.sameLine();
-                addPrefabImGui(Prefabs::generateQuestionMarkBlock,"assets/images/spritesheets/items.png");
+                addPrefabImGui(Prefabs::generateQuestionMarkBlock, "assets/images/spritesheets/items.png");
+
+                ImGui.endTabItem();
+            }
+
+            if (ImGui.beginTabItem("Sounds")) {
+                Collection<Sound> sounds = AssetPool.getAllSounds();
+                for (Sound sound : sounds) {
+                    File tmp = new File(sound.getFilePath());
+                    if (ImGui.button(tmp.getName())) {
+                        if (!sound.isPlaying())
+                            sound.play();
+                        else
+                            sound.stop();
+                    }
+                }
 
                 ImGui.endTabItem();
             }

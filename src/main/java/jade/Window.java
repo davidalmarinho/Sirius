@@ -149,6 +149,7 @@ public class Window implements Observer {
         int[] attributes = {0};
                 alcCreateContext(audioDevice, attributes);
         audioContext = alcCreateContext(audioDevice, attributes);
+        alcMakeContextCurrent(audioContext);
 
         ALCCapabilities alcCapabilities = ALC.createCapabilities(audioDevice);
         ALCapabilities alCapabilities = AL.createCapabilities(alcCapabilities);
