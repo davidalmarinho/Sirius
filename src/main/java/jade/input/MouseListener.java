@@ -11,7 +11,7 @@ import static org.lwjgl.glfw.GLFW.GLFW_RELEASE;
 
 public class MouseListener {
     private static MouseListener instance;
-    private double xPos, yPos;
+    private double xPos, yPos, lastX, lastY;
     private double scrollX, scrollY;
     private final boolean[] mouseButtons = new boolean[9];
     private boolean dragging;
@@ -26,6 +26,8 @@ public class MouseListener {
         // Definir os valores
         this.xPos     = 0.0;
         this.yPos     = 0.0;
+        this.lastX    = 0.0;
+        this.lastY    = 0.0;
         this.scrollX  = 0.0;
         this.scrollY  = 0.0;
         this.dragging = false;
@@ -80,9 +82,21 @@ public class MouseListener {
     }
 
     public static void endFrame() {
-        // Guardar e dar reset a valores
         get().scrollX  = 0.0;
         get().scrollY  = 0.0;
+    }
+
+    public static void clear() {
+        get().scrollX = 0.0;
+        get().scrollY = 0.0;
+        get().xPos    = 0.0;
+        get().yPos    = 0.0;
+        get().lastX   = 0.0;
+        get().lastY   = 0.0;
+
+        get().mouseButtonsDown = 0;
+        get().dragging = false;
+        // Arrays.fill(get().mouseButtons, false);
     }
 
     public static float getX() {

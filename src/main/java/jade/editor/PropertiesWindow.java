@@ -9,15 +9,20 @@ import physics2d.components.Box2DCollider;
 import physics2d.components.CircleCollider;
 import physics2d.components.RigidBody2d;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.lwjgl.glfw.GLFW.GLFW_MOUSE_BUTTON_LEFT;
 
 public class PropertiesWindow {
+    private List<GameObject> activeGameObjectList;
     private GameObject activeGameObject = null;
     private PickingTexture pickingTexture;
 
     private float debounce = 0.2f;
 
     public PropertiesWindow(PickingTexture pickingTexture) {
+        this.activeGameObjectList = new ArrayList<>();
         this.pickingTexture = pickingTexture;
     }
 
@@ -28,8 +33,9 @@ public class PropertiesWindow {
             int y = (int) MouseListener.getScreenY();
             int gameObjectId = pickingTexture.readPixed(x, y);
             GameObject pickedObj = currentScene.getGameObject(gameObjectId);
-            if (pickedObj != null && pickedObj.getComponent(NonPickable.class) == null) {
+            if (pickedObj != null && !pickedObj.hasComponent(NonPickable.class)) {
                 activeGameObject = pickedObj;
+                setActiveGameObject(pickedObj);
             } else if (pickedObj == null && !MouseListener.isDragging()) {
                 activeGameObject = null;
             }
@@ -38,7 +44,8 @@ public class PropertiesWindow {
     }
 
     public void imgui() {
-        if (activeGameObject != null) {
+        if (activeGameObjectList.size() == 1 && activeGameObjectList.get(0) != null) {
+            activeGameObject = activeGameObjectList.get(0);
             // Creates a Window
             ImGui.begin("Properties");
 
@@ -71,11 +78,30 @@ public class PropertiesWindow {
         }
     }
 
+    public void addActiveGameObject(GameObject activeGameObject) {
+        activeGameObjectList.add(activeGameObject);
+    }
+
+    public void clearSelected() {
+        activeGameObjectList.clear();
+    }
+
+    public void setInactive() {
+
+    }
+
     public GameObject getActiveGameObject() {
-        return activeGameObject;
+        return activeGameObjectList.size() == 1 ? this.activeGameObjectList.get(0) : null;
     }
 
     public void setActiveGameObject(GameObject activeGameObject) {
-        this.activeGameObject = activeGameObject;
+        if (activeGameObject != null) {
+            clearSelected();
+            activeGameObjectList.add(activeGameObject);
+        }
+    }
+
+    public List<GameObject> getActiveGameObjectList() {
+        return activeGameObjectList;
     }
 }

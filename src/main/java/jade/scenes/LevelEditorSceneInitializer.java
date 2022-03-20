@@ -12,6 +12,7 @@ import jade.editor.EditorCamera;
 import jade.editor.GizmoSystem;
 import jade.editor.GridLines;
 import jade.editor.MouseControls;
+import jade.editor.components.KeyControls;
 import jade.rendering.spritesheet.Images;
 import jade.rendering.spritesheet.Spritesheet;
 import jade.utils.AssetPool;
@@ -38,6 +39,7 @@ public class LevelEditorSceneInitializer extends SceneInitializer {
 
         levelEditorStuff = scene.createGameObject("LevelEditor");
         levelEditorStuff.setNoSerialize();
+        levelEditorStuff.addComponent(new KeyControls());
         levelEditorStuff.addComponent(new MouseControls());
 
         levelEditorStuff.addComponent(new GridLines());
