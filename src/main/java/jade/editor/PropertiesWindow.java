@@ -1,8 +1,11 @@
 package jade.editor;
 
 import gameobjects.GameObject;
+import gameobjects.components.SpriteRenderer;
 import imgui.ImGui;
+import jade.rendering.Color;
 import jade.rendering.PickingTexture;
+import org.joml.Vector4f;
 import physics2d.components.Box2DCollider;
 import physics2d.components.CircleCollider;
 import physics2d.components.RigidBody2d;
@@ -10,15 +13,15 @@ import physics2d.components.RigidBody2d;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.lwjgl.glfw.GLFW.GLFW_MOUSE_BUTTON_LEFT;
-
 public class PropertiesWindow {
     private List<GameObject> activeGameObjectList;
     private GameObject activeGameObject = null;
+    private List<Vector4f> activeGameObjectOriginalColorList;
     private PickingTexture pickingTexture;
 
     public PropertiesWindow(PickingTexture pickingTexture) {
         this.activeGameObjectList = new ArrayList<>();
+        this.activeGameObjectOriginalColorList = new ArrayList<>();
         this.pickingTexture = pickingTexture;
     }
 
@@ -58,11 +61,30 @@ public class PropertiesWindow {
     }
 
     public void addActiveGameObject(GameObject activeGameObject) {
+        SpriteRenderer spriteRenderer = activeGameObject.getComponent(SpriteRenderer.class);
+        if (spriteRenderer != null) {
+            this.activeGameObjectOriginalColorList.add(new Vector4f(spriteRenderer.getColor()));
+            spriteRenderer.setColor(new Vector4f(0.8f, 0.8f, 0.0f, 0.8f));
+        } else {
+            // To keep the list indices the same with the game object
+            this.activeGameObjectOriginalColorList.add(new Vector4f());
+        }
         activeGameObjectList.add(activeGameObject);
     }
 
     public void clearSelected() {
+        if (activeGameObjectList.size() > 0) {
+            for (int i = 0; i < activeGameObjectList.size(); i++) {
+                GameObject go = activeGameObjectList.get(i);
+                SpriteRenderer spriteRenderer = go.getComponent(SpriteRenderer.class);
+                if (spriteRenderer != null) {
+                    spriteRenderer.setColor(activeGameObjectOriginalColorList.get(i));
+                }
+            }
+        }
+
         activeGameObjectList.clear();
+        activeGameObjectOriginalColorList.clear();
     }
 
     public void setInactive() {
