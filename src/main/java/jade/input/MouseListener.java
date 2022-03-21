@@ -42,11 +42,15 @@ public class MouseListener {
      * @param yPos (Position) y mouse's actual coordinates
      */
     public static void mousePosCallback(long window, double xPos, double yPos) {
+        if (!Window.getImGuiLayer().getGameViewWindow().getWantCaptureMouse()) clear();
+
         if (get().mouseButtonsDown > 0) {
             get().dragging = true;
         }
 
         // Receive actual values -- actual coordinates
+        get().lastX = xPos;
+        get().lastY = yPos;
         get().xPos = xPos;
         get().yPos = yPos;
     }
@@ -82,8 +86,8 @@ public class MouseListener {
     }
 
     public static void endFrame() {
-        get().scrollX  = 0.0;
-        get().scrollY  = 0.0;
+        get().scrollX = 0.0;
+        get().scrollY = 0.0;
     }
 
     public static void clear() {
@@ -97,6 +101,51 @@ public class MouseListener {
         get().mouseButtonsDown = 0;
         get().dragging = false;
         // Arrays.fill(get().mouseButtons, false);
+    }
+
+    /**
+     * Gets the world coordinates by using the formula:
+     *     ScreenCoordinates = Position * ViewMatrix * ProjectionMatrix
+     * @param screenCoordinates
+     * @return the actually world coordinates.
+     */
+    public static Vector2f screenToWorld(Vector2f screenCoordinates) {
+        Vector2f normalizedScreenCoordinates = new Vector2f(
+                screenCoordinates.x / Window.getWidth(),
+                screenCoordinates.y / Window.getHeight()
+        );
+
+        normalizedScreenCoordinates.mul(2.0f).sub(new Vector2f(1.0f, 1.0f)); // [-1, 1]
+        Camera camera = Window.getCurrentScene().getCamera();
+        Vector4f tmp = new Vector4f(normalizedScreenCoordinates.x, normalizedScreenCoordinates.y, 0.0f, 1.0f);
+        Matrix4f inverseViewMatrix = new Matrix4f(camera.getInverseView());
+        Matrix4f inverseProjectionMatrix = new Matrix4f(camera.getInverseProjection());
+
+        // Undo everything
+        tmp.mul(inverseViewMatrix.mul(inverseProjectionMatrix));
+
+        return new Vector2f(tmp.x, tmp.y);
+    }
+
+    /**
+     * Gets the screen coordinates by using the formula:
+     *     WorldCoordinates = ScreenCoordinates * ViewMatrix^-1 * ProjectionMatrix^-1
+     * @param worldCoordinates
+     * @return the actually world coordinates.
+     */
+    public static Vector2f worldToScreen(Vector2f worldCoordinates) {
+        Camera camera = Window.getCurrentScene().getCamera();
+        Vector4f normalizedDeviceCoordsSpacePos = new Vector4f(worldCoordinates.x, worldCoordinates.y, 0.0f, 1.0f);
+        Matrix4f viewMatrix = new Matrix4f(camera.getViewMatrix());
+        Matrix4f projectionMatrix = new Matrix4f(camera.getProjectionMatrix());
+        normalizedDeviceCoordsSpacePos.mul(projectionMatrix.mul(viewMatrix));
+
+        Vector2f windowSpace = new Vector2f(normalizedDeviceCoordsSpacePos.x, normalizedDeviceCoordsSpacePos.y)
+                .mul(1.0f / normalizedDeviceCoordsSpacePos.w);
+        windowSpace.add(new Vector2f(1.0f, 1.0f)).mul(0.5f);
+        windowSpace.mul(new Vector2f(Window.getWidth(), Window.getHeight()));
+
+        return windowSpace;
     }
 
     public static float getX() {
@@ -149,6 +198,10 @@ public class MouseListener {
         currentY = 1080.0f - ((currentY / get().gameViewportSize.y) * 1080.0f); // Use '-' because ImGui has y coordinates flipped comparing to our project
 
         return currentY;
+    }
+
+    public static Vector2f getScreen() {
+        return new Vector2f(getScreenX(), getScreenY());
     }
 
     public static float getScrollX() {

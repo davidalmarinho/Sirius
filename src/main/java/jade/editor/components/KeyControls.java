@@ -16,7 +16,7 @@ public class KeyControls extends Component {
 
     @Override
     public void editorUpdate(float dt) {
-        PropertiesWindow propertiesWindow = Window.get().getImGuiLayer().getPropertiesWindow();
+        PropertiesWindow propertiesWindow = Window.getImGuiLayer().getPropertiesWindow();
         GameObject activeGameObject = propertiesWindow.getActiveGameObject();
         List<GameObject> activeGameObjectList = propertiesWindow.getActiveGameObjectList();
 

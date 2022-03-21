@@ -75,6 +75,16 @@ public class PickingTexture {
         glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
     }
 
+    public int readPixel(int xStart, int yStart) {
+        glBindFramebuffer(GL_READ_FRAMEBUFFER, fboId);
+        glReadBuffer(GL_COLOR_ATTACHMENT0);
+
+        float[] rgbPixels = new float[3];
+        glReadPixels(xStart, yStart, 1, 1, GL_RGB, GL_FLOAT, rgbPixels);
+
+        return (int)(rgbPixels[0]) - 1; // -1 to ensure the integrity of game objects ids
+    }
+
     public float[] readPixels(int xStart, int yStart, int xEnd, int yEnd) {
         glBindFramebuffer(GL_READ_FRAMEBUFFER, fboId);
         glReadBuffer(GL_COLOR_ATTACHMENT0);

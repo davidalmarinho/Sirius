@@ -176,12 +176,10 @@ public class ImGuiLayer {
         setupDockSpace();
         currentScene.imgui();
         gameViewWindow.imgui();
-        propertiesWindow.update(dt, currentScene);
         propertiesWindow.imgui();
         sceneHierarchy.imgui();
 
         // We have to end ImGui before we render ImGui
-
         endFrame();
     }
 
@@ -246,5 +244,9 @@ public class ImGuiLayer {
 
     public PropertiesWindow getPropertiesWindow() {
         return propertiesWindow;
+    }
+
+    public GameViewWindow getGameViewWindow() {
+        return gameViewWindow;
     }
 }

@@ -228,7 +228,6 @@ public class Window implements Observer {
             currently enabled for color writing).*/
 
             if (dt >= 0) {
-                DebugDraw.draw();
                 // System.out.println("FPS: " + 1.0f / dt);
                 if (runtimePlaying)
                     currentScene.update(dt);
@@ -236,11 +235,13 @@ public class Window implements Observer {
                     currentScene.editorUpdate(dt);
 
                 currentScene.render();
+                DebugDraw.draw();
             }
 
             frameBuffer.unbind();
 
             imGuiLayer.update(dt, currentScene);
+            MouseListener.endFrame();
             glfwSwapBuffers(glfwWindow); /* Faz o mesmo que o Bufferstrategy, aquela parte de já termos uma
             imagem pronta para mostrar antes de apagarmos a outra. */
 
@@ -272,12 +273,13 @@ public class Window implements Observer {
         return window;
     }
 
+    // TODO: 20/03/2022 Return the actually window's size
     public static int getWidth() {
-        return get().width;
+        return 1920; // get().width;
     }
 
     public static int getHeight() {
-        return get().height;
+        return 1080; // get().height;
     }
 
     public static void setWidth(int width) {
@@ -301,8 +303,8 @@ public class Window implements Observer {
         return currentScene;
     }
 
-    public ImGuiLayer getImGuiLayer() {
-        return imGuiLayer;
+    public static ImGuiLayer getImGuiLayer() {
+        return get().imGuiLayer;
     }
 
     @Override
