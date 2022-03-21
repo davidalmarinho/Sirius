@@ -1,5 +1,7 @@
 package jade.rendering;
 
+import org.joml.Vector2i;
+
 import static org.lwjgl.opengl.GL11.GL_TEXTURE_2D;
 import static org.lwjgl.opengl.GL11.GL_TEXTURE_MAG_FILTER;
 import static org.lwjgl.opengl.GL11.GL_TEXTURE_MIN_FILTER;
@@ -73,12 +75,33 @@ public class PickingTexture {
         glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
     }
 
-    public int readPixed(int x, int y) {
+    public int readPixel(int xStart, int yStart) {
         glBindFramebuffer(GL_READ_FRAMEBUFFER, fboId);
         glReadBuffer(GL_COLOR_ATTACHMENT0);
-        final float[] PIXELS = new float[3];
-        glReadPixels(x, y, 1, 1, GL_RGB, GL_FLOAT, PIXELS);
 
-        return (int)PIXELS[0] - 1;
+        float[] rgbPixels = new float[3];
+        glReadPixels(xStart, yStart, 1, 1, GL_RGB, GL_FLOAT, rgbPixels);
+
+        return (int)(rgbPixels[0]) - 1; // -1 to ensure the integrity of game objects ids
+    }
+
+    public float[] readPixels(int xStart, int yStart, int xEnd, int yEnd) {
+        glBindFramebuffer(GL_READ_FRAMEBUFFER, fboId);
+        glReadBuffer(GL_COLOR_ATTACHMENT0);
+
+        Vector2i size = new Vector2i(xEnd, yEnd).sub(new Vector2i(xStart, yStart)).absolute();
+
+        // Pixels in the selected square
+        int numPixels = size.x * size.y;
+
+        float[] rgbPixels = new float[3 * numPixels];
+        glReadPixels(xStart, yStart, size.x, size.y, GL_RGB, GL_FLOAT, rgbPixels);
+
+        // We have to get the proper id from each game object
+        for (int i = 0; i < rgbPixels.length; i++) {
+            rgbPixels[i] -= 1;
+        }
+
+        return rgbPixels;
     }
 }
