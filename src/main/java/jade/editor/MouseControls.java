@@ -22,7 +22,7 @@ import static org.lwjgl.glfw.GLFW.*;
 
 public class MouseControls extends Component {
     GameObject holdingGameObject = null;
-    private float debounceTime = 0.05f;
+    private float debounceTime = 0.2f;
     private float debounce = debounceTime;
 
     // To tell us if we are dragging
@@ -50,20 +50,51 @@ public class MouseControls extends Component {
         Window.getCurrentScene().addGameObject(newObj);
     }
 
+    private boolean isBlockInSquare(float x, float y) {
+        PropertiesWindow propertiesWindow = Window.getImGuiLayer().getPropertiesWindow();
+        Vector2f start        = new Vector2f(x, y);
+        Vector2f end          = new Vector2f(start).add(new Vector2f(Settings.GRID_WIDTH, Settings.GRID_HEIGHT));
+        Vector2f startScreenf = MouseListener.worldToScreen(start);
+        Vector2f endScreenf   = MouseListener.worldToScreen(end);
+
+        Vector2i startScreen = new Vector2i((int) startScreenf.x + 2, (int) startScreenf.y + 2); // +2 pixels, to ensure that we don't pick objects in a different square
+        Vector2i endScreen = new Vector2i((int) endScreenf.x - 2, (int) endScreenf.y - 2);
+        float[] gameObjectsIds = propertiesWindow.getPickingTexture().readPixels(startScreen, endScreen);
+
+        for (int i = 0; i < gameObjectsIds.length; i++) {
+            if (gameObjectsIds[i] >= 0) {
+                GameObject pickedObj = Window.getCurrentScene().getGameObject((int) gameObjectsIds[i]);
+                if (!pickedObj.hasComponent(NonPickable.class)) return true;
+            }
+        }
+
+        return false;
+    }
+
     @Override
     public void editorUpdate(float dt) {
         debounce -= dt;
 
-        if (holdingGameObject != null && debounce <= 0) {
+        if (holdingGameObject != null) {
             holdingGameObject.transform.position.x = MouseListener.getWorld().x;
             holdingGameObject.transform.position.y = MouseListener.getWorld().y;
 
             holdingGameObject.transform.position.x = ((int) Math.floor(holdingGameObject.transform.position.x / Settings.GRID_WIDTH) * Settings.GRID_WIDTH) + Settings.GRID_WIDTH / 2.0f;
             holdingGameObject.transform.position.y = ((int) Math.floor(holdingGameObject.transform.position.y / Settings.GRID_HEIGHT) * Settings.GRID_HEIGHT) + Settings.GRID_HEIGHT / 2.0f;
 
-            if (MouseListener.mouseButtonDown(GLFW_MOUSE_BUTTON_LEFT)) {
-                place();
-                debounce = debounceTime;
+            if (MouseListener.isMouseButtonPressed(GLFW_MOUSE_BUTTON_LEFT)) {
+                float halfWidth  = Settings.GRID_WIDTH / 2.0f;
+                float halfHeight = Settings.GRID_HEIGHT / 2.0f;
+                boolean isntBlockInSquare = !isBlockInSquare(holdingGameObject.transform.position.x - halfWidth,
+                        holdingGameObject.transform.position.y - halfHeight);
+
+                // Fix duplicated game object placement bug
+                if (MouseListener.isDragging() && isntBlockInSquare) {
+                    place();
+                } else if (!MouseListener.isDragging() && isntBlockInSquare) {
+                    place();
+                    debounce = debounceTime;
+                }
             }
 
             if (KeyListener.isKeyDown(GLFW_KEY_ESCAPE) || KeyListener.isKeyDown(GLFW_KEY_DELETE)) {
@@ -71,7 +102,7 @@ public class MouseControls extends Component {
                 holdingGameObject = null;
             }
 
-        } else if (!MouseListener.isDragging() && MouseListener.mouseButtonDown(GLFW_MOUSE_BUTTON_LEFT) && debounce < 0) {
+        } else if (!MouseListener.isDragging() && MouseListener.isMouseButtonPressed(GLFW_MOUSE_BUTTON_LEFT) && debounce < 0) {
             PickingTexture pickingTexture = Window.getImGuiLayer().getPropertiesWindow().getPickingTexture();
             Scene currentScene = Window.getCurrentScene();
             PropertiesWindow propertiesWindow = Window.getImGuiLayer().getPropertiesWindow();
@@ -88,7 +119,7 @@ public class MouseControls extends Component {
             this.debounce = 0.2f;
 
             // If we are dragging and pressing the mouse's left button
-        } else if (MouseListener.isDragging() && MouseListener.mouseButtonDown(GLFW_MOUSE_BUTTON_LEFT)) {
+        } else if (MouseListener.isDragging() && MouseListener.isMouseButtonPressed(GLFW_MOUSE_BUTTON_LEFT)) {
             // If we aren't dragging
             if (!boxSelectSet) {
                 Window.getImGuiLayer().getPropertiesWindow().clearSelected();

@@ -30,11 +30,11 @@ public class EditorCamera extends Component {
     public void editorUpdate(float dt) {
         // Moving camera
         final int BUTTON = GLFW_MOUSE_BUTTON_MIDDLE;
-        if (MouseListener.mouseButtonDown(BUTTON) && dragDebounce > 0) {
+        if (MouseListener.isMouseButtonPressed(BUTTON) && dragDebounce > 0) {
             this.clickOrigin = new Vector2f(MouseListener.getWorld());
             dragDebounce -= dt;
             return;
-        } else if (MouseListener.mouseButtonDown(BUTTON)) {
+        } else if (MouseListener.isMouseButtonPressed(BUTTON)) {
             Vector2f mousePos = new Vector2f(MouseListener.getWorld());
 
             Vector2f delta = new Vector2f(mousePos).sub(this.clickOrigin);
@@ -44,7 +44,7 @@ public class EditorCamera extends Component {
             this.clickOrigin.lerp(mousePos, dt);
         }
 
-        if (dragDebounce <= 0.0f && !MouseListener.mouseButtonDown(BUTTON)) {
+        if (dragDebounce <= 0.0f && !MouseListener.isMouseButtonPressed(BUTTON)) {
             dragDebounce = 0.032f;
         }
 

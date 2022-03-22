@@ -104,4 +104,8 @@ public class PickingTexture {
 
         return rgbPixels;
     }
+
+    public float[] readPixels(Vector2i start, Vector2i end) {
+        return readPixels(start.x, start.y, end.x, end.y);
+    }
 }

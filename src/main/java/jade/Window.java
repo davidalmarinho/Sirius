@@ -192,6 +192,7 @@ public class Window implements Observer {
 
         while (!glfwWindowShouldClose(glfwWindow)) {
             KeyListener.updateLastKeys();
+            MouseListener.updateLastButtons();
 
             // Carregar os eventos (teclado...)
             glfwPollEvents();

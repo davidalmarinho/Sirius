@@ -14,6 +14,7 @@ public class MouseListener {
     private double xPos, yPos, lastX, lastY;
     private double scrollX, scrollY;
     private final boolean[] mouseButtons = new boolean[9];
+    private final boolean[] lastMouseButtons = new boolean[9];
     private boolean dragging;
 
     private int mouseButtonsDown;
@@ -31,6 +32,10 @@ public class MouseListener {
         this.scrollX  = 0.0;
         this.scrollY  = 0.0;
         this.dragging = false;
+    }
+
+    public static void updateLastButtons() {
+        System.arraycopy(get().mouseButtons, 0, get().lastMouseButtons, 0, get().mouseButtons.length);
     }
 
     /**
@@ -224,12 +229,24 @@ public class MouseListener {
         get().gameViewportSize.set(gameViewportSize);
     }
 
-    public static boolean mouseButtonDown(int button) {
+    public static boolean isMouseButtonPressed(int button) {
         if (button < get().mouseButtons.length) {
             return get().mouseButtons[button];
         }
 
         return false;
+    }
+
+    public static boolean isMouseButtonDown(int button) {
+        if (button >= get().mouseButtons.length) return false;
+
+        return get().mouseButtons[button] && !get().lastMouseButtons[button];
+    }
+
+    public static boolean isMouseButtonUp(int button) {
+        if (button >= get().mouseButtons.length) return false;
+
+        return !get().mouseButtons[button] && get().lastMouseButtons[button];
     }
 
     public static MouseListener get() {

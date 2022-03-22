@@ -3,7 +3,6 @@ package jade.editor;
 import gameobjects.GameObject;
 import gameobjects.components.SpriteRenderer;
 import imgui.ImGui;
-import jade.rendering.Color;
 import jade.rendering.PickingTexture;
 import org.joml.Vector4f;
 import physics2d.components.Box2DCollider;
@@ -73,7 +72,7 @@ public class PropertiesWindow {
     }
 
     public void clearSelected() {
-        if (activeGameObjectList.size() > 0) {
+        if (activeGameObjectOriginalColorList.size() > 0) {
             for (int i = 0; i < activeGameObjectList.size(); i++) {
                 GameObject go = activeGameObjectList.get(i);
                 SpriteRenderer spriteRenderer = go.getComponent(SpriteRenderer.class);
