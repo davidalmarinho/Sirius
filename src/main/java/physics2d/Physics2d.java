@@ -4,10 +4,7 @@ import gameobjects.GameObject;
 import gameobjects.components.Transform;
 import org.jbox2d.collision.shapes.PolygonShape;
 import org.jbox2d.common.Vec2;
-import org.jbox2d.dynamics.Body;
-import org.jbox2d.dynamics.BodyDef;
-import org.jbox2d.dynamics.BodyType;
-import org.jbox2d.dynamics.World;
+import org.jbox2d.dynamics.*;
 import org.joml.Vector2f;
 import physics2d.components.Box2DCollider;
 import physics2d.components.CircleCollider;
@@ -69,6 +66,7 @@ public class Physics2d {
             bodyDef.angularDamping = rigidBody2d.getAngularDamping();
             bodyDef.linearDamping  = rigidBody2d.getLinearDamping();
             bodyDef.fixedRotation  = rigidBody2d.isFixedRotation();
+            bodyDef.userData       = rigidBody2d.gameObject;
             bodyDef.bullet         = rigidBody2d.isContinuousCollision();
 
             switch (rigidBody2d.getEBodyType()) {
@@ -83,30 +81,44 @@ public class Physics2d {
                     break;
             }
 
-            // Collision shapes
-            PolygonShape shape = new PolygonShape();
-            CircleCollider circleCollider;
-            Box2DCollider box2DCollider;
-            if ((circleCollider = gameObject.getComponent(CircleCollider.class)) != null) {
-                shape.setRadius(circleCollider.getRadius());
-            } else if ((box2DCollider = gameObject.getComponent(Box2DCollider.class)) != null) {
-                // Gets the correct size for JBox2D -- correct for JBox2D lib, because it is theoretically wrong for me
-                Vector2f halfSize = new Vector2f(box2DCollider.getHalfSize()).mul(0.5f);
-
-                Vector2f offset = box2DCollider.getOffset();
-                Vector2f origin = new Vector2f(box2DCollider.getOrigin());
-                shape.setAsBox(halfSize.x, halfSize.y, new Vec2(origin.x, origin.y), 0);
-
-                Vec2 pos = bodyDef.position;
-                float xPos = pos.x + offset.x;
-                float yPos = pos.y + offset.y;
-                bodyDef.position.set(xPos, yPos);
-            }
-
-            // Add all to box 2d engine
             Body body = this.world.createBody(bodyDef);
             rigidBody2d.setRawBody(body);
-            body.createFixture(shape, rigidBody2d.getMass());
+            CircleCollider circleCollider;
+            Box2DCollider box2DCollider;
+
+            if ((circleCollider = gameObject.getComponent(CircleCollider.class)) != null) {
+                // TODO: 23/03/2022 Add circle collider implementation too
+                // shape.setRadius(circleCollider.getRadius());
+            }
+
+            if ((box2DCollider = gameObject.getComponent(Box2DCollider.class)) != null) {
+                addBox2DCollider(rigidBody2d, box2DCollider);
+            }
         }
+    }
+
+    private void addBox2DCollider(RigidBody2d rb, Box2DCollider box2DCollider) {
+        Body body = rb.getRawBody();
+        assert body != null : "Raw body must not be null.";
+
+        // Collision shape
+        PolygonShape shape = new PolygonShape();
+
+        // Gets the correct size for JBox2D -- correct for JBox2D lib, because it is theoretically wrong for me
+        Vector2f halfSize = new Vector2f(box2DCollider.getHalfSize()).mul(0.5f);
+
+        Vector2f offset = box2DCollider.getOffset();
+        Vector2f origin = new Vector2f(box2DCollider.getOrigin());
+        shape.setAsBox(halfSize.x, halfSize.y, new Vec2(offset.x, offset.y), 0);
+
+        FixtureDef fixtureDef = new FixtureDef();
+        fixtureDef.shape = shape;
+        fixtureDef.density = 1.0f;
+        // fixtureDef.friction = rb.getFriction();
+        fixtureDef.userData = box2DCollider.gameObject;
+        // fixtureDef.isSensor = rb.isSensor();
+
+        // Add all to box2D
+        body.createFixture(fixtureDef);
     }
 }

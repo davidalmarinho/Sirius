@@ -5,6 +5,7 @@ import imgui.ImGui;
 import gameobjects.GameObject;
 import imgui.type.ImInt;
 import jade.rendering.Color;
+import org.jbox2d.dynamics.contacts.Contact;
 import org.joml.Vector2f;
 import org.joml.Vector3f;
 import org.joml.Vector4f;
@@ -33,6 +34,22 @@ public abstract class Component {
     }
 
     public void update(float dt) {
+
+    }
+
+    public void beginContact(GameObject collidingObject, Contact contact, Vector2f hitNormal) {
+
+    }
+
+    public void endContact(GameObject collidingObject, Contact contact, Vector2f hitNormal) {
+
+    }
+
+    public void preSolve(GameObject collidingObject, Contact contact, Vector2f hitNormal) {
+
+    }
+
+    public void postSolve(GameObject collidingObject, Contact contact, Vector2f hitNormal) {
 
     }
 
