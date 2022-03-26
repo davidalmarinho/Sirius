@@ -22,6 +22,7 @@ import org.lwjgl.openal.ALC;
 import org.lwjgl.openal.ALCCapabilities;
 import org.lwjgl.openal.ALCapabilities;
 import org.lwjgl.opengl.GL;
+import physics2d.Physics2d;
 
 import static org.lwjgl.glfw.Callbacks.glfwFreeCallbacks;
 import static org.lwjgl.glfw.GLFW.*;
@@ -272,6 +273,10 @@ public class Window implements Observer {
         }
 
         return window;
+    }
+
+    public static Physics2d getPhysics() {
+        return getCurrentScene().getPhysics();
     }
 
     // TODO: 20/03/2022 Return the actually window's size
