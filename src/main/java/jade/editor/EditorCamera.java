@@ -61,13 +61,13 @@ public class EditorCamera extends Component {
         }
 
         if (reset) {
-            LEVEL_EDITOR_CAMERA.position.lerp(new Vector2f(), lerpTime);
+            LEVEL_EDITOR_CAMERA.position.lerp(new Vector2f(-250.0f, 0.0f), lerpTime);
             LEVEL_EDITOR_CAMERA.setZoom(LEVEL_EDITOR_CAMERA.getZoom()
                     + ((1.0f - LEVEL_EDITOR_CAMERA.getZoom())) * lerpTime);
             lerpTime += 0.1f * dt;
-            if (Math.abs(LEVEL_EDITOR_CAMERA.position.x) <= 5.0f && Math.abs(LEVEL_EDITOR_CAMERA.position.y) <= 5.0f) {
+            if ((LEVEL_EDITOR_CAMERA.position.x) <= -245.0f && Math.abs(LEVEL_EDITOR_CAMERA.position.y) <= 5.0f) {
                 lerpTime = 0.0f;
-                LEVEL_EDITOR_CAMERA.position.set(0.0f, 0.0f);
+                LEVEL_EDITOR_CAMERA.position.set(-250.0f, 0.0f);
                 LEVEL_EDITOR_CAMERA.setZoom(1.0f);
                 reset = false;
             }
