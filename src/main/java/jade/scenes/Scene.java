@@ -225,4 +225,8 @@ public class Scene {
     public List<GameObject> getGameObjectList() {
         return gameObjectList;
     }
+
+    public Physics2d getPhysics() {
+        return this.physics2d;
+    }
 }
