@@ -26,10 +26,10 @@ public class KeyListener {
      */
     public static void keyCallback(long window, int keycode, int scancode, int action, int mods) {
         if (action == GLFW_PRESS) {
-            if (keycode < get().keys.length) {
+            if (keycode < get().keys.length && keycode > 0) {
                 get().keys[keycode] = true;
             }
-        } else if (action == GLFW_RELEASE) {
+        } else if (action == GLFW_RELEASE && keycode > 0) {
             if (keycode < get().keys.length) {
                 get().keys[keycode] = false;
             }
