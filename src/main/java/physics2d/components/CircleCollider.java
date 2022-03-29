@@ -1,5 +1,7 @@
 package physics2d.components;
 
+import org.joml.Vector2f;
+
 public class CircleCollider extends Collider2d {
     private float radius = 1.0f;
 
