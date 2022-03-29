@@ -28,7 +28,7 @@ public class Prefabs {
 
         GameObject mario = generateSpriteObject(playerSprites.getSprite(0), 0.25f, 0.25f);
 
-        Spritesheet bigPlayerSprites = AssetPool.getSpritesheet("assets/images/bigSpritesheet.png");
+        Spritesheet bigPlayerSprites = AssetPool.getSpritesheet("assets/images/spritesheets/bigSpritesheet.png");
 
         // Little mario animations
         AnimationState run = new AnimationState();

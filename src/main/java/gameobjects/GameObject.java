@@ -112,6 +112,7 @@ public class GameObject {
                 .setPrettyPrinting()
                 .registerTypeAdapter(Component.class, new ComponentDeserializer())
                 .registerTypeAdapter(GameObject.class, new GameObjectDeserializer())
+                .enableComplexMapKeySerialization()
                 .create();
 
         String objAsJson = gson.toJson(this);
