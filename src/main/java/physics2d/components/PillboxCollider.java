@@ -50,7 +50,7 @@ public class PillboxCollider extends Collider2d {
     public void editorUpdate(float dt) {
         topCircle.editorUpdate(dt);
         bottomCircle.editorUpdate(dt);
-        bottomCircle.editorUpdate(dt);
+        boxCollider.editorUpdate(dt);
 
         if (resetFixtureNextFrame) resetFixture();
     }
