@@ -2,6 +2,8 @@ package jade.rendering.spritesheet;
 
 public enum Images {
     SPRITE_SHEET("spritesheet.png"),
+    PLAYER_BIG_SPRITE_SHEET("bigSpritesheet.png"),
+    PIPES("pipes.png"),
     BLEND_IMAGE_1("blendImage1.png"),
     BLEND_IMAGE_2("blendImage2.png"),
     TEST_IMAGE("testImage.png"),
