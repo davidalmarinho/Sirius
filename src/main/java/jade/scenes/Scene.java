@@ -7,6 +7,10 @@ import gameobjects.GameObject;
 import gameobjects.GameObjectDeserializer;
 import gameobjects.components.Component;
 import gameobjects.components.ComponentDeserializer;
+import jade.Window;
+import jade.editor.MouseControls;
+import jade.editor.NonPickable;
+import jade.editor.PropertiesWindow;
 import jade.input.KeyListener;
 import jade.rendering.Camera;
 import jade.rendering.Renderer;
@@ -155,6 +159,23 @@ public class Scene {
     }
 
     public void save() {
+        // ===============================================================================
+        // Bug fix:
+        // Modifies the selected active game objects if they haven't been modified before
+        PropertiesWindow propertiesWindow = Window.getImGuiLayer().getPropertiesWindow();
+
+        if (sceneInitializer instanceof LevelEditorSceneInitializer) {
+            LevelEditorSceneInitializer levelEditor = (LevelEditorSceneInitializer) sceneInitializer;
+            MouseControls mouseControls = levelEditor.getLevelEditorStuff().getComponent(MouseControls.class);
+
+            if (!propertiesWindow.getActiveGameObjectList().isEmpty()) {
+                List<GameObject> activeGameObjectList = new ArrayList<>(propertiesWindow.getActiveGameObjectList());
+                mouseControls.changeAllGameObjects(activeGameObjectList.get(0), activeGameObjectList);
+                propertiesWindow.clearSelected();
+            }
+        }
+        // ===============================================================================
+
         Gson gson = new GsonBuilder()
                 .setPrettyPrinting()
                 .registerTypeAdapter(Component.class, new ComponentDeserializer())
@@ -167,6 +188,10 @@ public class Scene {
             FileWriter writer = new FileWriter("level.txt");
             List<GameObject> objsToSerialize = new ArrayList<>();
             for (GameObject obj: gameObjectList) {
+
+                // Bug fix --Don't save game objects that are attached to the cursor
+                if (obj.hasComponent(NonPickable.class)) continue;
+
                 if (obj.isDoSerialization()) {
                     objsToSerialize.add(obj);
                 }
