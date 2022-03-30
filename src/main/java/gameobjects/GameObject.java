@@ -151,6 +151,35 @@ public class GameObject {
         }
     }
 
+    /**
+     * Checks if a game object has the same components' types that other game object has.
+     *
+     * @param go Current game object's components will be compared with this game object.
+     * @return true if the 2 game objects have the same component types.
+     */
+    public boolean hasSameTypeOfComponents(GameObject go) {
+        List<Component> goComponentList = go.componentList;
+
+        // Check if they have the same number of components
+        if (componentList.size() != goComponentList.size()) return false;
+
+        int numberOfEqualComponents = 0;
+        for (int i = 0; i < componentList.size(); i++) {
+            Component component = componentList.get(i);
+            for (int j = 0; j < goComponentList.size(); j++) {
+                Component objComponent = goComponentList.get(j);
+
+                // If they have the same name, means that are the same type of component
+                if (component.getClass().getSimpleName().equals(objComponent.getClass().getSimpleName())) {
+                    numberOfEqualComponents++;
+                    break;
+                }
+            }
+        }
+
+        return numberOfEqualComponents == componentList.size();
+    }
+
     public void generateUid() {
         this.uid = ID_COUNTER++;
     }
