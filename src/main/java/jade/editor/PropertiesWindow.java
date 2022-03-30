@@ -25,7 +25,8 @@ public class PropertiesWindow {
     }
 
     public void imgui() {
-        if (activeGameObjectList.size() == 1 && activeGameObjectList.get(0) != null) {
+        if ((activeGameObjectList.size() > 0 && activeGameObjectList.get(0) != null)
+                && MouseControls.allComponentsHaveSameType) {
             activeGameObject = activeGameObjectList.get(0);
             // Creates a Window
             ImGui.begin("Properties");

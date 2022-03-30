@@ -8,10 +8,7 @@ import gameobjects.components.*;
 import gameobjects.IPrefabs;
 import jade.Sound;
 import jade.animations.StateMachine;
-import jade.editor.EditorCamera;
-import jade.editor.GizmoSystem;
-import jade.editor.GridLines;
-import jade.editor.MouseControls;
+import jade.editor.*;
 import jade.editor.components.KeyControls;
 import jade.rendering.spritesheet.Images;
 import jade.rendering.spritesheet.Spritesheet;
@@ -67,11 +64,22 @@ public class LevelEditorSceneInitializer extends SceneInitializer {
                         AssetPool.getTexture(Images.ITEMS.getSpritesheet()),
                         16, 16, 43, 0));
 
+        AssetPool.addSpritesheet(Images.PLAYER_BIG_SPRITE_SHEET.getSpritesheet(),
+                new Spritesheet(AssetPool.getTexture(Images.PLAYER_BIG_SPRITE_SHEET.getSpritesheet()),
+                        16, 32, 42, 0));
+
+        AssetPool.addSpritesheet(Images.PIPES.getSpritesheet(),
+                new Spritesheet(AssetPool.getTexture(Images.PIPES.getSpritesheet()),
+                        32, 32, 4, 0));
+
         AssetPool.addSpritesheet(Images.GIZMOS.getTexture(),
                 new Spritesheet(
                         AssetPool.getTexture(Images.GIZMOS.getTexture()),
                         24, 48, 3, 0));
+
         AssetPool.getTexture(Images.BLEND_IMAGE_2.getTexture());
+
+
 
         AssetPool.addSound("assets/sounds/main-theme-overworld.ogg", true);
         AssetPool.addSound("assets/sounds/flagpole.ogg", false);
@@ -211,5 +219,9 @@ public class LevelEditorSceneInitializer extends SceneInitializer {
             // Attach object to the mouse cursor
             levelEditorStuff.getComponent(MouseControls.class).pickupObject(object);
         }
+    }
+
+    public GameObject getLevelEditorStuff() {
+        return levelEditorStuff;
     }
 }

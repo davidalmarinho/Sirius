@@ -146,6 +146,10 @@ public class DebugDraw {
         addBox2D(center, dimensions, rotation, Color.GREEN, 1);
     }
 
+    public static void addBox2D(Vector2f center, Vector2f dimensions, float rotation, Color color) {
+        addBox2D(center, dimensions, rotation, color, 1);
+    }
+
     public static void addBox2D(Vector2f center, Vector2f dimensions, float rotation, int lifetime) {
         addBox2D(center, dimensions, rotation, Color.GREEN, lifetime);
     }

@@ -7,10 +7,7 @@ import org.jbox2d.collision.shapes.PolygonShape;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.*;
 import org.joml.Vector2f;
-import physics2d.components.Box2DCollider;
-import physics2d.components.CircleCollider;
-import physics2d.components.RaycastInfo;
-import physics2d.components.RigidBody2d;
+import physics2d.components.*;
 
 public class Physics2d {
     private Vec2 gravity;
@@ -27,6 +24,7 @@ public class Physics2d {
     public Physics2d() {
         this.gravity = new Vec2(0, -10.0f);
         this.world = new World(gravity);
+        world.setContactListener(new ContactListener());
         // TODO: 27/02/2022 Test the code with this line of code and test it without this line of code
         // world.setSleepingAllowed(false);
     }
@@ -176,6 +174,30 @@ public class Physics2d {
         body.resetMassData();
     }
 
+    public void addPillboxCollider(RigidBody2d rb, PillboxCollider pillboxCollider) {
+        Body body = rb.getRawBody();
+        assert body != null : "Raw body must not be null.";
+
+         addBox2DCollider(rb, pillboxCollider.getBoxCollider());
+         addCircleCollider(rb, pillboxCollider.getTopCircle());
+         addCircleCollider(rb, pillboxCollider.getBottomCircle());
+    }
+
+    public void resetPillboxCollider(RigidBody2d rb, PillboxCollider pillboxCollider) {
+        Body body = rb.getRawBody();
+
+        // If there aren't any colliders, we will cancel this action
+        if (body == null) return;
+
+        int size = fixtureListSize(body);
+        for (int i = 0; i < size; i++) {
+            body.destroyFixture(body.getFixtureList());
+        }
+
+        addPillboxCollider(rb, pillboxCollider);
+        body.resetMassData();
+    }
+
     public RaycastInfo raycast(GameObject requestingObject, Vector2f start, Vector2f end) {
         RaycastInfo callback = new RaycastInfo(requestingObject);
         // Send a raycast to the World
@@ -209,5 +231,14 @@ public class Physics2d {
         }
 
         return size;
+    }
+
+    /**
+     * Checks if we can touch the world's physics.
+     *
+     * @return true if we aren't allowed to change the Physics in the world.
+     */
+    public boolean isLocked() {
+        return world.isLocked();
     }
 }

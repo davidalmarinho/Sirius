@@ -1,16 +1,22 @@
 package physics2d.components;
 
+import jade.rendering.Color;
 import jade.rendering.debug.DebugDraw;
 import org.joml.Vector2f;
 
 public class Box2DCollider extends Collider2d {
-    private Vector2f halfSize = new Vector2f(0.25f, 0.25f);
-    private Vector2f origin = new Vector2f();
+    private Vector2f halfSize;
+    private Vector2f origin;
+
+    public Box2DCollider() {
+        this.halfSize = new Vector2f(0.25f, 0.25f);
+        this.origin = new Vector2f();
+    }
 
     @Override
     public void editorUpdate(float dt) {
-        Vector2f center = new Vector2f(gameObject.transform.position).add(offset);
-        DebugDraw.addBox2D(center, this.halfSize, this.gameObject.transform.rotation);
+        Vector2f center = new Vector2f(gameObject.transform.position).add(getOffset());
+        DebugDraw.addBox2D(center, this.halfSize, this.gameObject.transform.rotation, Color.DARK_GREEN);
     }
 
     /**
