@@ -67,7 +67,7 @@ public class Scene {
             go.editorUpdate(dt);
 
             if (go.isDead()) {
-                gameObjectList.remove(go);
+                gameObjectList.remove(i);
                 this.renderer.destroyGameObject(go);
                 this.physics2d.destroyGameObject(go);
 
@@ -86,7 +86,7 @@ public class Scene {
             go.update(dt);
 
             if (go.isDead()) {
-                gameObjectList.remove(go);
+                gameObjectList.remove(i);
                 this.renderer.destroyGameObject(go);
                 this.physics2d.destroyGameObject(go);
 

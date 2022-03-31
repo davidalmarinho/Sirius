@@ -18,6 +18,8 @@ import static org.lwjgl.opengl.GL30.glBindVertexArray;
 import static org.lwjgl.opengl.GL30.glGenVertexArrays;
 
 public class DebugDraw {
+    // TODO: 01/04/2022 Due to linux compatibility and because of OpenGL lines are deprecated, we need to draw squares
+    // TODO: 01/04/2022 to draw lines instead lines itself. Because, doing this way, some lines aren't destroyed.
     private static int MAX_LINES = 500;
 
     private static List<Line2D> line2DList = new ArrayList<>();
