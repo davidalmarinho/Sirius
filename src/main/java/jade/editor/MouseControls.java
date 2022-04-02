@@ -269,4 +269,8 @@ public class MouseControls extends Component {
             }
         }
     }
+
+    public GameObject getHoldingGameObject() {
+        return holdingGameObject;
+    }
 }
