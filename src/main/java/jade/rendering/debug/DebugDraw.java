@@ -2,6 +2,7 @@ package jade.rendering.debug;
 
 import jade.Window;
 import jade.rendering.Color;
+import jade.rendering.GlObjects;
 import jade.rendering.Shader;
 import jade.utils.AssetPool;
 import org.joml.Vector2f;
@@ -13,41 +14,33 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.lwjgl.opengl.GL15.*;
-import static org.lwjgl.opengl.GL20.*;
-import static org.lwjgl.opengl.GL30.glBindVertexArray;
-import static org.lwjgl.opengl.GL30.glGenVertexArrays;
 
 public class DebugDraw {
-    // TODO: 01/04/2022 Due to linux compatibility and because of OpenGL lines are deprecated, we need to draw squares
-    // TODO: 01/04/2022 to draw lines instead lines itself. Because, doing this way, some lines aren't destroyed.
-    private static int MAX_LINES = 500;
+    private static int MAX_LINES = 1000;
 
     private static List<Line2D> line2DList = new ArrayList<>();
     // 6 floats per vertex (x, y, z, r, g, b) , 2 vertices per line
-    private static float[] vertexArray = new float[MAX_LINES * 6 * 2];
+    private static float[] vertexArray = new float[MAX_LINES * 7 * 8];
     private static Shader shader = AssetPool.getShader("assets/shaders/debugLine2D.glsl");
 
     private static int vaoID;
     private static int vboID;
+    private static int eboID;
 
     private static boolean started;
 
     public static void start() {
         // Generate the vao
-        vaoID = glGenVertexArrays();
-        glBindVertexArray(vaoID);
+        vaoID = GlObjects.allocateVao();
 
         // Create vbo
-        vboID = glGenBuffers();
-        glBindBuffer(GL_ARRAY_BUFFER, vboID);
-        glBufferData(GL_ARRAY_BUFFER, (long) vertexArray.length * Float.BYTES, GL_DYNAMIC_DRAW);
+        vboID = GlObjects.allocateVbo((long) vertexArray.length * Float.BYTES);
+
+        eboID = GlObjects.allocateEbo();
 
         // Enable vertex array attributes
-        glVertexAttribPointer(0, 3, GL_FLOAT, false, 6 * Float.BYTES, 0);
-        glEnableVertexAttribArray(0);
-
-        glVertexAttribPointer(1, 3, GL_FLOAT, false, 6 * Float.BYTES, 3 * Float.BYTES);
-        glEnableVertexAttribArray(1);
+        GlObjects.attributeAndEnablePointer(0, 3, 7 * Float.BYTES, 0);
+        GlObjects.attributeAndEnablePointer(1, 4, 7 * Float.BYTES, 3 * Float.BYTES);
     }
 
     public static void beginFrame() {
@@ -72,9 +65,64 @@ public class DebugDraw {
         if (line2DList.isEmpty()) return;
         
         int index = 0;
+        float constant = 0.0025f;
         for (Line2D line : line2DList) {
-            for (int i = 0; i < 2; i++) {
-                Vector2f position = i == 0 ? line.getStart() : line.getEnd();
+            for (int i = 0; i < 8; i++) {
+                // Vector2f position = i == 0 ? line.getStart() : line.getEnd();
+                Vector2f position = new Vector2f();
+
+                // Horizontal lines
+                if (i == 0) {
+                    // Top right
+                    Vector2f buf = new Vector2f(line.getEnd());
+                    buf.add(0.0f, constant);
+                    // position.set(new Vector2f(-250f, 0f));
+                    position.set(buf);
+                } else if (i == 1) {
+                    // Bottom right
+                    Vector2f buf = new Vector2f(line.getEnd());
+                    buf.sub(0.0f, constant);
+                    // position.set(new Vector2f(-250f, -10f));
+                    position.set(buf);
+                } else if (i == 2) {
+                    // Bottom lef
+                    Vector2f buf = new Vector2f(line.getStart());
+                    buf.sub(0.0f, constant);
+                    // position.set(new Vector2f(-260f, -10f));
+                    position.set(buf);
+                } else if (i == 3) {
+                    // Top left
+                    Vector2f buf = new Vector2f(line.getStart());
+                    buf.add(0.0f, constant);
+                    position.set(buf);
+
+                // Vertical lines
+                }
+                if (i == 4) {
+                    Vector2f buf = new Vector2f(line.getStart());
+                    buf.add(constant, 0.00f);
+                    // position.set(new Vector2f(-250f, 0f));
+                    position.set(buf);
+                } else if (i == 5) {
+                    Vector2f buf = new Vector2f(line.getEnd());
+                    buf.add(constant, 0.00f);
+                    position.set(buf);
+                } else if (i == 6) {
+                    Vector2f buf = new Vector2f(line.getEnd());
+                    buf.sub(constant, 0.00f);
+                    position.set(buf);
+                } else if (i == 7) {
+                    Vector2f buf = new Vector2f(line.getStart());
+                    buf.sub(constant, 0.00f);
+                    position.set(buf);
+                }
+                // 3, 2, 0, 0, 2, 1           7, 6, 4, 4, 6, 5
+                /*
+              [3]-----[2]
+               |       |
+               |       |
+              [0]-----[1]
+         */
                 Vector4f color = line.getColor();
 
                 // Load position
@@ -86,12 +134,13 @@ public class DebugDraw {
                 vertexArray[index + 3] = color.x;
                 vertexArray[index + 4] = color.y;
                 vertexArray[index + 5] = color.z;
-                index += 6;
+                vertexArray[index + 6] = color.w;
+                index += 7;
             }
         }
         
         glBindBuffer(GL_ARRAY_BUFFER, vboID);
-        glBufferSubData(GL_ARRAY_BUFFER, 0, Arrays.copyOfRange(vertexArray, 0, line2DList.size() * 6 * 2));
+        glBufferSubData(GL_ARRAY_BUFFER, 0, vertexArray);
         
         // Use our shader
         shader.use();
@@ -99,22 +148,20 @@ public class DebugDraw {
         shader.uploadMat4f("uView", Window.getCurrentScene().getCamera().getViewMatrix());
         
         // Bind vao
-        glBindVertexArray(vaoID);
-        glEnableVertexAttribArray(0);
-        glEnableVertexAttribArray(1);
+        GlObjects.bindVao(vaoID);
+        GlObjects.enableAttributes(2);
         
         // Draw the batch
-        glDrawArrays(GL_LINES, 0, line2DList.size() * 6 * 2);
+        glDrawElements(GL_TRIANGLES, line2DList.size() * 12, GL_UNSIGNED_INT, 0);
         // Bresenham's line algorithm (Optimize lines drawing)
 
         // Disable location
-        glDisableVertexAttribArray(0);
-        glDisableVertexAttribArray(1);
-        glBindVertexArray(0);
+        GlObjects.disableAttributes(2);
+        GlObjects.unbindVao();
 
         shader.detach();
     }
-    
+
     // ===================================================================
     // Add Line2D
     // ===================================================================

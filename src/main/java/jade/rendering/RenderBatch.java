@@ -14,7 +14,6 @@ import java.util.List;
 import static org.lwjgl.opengl.GL15.*;
 import static org.lwjgl.opengl.GL20.*;
 import static org.lwjgl.opengl.GL30.glBindVertexArray;
-import static org.lwjgl.opengl.GL30.glGenVertexArrays;
 
 public class RenderBatch implements Comparable<RenderBatch> {
     /* In synthesis:
@@ -80,70 +79,20 @@ public class RenderBatch implements Comparable<RenderBatch> {
      */
     public void start() {
         // Generate and engage o VAO
-        vaoID = glGenVertexArrays();
-        glBindVertexArray(vaoID);
+        vaoID = GlObjects.allocateVao();
 
         // Allocate space to the vertices
-        vboID = glGenBuffers();
-        glBindBuffer(GL_ARRAY_BUFFER, vboID);
-        glBufferData(GL_ARRAY_BUFFER, (long) vertices.length * Float.BYTES, GL_DYNAMIC_DRAW);
+        vboID = GlObjects.allocateVbo((long) vertices.length * Float.BYTES);
 
         // Create and load the indices
-        eboID = glGenBuffers();
-        int[] indices = generateIndices();
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, eboID);
-        glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices, GL_STATIC_DRAW);
+        eboID = GlObjects.allocateEbo();
 
         // Gives enable to the attributes
-        glVertexAttribPointer(0, POSITION_SIZE, GL_FLOAT, false, VERTEX_SIZE_BYTES,
-                POSITION_OFFSET);
-        glEnableVertexAttribArray(0);
-
-        glVertexAttribPointer(1, COLOR_SIZE, GL_FLOAT, false, VERTEX_SIZE_BYTES,
-                COLOR_OFFSET);
-        glEnableVertexAttribArray(1);
-
-        glVertexAttribPointer(2, TEXTURE_COORDINATES_SIZE, GL_FLOAT, false,
-                VERTEX_SIZE_BYTES, TEXTURE_COORDINATES_OFFSET);
-        glEnableVertexAttribArray(2);
-
-        glVertexAttribPointer(3, TEXTURE_ID_SIZE, GL_FLOAT, false, VERTEX_SIZE_BYTES,
-                TEXTURE_ID_OFFSET);
-        glEnableVertexAttribArray(3);
-
-        glVertexAttribPointer(4, ENTITY_ID_SIZE, GL_FLOAT, false, VERTEX_SIZE_BYTES,
-                ENTITY_ID_OFFSET);
-        glEnableVertexAttribArray(4);
-    }
-
-    private int[] generateIndices() {
-        // 6 indices per square (3 per triangle)
-        int[] elements = new int[maxBatchSize * 6];
-
-        for (int i = 0; i < maxBatchSize; i++) {
-            loadElement(elements, i);
-        }
-
-        return elements;
-    }
-
-    private void loadElement(int[] elements, int index) {
-        // To find the beginning of the rendering
-        int arrayIndexOffset = 6 * index;
-
-        // To find the current
-        int offset = 4 * index; // 4, because we need 4 elements to draw a square
-
-        // 3, 2, 0, 0, 2, 1           7, 6, 4, 4, 6, 5
-        // Triangle 1
-        elements[arrayIndexOffset] = offset + 3;
-        elements[arrayIndexOffset + 1] = offset + 2;
-        elements[arrayIndexOffset + 2] = offset + 0;
-
-        // Triangle 2
-        elements[arrayIndexOffset + 3] = offset + 0;
-        elements[arrayIndexOffset + 4] = offset + 2;
-        elements[arrayIndexOffset + 5] = offset + 1;
+        GlObjects.attributeAndEnablePointer(0, POSITION_SIZE, VERTEX_SIZE_BYTES, POSITION_OFFSET);
+        GlObjects.attributeAndEnablePointer(1, COLOR_SIZE, VERTEX_SIZE_BYTES, COLOR_OFFSET);
+        GlObjects.attributeAndEnablePointer(2, TEXTURE_COORDINATES_SIZE, VERTEX_SIZE_BYTES, TEXTURE_COORDINATES_OFFSET);
+        GlObjects.attributeAndEnablePointer(3, TEXTURE_ID_SIZE, VERTEX_SIZE_BYTES, TEXTURE_ID_OFFSET);
+        GlObjects.attributeAndEnablePointer(4, ENTITY_ID_SIZE, VERTEX_SIZE_BYTES, ENTITY_ID_OFFSET);
     }
 
     public void addSprite(SpriteRenderer spr) {
@@ -206,7 +155,6 @@ public class RenderBatch implements Comparable<RenderBatch> {
                |       |
                |       |
               [0]-----[1]
-
          */
 
         float xAdd = 0.5f;
@@ -274,8 +222,7 @@ public class RenderBatch implements Comparable<RenderBatch> {
 
         // We rebuffer if the sprite is dirty
         if (rebuffer) {
-            glBindBuffer(GL_ARRAY_BUFFER, vboID);
-            glBufferSubData(GL_ARRAY_BUFFER, 0, vertices);
+            GlObjects.replaceVboData(vboID, vertices);
         }
 
         // Use shader
@@ -291,17 +238,15 @@ public class RenderBatch implements Comparable<RenderBatch> {
         }
         shader.uploadIntArray("uTextures", textureSlots);
 
-        glBindVertexArray(vaoID);
-        glEnableVertexAttribArray(0);
-        glEnableVertexAttribArray(1);
+        GlObjects.bindVao(vaoID);
+        GlObjects.enableAttributes(2);
 
         // Draw the elements
         glDrawElements(GL_TRIANGLES, this.numSprites * 6, GL_UNSIGNED_INT, 0);
 
         // Disengage everything
-        glDisableVertexAttribArray(0);
-        glDisableVertexAttribArray(1);
-        glBindVertexArray(0);
+        GlObjects.disableAttributes(2);
+        GlObjects.unbindVao();
 
         // Disengage the textures
         for (int i = 0; i < textureList.size(); i++) {

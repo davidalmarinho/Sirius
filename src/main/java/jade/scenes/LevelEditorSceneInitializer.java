@@ -10,6 +10,7 @@ import jade.Sound;
 import jade.animations.StateMachine;
 import jade.editor.*;
 import jade.editor.components.KeyControls;
+import jade.rendering.debug.DebugDraw;
 import jade.rendering.spritesheet.Images;
 import jade.rendering.spritesheet.Spritesheet;
 import jade.utils.AssetPool;
@@ -116,6 +117,10 @@ public class LevelEditorSceneInitializer extends SceneInitializer {
 
     @Override
     public void imgui() {
+        DebugDraw.addLine2D(new Vector2f(-264f, 0f), new Vector2f(-200f, 10));
+        DebugDraw.addLine2D(new Vector2f(-235f, 0f), new Vector2f(-200, 19f));
+        DebugDraw.addLine2D(new Vector2f(-245f, 0f), new Vector2f(-243f, 19f));
+
         // ================
         // For debug purposes
         ImGui.begin("Level Editor Stuff");
