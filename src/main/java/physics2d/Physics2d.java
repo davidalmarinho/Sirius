@@ -88,14 +88,16 @@ public class Physics2d {
             rigidBody2d.setRawBody(body);
             CircleCollider circleCollider;
             Box2DCollider box2DCollider;
+            PillboxCollider pillboxCollider;
 
-            if ((circleCollider = gameObject.getComponent(CircleCollider.class)) != null) {
+            if ((circleCollider = gameObject.getComponent(CircleCollider.class)) != null)
                 addCircleCollider(rigidBody2d, circleCollider);
-            }
 
-            if ((box2DCollider = gameObject.getComponent(Box2DCollider.class)) != null) {
+            if ((box2DCollider = gameObject.getComponent(Box2DCollider.class)) != null)
                 addBox2DCollider(rigidBody2d, box2DCollider);
-            }
+
+            if ((pillboxCollider = gameObject.getComponent(PillboxCollider.class)) != null)
+                addPillboxCollider(rigidBody2d, pillboxCollider);
         }
     }
 
