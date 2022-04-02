@@ -16,7 +16,8 @@ import java.util.List;
 import static org.lwjgl.opengl.GL15.*;
 
 public class DebugDraw {
-    private static int MAX_LINES = 1000;
+    private static int MAX_LINES = 500;
+    public static float lineThickness = 1.0f;
 
     private static List<Line2D> line2DList = new ArrayList<>();
     // 6 floats per vertex (x, y, z, r, g, b) , 2 vertices per line
@@ -36,7 +37,7 @@ public class DebugDraw {
         // Create vbo
         vboID = GlObjects.allocateVbo((long) vertexArray.length * Float.BYTES);
 
-        eboID = GlObjects.allocateEbo();
+        eboID = GlObjects.allocateEbo(MAX_LINES);
 
         // Enable vertex array attributes
         GlObjects.attributeAndEnablePointer(0, 3, 7 * Float.BYTES, 0);
@@ -65,64 +66,46 @@ public class DebugDraw {
         if (line2DList.isEmpty()) return;
         
         int index = 0;
-        float constant = 0.0025f;
+        float constant = 0.0025f * lineThickness;
         for (Line2D line : line2DList) {
             for (int i = 0; i < 8; i++) {
                 // Vector2f position = i == 0 ? line.getStart() : line.getEnd();
                 Vector2f position = new Vector2f();
 
                 // Horizontal lines
-                if (i == 0) {
+                if (i == 0)
                     // Top right
-                    Vector2f buf = new Vector2f(line.getEnd());
-                    buf.add(0.0f, constant);
-                    // position.set(new Vector2f(-250f, 0f));
-                    position.set(buf);
-                } else if (i == 1) {
+                    position.set(new Vector2f(line.getEnd()).add(0.0f, constant));
+                else if (i == 1)
                     // Bottom right
-                    Vector2f buf = new Vector2f(line.getEnd());
-                    buf.sub(0.0f, constant);
-                    // position.set(new Vector2f(-250f, -10f));
-                    position.set(buf);
-                } else if (i == 2) {
+                    position.set(new Vector2f(line.getEnd()).sub(0.0f, constant));
+                else if (i == 2)
                     // Bottom lef
-                    Vector2f buf = new Vector2f(line.getStart());
-                    buf.sub(0.0f, constant);
-                    // position.set(new Vector2f(-260f, -10f));
-                    position.set(buf);
-                } else if (i == 3) {
+                    position.set(new Vector2f(line.getStart()).sub(0.0f, constant));
+                else if (i == 3)
                     // Top left
-                    Vector2f buf = new Vector2f(line.getStart());
-                    buf.add(0.0f, constant);
-                    position.set(buf);
+                    position.set(new Vector2f(line.getStart()).add(0.0f, constant));
 
                 // Vertical lines
-                }
-                if (i == 4) {
-                    Vector2f buf = new Vector2f(line.getStart());
-                    buf.add(constant, 0.00f);
-                    // position.set(new Vector2f(-250f, 0f));
-                    position.set(buf);
-                } else if (i == 5) {
-                    Vector2f buf = new Vector2f(line.getEnd());
-                    buf.add(constant, 0.00f);
-                    position.set(buf);
-                } else if (i == 6) {
-                    Vector2f buf = new Vector2f(line.getEnd());
-                    buf.sub(constant, 0.00f);
-                    position.set(buf);
-                } else if (i == 7) {
-                    Vector2f buf = new Vector2f(line.getStart());
-                    buf.sub(constant, 0.00f);
-                    position.set(buf);
-                }
+                if (i == 4)
+                    // Top right
+                    position.set(new Vector2f(line.getStart()).add(constant, 0.0f));
+                else if (i == 5)
+                    // Bottom right
+                    position.set(new Vector2f(line.getEnd()).add(constant, 0.0f));
+                else if (i == 6)
+                    position.set(new Vector2f(line.getEnd()).sub(constant, 0.0f));
+                else if (i == 7)
+                    position.set(new Vector2f(line.getStart()).sub(constant, 0.0f));
+
                 // 3, 2, 0, 0, 2, 1           7, 6, 4, 4, 6, 5
                 /*
-              [3]-----[2]
-               |       |
-               |       |
-              [0]-----[1]
-         */
+                      [3]-----[2]
+                       |       |
+                       |       |
+                      [0]-----[1]
+                */
+
                 Vector4f color = line.getColor();
 
                 // Load position
@@ -138,9 +121,8 @@ public class DebugDraw {
                 index += 7;
             }
         }
-        
-        glBindBuffer(GL_ARRAY_BUFFER, vboID);
-        glBufferSubData(GL_ARRAY_BUFFER, 0, vertexArray);
+
+        GlObjects.replaceVboData(vboID, vertexArray);
         
         // Use our shader
         shader.use();

@@ -97,16 +97,27 @@ public class GlObjects {
      * Generates an Element buffer object.
      * This, specifically generates an ebo to render 2 triangles that form a square.
      *
+     * @param maxBatchSize Specifies the space reserved to the indices.
      * @return Element buffer object's id
      */
-    public static int allocateEbo() {
+    public static int allocateEbo(int maxBatchSize) {
         int eboId = 0;
         eboId = glGenBuffers();
-        int[] indices = generateIndices();
+        int[] indices = generateIndices(maxBatchSize);
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, eboId);
         glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices, GL_STATIC_DRAW);
 
         return eboId;
+    }
+
+    /**
+     * Generates an Element buffer object.
+     * This, specifically generates an ebo to render 2 triangles that form a square.
+     *
+     * @return Element buffer object's id
+     */
+    public static int allocateEbo() {
+        return allocateEbo(DEFAULT_BATCH_SIZE);
     }
 
     /**
@@ -118,10 +129,6 @@ public class GlObjects {
     public static void replaceVboData(int vboId, float[] data) {
         glBindBuffer(GL_ARRAY_BUFFER, vboId);
         glBufferSubData(GL_ARRAY_BUFFER, 0, data);
-    }
-
-    private static int[] generateIndices() {
-        return generateIndices(DEFAULT_BATCH_SIZE);
     }
 
     public static void enableAttributes(int amount) {
