@@ -1,6 +1,7 @@
 package jade.editor;
 
 import gameobjects.GameObject;
+import gameobjects.components.PlayerController;
 import gameobjects.components.SpriteRenderer;
 import imgui.ImGui;
 import jade.rendering.PickingTexture;
@@ -49,6 +50,12 @@ public class PropertiesWindow {
                     if (!activeGameObject.hasComponent(CircleCollider.class)
                             && !activeGameObject.hasComponent(Box2DCollider.class)) {
                         activeGameObject.addComponent(new CircleCollider());
+                    }
+                }
+
+                if (ImGui.menuItem("Add Player Controls")) {
+                    if (!activeGameObject.hasComponent(PlayerController.class)) {
+                        activeGameObject.addComponent(new PlayerController());
                     }
                 }
 

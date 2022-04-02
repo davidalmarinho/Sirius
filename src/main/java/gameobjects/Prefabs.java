@@ -25,10 +25,8 @@ public class Prefabs {
 
     public static GameObject generateMario(Sprite sprite, float sizeX, float sizeY) {
         Spritesheet playerSprites = AssetPool.getSpritesheet("assets/images/spritesheets/spritesheet.png");
-
-        GameObject mario = generateSpriteObject(playerSprites.getSprite(0), 0.25f, 0.25f);
-
         Spritesheet bigPlayerSprites = AssetPool.getSpritesheet("assets/images/spritesheets/bigSpritesheet.png");
+        GameObject mario = generateSpriteObject(playerSprites.getSprite(0), 0.25f, 0.25f);
 
         // Little mario animations
         AnimationState run = new AnimationState();
@@ -193,16 +191,17 @@ public class Prefabs {
         stateMachine.addState(fireJump.title, bigJump.title, "die");
         mario.addComponent(stateMachine);
 
-        PillboxCollider pillboxCollider = new PillboxCollider();
-        pillboxCollider.setSize(0.39f, 0.31f);
-        RigidBody2d rb = new RigidBody2d();
-        rb.setEBodyType(EBodyType.DYNAMIC);
-        rb.setContinuousCollision(false); // True just if the game object moves too fast
-        rb.setFixedRotation(true);
-        rb.setMass(78.0f);
+        PillboxCollider pb = new PillboxCollider();
+        pb.setSize(0.39f, 0.31f);
 
-        mario.addComponent(rb);
-        mario.addComponent(pillboxCollider);
+        RigidBody2d rigidBody2d = new RigidBody2d();
+        rigidBody2d.setEBodyType(EBodyType.DYNAMIC);
+        rigidBody2d.setContinuousCollision(false);
+        rigidBody2d.setFixedRotation(true);
+        rigidBody2d.setMass(25.0f);
+
+        mario.addComponent(rigidBody2d);
+        mario.addComponent(pb);
 
         return mario;
     }
