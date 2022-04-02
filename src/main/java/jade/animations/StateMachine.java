@@ -35,24 +35,26 @@ public class StateMachine extends Component {
         this.animationStateList.add(state);
     }
 
+    private int stateIndexOf(String stateTitle) {
+        for (int i = 0; i < animationStateList.size(); i++) {
+            AnimationState animationState = animationStateList.get(i);
+            if (animationState.title.equals(stateTitle))
+                return i;
+        }
+
+        return -1;
+    }
+
     // Transfers us to the correct state depending on the trigger
     public void trigger(String trigger) {
         for (StateTrigger stateTrigger : stateTransfers.keySet()) {
             // Means we are on the state
             if (stateTrigger.state.equals(currentState.title) && stateTrigger.trigger.equals(trigger)) {
                 if (stateTransfers.get(stateTrigger) != null) {
-                    int newStateIndex = -1;
-                    for (int i = 0; i < animationStateList.size(); i++) {
-                        AnimationState currentAnimationState = new AnimationState();
-                        if (currentAnimationState.title.equals(stateTransfers.get(stateTrigger))) {
-                            newStateIndex = i;
-                            break;
-                        }
-                    }
+                    int newStateIndex = stateIndexOf(stateTransfers.get(stateTrigger));
 
                     if (newStateIndex > -1) {
                         currentState = animationStateList.get(newStateIndex);
-                        return;
                     }
                 }
                 return;
