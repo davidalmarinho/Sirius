@@ -1,5 +1,7 @@
 package physics2d.components;
 
+import gameobjects.GameObject;
+import jade.Window;
 import jade.rendering.Color;
 import jade.rendering.debug.DebugDraw;
 import org.joml.Vector2f;
@@ -15,6 +17,9 @@ public class Box2DCollider extends Collider2d {
 
     @Override
     public void editorUpdate(float dt) {
+        GameObject activeGameObject = Window.getImGuiLayer().getPropertiesWindow().getActiveGameObject();
+        if (activeGameObject == null || activeGameObject != gameObject) return;
+
         Vector2f center = new Vector2f(gameObject.transform.position).add(getOffset());
         DebugDraw.addBox2D(center, this.halfSize, this.gameObject.transform.rotation, Color.DARK_GREEN);
     }
