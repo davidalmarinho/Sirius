@@ -1,13 +1,13 @@
 package gameobjects.components;
 
+import jade.Window;
 import jade.animations.StateMachine;
 import jade.input.KeyListener;
 import jade.utils.Settings;
 import org.joml.Vector2f;
 import physics2d.components.RigidBody2d;
 
-import static org.lwjgl.glfw.GLFW.GLFW_KEY_D;
-import static org.lwjgl.glfw.GLFW.GLFW_KEY_RIGHT;
+import static org.lwjgl.glfw.GLFW.*;
 
 public class PlayerController extends Component {
     public float walkSpeed           = 1.9f;
@@ -44,20 +44,48 @@ public class PlayerController extends Component {
     @Override
     public void update(float dt) {
         if (KeyListener.isKeyPressed(GLFW_KEY_RIGHT) || KeyListener.isKeyPressed(GLFW_KEY_D)) {
-            this.gameObject.transform.scale.x = playerWith;
             this.acceleration.x = walkSpeed;
 
+            // Changes player's direction when he switches direction
+            this.gameObject.transform.scale.x = playerWith;
             if (this.velocity.x < 0) {
                 this.stateMachine.trigger("switchDirection");
                 this.velocity.x += slowDownForce;
             } else {
                 this.stateMachine.trigger("startRunning");
             }
+        } else if (KeyListener.isKeyPressed(GLFW_KEY_LEFT) || KeyListener.isKeyPressed(GLFW_KEY_A)) {
+            this.acceleration.x = -walkSpeed;
+
+            // Changes player's direction when he switches direction
+            this.gameObject.transform.scale.x = -playerWith;
+            if (this.velocity.x > 0) {
+                this.stateMachine.trigger("switchDirection");
+                this.velocity.x -= slowDownForce;
+            } else {
+                this.stateMachine.trigger("startRunning");
+            }
+        } else {
+            this.acceleration.x = 0;
+
+            // If going to the right
+            if (this.velocity.x > 0)
+                this.velocity.x = Math.max(0, this.velocity.x - slowDownForce);
+            // If going to the left
+            else if (this.velocity.x < 0)
+                this.velocity.x = Math.min(0, this.velocity.x + slowDownForce);
+
+            if (this.velocity.x == 0) {
+                this.stateMachine.trigger("stopRunning");
+            }
         }
 
-        this.velocity.x += this.acceleration.x * dt;
-        this.velocity.x = Math.max(Math.min(this.velocity.x, this.terminalVelocity.x), -this.terminalVelocity.x);
+        this.acceleration.y = Window.getPhysics().getGravity().y * 0.7f;
 
+        this.velocity.x += this.acceleration.x * dt;
+        this.velocity.y += this.acceleration.y * dt;
+        this.velocity.x = Math.max(Math.min(this.velocity.x, this.terminalVelocity.x), -this.terminalVelocity.x);
+        this.velocity.y = Math.max(Math.min(this.velocity.y, this.terminalVelocity.y), -this.terminalVelocity.y);
         this.rigidBody2d.setVelocity(this.velocity);
         this.rigidBody2d.setAngularVelocity(0);
     }
