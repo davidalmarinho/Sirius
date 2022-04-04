@@ -1,6 +1,7 @@
 package jade.editor;
 
 import gameobjects.components.Component;
+import jade.SiriusTheFox;
 import jade.Window;
 import jade.input.KeyListener;
 import jade.rendering.spritesheet.Spritesheet;
@@ -22,9 +23,9 @@ public class GizmoSystem extends Component {
     @Override
     public void start() {
         gameObject.addComponent(new TranslateGizmo(GIZMOS_SPRITESHEET.getSprite(1),
-                Window.getImGuiLayer().getPropertiesWindow()));
+                SiriusTheFox.getImGuiLayer().getPropertiesWindow()));
         gameObject.addComponent(new ScaleGizmo(GIZMOS_SPRITESHEET.getSprite(2),
-                Window.getImGuiLayer().getPropertiesWindow()));
+                SiriusTheFox.getImGuiLayer().getPropertiesWindow()));
     }
 
     @Override

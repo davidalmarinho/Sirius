@@ -4,6 +4,7 @@ import gameobjects.GameObject;
 import gameobjects.components.Component;
 import gameobjects.components.SpriteRenderer;
 import gameobjects.components.Transform;
+import jade.SiriusTheFox;
 import jade.Window;
 import jade.animations.StateMachine;
 import jade.input.KeyListener;
@@ -42,7 +43,7 @@ public class MouseControls extends Component {
         holdingGameObject = go;
         holdingGameObject.getComponent(SpriteRenderer.class).setColor(new Color(0.8f, 0.8f, 0.8f, 0.8f));
         this.holdingGameObject.addComponent(new NonPickable());
-        Window.getCurrentScene().addGameObject(go);
+        SiriusTheFox.getCurrentScene().addGameObject(go);
     }
 
     public void place() {
@@ -52,11 +53,11 @@ public class MouseControls extends Component {
 
         newObj.getComponent(SpriteRenderer.class).setColor(new Color(1.0f, 1.0f, 1.0f, 1.0f));
         newObj.removeComponent(NonPickable.class);
-        Window.getCurrentScene().addGameObject(newObj);
+        SiriusTheFox.getCurrentScene().addGameObject(newObj);
     }
 
     private boolean isBlockInSquare(float x, float y) {
-        PropertiesWindow propertiesWindow = Window.getImGuiLayer().getPropertiesWindow();
+        PropertiesWindow propertiesWindow = SiriusTheFox.getImGuiLayer().getPropertiesWindow();
         Vector2f start        = new Vector2f(x, y);
         Vector2f end          = new Vector2f(start).add(new Vector2f(Settings.GRID_WIDTH, Settings.GRID_HEIGHT));
         Vector2f startScreenf = MouseListener.worldToScreen(start);
@@ -68,7 +69,7 @@ public class MouseControls extends Component {
 
         for (int i = 0; i < gameObjectsIds.length; i++) {
             if (gameObjectsIds[i] >= 0) {
-                GameObject pickedObj = Window.getCurrentScene().getGameObject((int) gameObjectsIds[i]);
+                GameObject pickedObj = SiriusTheFox.getCurrentScene().getGameObject((int) gameObjectsIds[i]);
                 if (!pickedObj.hasComponent(NonPickable.class)) return true;
             }
         }
@@ -103,7 +104,7 @@ public class MouseControls extends Component {
 
             // Remove current game object and replace it with its copy and some others pretended components
             gameObjectList.get(i).destroy();
-            Window.getCurrentScene().addGameObject(copyGo);
+            SiriusTheFox.getCurrentScene().addGameObject(copyGo);
         }
     }
 
@@ -138,7 +139,7 @@ public class MouseControls extends Component {
      * types of components.
      */
     private void selectAndChangeMultipleGameObjects() {
-        PropertiesWindow propertiesWindow = Window.getImGuiLayer().getPropertiesWindow();
+        PropertiesWindow propertiesWindow = SiriusTheFox.getImGuiLayer().getPropertiesWindow();
         List<GameObject> activeGameObjectList = new ArrayList<>(propertiesWindow.getActiveGameObjectList());
 
         if (activeGameObjectList.isEmpty()) {
@@ -200,9 +201,9 @@ public class MouseControls extends Component {
             }
 
         } else if (!MouseListener.isDragging() && MouseListener.isMouseButtonPressed(GLFW_MOUSE_BUTTON_LEFT) && debounce < 0) {
-            PickingTexture pickingTexture = Window.getImGuiLayer().getPropertiesWindow().getPickingTexture();
-            Scene currentScene = Window.getCurrentScene();
-            PropertiesWindow propertiesWindow = Window.getImGuiLayer().getPropertiesWindow();
+            PickingTexture pickingTexture = SiriusTheFox.getImGuiLayer().getPropertiesWindow().getPickingTexture();
+            Scene currentScene = SiriusTheFox.getCurrentScene();
+            PropertiesWindow propertiesWindow = SiriusTheFox.getImGuiLayer().getPropertiesWindow();
 
             int x = (int) MouseListener.getScreenX();
             int y = (int) MouseListener.getScreenY();
@@ -219,7 +220,7 @@ public class MouseControls extends Component {
         } else if (MouseListener.isDragging() && MouseListener.isMouseButtonPressed(GLFW_MOUSE_BUTTON_LEFT)) {
             // If we aren't dragging
             if (!boxSelectSet) {
-                Window.getImGuiLayer().getPropertiesWindow().clearSelected();
+                SiriusTheFox.getImGuiLayer().getPropertiesWindow().clearSelected();
                 boxSelectStart = MouseListener.getScreen();
                 boxSelectSet = true;
             }
@@ -231,7 +232,7 @@ public class MouseControls extends Component {
             DebugDraw.addBox2D((new Vector2f(boxSelectStartWorld)).add(halfSize), new Vector2f(halfSize).mul(2.0f), 0.0f);
 
         } else if (boxSelectSet) {
-            PickingTexture pickingTexture = Window.getImGuiLayer().getPropertiesWindow().getPickingTexture();
+            PickingTexture pickingTexture = SiriusTheFox.getImGuiLayer().getPropertiesWindow().getPickingTexture();
             boxSelectSet = false;
             int screenStartX = (int) boxSelectStart.x;
             int screenStartY = (int) boxSelectStart.y;
@@ -262,10 +263,10 @@ public class MouseControls extends Component {
             }
 
             for (Integer gameObjectId : uniqueGameObjectIds) {
-                GameObject pickedObj = Window.getCurrentScene().getGameObject(gameObjectId);
+                GameObject pickedObj = SiriusTheFox.getCurrentScene().getGameObject(gameObjectId);
                 if (pickedObj != null && !pickedObj.hasComponent(NonPickable.class))
                     // Means that we can't pick it
-                    Window.getImGuiLayer().getPropertiesWindow().addActiveGameObject(pickedObj);
+                    SiriusTheFox.getImGuiLayer().getPropertiesWindow().addActiveGameObject(pickedObj);
             }
         }
     }

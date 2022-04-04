@@ -1,5 +1,6 @@
 package gameobjects.components;
 
+import jade.SiriusTheFox;
 import jade.Window;
 import jade.animations.StateMachine;
 import jade.input.KeyListener;
@@ -64,13 +65,13 @@ public class PlayerController extends Component {
         float yVal = playerState == PlayerState.SMALL ? -0.14f : -0.24f;
 
         Vector2f raycastEnd = new Vector2f(raycastBegin).add(0.0f, yVal);
-        RaycastInfo info = Window.getPhysics().raycast(gameObject, raycastBegin, raycastEnd);
+        RaycastInfo info = SiriusTheFox.getPhysics().raycast(gameObject, raycastBegin, raycastEnd);
 
         // Get mario's right foot
         Vector2f raycast2Begin = new Vector2f(raycastBegin).add(innerPlayerWidth, 0.0f);
         Vector2f raycast2End = new Vector2f(raycastEnd).add(innerPlayerWidth, 0.0f);
 
-        RaycastInfo info2 = Window.getPhysics().raycast(gameObject, raycast2Begin, raycast2End);
+        RaycastInfo info2 = SiriusTheFox.getPhysics().raycast(gameObject, raycast2Begin, raycast2End);
 
         // boolean g = info.hitSomething && info.hitObject != null && info.hitObject.hasComponent(Ground.class);
 
@@ -122,7 +123,7 @@ public class PlayerController extends Component {
             }
         }
 
-        this.acceleration.y = Window.getPhysics().getGravity().y * 0.7f;
+        this.acceleration.y = SiriusTheFox.getPhysics().getGravity().y * 0.7f;
 
         this.velocity.x += this.acceleration.x * dt;
         this.velocity.y += this.acceleration.y * dt;

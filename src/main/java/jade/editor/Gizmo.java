@@ -5,6 +5,7 @@ import gameobjects.Prefabs;
 import gameobjects.components.Component;
 import gameobjects.components.Sprite;
 import gameobjects.components.SpriteRenderer;
+import jade.SiriusTheFox;
 import jade.Window;
 import jade.input.MouseListener;
 import jade.rendering.Color;
@@ -49,8 +50,8 @@ class Gizmo extends Component {
         this.xAxisObject.addComponent(new NonPickable());
         this.yAxisObject.addComponent(new NonPickable());
 
-        Window.getCurrentScene().addGameObject(xAxisObject);
-        Window.getCurrentScene().addGameObject(yAxisObject);
+        SiriusTheFox.getCurrentScene().addGameObject(xAxisObject);
+        SiriusTheFox.getCurrentScene().addGameObject(yAxisObject);
     }
 
     @Override

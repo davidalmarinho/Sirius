@@ -1,5 +1,6 @@
 package jade.rendering.debug;
 
+import jade.SiriusTheFox;
 import jade.Window;
 import jade.rendering.Color;
 import jade.rendering.GlObjects;
@@ -126,8 +127,8 @@ public class DebugDraw {
         
         // Use our shader
         shader.use();
-        shader.uploadMat4f("uProjection", Window.getCurrentScene().getCamera().getProjectionMatrix());
-        shader.uploadMat4f("uView", Window.getCurrentScene().getCamera().getViewMatrix());
+        shader.uploadMat4f("uProjection", SiriusTheFox.getCurrentScene().getCamera().getProjectionMatrix());
+        shader.uploadMat4f("uView", SiriusTheFox.getCurrentScene().getCamera().getViewMatrix());
         
         // Bind vao
         GlObjects.bindVao(vaoID);

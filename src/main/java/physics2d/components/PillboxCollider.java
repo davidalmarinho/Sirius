@@ -1,6 +1,7 @@
 package physics2d.components;
 
 import gameobjects.components.Component;
+import jade.SiriusTheFox;
 import jade.Window;
 import org.jbox2d.collision.shapes.PolygonShape;
 import org.jbox2d.common.Vec2;
@@ -73,7 +74,7 @@ public class PillboxCollider extends Collider2d {
      * Resets the fixtures
      */
     private void resetFixture() {
-        if (Window.getPhysics().isLocked()) {
+        if (SiriusTheFox.getPhysics().isLocked()) {
             resetFixtureNextFrame = true;
             return;
         }
@@ -81,7 +82,7 @@ public class PillboxCollider extends Collider2d {
 
         if (gameObject != null) {
             RigidBody2d rigidBody = gameObject.getComponent(RigidBody2d.class);
-            if (rigidBody != null) Window.getPhysics().resetPillboxCollider(rigidBody, this);
+            if (rigidBody != null) SiriusTheFox.getPhysics().resetPillboxCollider(rigidBody, this);
         }
     }
 

@@ -1,6 +1,7 @@
 package jade.rendering;
 
 import gameobjects.GameObject;
+import jade.SiriusTheFox;
 import jade.Window;
 import gameobjects.components.SpriteRenderer;
 import jade.rendering.spritesheet.Texture;
@@ -228,8 +229,8 @@ public class RenderBatch implements Comparable<RenderBatch> {
         // Use shader
         Shader shader = Renderer.getBoundShader();
         shader.use();
-        shader.uploadMat4f("uProjection", Window.getCurrentScene().getCamera().getProjectionMatrix());
-        shader.uploadMat4f("uView", Window.getCurrentScene().getCamera().getViewMatrix());
+        shader.uploadMat4f("uProjection", SiriusTheFox.getCurrentScene().getCamera().getProjectionMatrix());
+        shader.uploadMat4f("uView", SiriusTheFox.getCurrentScene().getCamera().getViewMatrix());
 
         // Load the textures
         for (int i = 0; i < textureList.size(); i++) {

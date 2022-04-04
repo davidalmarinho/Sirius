@@ -1,6 +1,7 @@
 package physics2d.components;
 
 import gameobjects.components.Component;
+import jade.SiriusTheFox;
 import jade.Window;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.Body;
@@ -123,7 +124,7 @@ public class RigidBody2d extends Component {
         this.sensor = sensor;
         if (rawBody == null) return;
 
-        Window.getPhysics().setSensor(this, sensor);
+        SiriusTheFox.getPhysics().setSensor(this, sensor);
     }
 
     public boolean isFixedRotation() {

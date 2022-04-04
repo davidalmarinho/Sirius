@@ -7,6 +7,7 @@ import gameobjects.GameObject;
 import gameobjects.GameObjectDeserializer;
 import gameobjects.components.Component;
 import gameobjects.components.ComponentDeserializer;
+import jade.SiriusTheFox;
 import jade.Window;
 import jade.editor.MouseControls;
 import jade.editor.NonPickable;
@@ -162,7 +163,7 @@ public class Scene {
         // ===============================================================================
         // Bug fix:
         // Modifies the selected active game objects if they haven't been modified before
-        PropertiesWindow propertiesWindow = Window.getImGuiLayer().getPropertiesWindow();
+        PropertiesWindow propertiesWindow = SiriusTheFox.getImGuiLayer().getPropertiesWindow();
 
         if (sceneInitializer instanceof LevelEditorSceneInitializer) {
             LevelEditorSceneInitializer levelEditor = (LevelEditorSceneInitializer) sceneInitializer;

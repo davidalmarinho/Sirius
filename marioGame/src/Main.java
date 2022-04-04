@@ -1,9 +1,10 @@
+import jade.SiriusTheFox;
 import jade.Window;
 
 public class Main {
+
     public static void main(String[] args) {
-        // Create window
-        Window window = Window.get();
-        window.run();
+        // Run engine
+        SiriusTheFox.get().run();
     }
 }

@@ -2,6 +2,7 @@ package gameobjects;
 
 import gameobjects.components.Sprite;
 import gameobjects.components.SpriteRenderer;
+import jade.SiriusTheFox;
 import jade.Window;
 import jade.animations.AnimationState;
 import jade.animations.StateMachine;
@@ -14,7 +15,7 @@ import physics2d.components.RigidBody2d;
 public class Prefabs {
 
     public static GameObject generateSpriteObject(Sprite sprite, float sizeX, float sizeY) {
-        GameObject block = Window.getCurrentScene().createGameObject("Sprite_Object_Gen");
+        GameObject block = SiriusTheFox.getCurrentScene().createGameObject("Sprite_Object_Gen");
         block.transform.scale.x = sizeX;
         block.transform.scale.y = sizeY;
         SpriteRenderer spriteRenderer = SpriteRenderer.Builder.newInstance().setSprite(sprite).build();
