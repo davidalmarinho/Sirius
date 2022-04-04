@@ -6534,7 +6534,8 @@
           "terminalVelocity": {
             "x": 2.1,
             "y": 3.1
-          }
+          },
+          "playerState": "SMALL"
         }
       },
       {

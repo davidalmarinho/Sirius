@@ -36,7 +36,7 @@ public class ImGuiLayer {
     public ImGuiLayer(long glfwWindow, PickingTexture pickingTexture) {
         this.glfwWindow = glfwWindow;
         this.gameViewWindow = new GameViewWindow();
-        this.propertiesWindow = new PropertiesWindow(pickingTexture);
+        this.propertiesWindow = PropertiesWindow.get(pickingTexture);
         this.menuBar = new MenuBar();
         this.sceneHierarchy = new SceneHierarchy();
     }
