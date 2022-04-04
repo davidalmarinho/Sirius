@@ -2,6 +2,7 @@ package jade;
 
 import audio.Audio;
 import gameobjects.GameObject;
+import jade.editor.ICustomPropertiesWindow;
 import jade.input.Input;
 import jade.input.MouseListener;
 import jade.rendering.Renderer;
@@ -155,6 +156,10 @@ public class SiriusTheFox implements Observer {
                 currentScene.save();
                 break;
         }
+    }
+
+    public void addCustomizedPropertiesWindow(ICustomPropertiesWindow iCustomPropertiesWindow) {
+        window.setICustomPropertiesWindow(iCustomPropertiesWindow);
     }
 
     public static Window getWindow() {

@@ -1,6 +1,6 @@
 [
   {
-    "uid": 163,
+    "uid": 0,
     "name": "Sprite_Object_Gen",
     "componentList": [
       {
@@ -97,7 +97,7 @@
     "doSerialization": true
   },
   {
-    "uid": 164,
+    "uid": 1,
     "name": "Sprite_Object_Gen",
     "componentList": [
       {
@@ -194,7 +194,7 @@
     "doSerialization": true
   },
   {
-    "uid": 165,
+    "uid": 2,
     "name": "Sprite_Object_Gen",
     "componentList": [
       {
@@ -291,7 +291,7 @@
     "doSerialization": true
   },
   {
-    "uid": 166,
+    "uid": 3,
     "name": "Sprite_Object_Gen",
     "componentList": [
       {
@@ -388,7 +388,7 @@
     "doSerialization": true
   },
   {
-    "uid": 167,
+    "uid": 4,
     "name": "Sprite_Object_Gen",
     "componentList": [
       {
@@ -485,7 +485,7 @@
     "doSerialization": true
   },
   {
-    "uid": 168,
+    "uid": 5,
     "name": "Sprite_Object_Gen",
     "componentList": [
       {
@@ -582,7 +582,7 @@
     "doSerialization": true
   },
   {
-    "uid": 169,
+    "uid": 6,
     "name": "Sprite_Object_Gen",
     "componentList": [
       {
@@ -679,7 +679,7 @@
     "doSerialization": true
   },
   {
-    "uid": 170,
+    "uid": 7,
     "name": "Sprite_Object_Gen",
     "componentList": [
       {
@@ -776,7 +776,7 @@
     "doSerialization": true
   },
   {
-    "uid": 171,
+    "uid": 8,
     "name": "Sprite_Object_Gen",
     "componentList": [
       {
@@ -873,7 +873,7 @@
     "doSerialization": true
   },
   {
-    "uid": 172,
+    "uid": 9,
     "name": "Sprite_Object_Gen",
     "componentList": [
       {
@@ -970,7 +970,7 @@
     "doSerialization": true
   },
   {
-    "uid": 173,
+    "uid": 10,
     "name": "Sprite_Object_Gen",
     "componentList": [
       {
@@ -1067,7 +1067,7 @@
     "doSerialization": true
   },
   {
-    "uid": 174,
+    "uid": 11,
     "name": "Sprite_Object_Gen",
     "componentList": [
       {
@@ -1164,7 +1164,7 @@
     "doSerialization": true
   },
   {
-    "uid": 175,
+    "uid": 12,
     "name": "Sprite_Object_Gen",
     "componentList": [
       {
@@ -1261,7 +1261,7 @@
     "doSerialization": true
   },
   {
-    "uid": 176,
+    "uid": 13,
     "name": "Sprite_Object_Gen",
     "componentList": [
       {
@@ -1358,7 +1358,7 @@
     "doSerialization": true
   },
   {
-    "uid": 177,
+    "uid": 14,
     "name": "Sprite_Object_Gen",
     "componentList": [
       {
@@ -1455,7 +1455,7 @@
     "doSerialization": true
   },
   {
-    "uid": 178,
+    "uid": 15,
     "name": "Sprite_Object_Gen",
     "componentList": [
       {
@@ -1552,7 +1552,7 @@
     "doSerialization": true
   },
   {
-    "uid": 179,
+    "uid": 16,
     "name": "Sprite_Object_Gen",
     "componentList": [
       {
@@ -1649,7 +1649,7 @@
     "doSerialization": true
   },
   {
-    "uid": 180,
+    "uid": 17,
     "name": "Sprite_Object_Gen",
     "componentList": [
       {
@@ -1746,7 +1746,7 @@
     "doSerialization": true
   },
   {
-    "uid": 181,
+    "uid": 18,
     "name": "Sprite_Object_Gen",
     "componentList": [
       {
@@ -1843,7 +1843,7 @@
     "doSerialization": true
   },
   {
-    "uid": 182,
+    "uid": 19,
     "name": "Sprite_Object_Gen",
     "componentList": [
       {
@@ -1940,7 +1940,7 @@
     "doSerialization": true
   },
   {
-    "uid": 183,
+    "uid": 20,
     "name": "Sprite_Object_Gen",
     "componentList": [
       {
@@ -2037,7 +2037,7 @@
     "doSerialization": true
   },
   {
-    "uid": 184,
+    "uid": 21,
     "name": "Sprite_Object_Gen",
     "componentList": [
       {
@@ -2134,7 +2134,7 @@
     "doSerialization": true
   },
   {
-    "uid": 185,
+    "uid": 22,
     "name": "Sprite_Object_Gen",
     "componentList": [
       {
@@ -2231,7 +2231,7 @@
     "doSerialization": true
   },
   {
-    "uid": 186,
+    "uid": 23,
     "name": "Sprite_Object_Gen",
     "componentList": [
       {
@@ -2328,7 +2328,7 @@
     "doSerialization": true
   },
   {
-    "uid": 187,
+    "uid": 24,
     "name": "Sprite_Object_Gen",
     "componentList": [
       {
@@ -2425,7 +2425,7 @@
     "doSerialization": true
   },
   {
-    "uid": 188,
+    "uid": 25,
     "name": "Sprite_Object_Gen",
     "componentList": [
       {
@@ -2522,7 +2522,7 @@
     "doSerialization": true
   },
   {
-    "uid": 189,
+    "uid": 26,
     "name": "Sprite_Object_Gen",
     "componentList": [
       {
@@ -2619,7 +2619,7 @@
     "doSerialization": true
   },
   {
-    "uid": 190,
+    "uid": 27,
     "name": "Sprite_Object_Gen",
     "componentList": [
       {
@@ -2716,7 +2716,7 @@
     "doSerialization": true
   },
   {
-    "uid": 191,
+    "uid": 28,
     "name": "Sprite_Object_Gen",
     "componentList": [
       {
@@ -2813,7 +2813,7 @@
     "doSerialization": true
   },
   {
-    "uid": 192,
+    "uid": 29,
     "name": "Sprite_Object_Gen",
     "componentList": [
       {
@@ -2910,7 +2910,7 @@
     "doSerialization": true
   },
   {
-    "uid": 193,
+    "uid": 30,
     "name": "Sprite_Object_Gen",
     "componentList": [
       {
@@ -3007,7 +3007,7 @@
     "doSerialization": true
   },
   {
-    "uid": 194,
+    "uid": 31,
     "name": "Sprite_Object_Gen",
     "componentList": [
       {
@@ -3104,7 +3104,7 @@
     "doSerialization": true
   },
   {
-    "uid": 195,
+    "uid": 32,
     "name": "Sprite_Object_Gen",
     "componentList": [
       {
@@ -3201,7 +3201,7 @@
     "doSerialization": true
   },
   {
-    "uid": 196,
+    "uid": 33,
     "name": "Sprite_Object_Gen",
     "componentList": [
       {
@@ -3298,7 +3298,7 @@
     "doSerialization": true
   },
   {
-    "uid": 197,
+    "uid": 34,
     "name": "Sprite_Object_Gen",
     "componentList": [
       {
@@ -3395,7 +3395,7 @@
     "doSerialization": true
   },
   {
-    "uid": 198,
+    "uid": 35,
     "name": "Sprite_Object_Gen",
     "componentList": [
       {
@@ -3492,7 +3492,7 @@
     "doSerialization": true
   },
   {
-    "uid": 199,
+    "uid": 36,
     "name": "Sprite_Object_Gen",
     "componentList": [
       {
@@ -3589,7 +3589,7 @@
     "doSerialization": true
   },
   {
-    "uid": 200,
+    "uid": 37,
     "name": "Sprite_Object_Gen",
     "componentList": [
       {
@@ -3686,7 +3686,7 @@
     "doSerialization": true
   },
   {
-    "uid": 201,
+    "uid": 38,
     "name": "Sprite_Object_Gen",
     "componentList": [
       {
@@ -3783,7 +3783,7 @@
     "doSerialization": true
   },
   {
-    "uid": 202,
+    "uid": 39,
     "name": "Sprite_Object_Gen",
     "componentList": [
       {
@@ -3880,7 +3880,7 @@
     "doSerialization": true
   },
   {
-    "uid": 203,
+    "uid": 40,
     "name": "Sprite_Object_Gen",
     "componentList": [
       {
@@ -3977,7 +3977,7 @@
     "doSerialization": true
   },
   {
-    "uid": 204,
+    "uid": 41,
     "name": "Sprite_Object_Gen",
     "componentList": [
       {
@@ -4074,7 +4074,7 @@
     "doSerialization": true
   },
   {
-    "uid": 205,
+    "uid": 42,
     "name": "Sprite_Object_Gen",
     "componentList": [
       {
@@ -4171,7 +4171,7 @@
     "doSerialization": true
   },
   {
-    "uid": 206,
+    "uid": 43,
     "name": "Sprite_Object_Gen",
     "componentList": [
       {
@@ -4268,7 +4268,7 @@
     "doSerialization": true
   },
   {
-    "uid": 207,
+    "uid": 44,
     "name": "Sprite_Object_Gen",
     "componentList": [
       {
@@ -4365,7 +4365,7 @@
     "doSerialization": true
   },
   {
-    "uid": 208,
+    "uid": 45,
     "name": "Sprite_Object_Gen",
     "componentList": [
       {
@@ -4462,7 +4462,7 @@
     "doSerialization": true
   },
   {
-    "uid": 209,
+    "uid": 46,
     "name": "Sprite_Object_Gen",
     "componentList": [
       {
@@ -4559,7 +4559,7 @@
     "doSerialization": true
   },
   {
-    "uid": 210,
+    "uid": 47,
     "name": "Sprite_Object_Gen",
     "componentList": [
       {
@@ -4656,7 +4656,7 @@
     "doSerialization": true
   },
   {
-    "uid": 211,
+    "uid": 48,
     "name": "Sprite_Object_Gen",
     "componentList": [
       {
@@ -4753,7 +4753,7 @@
     "doSerialization": true
   },
   {
-    "uid": 212,
+    "uid": 49,
     "name": "Sprite_Object_Gen",
     "componentList": [
       {
@@ -4850,7 +4850,7 @@
     "doSerialization": true
   },
   {
-    "uid": 213,
+    "uid": 50,
     "name": "Sprite_Object_Gen",
     "componentList": [
       {
@@ -4947,7 +4947,7 @@
     "doSerialization": true
   },
   {
-    "uid": 214,
+    "uid": 51,
     "name": "Sprite_Object_Gen",
     "componentList": [
       {
@@ -5044,7 +5044,7 @@
     "doSerialization": true
   },
   {
-    "uid": 215,
+    "uid": 52,
     "name": "Sprite_Object_Gen",
     "componentList": [
       {
@@ -5141,7 +5141,7 @@
     "doSerialization": true
   },
   {
-    "uid": 216,
+    "uid": 53,
     "name": "Sprite_Object_Gen",
     "componentList": [
       {
@@ -5238,7 +5238,7 @@
     "doSerialization": true
   },
   {
-    "uid": 217,
+    "uid": 54,
     "name": "Sprite_Object_Gen",
     "componentList": [
       {
@@ -6525,7 +6525,7 @@
         }
       },
       {
-        "type": "gameobjects.components.PlayerController",
+        "type": "PlayerController",
         "properties": {
           "walkSpeed": 1.9,
           "jumpBoost": 1.0,

@@ -228,8 +228,8 @@ public class MouseControls extends Component {
             boxSelectEnd = MouseListener.getScreen();
             Vector2f boxSelectStartWorld = MouseListener.screenToWorld(boxSelectStart);
             Vector2f boxSelectEndWorld = MouseListener.screenToWorld(boxSelectEnd);
-            Vector2f halfSize = (new Vector2f(boxSelectEndWorld).sub(boxSelectStartWorld)).mul(0.5f);
-            DebugDraw.addBox2D((new Vector2f(boxSelectStartWorld)).add(halfSize), new Vector2f(halfSize).mul(2.0f), 0.0f);
+            Vector2f halfSize = new Vector2f(boxSelectEndWorld).sub(boxSelectStartWorld).mul(0.5f);
+            DebugDraw.addBox2D(new Vector2f(boxSelectStartWorld).add(halfSize), new Vector2f(halfSize).mul(2.0f), 0.0f);
 
         } else if (boxSelectSet) {
             PickingTexture pickingTexture = SiriusTheFox.getImGuiLayer().getPropertiesWindow().getPickingTexture();

@@ -185,4 +185,8 @@ public class Window {
     public ICustomPropertiesWindow getICustomPropertiesWindow() {
         return iCustomPropertiesWindow;
     }
+
+    public void setICustomPropertiesWindow(ICustomPropertiesWindow iCustomPropertiesWindow) {
+        this.iCustomPropertiesWindow = iCustomPropertiesWindow;
+    }
 }

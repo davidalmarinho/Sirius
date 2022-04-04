@@ -1,17 +1,14 @@
-package gameobjects.components;
-
+import gameobjects.components.Component;
 import jade.SiriusTheFox;
-import jade.Window;
 import jade.animations.StateMachine;
 import jade.input.KeyListener;
 import jade.rendering.Color;
 import jade.rendering.debug.DebugDraw;
 import jade.utils.Settings;
 import org.joml.Vector2f;
+import org.lwjgl.glfw.GLFW;
 import physics2d.components.RaycastInfo;
 import physics2d.components.RigidBody2d;
-
-import static org.lwjgl.glfw.GLFW.*;
 
 public class PlayerController extends Component {
     private enum PlayerState {
@@ -86,7 +83,7 @@ public class PlayerController extends Component {
 
         }
 
-        if (KeyListener.isKeyPressed(GLFW_KEY_RIGHT) || KeyListener.isKeyPressed(GLFW_KEY_D)) {
+        if (KeyListener.isKeyPressed(GLFW.GLFW_KEY_RIGHT) || KeyListener.isKeyPressed(GLFW.GLFW_KEY_D)) {
             this.acceleration.x = walkSpeed;
 
             // Changes player's direction when he switches direction
@@ -97,7 +94,7 @@ public class PlayerController extends Component {
             } else {
                 this.stateMachine.trigger("startRunning");
             }
-        } else if (KeyListener.isKeyPressed(GLFW_KEY_LEFT) || KeyListener.isKeyPressed(GLFW_KEY_A)) {
+        } else if (KeyListener.isKeyPressed(GLFW.GLFW_KEY_LEFT) || KeyListener.isKeyPressed(GLFW.GLFW_KEY_A)) {
             this.acceleration.x = -walkSpeed;
 
             // Changes player's direction when he switches direction
