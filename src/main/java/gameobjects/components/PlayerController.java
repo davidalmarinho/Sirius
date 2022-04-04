@@ -3,19 +3,31 @@ package gameobjects.components;
 import jade.Window;
 import jade.animations.StateMachine;
 import jade.input.KeyListener;
+import jade.rendering.Color;
+import jade.rendering.debug.DebugDraw;
 import jade.utils.Settings;
 import org.joml.Vector2f;
+import physics2d.components.RaycastInfo;
 import physics2d.components.RigidBody2d;
 
 import static org.lwjgl.glfw.GLFW.*;
 
 public class PlayerController extends Component {
+    private enum PlayerState {
+        SMALL,
+        BIG,
+        FIRE,
+        INVINCIBLE,
+        DEAD
+    }
+
     public float walkSpeed           = 1.9f;
     public float jumpBoost           = 1.0f;
     public float jumpImpulse         = 3.0f;
     public float slowDownForce       = 0.5f; // Like friction
     public Vector2f terminalVelocity = new Vector2f(2.1f, 3.1f);
 
+    private PlayerState playerState = PlayerState.SMALL;
     public transient boolean onGround;
 
     // Basically, when the player isn't in the ground anymore, you still have some time to still jump
@@ -41,8 +53,38 @@ public class PlayerController extends Component {
         this.rigidBody2d.setGravityScale(0.0f);
     }
 
+    private boolean isOnGround() {
+        Vector2f raycastBegin = new Vector2f(this.gameObject.transform.position);
+        float innerPlayerWidth = this.playerWith * 0.6f;
+
+        // Get mario's left foot
+        raycastBegin.sub(innerPlayerWidth / 2.0f, 0.0f);
+
+        // Raycast size according to mario's height
+        float yVal = playerState == PlayerState.SMALL ? -0.14f : -0.24f;
+
+        Vector2f raycastEnd = new Vector2f(raycastBegin).add(0.0f, yVal);
+        RaycastInfo info = Window.getPhysics().raycast(gameObject, raycastBegin, raycastEnd);
+
+        // Get mario's right foot
+        Vector2f raycast2Begin = new Vector2f(raycastBegin).add(innerPlayerWidth, 0.0f);
+        Vector2f raycast2End = new Vector2f(raycastEnd).add(innerPlayerWidth, 0.0f);
+
+        RaycastInfo info2 = Window.getPhysics().raycast(gameObject, raycast2Begin, raycast2End);
+
+        // boolean g = info.hitSomething && info.hitObject != null && info.hitObject.hasComponent(Ground.class);
+
+        DebugDraw.addLine2D(raycastBegin, raycastEnd, new Color(1.0f, 0.0f, 0.0f));
+
+        return false;
+    }
+
     @Override
     public void update(float dt) {
+        if (isOnGround()) {
+
+        }
+
         if (KeyListener.isKeyPressed(GLFW_KEY_RIGHT) || KeyListener.isKeyPressed(GLFW_KEY_D)) {
             this.acceleration.x = walkSpeed;
 

@@ -61,7 +61,7 @@ public class StateMachine extends Component {
             }
         }
 
-        System.err.println("Unable to find trigger '" + trigger + "'.");
+        // System.err.println("Unable to find trigger '" + trigger + "'.");
     }
 
     @Override

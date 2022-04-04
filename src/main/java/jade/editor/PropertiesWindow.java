@@ -14,12 +14,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PropertiesWindow {
+    private static PropertiesWindow instance;
     private List<GameObject> activeGameObjectList;
     private GameObject activeGameObject = null;
     private List<Vector4f> activeGameObjectOriginalColorList;
     private PickingTexture pickingTexture;
 
-    public PropertiesWindow(PickingTexture pickingTexture) {
+    private PropertiesWindow(PickingTexture pickingTexture) {
         this.activeGameObjectList = new ArrayList<>();
         this.activeGameObjectOriginalColorList = new ArrayList<>();
         this.pickingTexture = pickingTexture;
@@ -115,5 +116,13 @@ public class PropertiesWindow {
 
     public List<GameObject> getActiveGameObjectList() {
         return activeGameObjectList;
+    }
+
+    // Singleton
+    public static PropertiesWindow get(PickingTexture pickingTexture) {
+        if (instance == null)
+            instance = new PropertiesWindow(pickingTexture);
+
+        return instance;
     }
 }
