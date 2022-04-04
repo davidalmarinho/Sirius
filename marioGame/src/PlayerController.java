@@ -1,16 +1,14 @@
-package gameobjects.components;
-
-import jade.Window;
+import gameobjects.components.Component;
+import jade.SiriusTheFox;
 import jade.animations.StateMachine;
 import jade.input.KeyListener;
 import jade.rendering.Color;
 import jade.rendering.debug.DebugDraw;
 import jade.utils.Settings;
 import org.joml.Vector2f;
+import org.lwjgl.glfw.GLFW;
 import physics2d.components.RaycastInfo;
 import physics2d.components.RigidBody2d;
-
-import static org.lwjgl.glfw.GLFW.*;
 
 public class PlayerController extends Component {
     private enum PlayerState {
@@ -64,13 +62,13 @@ public class PlayerController extends Component {
         float yVal = playerState == PlayerState.SMALL ? -0.14f : -0.24f;
 
         Vector2f raycastEnd = new Vector2f(raycastBegin).add(0.0f, yVal);
-        RaycastInfo info = Window.getPhysics().raycast(gameObject, raycastBegin, raycastEnd);
+        RaycastInfo info = SiriusTheFox.getPhysics().raycast(gameObject, raycastBegin, raycastEnd);
 
         // Get mario's right foot
         Vector2f raycast2Begin = new Vector2f(raycastBegin).add(innerPlayerWidth, 0.0f);
         Vector2f raycast2End = new Vector2f(raycastEnd).add(innerPlayerWidth, 0.0f);
 
-        RaycastInfo info2 = Window.getPhysics().raycast(gameObject, raycast2Begin, raycast2End);
+        RaycastInfo info2 = SiriusTheFox.getPhysics().raycast(gameObject, raycast2Begin, raycast2End);
 
         // boolean g = info.hitSomething && info.hitObject != null && info.hitObject.hasComponent(Ground.class);
 
@@ -85,7 +83,7 @@ public class PlayerController extends Component {
 
         }
 
-        if (KeyListener.isKeyPressed(GLFW_KEY_RIGHT) || KeyListener.isKeyPressed(GLFW_KEY_D)) {
+        if (KeyListener.isKeyPressed(GLFW.GLFW_KEY_RIGHT) || KeyListener.isKeyPressed(GLFW.GLFW_KEY_D)) {
             this.acceleration.x = walkSpeed;
 
             // Changes player's direction when he switches direction
@@ -96,7 +94,7 @@ public class PlayerController extends Component {
             } else {
                 this.stateMachine.trigger("startRunning");
             }
-        } else if (KeyListener.isKeyPressed(GLFW_KEY_LEFT) || KeyListener.isKeyPressed(GLFW_KEY_A)) {
+        } else if (KeyListener.isKeyPressed(GLFW.GLFW_KEY_LEFT) || KeyListener.isKeyPressed(GLFW.GLFW_KEY_A)) {
             this.acceleration.x = -walkSpeed;
 
             // Changes player's direction when he switches direction
@@ -122,7 +120,7 @@ public class PlayerController extends Component {
             }
         }
 
-        this.acceleration.y = Window.getPhysics().getGravity().y * 0.7f;
+        this.acceleration.y = SiriusTheFox.getPhysics().getGravity().y * 0.7f;
 
         this.velocity.x += this.acceleration.x * dt;
         this.velocity.y += this.acceleration.y * dt;

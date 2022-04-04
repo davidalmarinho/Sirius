@@ -1,78 +1,39 @@
 package jade;
 
-import gameobjects.GameObject;
+import jade.editor.ICustomPropertiesWindow;
 import jade.input.KeyListener;
 import jade.input.MouseListener;
 import jade.rendering.FrameBuffer;
 import jade.rendering.PickingTexture;
-import jade.rendering.Renderer;
-import jade.rendering.Shader;
-import jade.rendering.debug.DebugDraw;
-import jade.scenes.LevelEditorSceneInitializer;
-import jade.scenes.Scene;
-import jade.scenes.SceneInitializer;
-import jade.utils.AssetPool;
-import observers.EventSystem;
-import observers.Observer;
-import observers.events.Event;
-import org.lwjgl.Version;
+
 import org.lwjgl.glfw.GLFWErrorCallback;
-import org.lwjgl.openal.AL;
-import org.lwjgl.openal.ALC;
-import org.lwjgl.openal.ALCCapabilities;
-import org.lwjgl.openal.ALCapabilities;
 import org.lwjgl.opengl.GL;
-import physics2d.Physics2d;
 
 import static org.lwjgl.glfw.Callbacks.glfwFreeCallbacks;
 import static org.lwjgl.glfw.GLFW.*;
-import static org.lwjgl.openal.ALC10.*;
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.system.MemoryUtil.NULL;
 
-public class Window implements Observer {
+public class Window {
+    private ICustomPropertiesWindow iCustomPropertiesWindow;
     private int width, height;
     private final String title;
     private static Window window;
     private long glfwWindow; // Vai agir como se fosse um ponteiro
-    private static Scene currentScene;
     private ImGuiLayer imGuiLayer;
     private FrameBuffer frameBuffer;
     private PickingTexture pickingTexture;
 
     private boolean runtimePlaying;
 
-    private long audioContext;
-    private long audioDevice;
-
-    private Window() {
+    public Window(String title, int width, int height) {
+        this.title  = title;
         this.width  = 1920;
         this.height = 1080;
-        this.title  = "Mario";
-        EventSystem.addObserver(this);
     }
 
-    public void run() {
-        System.out.println("Hello LWJGL " + Version.getVersion() + "!");
-
-        init();
-        loop();
-
-        /* This part isn't strictly necessary because the operative system usually cleans up the memory for us. But
-         * just for safe, we will clean it by ourselves and because this is good practice.
-         */
-
-        // Destroy audio context
-        alcDestroyContext(audioContext);
-        alcCloseDevice(audioDevice);
-
-        // Free the memory
-        glfwFreeCallbacks(glfwWindow); // Clean up the errors --Gives reset to the window errors
-        glfwDestroyWindow(glfwWindow); // Destroys the window
-
-        // Finish window's executions
-        glfwTerminate(); // Terminates glfwWindowHint library
-        glfwSetErrorCallback(null).free(); // Free the error callback
+    public Window(String title) {
+        this(title, 1920, 1080);
     }
 
     public void init() {
@@ -95,8 +56,8 @@ public class Window implements Observer {
 
         // Configurar o GLFW (resizable window, close operation...)
         /* Configuramos primeiro e depois criamos a janela, pois o GLFW vai usar isto par criar
-        * a janela
-        */
+         * a janela
+         */
         glfwDefaultWindowHints(); // Colocar tudo default primeiro
 
         // For linux compatibility, we have to specify the context version and make an opengl profile
@@ -126,8 +87,8 @@ public class Window implements Observer {
         glfwSetScrollCallback(glfwWindow, MouseListener::mouseScrollCallback);
         glfwSetMouseButtonCallback(glfwWindow, MouseListener::mouseButtonCallback);
         glfwSetWindowSizeCallback(glfwWindow, (w, newWidth, newHeight) -> {
-            Window.setWidth(newWidth);
-            Window.setHeight(newHeight);
+            SiriusTheFox.getWindow().setWidth(newWidth);
+            SiriusTheFox.getWindow().setHeight(newHeight);
         });
 
         // Configurar callbacks do teclado
@@ -141,25 +102,9 @@ public class Window implements Observer {
 
         // Agora vamos tornar a janela visível
         glfwShowWindow(glfwWindow);
+    }
 
-        // Initialize audio device
-        String defaultDeviceName = alcGetString(0, ALC_DEFAULT_DEVICE_SPECIFIER);
-        audioDevice = alcOpenDevice(defaultDeviceName);
-
-        // Set up audio context
-        int[] attributes = {0};
-                alcCreateContext(audioDevice, attributes);
-        audioContext = alcCreateContext(audioDevice, attributes);
-        alcMakeContextCurrent(audioContext);
-
-        ALCCapabilities alcCapabilities = ALC.createCapabilities(audioDevice);
-        ALCapabilities alCapabilities = AL.createCapabilities(alcCapabilities);
-
-        // If audio library isn't supported
-        assert !alCapabilities.OpenAL10 : "Audio library not suppoerted.";
-
-
-
+    public void start() {
         // This line is critical for LWJGL's interoperation with GLFW's
         // OpenGL context, or any context that is managed externally.
         // LWJGL detects the context that is current in the current thread,
@@ -178,124 +123,46 @@ public class Window implements Observer {
 
         imGuiLayer = new ImGuiLayer(glfwWindow, pickingTexture);
         imGuiLayer.initImGui();
-
-        // Colocar a scene
-        changeScene(new LevelEditorSceneInitializer());
     }
 
-    public void loop() {
-        float beginTime = (float) glfwGetTime();
-        float endTime;
-        float dt = -1.0f;
+    /**
+     * Destroys the Window and frees the memory.
+     * Also terminates the executions of the window
+     */
+    public void freeMemory() {
+        // Free the memory
+        glfwFreeCallbacks(glfwWindow); // Clean up the errors --Gives reset to the window errors
+        glfwDestroyWindow(glfwWindow); // Destroys the window
 
-        Shader defaultShader = AssetPool.getShader("assets/shaders/default.glsl");
-        Shader pickingShader = AssetPool.getShader("assets/shaders/pickingShader.glsl");
+        // Finish window's executions
+        glfwTerminate(); // Terminates glfwWindowHint library
+        glfwSetErrorCallback(null).free(); // Free the error callback
+    }
 
-        while (!glfwWindowShouldClose(glfwWindow)) {
-            KeyListener.updateLastKeys();
-            MouseListener.updateLastButtons();
-
-            // Carregar os eventos (teclado...)
-            glfwPollEvents();
-
-            // ========================================
-            // Render pass 1. render to picking texture
-            // ========================================
-            glDisable(GL_BLEND);
-            pickingTexture.enableWriting();
-            glViewport(0, 0, 1920, 1080);
-            glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
-            glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-            Renderer.bindShader(pickingShader);
-
-            currentScene.render();
-
-            pickingTexture.disableWriting();
-            glEnable(GL_BLEND);
-
-            // ========================================
-            // Render pass 2. render actual game
-            // ========================================
-            Renderer.bindShader(defaultShader);
-
-            DebugDraw.beginFrame();
-
-            frameBuffer.bind();
-
-            // Limpar a frame com uma cor
-            glClearColor(1f, 1f, 1f, 1f); /* Especifica a cor que o glClear vai usar para
-            limpar a color buffers */
-
-            glClear(GL_COLOR_BUFFER_BIT); /* Contar para o OpenGL como limpar a frame (Indicates the buffers
-            currently enabled for color writing).*/
-
-            if (dt >= 0) {
-                // System.out.println("FPS: " + 1.0f / dt);
-                if (runtimePlaying)
-                    currentScene.update(dt);
-                else
-                    currentScene.editorUpdate(dt);
-
-                currentScene.render();
-                DebugDraw.draw();
-            }
-
-            frameBuffer.unbind();
-
-            imGuiLayer.update(dt, currentScene);
-            MouseListener.endFrame();
-            glfwSwapBuffers(glfwWindow); /* Faz o mesmo que o Bufferstrategy, aquela parte de já termos uma
+    public void dispose() {
+        glfwSwapBuffers(glfwWindow); /* Faz o mesmo que o Bufferstrategy, aquela parte de já termos uma
             imagem pronta para mostrar antes de apagarmos a outra. */
-
-            // Gameloop
-            endTime = (float) glfwGetTime();
-            dt = endTime - beginTime;
-            beginTime = endTime;
-        }
-    }
-
-    private void changeScene(SceneInitializer sceneInitializer) {
-        if (currentScene != null) {
-            currentScene.destroy();
-        }
-        getImGuiLayer().getPropertiesWindow().setActiveGameObject(null);
-        currentScene = new Scene(sceneInitializer);
-        currentScene.load();
-        currentScene.init();
-        currentScene.start();
-    }
-
-    public static Window get() {
-        if (window == null) {
-            window = new Window();
-        }
-
-        return window;
-    }
-
-    public static Physics2d getPhysics() {
-        return getCurrentScene().getPhysics();
     }
 
     // TODO: 20/03/2022 Return the actually window's size
+
     public static int getWidth() {
         return 1920; // get().width;
     }
-
     public static int getHeight() {
         return 1080; // get().height;
     }
 
-    public static void setWidth(int width) {
-        get().width = width;
+    public void setWidth(int width) {
+        this.width = width;
     }
 
-    public static void setHeight(int height) {
-        get().height = height;
+    public void setHeight(int height) {
+        this.height = height;
     }
 
-    public static FrameBuffer getFramebuffer() {
-        return get().frameBuffer;
+    public boolean isWindowClosed() {
+        return glfwWindowShouldClose(glfwWindow);
     }
 
     public static float getTargetAspectRatio() {
@@ -303,32 +170,23 @@ public class Window implements Observer {
         return 16.0f/ 9.0f;
     }
 
-    public static Scene getCurrentScene() {
-        return currentScene;
+    public FrameBuffer getFramebuffer() {
+        return frameBuffer;
     }
 
-    public static ImGuiLayer getImGuiLayer() {
-        return get().imGuiLayer;
+    public ImGuiLayer getImGuiLayer() {
+        return imGuiLayer;
     }
 
-    @Override
-    public void onNotify(GameObject gameObject, Event event) {
-        switch (event.type) {
-            case GAME_ENGINE_START_PLAY:
-                this.runtimePlaying = true;
-                currentScene.save();
-                changeScene(new LevelEditorSceneInitializer());
-                break;
-            case GAME_ENGINE_STOP_PLAY:
-                this.runtimePlaying = false;
-                changeScene(new LevelEditorSceneInitializer());
-                break;
-            case LOAD_LEVEL:
-                changeScene(new LevelEditorSceneInitializer());
-                break;
-            case SAVE_LEVEL:
-                currentScene.save();
-                break;
-        }
+    public PickingTexture getPickingTexture() {
+        return pickingTexture;
+    }
+
+    public ICustomPropertiesWindow getICustomPropertiesWindow() {
+        return iCustomPropertiesWindow;
+    }
+
+    public void setICustomPropertiesWindow(ICustomPropertiesWindow iCustomPropertiesWindow) {
+        this.iCustomPropertiesWindow = iCustomPropertiesWindow;
     }
 }

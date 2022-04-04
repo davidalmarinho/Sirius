@@ -6525,7 +6525,7 @@
         }
       },
       {
-        "type": "gameobjects.components.PlayerController",
+        "type": "PlayerController",
         "properties": {
           "walkSpeed": 1.9,
           "jumpBoost": 1.0,

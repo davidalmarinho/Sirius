@@ -1,5 +1,6 @@
 package jade.input;
 
+import jade.SiriusTheFox;
 import jade.Window;
 import jade.rendering.Camera;
 import org.joml.Matrix4f;
@@ -47,7 +48,7 @@ public class MouseListener {
      * @param yPos (Position) y mouse's actual coordinates
      */
     public static void mousePosCallback(long window, double xPos, double yPos) {
-        if (!Window.getImGuiLayer().getGameViewWindow().getWantCaptureMouse()) clear();
+        if (!SiriusTheFox.getImGuiLayer().getGameViewWindow().getWantCaptureMouse()) clear();
 
         if (get().mouseButtonsDown > 0) {
             get().dragging = true;
@@ -121,7 +122,7 @@ public class MouseListener {
         );
 
         normalizedScreenCoordinates.mul(2.0f).sub(new Vector2f(1.0f, 1.0f)); // [-1, 1]
-        Camera camera = Window.getCurrentScene().getCamera();
+        Camera camera = SiriusTheFox.getCurrentScene().getCamera();
         Vector4f tmp = new Vector4f(normalizedScreenCoordinates.x, normalizedScreenCoordinates.y, 0.0f, 1.0f);
         Matrix4f inverseViewMatrix = new Matrix4f(camera.getInverseView());
         Matrix4f inverseProjectionMatrix = new Matrix4f(camera.getInverseProjection());
@@ -139,7 +140,7 @@ public class MouseListener {
      * @return the actually world coordinates.
      */
     public static Vector2f worldToScreen(Vector2f worldCoordinates) {
-        Camera camera = Window.getCurrentScene().getCamera();
+        Camera camera = SiriusTheFox.getCurrentScene().getCamera();
         Vector4f normalizedDeviceCoordsSpacePos = new Vector4f(worldCoordinates.x, worldCoordinates.y, 0.0f, 1.0f);
         Matrix4f viewMatrix = new Matrix4f(camera.getViewMatrix());
         Matrix4f projectionMatrix = new Matrix4f(camera.getProjectionMatrix());
@@ -176,7 +177,7 @@ public class MouseListener {
         Vector4f tmp = new Vector4f(currentX, currentY, 0, 1); // 1 IS VERY IMPORTANT TO MAINTAIN THE INTEGRITY OF MATRIX MULTIPLICATION
 
         // See explanation of this in Camera.java file in its constructor method.
-        Camera camera                    = Window.getCurrentScene().getCamera();
+        Camera camera                    = SiriusTheFox.getCurrentScene().getCamera();
         Matrix4f inverseViewMatrix       = new Matrix4f(camera.getInverseView());
         Matrix4f inverseProjectionMatrix = new Matrix4f(camera.getInverseProjection());
 

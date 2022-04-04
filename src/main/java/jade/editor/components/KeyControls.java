@@ -2,6 +2,7 @@ package jade.editor.components;
 
 import gameobjects.GameObject;
 import gameobjects.components.Component;
+import jade.SiriusTheFox;
 import jade.Window;
 import jade.editor.PropertiesWindow;
 import jade.input.KeyListener;
@@ -16,21 +17,21 @@ public class KeyControls extends Component {
 
     @Override
     public void editorUpdate(float dt) {
-        PropertiesWindow propertiesWindow = Window.getImGuiLayer().getPropertiesWindow();
+        PropertiesWindow propertiesWindow = SiriusTheFox.getImGuiLayer().getPropertiesWindow();
         GameObject activeGameObject = propertiesWindow.getActiveGameObject();
         List<GameObject> activeGameObjectList = propertiesWindow.getActiveGameObjectList();
 
         if (KeyListener.isBindPressed(GLFW_KEY_LEFT_CONTROL, GLFW_KEY_D) && activeGameObject != null) {
             GameObject newObj = activeGameObject.copy();
             newObj.transform.position.add(Settings.GRID_WIDTH, 0.0f);
-            Window.getCurrentScene().addGameObject(newObj);
+            SiriusTheFox.getCurrentScene().addGameObject(newObj);
             propertiesWindow.setActiveGameObject(newObj);
         } else if (KeyListener.isBindPressed(GLFW_KEY_LEFT_CONTROL, GLFW_KEY_D) && activeGameObjectList.size() > 1) {
             List<GameObject> gameObjectList = new ArrayList<>(activeGameObjectList);
             propertiesWindow.clearSelected();
             for (GameObject go : gameObjectList) {
                 GameObject copy = go.copy();
-                Window.getCurrentScene().addGameObject(copy);
+                SiriusTheFox.getCurrentScene().addGameObject(copy);
                 propertiesWindow.addActiveGameObject(copy);
             }
         } else if (KeyListener.isKeyDown(GLFW_KEY_DELETE)) {

@@ -80,6 +80,8 @@ def getImplementationBasedOnOS(String implWithoutNatives, String version) {
 }
 
 dependencies {
+    evaluationDependsOnChildren()
+
     // Box2D
     implementation name: 'jbox2d-library'
 

@@ -1,6 +1,7 @@
 package physics2d.components;
 
 import gameobjects.GameObject;
+import jade.SiriusTheFox;
 import jade.Window;
 import jade.rendering.Color;
 import jade.rendering.debug.DebugDraw;
@@ -17,7 +18,7 @@ public class Box2DCollider extends Collider2d {
 
     @Override
     public void editorUpdate(float dt) {
-        GameObject activeGameObject = Window.getImGuiLayer().getPropertiesWindow().getActiveGameObject();
+        GameObject activeGameObject = SiriusTheFox.getImGuiLayer().getPropertiesWindow().getActiveGameObject();
         if (activeGameObject == null || activeGameObject != gameObject) return;
 
         Vector2f center = new Vector2f(gameObject.transform.position).add(getOffset());

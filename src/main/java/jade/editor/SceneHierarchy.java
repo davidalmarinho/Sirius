@@ -3,6 +3,7 @@ package jade.editor;
 import gameobjects.GameObject;
 import imgui.ImGui;
 import imgui.flag.ImGuiTreeNodeFlags;
+import jade.SiriusTheFox;
 import jade.Window;
 
 import java.util.List;
@@ -13,7 +14,7 @@ public class SceneHierarchy {
     public void imgui() {
         ImGui.begin("Scene Hierarchy");
 
-        List<GameObject> gameObjects = Window.getCurrentScene().getGameObjectList();
+        List<GameObject> gameObjects = SiriusTheFox.getCurrentScene().getGameObjectList();
 
         for (int i = 0; i < gameObjects.size(); i++) {
             GameObject go = gameObjects.get(i);

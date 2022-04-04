@@ -1,9 +1,10 @@
 package jade.editor;
 
 import gameobjects.GameObject;
-import gameobjects.components.PlayerController;
+import gameobjects.components.Component;
 import gameobjects.components.SpriteRenderer;
 import imgui.ImGui;
+import jade.SiriusTheFox;
 import jade.rendering.PickingTexture;
 import org.joml.Vector4f;
 import physics2d.components.Box2DCollider;
@@ -54,10 +55,9 @@ public class PropertiesWindow {
                     }
                 }
 
-                if (ImGui.menuItem("Add Player Controls")) {
-                    if (!activeGameObject.hasComponent(PlayerController.class)) {
-                        activeGameObject.addComponent(new PlayerController());
-                    }
+                ICustomPropertiesWindow customPropertiesWindow = SiriusTheFox.getWindow().getICustomPropertiesWindow();
+                if (customPropertiesWindow != null) {
+                    customPropertiesWindow.imgui();
                 }
 
                 ImGui.endPopup();
@@ -93,6 +93,25 @@ public class PropertiesWindow {
 
         activeGameObjectList.clear();
         activeGameObjectOriginalColorList.clear();
+    }
+
+    /**
+     * Let add a customized component.
+     *
+     * @param customizedMsg The message that will appear in the menu box.
+     * @param component The pretended component to add.
+     */
+    public static void addMenuItem(String customizedMsg, Component component) {
+        if (ImGui.menuItem(customizedMsg)) {
+            GameObject activeGameObject = SiriusTheFox.getImGuiLayer().getPropertiesWindow().getActiveGameObject();
+            if (!activeGameObject.hasComponent(component.getClass())) {
+                activeGameObject.addComponent(component);
+            }
+        }
+    }
+
+    public static void addMenuItem(Component component) {
+        addMenuItem("Add" + component.getClass().getSimpleName(), component);
     }
 
     public void setInactive() {

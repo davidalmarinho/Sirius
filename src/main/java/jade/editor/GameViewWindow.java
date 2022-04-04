@@ -3,6 +3,7 @@ package jade.editor;
 import imgui.ImGui;
 import imgui.ImVec2;
 import imgui.flag.ImGuiWindowFlags;
+import jade.SiriusTheFox;
 import jade.Window;
 import jade.input.MouseListener;
 import observers.EventSystem;
@@ -49,7 +50,7 @@ public class GameViewWindow {
         rightX = topLeft.x + windowSize.x;
         topY = topLeft.y + windowSize.y;
 
-        int textureID = Window.getFramebuffer().getTextureID();
+        int textureID = SiriusTheFox.getWindow().getFramebuffer().getTextureID();
         ImGui.image(textureID, windowSize.x, windowSize.y, 0, 1, 1, 0);
 
         MouseListener.setGameViewportPos(new Vector2f(topLeft.x, topLeft.y));

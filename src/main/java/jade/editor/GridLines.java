@@ -1,6 +1,7 @@
 package jade.editor;
 
 import gameobjects.components.Component;
+import jade.SiriusTheFox;
 import jade.Window;
 import jade.rendering.Camera;
 import jade.rendering.Color;
@@ -13,7 +14,7 @@ public class GridLines extends Component {
 
     @Override
     public void editorUpdate(float dt) {
-        Camera camera = Window.getCurrentScene().getCamera();
+        Camera camera = SiriusTheFox.getCurrentScene().getCamera();
 
         Vector2f cameraPos = camera.position;
         Vector2f projectionSize = camera.getProjectionSize();
