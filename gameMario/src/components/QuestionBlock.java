@@ -1,6 +1,9 @@
 package components;
 
+import gameobjects.GameObject;
+import jade.SiriusTheFox;
 import jade.animations.StateMachine;
+import main.CustomPrefabs;
 
 public class QuestionBlock extends Block {
     private enum BlockType {
@@ -39,9 +42,9 @@ public class QuestionBlock extends Block {
     }
 
     private void doCoin() {
-        /*GameObject coin = CustomPrefabs.generateCoin();
+        GameObject coin = CustomPrefabs.generateCoin();
         coin.transform.position.set(gameObject.transform.position);
         coin.transform.position.y += 0.25f;
-        SiriusTheFox.getCurrentScene().addGameObject(coin);*/
+        SiriusTheFox.getCurrentScene().addGameObject(coin);
     }
 }
