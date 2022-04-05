@@ -57,7 +57,7 @@ public class PropertiesWindow {
 
                 ICustomPropertiesWindow customPropertiesWindow = SiriusTheFox.getWindow().getICustomPropertiesWindow();
                 if (customPropertiesWindow != null) {
-                    customPropertiesWindow.imgui();
+                    customPropertiesWindow.imgui(activeGameObject);
                 }
 
                 ImGui.endPopup();
@@ -101,17 +101,16 @@ public class PropertiesWindow {
      * @param customizedMsg The message that will appear in the menu box.
      * @param component The pretended component to add.
      */
-    public static void addMenuItem(String customizedMsg, Component component) {
+    public static void addMenuItem(GameObject activeGameObject, String customizedMsg, Component component) {
         if (ImGui.menuItem(customizedMsg)) {
-            GameObject activeGameObject = SiriusTheFox.getImGuiLayer().getPropertiesWindow().getActiveGameObject();
             if (!activeGameObject.hasComponent(component.getClass())) {
                 activeGameObject.addComponent(component);
             }
         }
     }
 
-    public static void addMenuItem(Component component) {
-        addMenuItem("Add" + component.getClass().getSimpleName(), component);
+    public static void addMenuItem(GameObject activeGameObject, Component component) {
+        addMenuItem(activeGameObject, "Add" + component.getClass().getSimpleName(), component);
     }
 
     public void setInactive() {

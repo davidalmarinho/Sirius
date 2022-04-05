@@ -4,11 +4,14 @@ import jade.animations.StateMachine;
 import jade.input.KeyListener;
 import jade.rendering.Color;
 import jade.rendering.debug.DebugDraw;
+import jade.utils.AssetPool;
 import jade.utils.Settings;
 import org.joml.Vector2f;
 import org.lwjgl.glfw.GLFW;
 import physics2d.components.RaycastInfo;
 import physics2d.components.RigidBody2d;
+
+import static org.lwjgl.glfw.GLFW.GLFW_KEY_SPACE;
 
 public class PlayerController extends Component {
     private enum PlayerState {
@@ -26,7 +29,6 @@ public class PlayerController extends Component {
     public Vector2f terminalVelocity = new Vector2f(2.1f, 3.1f);
 
     private PlayerState playerState = PlayerState.SMALL;
-    public transient boolean onGround;
 
     // Basically, when the player isn't in the ground anymore, you still have some time to still jump
     public transient float groundDebounce = 0.0f;
@@ -70,17 +72,42 @@ public class PlayerController extends Component {
 
         RaycastInfo info2 = SiriusTheFox.getPhysics().raycast(gameObject, raycast2Begin, raycast2End);
 
-        // boolean g = info.hitSomething && info.hitObject != null && info.hitObject.hasComponent(Ground.class);
-
         DebugDraw.addLine2D(raycastBegin, raycastEnd, new Color(1.0f, 0.0f, 0.0f));
+        DebugDraw.addLine2D(raycast2Begin, raycast2End, new Color(1.0f, 0.0f, 0.0f));
 
-        return false;
+        return (info.hitSomething && info.hitObject != null && info.hitObject.hasComponent(Ground.class)
+                && info2.hitSomething && info2.hitObject != null && info2.hitObject.hasComponent(Ground.class));
     }
 
     @Override
     public void update(float dt) {
-        if (isOnGround()) {
+        if (KeyListener.isKeyPressed(GLFW_KEY_SPACE) && (jumpTime > 0 || isOnGround() || groundDebounce > 0)) {
+            if (jumpTime == 0 && (isOnGround() || groundDebounce > 0)) {
+                AssetPool.getSound("assets/sounds/jump-small.ogg").play();
+                jumpTime = 28;
+                this.velocity.y = jumpImpulse;
+            } else if (jumpTime > 0) {
+                jumpTime--;
+                this.velocity.y = ((jumpTime / 2.02f) * jumpBoost);
+            } else {
+                this.velocity.y = 0;
+            }
 
+            groundDebounce = 0;
+        } else if (!isOnGround()) {
+            // If we are in the middle of a jump and if we release space key
+            if (this.jumpTime > 0) {
+                this.velocity.y *= 0.35f;
+                this.jumpTime = 0;
+            }
+            groundDebounce -= dt;
+            this.acceleration.y = SiriusTheFox.getPhysics().getGravity().y * 0.7f;
+
+            // If we are in the ground
+        } else {
+            this.velocity.y = 0.0f;
+            this.acceleration.y = 0.0f;
+            groundDebounce = groundDebounceTime;
         }
 
         if (KeyListener.isKeyPressed(GLFW.GLFW_KEY_RIGHT) || KeyListener.isKeyPressed(GLFW.GLFW_KEY_D)) {
