@@ -6,7 +6,6 @@ import gameobjects.components.Component;
 import gameobjects.components.Sprite;
 import gameobjects.components.SpriteRenderer;
 import jade.SiriusTheFox;
-import jade.Window;
 import jade.input.MouseListener;
 import jade.rendering.Color;
 import org.joml.Vector2f;

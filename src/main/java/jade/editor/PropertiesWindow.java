@@ -1,6 +1,7 @@
 package jade.editor;
 
 import gameobjects.GameObject;
+import gameobjects.ICustomPrefabs;
 import gameobjects.components.Component;
 import gameobjects.components.SpriteRenderer;
 import imgui.ImGui;
@@ -16,6 +17,8 @@ import java.util.List;
 
 public class PropertiesWindow {
     private static PropertiesWindow instance;
+    private ICustomPrefabs iCustomPrefabs;
+
     private List<GameObject> activeGameObjectList;
     private GameObject activeGameObject = null;
     private List<Vector4f> activeGameObjectOriginalColorList;

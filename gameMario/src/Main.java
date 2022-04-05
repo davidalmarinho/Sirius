@@ -8,8 +8,10 @@ public class Main {
 
         // Add customized operations
         engine.addCustomizedPropertiesWindow(new MyPropertiesWindow());
+        engine.addRuntimeOptionCustomizedPrefabs(new CustomPrefabs());
 
         // Run engine
         engine.run();
+
     }
 }
