@@ -20,7 +20,7 @@ public abstract class Block extends Component {
     @Override
     public void start() {
         this.bopStart = new Vector2f(this.gameObject.transform.position);
-        this.topBopLocation = new Vector2f(bopStart).add(0.0f, 0.2f);
+        this.topBopLocation = new Vector2f(bopStart).add(0.0f, 0.02f);
     }
 
     @Override
