@@ -37,7 +37,7 @@ public abstract class Component {
 
     }
 
-    public void beginContact(GameObject collidingObject, Contact contact, Vector2f hitNormal) {
+    public void beginCollision(GameObject collidingObject, Contact contact, Vector2f hitNormal) {
 
     }
 
