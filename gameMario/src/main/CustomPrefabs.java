@@ -1,8 +1,9 @@
+package main;
+
 import components.Ground;
 import components.QuestionBlock;
 import gameobjects.GameObject;
 import gameobjects.ICustomPrefabs;
-import gameobjects.IPrefabs;
 import gameobjects.Prefabs;
 import gameobjects.components.Sprite;
 import jade.animations.AnimationState;
