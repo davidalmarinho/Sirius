@@ -1,3 +1,5 @@
+package components;
+
 import gameobjects.GameObject;
 import gameobjects.components.Component;
 import jade.SiriusTheFox;
@@ -180,5 +182,9 @@ public class PlayerController extends Component {
             stateMachine.trigger("jump");
         else
             stateMachine.trigger("stopJumping");
+    }
+
+    public boolean isSmall() {
+        return playerState == PlayerState.SMALL;
     }
 }
