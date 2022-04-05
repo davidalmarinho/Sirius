@@ -1,6 +1,6 @@
 package physics2d;
 
-public enum EBodyType {
+public enum BodyTypes {
     STATIC,
     DYNAMIC,
     KINEMATIC

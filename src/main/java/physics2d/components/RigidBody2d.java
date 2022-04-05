@@ -2,17 +2,16 @@ package physics2d.components;
 
 import gameobjects.components.Component;
 import jade.SiriusTheFox;
-import jade.Window;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.Body;
 import org.joml.Vector2f;
-import physics2d.EBodyType;
+import physics2d.BodyTypes;
 
 public class RigidBody2d extends Component {
     private Vector2f velocity = new Vector2f();
     private float angularDamping = 0.8f;
     private float linearDamping = 0.9f;
-    private EBodyType eBodyType = EBodyType.DYNAMIC;
+    private BodyTypes bodyType = BodyTypes.DYNAMIC;
     private float mass = 0.0f;
     private float friction = 0.1f;
     private float angularVelocity = 0.0f;
@@ -39,10 +38,20 @@ public class RigidBody2d extends Component {
     @Override
     public void update(float dt) {
         if (rawBody != null) {
-            gameObject.transform.position.set(
-                    rawBody.getPosition().x, rawBody.getPosition().y
-            );
-            gameObject.transform.rotation = (float) Math.toDegrees(rawBody.getAngle());
+            if (this.bodyType == BodyTypes.DYNAMIC || this.bodyType == BodyTypes.KINEMATIC) {
+                gameObject.transform.position.set(
+                        rawBody.getPosition().x, rawBody.getPosition().y
+                );
+                gameObject.transform.rotation = (float) Math.toDegrees(rawBody.getAngle());
+                Vec2 vel = rawBody.getLinearVelocity();
+                this.velocity.set(vel.x, vel.y);
+
+            // In this body type, the game object can't be moved
+            } else if (this.bodyType == BodyTypes.STATIC) {
+                this.rawBody.setTransform(new Vec2(
+                        this.gameObject.transform.position.x, this.gameObject.transform.position.y),
+                        this.gameObject.transform.rotation);
+            }
         }
     }
 
@@ -74,12 +83,12 @@ public class RigidBody2d extends Component {
         this.linearDamping = linearDamping;
     }
 
-    public EBodyType getEBodyType() {
-        return eBodyType;
+    public BodyTypes getEBodyType() {
+        return bodyType;
     }
 
-    public void setEBodyType(EBodyType eBodyType) {
-        this.eBodyType = eBodyType;
+    public void setEBodyType(BodyTypes bodyTypes) {
+        this.bodyType = bodyTypes;
     }
 
     public float getMass() {

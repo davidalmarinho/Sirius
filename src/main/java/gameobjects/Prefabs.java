@@ -3,12 +3,11 @@ package gameobjects;
 import gameobjects.components.Sprite;
 import gameobjects.components.SpriteRenderer;
 import jade.SiriusTheFox;
-import jade.Window;
 import jade.animations.AnimationState;
 import jade.animations.StateMachine;
 import jade.rendering.spritesheet.Spritesheet;
 import jade.utils.AssetPool;
-import physics2d.EBodyType;
+import physics2d.BodyTypes;
 import physics2d.components.PillboxCollider;
 import physics2d.components.RigidBody2d;
 
@@ -196,7 +195,7 @@ public class Prefabs {
         pb.setSize(0.39f, 0.31f);
 
         RigidBody2d rigidBody2d = new RigidBody2d();
-        rigidBody2d.setEBodyType(EBodyType.DYNAMIC);
+        rigidBody2d.setEBodyType(BodyTypes.DYNAMIC);
         rigidBody2d.setContinuousCollision(false);
         rigidBody2d.setFixedRotation(true);
         rigidBody2d.setMass(25.0f);
