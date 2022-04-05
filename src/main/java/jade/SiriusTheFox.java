@@ -91,7 +91,7 @@ public class SiriusTheFox implements Observer {
             currently enabled for color writing).*/
 
             if (dt >= 0) {
-                System.out.println("FPS: " + 1.0f / dt);
+                // System.out.println("FPS: " + 1.0f / dt);
                 if (runtimePlaying)
                     currentScene.update(dt);
                 else

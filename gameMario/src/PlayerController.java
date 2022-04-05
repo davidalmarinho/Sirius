@@ -1,3 +1,4 @@
+import gameobjects.GameObject;
 import gameobjects.components.Component;
 import jade.SiriusTheFox;
 import jade.animations.StateMachine;
@@ -6,6 +7,7 @@ import jade.rendering.Color;
 import jade.rendering.debug.DebugDraw;
 import jade.utils.AssetPool;
 import jade.utils.Settings;
+import org.jbox2d.dynamics.contacts.Contact;
 import org.joml.Vector2f;
 import org.lwjgl.glfw.GLFW;
 import physics2d.components.RaycastInfo;
@@ -51,6 +53,24 @@ public class PlayerController extends Component {
 
         // Don't want to the Physics to control the Player. We will control the velocity and that stuff by ourselves
         this.rigidBody2d.setGravityScale(0.0f);
+    }
+
+    @Override
+    public void beginCollision(GameObject collidingGameObject, Contact contact, Vector2f contactNormal) {
+        if (dead) return;
+
+        if (collidingGameObject.hasComponent(Ground.class)) {
+            // Checks if we hit horizontally
+            if (Math.abs(contactNormal.x) > 0.8f) {
+                this.velocity.x = 0;
+
+            // Checks if we hit vertically
+            } else if (contactNormal.y > 0.8f) {
+                this.velocity.y     = 0;
+                this.acceleration.y = 0;
+                this.jumpTime       = 0;
+            }
+        }
     }
 
     private boolean isOnGround() {
@@ -155,5 +175,10 @@ public class PlayerController extends Component {
         this.velocity.y = Math.max(Math.min(this.velocity.y, this.terminalVelocity.y), -this.terminalVelocity.y);
         this.rigidBody2d.setVelocity(this.velocity);
         this.rigidBody2d.setAngularVelocity(0);
+
+        if (!isOnGround())
+            stateMachine.trigger("jump");
+        else
+            stateMachine.trigger("stopJumping");
     }
 }
