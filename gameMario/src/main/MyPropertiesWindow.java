@@ -1,3 +1,5 @@
+package main;
+
 import components.BreakableBrick;
 import components.Ground;
 import components.PlayerController;

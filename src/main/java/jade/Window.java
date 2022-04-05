@@ -1,5 +1,6 @@
 package jade;
 
+import gameobjects.ICustomPrefabs;
 import jade.editor.ICustomPropertiesWindow;
 import jade.input.KeyListener;
 import jade.input.MouseListener;
@@ -15,7 +16,11 @@ import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.system.MemoryUtil.NULL;
 
 public class Window {
+    // TODO: 05/04/2022 Should go to imGuiLayer
+    // Custom modifications
     private ICustomPropertiesWindow iCustomPropertiesWindow;
+    private ICustomPrefabs iCustomPrefabs;
+
     private int width, height;
     private final String title;
     private static Window window;
@@ -188,5 +193,13 @@ public class Window {
 
     public void setICustomPropertiesWindow(ICustomPropertiesWindow iCustomPropertiesWindow) {
         this.iCustomPropertiesWindow = iCustomPropertiesWindow;
+    }
+
+    public ICustomPrefabs getICustomPrefabs() {
+        return iCustomPrefabs;
+    }
+
+    public void setICustomPrefabs(ICustomPrefabs iCustomPrefabs) {
+        this.iCustomPrefabs = iCustomPrefabs;
     }
 }

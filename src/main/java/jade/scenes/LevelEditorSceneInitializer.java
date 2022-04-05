@@ -1,16 +1,16 @@
 package jade.scenes;
 
+import gameobjects.ICustomPrefabs;
 import gameobjects.Prefabs;
 import imgui.ImGui;
 import imgui.ImVec2;
 import gameobjects.GameObject;
 import gameobjects.components.*;
-import gameobjects.IPrefabs;
+import jade.SiriusTheFox;
 import jade.Sound;
 import jade.animations.StateMachine;
 import jade.editor.*;
 import jade.editor.components.KeyControls;
-import jade.rendering.debug.DebugDraw;
 import jade.rendering.spritesheet.Images;
 import jade.rendering.spritesheet.Spritesheet;
 import jade.utils.AssetPool;
@@ -176,9 +176,12 @@ public class LevelEditorSceneInitializer extends SceneInitializer {
             }
 
             if (ImGui.beginTabItem("Prefabs")) {
-                addPrefabImGui(Prefabs::generateMario, "assets/images/spritesheets/spritesheet.png");
-                ImGui.sameLine();
-                addPrefabImGui(Prefabs::generateQuestionMarkBlock, "assets/images/spritesheets/items.png");
+
+                // Check if we have customized prefabs
+                ICustomPrefabs customPrefabs = SiriusTheFox.getWindow().getICustomPrefabs();
+                if (customPrefabs != null) {
+                    customPrefabs.imgui();
+                }
 
                 ImGui.endTabItem();
             }
@@ -202,24 +205,6 @@ public class LevelEditorSceneInitializer extends SceneInitializer {
         }
 
         ImGui.end();
-    }
-
-    private void addPrefabImGui(IPrefabs prefabs, String spriteSheetPath) {
-        Spritesheet sprites = AssetPool.getSpritesheet(spriteSheetPath);
-        Sprite sprite = sprites.getSprite(0);
-
-        float spriteWidth = sprite.getWidth() * 2;
-        float spriteHeight = sprite.getHeight() * 2;
-
-        int id = sprite.getTextureID();
-        Vector2f[] texCoords = sprite.getTextureCoordinates();
-
-        if (ImGui.imageButton(id, spriteWidth, spriteHeight, texCoords[2].x, texCoords[0].y, texCoords[0].x, texCoords[2].y)) {
-
-            GameObject object = prefabs.generate(sprite, 0.25f, 0.25f);
-            // Attach object to the mouse cursor
-            levelEditorStuff.getComponent(MouseControls.class).pickupObject(object);
-        }
     }
 
     public GameObject getLevelEditorStuff() {

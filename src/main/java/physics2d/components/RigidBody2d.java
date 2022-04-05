@@ -87,7 +87,7 @@ public class RigidBody2d extends Component {
         return bodyType;
     }
 
-    public void setEBodyType(BodyTypes bodyTypes) {
+    public void setBodyType(BodyTypes bodyTypes) {
         this.bodyType = bodyTypes;
     }
 
