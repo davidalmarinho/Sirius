@@ -1,5 +1,7 @@
 package jade.editor;
 
+import gameobjects.GameObject;
+
 public interface ICustomPropertiesWindow {
-    void imgui();
+    void imgui(GameObject activeGameObject);
 }
