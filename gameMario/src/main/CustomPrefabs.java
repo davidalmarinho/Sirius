@@ -309,6 +309,36 @@ public class CustomPrefabs implements ICustomPrefabs {
 
         GameObject goomba = generateSpriteObject(spritesheet.getSprite(15), 0.25f, 0.25f);
 
+        AnimationState walk = new AnimationState();
+        walk.title = "Walk";
+        float defaultFrameTime = 0.23f;
+        walk.addFrame(spritesheet.getSprite(14), defaultFrameTime);
+        walk.addFrame(spritesheet.getSprite(15), defaultFrameTime);
+        walk.setLoop(true);
+
+        AnimationState squashed = new AnimationState();
+        squashed.title = "Squashed";
+        squashed.addFrame(spritesheet.getSprite(16), 0.1f);
+
+        StateMachine stateMachine = new StateMachine();
+        stateMachine.addState(walk);
+        stateMachine.addState(squashed);
+        stateMachine.setDefaultState(walk.title);
+        stateMachine.addState(walk.title, squashed.title, "squashMe");
+        goomba.addComponent(stateMachine);
+
+        RigidBody2d rigidBody2d = new RigidBody2d();
+        rigidBody2d.setBodyType(BodyTypes.DYNAMIC);
+        rigidBody2d.setMass(15.0f);
+        rigidBody2d.setFixedRotation(true);
+        goomba.addComponent(rigidBody2d);
+
+        CircleCollider circleCollider = new CircleCollider();
+        circleCollider.setRadius(0.12f);
+        goomba.addComponent(circleCollider);
+
+        goomba.addComponent(new GoombaAI());
+
         return goomba;
     }
 
