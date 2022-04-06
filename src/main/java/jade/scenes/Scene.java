@@ -187,11 +187,15 @@ public class Scene {
             LevelEditorSceneInitializer levelEditor = (LevelEditorSceneInitializer) sceneInitializer;
             MouseControls mouseControls = levelEditor.getLevelEditorStuff().getComponent(MouseControls.class);
 
-            if (!propertiesWindow.getActiveGameObjectList().isEmpty()) {
+            if (propertiesWindow.getActiveGameObjectList().size() > 1) {
+                System.out.println("reach her");
                 List<GameObject> activeGameObjectList = new ArrayList<>(propertiesWindow.getActiveGameObjectList());
                 mouseControls.changeAllGameObjects(activeGameObjectList.get(0), activeGameObjectList);
                 propertiesWindow.clearSelected();
             }
+
+            gameObjectList.addAll(pendingGameObjectList);
+            pendingGameObjectList.clear();
         }
         // ===============================================================================
 
@@ -278,5 +282,9 @@ public class Scene {
 
     public SceneInitializer getSceneInitializer() {
         return sceneInitializer;
+    }
+
+    public boolean isRunning() {
+        return running;
     }
 }
