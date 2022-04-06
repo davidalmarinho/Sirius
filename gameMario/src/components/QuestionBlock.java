@@ -1,8 +1,13 @@
 package components;
 
 import gameobjects.GameObject;
+import gameobjects.IPrefabs;
+import gameobjects.Prefabs;
+import gameobjects.components.Sprite;
 import jade.SiriusTheFox;
 import jade.animations.StateMachine;
+import jade.rendering.spritesheet.Spritesheet;
+import jade.utils.AssetPool;
 import main.CustomPrefabs;
 
 public class QuestionBlock extends Block {
@@ -21,7 +26,7 @@ public class QuestionBlock extends Block {
                 doCoin();
                 break;
             case POWERUP:
-                doPowerUp();
+                doPowerUp(playerController);
                 break;
             case INVINCIBILITY:
                 doInvincibility();
@@ -38,7 +43,20 @@ public class QuestionBlock extends Block {
     private void doInvincibility() {
     }
 
-    private void doPowerUp() {
+    private void spawnItem(IPrefabs iPrefabs) {
+        GameObject item = iPrefabs.generate(null, 0.25f, 0.25f);
+        item.transform.position.set(gameObject.transform.position);
+        item.transform.position.y += 0.25f;
+        SiriusTheFox.getCurrentScene().addGameObject(item);
+    }
+
+    private void spawnMushroom() {
+        spawnItem(CustomPrefabs::generateMushroom);
+    }
+
+    private void doPowerUp(PlayerController playerController) {
+        if (playerController.isSmall())
+            spawnMushroom();
     }
 
     private void doCoin() {
