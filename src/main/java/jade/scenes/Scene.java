@@ -34,6 +34,7 @@ public class Scene {
     private Camera camera;
     private Physics2d physics2d;
     private List<GameObject> gameObjectList;
+    private List<GameObject> pendingGameObjectList;
     // Game object that we are inspecting
     private boolean running;
 
@@ -44,6 +45,7 @@ public class Scene {
         this.physics2d = new Physics2d();
         this.renderer = new Renderer();
         gameObjectList = new ArrayList<>();
+        pendingGameObjectList = new ArrayList<>();
         running = false;
     }
 
@@ -76,6 +78,8 @@ public class Scene {
                 i--;
             }
         }
+
+        addSceneAtRuntime();
     }
 
     public void update(float dt) {
@@ -95,6 +99,19 @@ public class Scene {
                 i--;
             }
         }
+
+        addSceneAtRuntime();
+    }
+
+    // Let's suppose that we spawn an enemy while the game is running, we have to add it too
+    private void addSceneAtRuntime() {
+        for (GameObject go : pendingGameObjectList) {
+            gameObjectList.add(go);
+            go.start();
+            this.renderer.add(go);
+            this.physics2d.add(go);
+        }
+        pendingGameObjectList.clear();
     }
 
     public void render() {
@@ -111,15 +128,16 @@ public class Scene {
         running = true;
     }
 
+    /**
+     * Adds a game object to a queue list if the game isn't been run. Or adds the game object directly to the game.
+     *
+     * @param gameObject The game object that will be added to the pendingGameObjectList or to the  gameObjectList.
+     */
     public void addGameObject(GameObject gameObject) {
-        gameObjectList.add(gameObject);
-
-        // Let's suppose that we spawn an enemy while the game is running, we have to add it too
-        if (running) {
-            gameObject.start();
-            this.renderer.add(gameObject);
-            this.physics2d.add(gameObject);
-        }
+        if (running)
+            pendingGameObjectList.add(gameObject);
+        else
+            gameObjectList.add(gameObject);
     }
 
     /**
