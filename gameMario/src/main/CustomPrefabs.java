@@ -1,9 +1,6 @@
 package main;
 
-import components.BlockCoin;
-import components.Ground;
-import components.MushroomAI;
-import components.QuestionBlock;
+import components.*;
 import gameobjects.GameObject;
 import gameobjects.ICustomPrefabs;
 import gameobjects.Prefabs;
@@ -284,6 +281,26 @@ public class CustomPrefabs implements ICustomPrefabs {
         mushroom.addComponent(new MushroomAI());
 
         return mushroom;
+    }
+
+    public static GameObject generateFlower(Sprite sprite, float xSize, float ySize) {
+        Spritesheet items = AssetPool.getSpritesheet("assets/images/spritesheets/items.png");
+
+        GameObject flower = generateSpriteObject(items.getSprite(20), 0.25f, 0.25f);
+
+        RigidBody2d rigidBody2d = new RigidBody2d();
+        rigidBody2d.setBodyType(BodyTypes.STATIC);
+        rigidBody2d.setFixedRotation(true);
+        rigidBody2d.setContinuousCollision(false);
+        flower.addComponent(rigidBody2d);
+
+        CircleCollider circleCollider = new CircleCollider();
+        circleCollider.setRadius(0.14f);
+        flower.addComponent(circleCollider);
+
+        flower.addComponent(new Flower());
+
+        return flower;
     }
 
     @Override
