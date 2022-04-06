@@ -127,11 +127,11 @@ public class SiriusTheFox implements Observer {
         window.freeMemory();
     }
 
-    private void changeScene(SceneInitializer sceneInitializer) {
+    public static void changeScene(SceneInitializer sceneInitializer) {
         if (currentScene != null) {
             currentScene.destroy();
         }
-        window.getImGuiLayer().getPropertiesWindow().setActiveGameObject(null);
+        getWindow().getImGuiLayer().getPropertiesWindow().setActiveGameObject(null);
         currentScene = new Scene(sceneInitializer);
         currentScene.load();
         currentScene.init();

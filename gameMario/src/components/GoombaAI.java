@@ -5,6 +5,7 @@ import gameobjects.components.Component;
 import jade.SiriusTheFox;
 import jade.animations.StateMachine;
 import jade.rendering.Camera;
+import jade.utils.AssetPool;
 import org.jbox2d.dynamics.contacts.Contact;
 import org.joml.Vector2f;
 import physics2d.Physics2d;
@@ -21,17 +22,28 @@ public class GoombaAI extends Component {
     private transient StateMachine stateMachine;
     private boolean dead;
 
+    private void stomp() {
+        this.dead = true;
+        this.velocity.zero();
+        this.rigidBody2d.setVelocity(new Vector2f());
+        this.rigidBody2d.setAngularVelocity(0.0f);
+        this.rigidBody2d.setGravityScale(0.0f);
+        this.stateMachine.trigger("squashMe");
+        this.rigidBody2d.setSensor(true);
+        AssetPool.getSound("assets/sounds/bump.ogg").play();
+    }
+
     @Override
     public void beginCollision(GameObject collidingObject, Contact contact, Vector2f hitNormal) {
         if (dead) return;
 
         PlayerController playerController = collidingObject.getComponent(PlayerController.class);
         if (playerController != null) {
-            if (!playerController.isDead() && playerController.isHurtInvincible() && isPlayerOnTopGoomba(hitNormal)) {
-                // playerController.enemyBounce();
-                // stomp();
-            } else if (!playerController.isDead() && playerController.isHurtInvincible()) {
-                // playerController.die();
+            if (!playerController.isDead() && !playerController.isHurtInvincible() && isPlayerOnTopGoomba(hitNormal)) {
+                playerController.enemyBounce();
+                stomp();
+            } else if (!playerController.isDead() && !playerController.isHurtInvincible()) {
+                playerController.hurt();
             }
         } else if (Math.abs(hitNormal.y) < 0.1f) {
             goingRight = hitNormal.x < 0;
@@ -51,6 +63,15 @@ public class GoombaAI extends Component {
         Camera camera = SiriusTheFox.getCurrentScene().getCamera();
         if (this.gameObject.transform.position.x > camera.position.x + camera.getProjectionSize().x * camera.getZoom())
             return;
+
+        if (dead) {
+            timeToKill -= dt;
+            if (timeToKill <= 0)
+                this.gameObject.destroy();
+
+            this.rigidBody2d.setVelocity(new Vector2f());
+            return;
+        }
 
         if (goingRight)
             velocity.x = walkSpeed;

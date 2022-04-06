@@ -2,17 +2,19 @@ package components;
 
 import gameobjects.GameObject;
 import gameobjects.components.Component;
+import gameobjects.components.SpriteRenderer;
 import gameobjects.components.game_components.Ground;
 import jade.SiriusTheFox;
 import jade.animations.StateMachine;
 import jade.input.KeyListener;
 import jade.rendering.Color;
-import jade.rendering.debug.DebugDraw;
+import jade.scenes.LevelEditorSceneInitializer;
 import jade.utils.AssetPool;
 import jade.utils.Settings;
 import org.jbox2d.dynamics.contacts.Contact;
 import org.joml.Vector2f;
 import org.lwjgl.glfw.GLFW;
+import physics2d.BodyTypes;
 import physics2d.Physics2d;
 import physics2d.components.PillboxCollider;
 import physics2d.components.RigidBody2d;
@@ -20,6 +22,7 @@ import physics2d.components.RigidBody2d;
 import static org.lwjgl.glfw.GLFW.GLFW_KEY_SPACE;
 
 public class PlayerController extends Component {
+
     private enum PlayerState {
         SMALL,
         BIG,
@@ -48,13 +51,21 @@ public class PlayerController extends Component {
     private transient Vector2f acceleration = new Vector2f();
     private transient Vector2f velocity = new Vector2f();
     private transient boolean dead;
-    private transient int hurtInvincibilityTimeLeft;
     private transient int enemyBounce = 0;
+    private transient float hurtInvincibilityTimeLeft;
+    private transient float hurtInvincibilityTime = 1.4f;
+    private transient float deadMaxHeight;
+    private transient float deadMinHeight;
+    private transient boolean deadGoingUp = true;
+    private transient float blinkTime = 0.0f;
+    private transient SpriteRenderer spriteRenderer;
+
 
     @Override
     public void start() {
-        this.rigidBody2d = gameObject.getComponent(RigidBody2d.class);
-        this.stateMachine = gameObject.getComponent(StateMachine.class);
+        this.spriteRenderer = gameObject.getComponent(SpriteRenderer.class);
+        this.rigidBody2d    = gameObject.getComponent(RigidBody2d.class);
+        this.stateMachine   = gameObject.getComponent(StateMachine.class);
 
         // Don't want to the Physics to control the Player. We will control the velocity and that stuff by ourselves
         this.rigidBody2d.setGravityScale(0.0f);
@@ -107,6 +118,44 @@ public class PlayerController extends Component {
 
     @Override
     public void update(float dt) {
+        // Death animation
+        if (dead) {
+            if (this.gameObject.transform.position.y < deadMaxHeight && deadGoingUp) {
+                this.gameObject.transform.position.y += dt * walkSpeed / 2.0f;
+            } else if (this.gameObject.transform.position.y >= deadMaxHeight && deadGoingUp) {
+                deadGoingUp = false;
+            } else  if (!deadGoingUp && gameObject.transform.position.y > deadMinHeight) {
+                this.rigidBody2d.setBodyType(BodyTypes.KINEMATIC);
+                this.acceleration.y = SiriusTheFox.getPhysics().getGravity().y * 0.7f;
+                this.velocity.y += this.acceleration.y * dt;
+                this.velocity.y = Math.max(Math.min(this.velocity.y, this.terminalVelocity.y), -this.terminalVelocity.y);
+                this.rigidBody2d.setVelocity(this.velocity);
+                this.rigidBody2d.setAngularVelocity(0);
+
+                // If we are outside of screen's edges
+            } else if (!deadGoingUp && gameObject.transform.position.y <= deadMinHeight) {
+                SiriusTheFox.changeScene(new LevelEditorSceneInitializer());
+            }
+
+            return;
+        }
+
+        if (hurtInvincibilityTimeLeft > 0) {
+            hurtInvincibilityTimeLeft -= dt;
+            blinkTime -= dt;
+
+            if (blinkTime <= 0) {
+                blinkTime = 0.2f;
+                if (spriteRenderer.getColor().w == 1)
+                    spriteRenderer.setColor(new Color(1.0f, 1.0f, 1.0f, 0.0f));
+                else
+                    spriteRenderer.setColor(new Color(1.0f, 1.0f, 1.0f, 1.0f));
+            } else {
+                if (spriteRenderer.getColor().w == 0)
+                    spriteRenderer.setColor(new Color(1.0f, 1.0f, 1.0f, 1.0f));
+            }
+        }
+
         if (KeyListener.isKeyPressed(GLFW_KEY_SPACE) && (jumpTime > 0 || isOnGround() || groundDebounce > 0)) {
             if (jumpTime == 0 && (isOnGround() || groundDebounce > 0)) {
                 AssetPool.getSound("assets/sounds/jump-small.ogg").play();
@@ -120,6 +169,10 @@ public class PlayerController extends Component {
             }
 
             groundDebounce = 0;
+        } else if (enemyBounce > 0) {
+            enemyBounce--;
+            this.velocity.y = (enemyBounce / 2.2f) * jumpBoost;
+
         } else if (!isOnGround()) {
             // If we are in the middle of a jump and if we release space key
             if (this.jumpTime > 0) {
@@ -186,6 +239,50 @@ public class PlayerController extends Component {
             stateMachine.trigger("jump");
         else
             stateMachine.trigger("stopJumping");
+    }
+
+    public void hurt() {
+        this.stateMachine.trigger("die");
+        switch (playerState) {
+            case SMALL:
+                this.playerState = PlayerState.DEAD;
+                this.velocity.set(0, 0);
+                this.acceleration.set(0, 0);
+                this.rigidBody2d.setVelocity(new Vector2f());
+                this.dead = true;
+                this.rigidBody2d.setSensor(true);
+                AssetPool.getSound("assets/sounds/mario_die.ogg").play();
+                deadMaxHeight = this.gameObject.transform.position.y + 0.3f;
+                this.rigidBody2d.setBodyType(BodyTypes.STATIC);
+                if (gameObject.transform.position.y > 0) deadMinHeight = -0.25f;
+                break;
+
+            case BIG:
+                this.playerState = PlayerState.SMALL;
+                gameObject.transform.scale.y = 0.25f;
+                PillboxCollider pillboxCollider = gameObject.getComponent(PillboxCollider.class);
+
+                // We are small, so the jumps have to be smaller too
+                if (pillboxCollider != null) {
+                    jumpBoost /= bigJumpBoostFactor;
+                    walkSpeed /= bigJumpBoostFactor;
+                    pillboxCollider.setHeight(0.31f);
+                }
+
+                hurtInvincibilityTimeLeft = hurtInvincibilityTime;
+                AssetPool.getSound("assets/sounds/pipe.ogg").play();
+                break;
+
+            case FIRE:
+                this.playerState = PlayerState.BIG;
+                hurtInvincibilityTimeLeft = hurtInvincibilityTime;
+                AssetPool.getSound("assets/sounds/pipe.ogg").play();
+                break;
+        }
+    }
+
+    public void enemyBounce() {
+        this.enemyBounce = 8;
     }
 
     public boolean isSmall() {
