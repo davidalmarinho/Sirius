@@ -13,6 +13,7 @@ import jade.rendering.spritesheet.Spritesheet;;
 import jade.utils.AssetPool;
 import physics2d.BodyTypes;
 import physics2d.components.Box2DCollider;
+import physics2d.components.CircleCollider;
 import physics2d.components.PillboxCollider;
 import physics2d.components.RigidBody2d;
 
@@ -262,6 +263,24 @@ public class CustomPrefabs implements ICustomPrefabs {
         coin.addComponent(new BlockCoin());
 
         return coin;
+    }
+
+    public static GameObject generateMushroom(Sprite sprite, float xSize, float ySize) {
+        Spritesheet items = AssetPool.getSpritesheet("assets/images/spritesheets/items.png");
+
+        GameObject mushroom = generateSpriteObject(items.getSprite(10), 0.25f, 0.25f);
+
+        RigidBody2d rigidBody2d = new RigidBody2d();
+        rigidBody2d.setBodyType(BodyTypes.DYNAMIC);
+        rigidBody2d.setFixedRotation(true);
+        rigidBody2d.setContinuousCollision(false);
+        mushroom.addComponent(rigidBody2d);
+
+        CircleCollider circleCollider = new CircleCollider();
+        circleCollider.setRadius(0.14f);
+        mushroom.addComponent(circleCollider);
+
+        return mushroom;
     }
 
     @Override

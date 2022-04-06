@@ -8559,7 +8559,7 @@
     "doSerialization": true
   },
   {
-    "uid": 77,
+    "uid": 72,
     "name": "Sprite_Object_Gen",
     "componentList": [
       {
@@ -8660,7 +8660,7 @@
     "doSerialization": true
   },
   {
-    "uid": 78,
+    "uid": 73,
     "name": "Sprite_Object_Gen",
     "componentList": [
       {
@@ -8761,7 +8761,7 @@
     "doSerialization": true
   },
   {
-    "uid": 86,
+    "uid": 74,
     "name": "Sprite_Object_Gen",
     "componentList": [
       {
@@ -8798,19 +8798,19 @@
             },
             "textureCoordinates": [
               {
-                "x": 0.2857143,
+                "x": 0.42857143,
                 "y": 1.0
               },
               {
+                "x": 0.42857143,
+                "y": 0.8
+              },
+              {
                 "x": 0.2857143,
                 "y": 0.8
               },
               {
-                "x": 0.14285715,
-                "y": 0.8
-              },
-              {
-                "x": 0.14285715,
+                "x": 0.2857143,
                 "y": 1.0
               }
             ]
@@ -9018,7 +9018,7 @@
     "doSerialization": true
   },
   {
-    "uid": 88,
+    "uid": 75,
     "name": "Sprite_Object_Gen",
     "componentList": [
       {
@@ -9275,62 +9275,9 @@
     "doSerialization": true
   },
   {
-    "uid": 90,
+    "uid": 76,
     "name": "Sprite_Object_Gen",
     "componentList": [
-      {
-        "type": "gameobjects.components.Transform",
-        "properties": {
-          "position": {
-            "x": -248.125,
-            "y": 2.625
-          },
-          "scale": {
-            "x": 0.25,
-            "y": 0.25
-          },
-          "rotation": 0.0,
-          "zIndex": 0
-        }
-      },
-      {
-        "type": "gameobjects.components.SpriteRenderer",
-        "properties": {
-          "color": {
-            "x": 1.0,
-            "y": 1.0,
-            "z": 1.0,
-            "w": 1.0
-          },
-          "sprite": {
-            "width": 16,
-            "height": 16,
-            "texture": {
-              "filePath": "assets/images/spritesheets/items.png",
-              "width": 112,
-              "height": 80
-            },
-            "textureCoordinates": [
-              {
-                "x": 0.14285715,
-                "y": 1.0
-              },
-              {
-                "x": 0.14285715,
-                "y": 0.8
-              },
-              {
-                "x": 0.0,
-                "y": 0.8
-              },
-              {
-                "x": 0.0,
-                "y": 1.0
-              }
-            ]
-          }
-        }
-      },
       {
         "type": "jade.animations.StateMachine",
         "properties": {
@@ -9483,7 +9430,7 @@
       {
         "type": "components.QuestionBlock",
         "properties": {
-          "blockType": "COIN",
+          "blockType": "POWERUP",
           "bopSpeed": 0.4
         }
       },
@@ -9526,272 +9473,7 @@
       {
         "type": "components.Ground",
         "properties": {}
-      }
-    ],
-    "dead": false,
-    "doSerialization": true
-  },
-  {
-    "uid": 92,
-    "name": "Sprite_Object_Gen",
-    "componentList": [
-      {
-        "type": "gameobjects.components.Transform",
-        "properties": {
-          "position": {
-            "x": -247.875,
-            "y": 2.625
-          },
-          "scale": {
-            "x": 0.25,
-            "y": 0.25
-          },
-          "rotation": 0.0,
-          "zIndex": 0
-        }
       },
-      {
-        "type": "gameobjects.components.SpriteRenderer",
-        "properties": {
-          "color": {
-            "x": 1.0,
-            "y": 1.0,
-            "z": 1.0,
-            "w": 1.0
-          },
-          "sprite": {
-            "width": 16,
-            "height": 16,
-            "texture": {
-              "filePath": "assets/images/spritesheets/items.png",
-              "width": 112,
-              "height": 80
-            },
-            "textureCoordinates": [
-              {
-                "x": 0.2857143,
-                "y": 1.0
-              },
-              {
-                "x": 0.2857143,
-                "y": 0.8
-              },
-              {
-                "x": 0.14285715,
-                "y": 0.8
-              },
-              {
-                "x": 0.14285715,
-                "y": 1.0
-              }
-            ]
-          }
-        }
-      },
-      {
-        "type": "jade.animations.StateMachine",
-        "properties": {
-          "stateTransfers": [
-            [
-              {
-                "state": "Flicker",
-                "trigger": "setInactive"
-              },
-              "Inactive"
-            ]
-          ],
-          "animationStateList": [
-            {
-              "title": "Flicker",
-              "animationFrameList": [
-                {
-                  "sprite": {
-                    "width": 16,
-                    "height": 16,
-                    "texture": {
-                      "filePath": "assets/images/spritesheets/items.png",
-                      "width": 112,
-                      "height": 80
-                    },
-                    "textureCoordinates": [
-                      {
-                        "x": 0.14285715,
-                        "y": 1.0
-                      },
-                      {
-                        "x": 0.14285715,
-                        "y": 0.8
-                      },
-                      {
-                        "x": 0.0,
-                        "y": 0.8
-                      },
-                      {
-                        "x": 0.0,
-                        "y": 1.0
-                      }
-                    ]
-                  },
-                  "frameTime": 0.23
-                },
-                {
-                  "sprite": {
-                    "width": 16,
-                    "height": 16,
-                    "texture": {
-                      "filePath": "assets/images/spritesheets/items.png",
-                      "width": 112,
-                      "height": 80
-                    },
-                    "textureCoordinates": [
-                      {
-                        "x": 0.2857143,
-                        "y": 1.0
-                      },
-                      {
-                        "x": 0.2857143,
-                        "y": 0.8
-                      },
-                      {
-                        "x": 0.14285715,
-                        "y": 0.8
-                      },
-                      {
-                        "x": 0.14285715,
-                        "y": 1.0
-                      }
-                    ]
-                  },
-                  "frameTime": 0.23
-                },
-                {
-                  "sprite": {
-                    "width": 16,
-                    "height": 16,
-                    "texture": {
-                      "filePath": "assets/images/spritesheets/items.png",
-                      "width": 112,
-                      "height": 80
-                    },
-                    "textureCoordinates": [
-                      {
-                        "x": 0.42857143,
-                        "y": 1.0
-                      },
-                      {
-                        "x": 0.42857143,
-                        "y": 0.8
-                      },
-                      {
-                        "x": 0.2857143,
-                        "y": 0.8
-                      },
-                      {
-                        "x": 0.2857143,
-                        "y": 1.0
-                      }
-                    ]
-                  },
-                  "frameTime": 0.23
-                }
-              ],
-              "doesLoop": true
-            },
-            {
-              "title": "Inactive",
-              "animationFrameList": [
-                {
-                  "sprite": {
-                    "width": 16,
-                    "height": 16,
-                    "texture": {
-                      "filePath": "assets/images/spritesheets/items.png",
-                      "width": 112,
-                      "height": 80
-                    },
-                    "textureCoordinates": [
-                      {
-                        "x": 0.5714286,
-                        "y": 1.0
-                      },
-                      {
-                        "x": 0.5714286,
-                        "y": 0.8
-                      },
-                      {
-                        "x": 0.42857143,
-                        "y": 0.8
-                      },
-                      {
-                        "x": 0.42857143,
-                        "y": 1.0
-                      }
-                    ]
-                  },
-                  "frameTime": 0.1
-                }
-              ],
-              "doesLoop": false
-            }
-          ],
-          "defaultStateTitle": "Flicker"
-        }
-      },
-      {
-        "type": "components.QuestionBlock",
-        "properties": {
-          "blockType": "COIN",
-          "bopSpeed": 0.4
-        }
-      },
-      {
-        "type": "physics2d.components.RigidBody2d",
-        "properties": {
-          "velocity": {
-            "x": 0.0,
-            "y": 0.0
-          },
-          "angularDamping": 0.8,
-          "linearDamping": 0.9,
-          "bodyType": "STATIC",
-          "mass": 0.0,
-          "friction": 0.1,
-          "angularVelocity": 0.0,
-          "gravityScale": 1.0,
-          "sensor": false,
-          "fixedRotation": false,
-          "continuousCollision": true
-        }
-      },
-      {
-        "type": "physics2d.components.Box2DCollider",
-        "properties": {
-          "halfSize": {
-            "x": 0.25,
-            "y": 0.25
-          },
-          "origin": {
-            "x": 0.0,
-            "y": 0.0
-          },
-          "offset": {
-            "x": 0.0,
-            "y": 0.0
-          }
-        }
-      },
-      {
-        "type": "components.Ground",
-        "properties": {}
-      }
-    ],
-    "dead": false,
-    "doSerialization": true
-  },
-  {
-    "uid": 94,
-    "name": "Sprite_Object_Gen",
-    "componentList": [
       {
         "type": "gameobjects.components.Transform",
         "properties": {
@@ -9844,7 +9526,15 @@
             ]
           }
         }
-      },
+      }
+    ],
+    "dead": false,
+    "doSerialization": true
+  },
+  {
+    "uid": 77,
+    "name": "Sprite_Object_Gen",
+    "componentList": [
       {
         "type": "jade.animations.StateMachine",
         "properties": {
@@ -9997,7 +9687,7 @@
       {
         "type": "components.QuestionBlock",
         "properties": {
-          "blockType": "COIN",
+          "blockType": "POWERUP",
           "bopSpeed": 0.4
         }
       },
@@ -10040,6 +9730,316 @@
       {
         "type": "components.Ground",
         "properties": {}
+      },
+      {
+        "type": "gameobjects.components.Transform",
+        "properties": {
+          "position": {
+            "x": -247.875,
+            "y": 2.625
+          },
+          "scale": {
+            "x": 0.25,
+            "y": 0.25
+          },
+          "rotation": 0.0,
+          "zIndex": 0
+        }
+      },
+      {
+        "type": "gameobjects.components.SpriteRenderer",
+        "properties": {
+          "color": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0,
+            "w": 1.0
+          },
+          "sprite": {
+            "width": 16,
+            "height": 16,
+            "texture": {
+              "filePath": "assets/images/spritesheets/items.png",
+              "width": 112,
+              "height": 80
+            },
+            "textureCoordinates": [
+              {
+                "x": 0.42857143,
+                "y": 1.0
+              },
+              {
+                "x": 0.42857143,
+                "y": 0.8
+              },
+              {
+                "x": 0.2857143,
+                "y": 0.8
+              },
+              {
+                "x": 0.2857143,
+                "y": 1.0
+              }
+            ]
+          }
+        }
+      }
+    ],
+    "dead": false,
+    "doSerialization": true
+  },
+  {
+    "uid": 78,
+    "name": "Sprite_Object_Gen",
+    "componentList": [
+      {
+        "type": "jade.animations.StateMachine",
+        "properties": {
+          "stateTransfers": [
+            [
+              {
+                "state": "Flicker",
+                "trigger": "setInactive"
+              },
+              "Inactive"
+            ]
+          ],
+          "animationStateList": [
+            {
+              "title": "Flicker",
+              "animationFrameList": [
+                {
+                  "sprite": {
+                    "width": 16,
+                    "height": 16,
+                    "texture": {
+                      "filePath": "assets/images/spritesheets/items.png",
+                      "width": 112,
+                      "height": 80
+                    },
+                    "textureCoordinates": [
+                      {
+                        "x": 0.14285715,
+                        "y": 1.0
+                      },
+                      {
+                        "x": 0.14285715,
+                        "y": 0.8
+                      },
+                      {
+                        "x": 0.0,
+                        "y": 0.8
+                      },
+                      {
+                        "x": 0.0,
+                        "y": 1.0
+                      }
+                    ]
+                  },
+                  "frameTime": 0.23
+                },
+                {
+                  "sprite": {
+                    "width": 16,
+                    "height": 16,
+                    "texture": {
+                      "filePath": "assets/images/spritesheets/items.png",
+                      "width": 112,
+                      "height": 80
+                    },
+                    "textureCoordinates": [
+                      {
+                        "x": 0.2857143,
+                        "y": 1.0
+                      },
+                      {
+                        "x": 0.2857143,
+                        "y": 0.8
+                      },
+                      {
+                        "x": 0.14285715,
+                        "y": 0.8
+                      },
+                      {
+                        "x": 0.14285715,
+                        "y": 1.0
+                      }
+                    ]
+                  },
+                  "frameTime": 0.23
+                },
+                {
+                  "sprite": {
+                    "width": 16,
+                    "height": 16,
+                    "texture": {
+                      "filePath": "assets/images/spritesheets/items.png",
+                      "width": 112,
+                      "height": 80
+                    },
+                    "textureCoordinates": [
+                      {
+                        "x": 0.42857143,
+                        "y": 1.0
+                      },
+                      {
+                        "x": 0.42857143,
+                        "y": 0.8
+                      },
+                      {
+                        "x": 0.2857143,
+                        "y": 0.8
+                      },
+                      {
+                        "x": 0.2857143,
+                        "y": 1.0
+                      }
+                    ]
+                  },
+                  "frameTime": 0.23
+                }
+              ],
+              "doesLoop": true
+            },
+            {
+              "title": "Inactive",
+              "animationFrameList": [
+                {
+                  "sprite": {
+                    "width": 16,
+                    "height": 16,
+                    "texture": {
+                      "filePath": "assets/images/spritesheets/items.png",
+                      "width": 112,
+                      "height": 80
+                    },
+                    "textureCoordinates": [
+                      {
+                        "x": 0.5714286,
+                        "y": 1.0
+                      },
+                      {
+                        "x": 0.5714286,
+                        "y": 0.8
+                      },
+                      {
+                        "x": 0.42857143,
+                        "y": 0.8
+                      },
+                      {
+                        "x": 0.42857143,
+                        "y": 1.0
+                      }
+                    ]
+                  },
+                  "frameTime": 0.1
+                }
+              ],
+              "doesLoop": false
+            }
+          ],
+          "defaultStateTitle": "Flicker"
+        }
+      },
+      {
+        "type": "components.QuestionBlock",
+        "properties": {
+          "blockType": "POWERUP",
+          "bopSpeed": 0.4
+        }
+      },
+      {
+        "type": "physics2d.components.RigidBody2d",
+        "properties": {
+          "velocity": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "angularDamping": 0.8,
+          "linearDamping": 0.9,
+          "bodyType": "STATIC",
+          "mass": 0.0,
+          "friction": 0.1,
+          "angularVelocity": 0.0,
+          "gravityScale": 1.0,
+          "sensor": false,
+          "fixedRotation": false,
+          "continuousCollision": true
+        }
+      },
+      {
+        "type": "physics2d.components.Box2DCollider",
+        "properties": {
+          "halfSize": {
+            "x": 0.25,
+            "y": 0.25
+          },
+          "origin": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "offset": {
+            "x": 0.0,
+            "y": 0.0
+          }
+        }
+      },
+      {
+        "type": "components.Ground",
+        "properties": {}
+      },
+      {
+        "type": "gameobjects.components.Transform",
+        "properties": {
+          "position": {
+            "x": -248.125,
+            "y": 2.625
+          },
+          "scale": {
+            "x": 0.25,
+            "y": 0.25
+          },
+          "rotation": 0.0,
+          "zIndex": 0
+        }
+      },
+      {
+        "type": "gameobjects.components.SpriteRenderer",
+        "properties": {
+          "color": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0,
+            "w": 1.0
+          },
+          "sprite": {
+            "width": 16,
+            "height": 16,
+            "texture": {
+              "filePath": "assets/images/spritesheets/items.png",
+              "width": 112,
+              "height": 80
+            },
+            "textureCoordinates": [
+              {
+                "x": 0.42857143,
+                "y": 1.0
+              },
+              {
+                "x": 0.42857143,
+                "y": 0.8
+              },
+              {
+                "x": 0.2857143,
+                "y": 0.8
+              },
+              {
+                "x": 0.2857143,
+                "y": 1.0
+              }
+            ]
+          }
+        }
       }
     ],
     "dead": false,
