@@ -2,6 +2,7 @@ package main;
 
 import components.BlockCoin;
 import components.Ground;
+import components.MushroomAI;
 import components.QuestionBlock;
 import gameobjects.GameObject;
 import gameobjects.ICustomPrefabs;
@@ -279,6 +280,8 @@ public class CustomPrefabs implements ICustomPrefabs {
         CircleCollider circleCollider = new CircleCollider();
         circleCollider.setRadius(0.14f);
         mushroom.addComponent(circleCollider);
+
+        mushroom.addComponent(new MushroomAI());
 
         return mushroom;
     }
