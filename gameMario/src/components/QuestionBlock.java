@@ -2,12 +2,8 @@ package components;
 
 import gameobjects.GameObject;
 import gameobjects.IPrefabs;
-import gameobjects.Prefabs;
-import gameobjects.components.Sprite;
 import jade.SiriusTheFox;
 import jade.animations.StateMachine;
-import jade.rendering.spritesheet.Spritesheet;
-import jade.utils.AssetPool;
 import main.CustomPrefabs;
 
 public class QuestionBlock extends Block {
@@ -54,9 +50,15 @@ public class QuestionBlock extends Block {
         spawnItem(CustomPrefabs::generateMushroom);
     }
 
+    private void spawnFlower() {
+        spawnItem(CustomPrefabs::generateFlower);
+    }
+
     private void doPowerUp(PlayerController playerController) {
         if (playerController.isSmall())
             spawnMushroom();
+        else
+            spawnFlower();
     }
 
     private void doCoin() {
