@@ -12,10 +12,19 @@ public class MushroomAI extends Component {
     private transient RigidBody2d rigidBody2d;
     private transient Vector2f speed = new Vector2f(1.0f, 0.0f);
     private transient float maxSpeed = 0.8f;
-    private transient boolean hitPlayer = true;
+    private transient boolean hitPlayer;
 
     @Override
     public void preSolve(GameObject gameObject, Contact contact, Vector2f contactNormal) {
+        if (gameObject.hasComponent(PlayerController.class)) {
+            contact.setEnabled(false);
+            if (!hitPlayer) {
+                gameObject.getComponent(PlayerController.class).powerup();
+                this.gameObject.destroy();
+                hitPlayer = true;
+            }
+        }
+
         // if the contact was more horizontally than vertically
         if (Math.abs(contactNormal.y) < 0.1f)
             // Means we have been hit on the left side

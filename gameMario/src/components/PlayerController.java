@@ -12,6 +12,7 @@ import jade.utils.Settings;
 import org.jbox2d.dynamics.contacts.Contact;
 import org.joml.Vector2f;
 import org.lwjgl.glfw.GLFW;
+import physics2d.components.PillboxCollider;
 import physics2d.components.RaycastInfo;
 import physics2d.components.RigidBody2d;
 
@@ -55,6 +56,26 @@ public class PlayerController extends Component {
 
         // Don't want to the Physics to control the Player. We will control the velocity and that stuff by ourselves
         this.rigidBody2d.setGravityScale(0.0f);
+    }
+
+    public void powerup() {
+        if (playerState == PlayerState.SMALL) {
+            playerState = PlayerState.BIG;
+            AssetPool.getSound("assets/sounds/powerup.ogg").play();
+            gameObject.transform.scale.y = 0.42f;
+            PillboxCollider pb = gameObject.getComponent(PillboxCollider.class);
+            if (pb != null) {
+                // Turn the forces stronger
+                jumpBoost *= bigJumpBoostFactor;
+                walkSpeed *= bigJumpBoostFactor;
+                pb.setHeight(0.63f);
+            }
+        } else if (playerState == PlayerState.BIG) {
+            playerState = PlayerState.FIRE;
+            AssetPool.getSound("assets/sounds/powerup.ogg").play();
+        }
+
+        stateMachine.trigger("powerup");
     }
 
     @Override
