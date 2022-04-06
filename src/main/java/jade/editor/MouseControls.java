@@ -275,6 +275,11 @@ public class MouseControls extends Component {
                     SiriusTheFox.getImGuiLayer().getPropertiesWindow().addActiveGameObject(pickedObj);
             }
         }
+
+        if (holdingGameObject != null
+                && SiriusTheFox.getImGuiLayer().getPropertiesWindow().getActiveGameObject() != null) {
+            SiriusTheFox.getImGuiLayer().getPropertiesWindow().clearSelected();
+        }
     }
 
     public GameObject getHoldingGameObject() {
