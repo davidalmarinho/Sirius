@@ -2,6 +2,7 @@ package components;
 
 import gameobjects.GameObject;
 import gameobjects.components.Component;
+import gameobjects.components.game_components.Ground;
 import jade.SiriusTheFox;
 import jade.animations.StateMachine;
 import jade.input.KeyListener;
@@ -12,6 +13,7 @@ import jade.utils.Settings;
 import org.jbox2d.dynamics.contacts.Contact;
 import org.joml.Vector2f;
 import org.lwjgl.glfw.GLFW;
+import physics2d.Physics2d;
 import physics2d.components.PillboxCollider;
 import physics2d.components.RaycastInfo;
 import physics2d.components.RigidBody2d;
@@ -97,29 +99,10 @@ public class PlayerController extends Component {
     }
 
     private boolean isOnGround() {
-        Vector2f raycastBegin = new Vector2f(this.gameObject.transform.position);
         float innerPlayerWidth = this.playerWith * 0.6f;
-
-        // Get mario's left foot
-        raycastBegin.sub(innerPlayerWidth / 2.0f, 0.0f);
-
-        // Raycast size according to mario's height
         float yVal = playerState == PlayerState.SMALL ? -0.14f : -0.24f;
 
-        Vector2f raycastEnd = new Vector2f(raycastBegin).add(0.0f, yVal);
-        RaycastInfo info = SiriusTheFox.getPhysics().raycast(gameObject, raycastBegin, raycastEnd);
-
-        // Get mario's right foot
-        Vector2f raycast2Begin = new Vector2f(raycastBegin).add(innerPlayerWidth, 0.0f);
-        Vector2f raycast2End = new Vector2f(raycastEnd).add(innerPlayerWidth, 0.0f);
-
-        RaycastInfo info2 = SiriusTheFox.getPhysics().raycast(gameObject, raycast2Begin, raycast2End);
-
-        DebugDraw.addLine2D(raycastBegin, raycastEnd, new Color(1.0f, 0.0f, 0.0f));
-        DebugDraw.addLine2D(raycast2Begin, raycast2End, new Color(1.0f, 0.0f, 0.0f));
-
-        return (info.hitSomething && info.hitObject != null && info.hitObject.hasComponent(Ground.class)
-                && info2.hitSomething && info2.hitObject != null && info2.hitObject.hasComponent(Ground.class));
+        return Physics2d.isOnGround(this.gameObject, innerPlayerWidth, yVal);
     }
 
     @Override

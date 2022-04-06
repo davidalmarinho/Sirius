@@ -4,6 +4,7 @@ import gameobjects.GameObject;
 import gameobjects.ICustomPrefabs;
 import gameobjects.components.Component;
 import gameobjects.components.SpriteRenderer;
+import gameobjects.components.game_components.Ground;
 import imgui.ImGui;
 import jade.SiriusTheFox;
 import jade.rendering.PickingTexture;
@@ -57,6 +58,8 @@ public class PropertiesWindow {
                         activeGameObject.addComponent(new CircleCollider());
                     }
                 }
+
+                PropertiesWindow.addMenuItem(activeGameObject, "Add Ground", new Ground());
 
                 ICustomPropertiesWindow customPropertiesWindow = SiriusTheFox.getWindow().getICustomPropertiesWindow();
                 if (customPropertiesWindow != null) {

@@ -142,8 +142,8 @@ public class SiriusTheFox implements Observer {
     public void onNotify(GameObject gameObject, Event event) {
         switch (event.type) {
             case GAME_ENGINE_START_PLAY:
-                this.runtimePlaying = true;
                 currentScene.save();
+                this.runtimePlaying = true;
                 changeScene(new LevelEditorSceneInitializer());
                 break;
             case GAME_ENGINE_STOP_PLAY:

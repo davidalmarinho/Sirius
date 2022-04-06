@@ -5,7 +5,7 @@ import gameobjects.GameObject;
 import gameobjects.ICustomPrefabs;
 import gameobjects.Prefabs;
 import gameobjects.components.Sprite;
-import gameobjects.components.SpriteRenderer;
+import gameobjects.components.game_components.Ground;
 import jade.animations.AnimationState;
 import jade.animations.StateMachine;
 import jade.rendering.spritesheet.Spritesheet;;

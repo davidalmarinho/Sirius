@@ -104,7 +104,8 @@ public class MouseControls extends Component {
 
             // Remove current game object and replace it with its copy and some others pretended components
             gameObjectList.get(i).destroy();
-            SiriusTheFox.getCurrentScene().addGameObject(copyGo);
+
+            SiriusTheFox.getCurrentScene().getGameObjectList().add(copyGo);
         }
     }
 
