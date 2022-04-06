@@ -5,6 +5,7 @@ import gameobjects.GameObject;
 import gameobjects.ICustomPrefabs;
 import gameobjects.Prefabs;
 import gameobjects.components.Sprite;
+import gameobjects.components.SpriteRenderer;
 import jade.animations.AnimationState;
 import jade.animations.StateMachine;
 import jade.rendering.spritesheet.Spritesheet;;
@@ -303,10 +304,23 @@ public class CustomPrefabs implements ICustomPrefabs {
         return flower;
     }
 
+    public static GameObject generateGoomba(Sprite sprite, float xSize, float ySize) {
+        Spritesheet spritesheet = AssetPool.getSpritesheet("assets/images/spritesheets/spritesheet.png");
+
+        GameObject goomba = generateSpriteObject(spritesheet.getSprite(15), 0.25f, 0.25f);
+
+        return goomba;
+    }
+
     @Override
     public void imgui() {
-        Prefabs.addPrefabImGui(CustomPrefabs::generateMario, "assets/images/spritesheets/spritesheet.png");
+        Prefabs.addPrefabImGui(CustomPrefabs::generateMario,
+                AssetPool.getSpritesheet("assets/images/spritesheets/spritesheet.png").getSprite(0));
         Prefabs.sameLine();
-        Prefabs.addPrefabImGui(CustomPrefabs::generateQuestionMarkBlock, "assets/images/spritesheets/items.png");
+        Prefabs.addPrefabImGui(CustomPrefabs::generateQuestionMarkBlock,
+                AssetPool.getSpritesheet("assets/images/spritesheets/items.png").getSprite(0));
+        Prefabs.sameLine();
+        Prefabs.addPrefabImGui(CustomPrefabs::generateGoomba,
+                AssetPool.getSpritesheet("assets/images/spritesheets/spritesheet.png").getSprite(15));
     }
 }
