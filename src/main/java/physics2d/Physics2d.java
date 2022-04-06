@@ -2,6 +2,10 @@ package physics2d;
 
 import gameobjects.GameObject;
 import gameobjects.components.Transform;
+import gameobjects.components.game_components.Ground;
+import jade.SiriusTheFox;
+import jade.rendering.Color;
+import jade.rendering.debug.DebugDraw;
 import org.jbox2d.collision.shapes.CircleShape;
 import org.jbox2d.collision.shapes.PolygonShape;
 import org.jbox2d.common.Vec2;
@@ -233,6 +237,36 @@ public class Physics2d {
         }
 
         return size;
+    }
+
+    public static boolean isOnGround(GameObject gameObject, float innerObjWidth, float height, boolean showRaycast) {
+        Vector2f raycastBegin = new Vector2f(gameObject.transform.position);
+        // float innerPlayerWidth = this.playerWith * 0.6f;
+
+        // Get object's left foot
+        raycastBegin.sub(innerObjWidth / 2.0f, 0.0f);
+
+        // Raycast size according to object's height
+        Vector2f raycastEnd = new Vector2f(raycastBegin).add(0.0f, height);
+        RaycastInfo info = SiriusTheFox.getPhysics().raycast(gameObject, raycastBegin, raycastEnd);
+
+        // Get object's right foot
+        Vector2f raycast2Begin = new Vector2f(raycastBegin).add(innerObjWidth, 0.0f);
+        Vector2f raycast2End = new Vector2f(raycastEnd).add(innerObjWidth, 0.0f);
+
+        RaycastInfo info2 = SiriusTheFox.getPhysics().raycast(gameObject, raycast2Begin, raycast2End);
+
+        if (showRaycast) {
+            DebugDraw.addLine2D(raycastBegin, raycastEnd, new Color(1.0f, 0.0f, 0.0f));
+            DebugDraw.addLine2D(raycast2Begin, raycast2End, new Color(1.0f, 0.0f, 0.0f));
+        }
+
+        return (info.hitSomething && info.hitObject != null && info.hitObject.hasComponent(Ground.class)
+                && info2.hitSomething && info2.hitObject != null && info2.hitObject.hasComponent(Ground.class));
+    }
+
+    public static boolean isOnGround(GameObject gameObject, float innerObjWidth, float height) {
+        return Physics2d.isOnGround(gameObject, innerObjWidth, height, false);
     }
 
     /**

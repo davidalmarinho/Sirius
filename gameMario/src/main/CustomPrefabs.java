@@ -5,6 +5,7 @@ import gameobjects.GameObject;
 import gameobjects.ICustomPrefabs;
 import gameobjects.Prefabs;
 import gameobjects.components.Sprite;
+import gameobjects.components.game_components.Ground;
 import jade.animations.AnimationState;
 import jade.animations.StateMachine;
 import jade.rendering.spritesheet.Spritesheet;;
@@ -303,10 +304,53 @@ public class CustomPrefabs implements ICustomPrefabs {
         return flower;
     }
 
+    public static GameObject generateGoomba(Sprite sprite, float xSize, float ySize) {
+        Spritesheet spritesheet = AssetPool.getSpritesheet("assets/images/spritesheets/spritesheet.png");
+
+        GameObject goomba = generateSpriteObject(spritesheet.getSprite(15), 0.25f, 0.25f);
+
+        AnimationState walk = new AnimationState();
+        walk.title = "Walk";
+        float defaultFrameTime = 0.23f;
+        walk.addFrame(spritesheet.getSprite(14), defaultFrameTime);
+        walk.addFrame(spritesheet.getSprite(15), defaultFrameTime);
+        walk.setLoop(true);
+
+        AnimationState squashed = new AnimationState();
+        squashed.title = "Squashed";
+        squashed.addFrame(spritesheet.getSprite(16), 0.1f);
+
+        StateMachine stateMachine = new StateMachine();
+        stateMachine.addState(walk);
+        stateMachine.addState(squashed);
+        stateMachine.setDefaultState(walk.title);
+        stateMachine.addState(walk.title, squashed.title, "squashMe");
+        goomba.addComponent(stateMachine);
+
+        RigidBody2d rigidBody2d = new RigidBody2d();
+        rigidBody2d.setBodyType(BodyTypes.DYNAMIC);
+        rigidBody2d.setMass(15.0f);
+        rigidBody2d.setFixedRotation(true);
+        goomba.addComponent(rigidBody2d);
+
+        CircleCollider circleCollider = new CircleCollider();
+        circleCollider.setRadius(0.12f);
+        goomba.addComponent(circleCollider);
+
+        goomba.addComponent(new GoombaAI());
+
+        return goomba;
+    }
+
     @Override
     public void imgui() {
-        Prefabs.addPrefabImGui(CustomPrefabs::generateMario, "assets/images/spritesheets/spritesheet.png");
+        Prefabs.addPrefabImGui(CustomPrefabs::generateMario,
+                AssetPool.getSpritesheet("assets/images/spritesheets/spritesheet.png").getSprite(0));
         Prefabs.sameLine();
-        Prefabs.addPrefabImGui(CustomPrefabs::generateQuestionMarkBlock, "assets/images/spritesheets/items.png");
+        Prefabs.addPrefabImGui(CustomPrefabs::generateQuestionMarkBlock,
+                AssetPool.getSpritesheet("assets/images/spritesheets/items.png").getSprite(0));
+        Prefabs.sameLine();
+        Prefabs.addPrefabImGui(CustomPrefabs::generateGoomba,
+                AssetPool.getSpritesheet("assets/images/spritesheets/spritesheet.png").getSprite(15));
     }
 }

@@ -1,4 +1,4 @@
-package components;
+package gameobjects.components.game_components;
 
 import gameobjects.components.Component;
 

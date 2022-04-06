@@ -5,14 +5,15 @@ import gameobjects.components.SpriteRenderer;
 import imgui.ImGui;
 import jade.SiriusTheFox;
 import jade.editor.MouseControls;
-import jade.rendering.spritesheet.Spritesheet;
 import jade.scenes.LevelEditorSceneInitializer;
 import jade.scenes.SceneInitializer;
-import jade.utils.AssetPool;
 import jade.utils.Settings;
 import org.joml.Vector2f;
 
 public class Prefabs {
+    // uid to push into ImGui. It is reset in LevelEditorSceneInitializer class.
+    public static int uid = 0;
+
     public static GameObject generateSpriteObject(Sprite sprite, float sizeX, float sizeY) {
         GameObject block = SiriusTheFox.getCurrentScene().createGameObject("Sprite_Object_Gen");
         block.transform.scale.x = sizeX;
@@ -27,11 +28,11 @@ public class Prefabs {
      * Adds a new prefab to ImGui.
      * @param prefabs This interface is a functional interface. Throw this parameter we can parse a
      *                customized method. The goal of this is to generate prefabs with different textures.
-     * @param spriteSheetPath The path of the spritesheet or of the texture to put in the menu.
+     * The path of the spritesheet or of the texture to put in the menu.
      */
-    public static void addPrefabImGui(IPrefabs prefabs, String spriteSheetPath) {
-        Spritesheet sprites = AssetPool.getSpritesheet(spriteSheetPath);
-        Sprite sprite = sprites.getSprite(0);
+    public static void addPrefabImGui(IPrefabs prefabs, Sprite sprite) {
+        // Spritesheet sprites = AssetPool.getSpritesheet(spriteSheetPath);
+        // Sprite sprite = sprite;
 
         float spriteWidth = sprite.getWidth() * 2;
         float spriteHeight = sprite.getHeight() * 2;
@@ -39,6 +40,7 @@ public class Prefabs {
         int id = sprite.getTextureID();
         Vector2f[] texCoords = sprite.getTextureCoordinates();
 
+        ImGui.pushID(uid++);
         if (ImGui.imageButton(id, spriteWidth, spriteHeight, texCoords[2].x, texCoords[0].y, texCoords[0].x, texCoords[2].y)) {
 
             GameObject object = prefabs.generate(sprite, Settings.GRID_WIDTH, Settings.GRID_HEIGHT);
@@ -48,6 +50,7 @@ public class Prefabs {
                 ((LevelEditorSceneInitializer) sceneInitializer).getLevelEditorStuff()
                         .getComponent(MouseControls.class).pickupObject(object);
         }
+        ImGui.popID();
     }
 
     /**

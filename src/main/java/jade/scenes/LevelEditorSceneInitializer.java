@@ -182,7 +182,7 @@ public class LevelEditorSceneInitializer extends SceneInitializer {
                 if (customPrefabs != null) {
                     customPrefabs.imgui();
                 }
-
+                Prefabs.uid = 0;
                 ImGui.endTabItem();
             }
 
