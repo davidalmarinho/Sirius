@@ -15,7 +15,6 @@ import org.joml.Vector2f;
 import org.lwjgl.glfw.GLFW;
 import physics2d.Physics2d;
 import physics2d.components.PillboxCollider;
-import physics2d.components.RaycastInfo;
 import physics2d.components.RigidBody2d;
 
 import static org.lwjgl.glfw.GLFW.GLFW_KEY_SPACE;
@@ -49,6 +48,7 @@ public class PlayerController extends Component {
     private transient Vector2f acceleration = new Vector2f();
     private transient Vector2f velocity = new Vector2f();
     private transient boolean dead;
+    private transient int hurtInvincibilityTimeLeft;
     private transient int enemyBounce = 0;
 
     @Override
@@ -190,5 +190,17 @@ public class PlayerController extends Component {
 
     public boolean isSmall() {
         return playerState == PlayerState.SMALL;
+    }
+
+    public boolean isDead() {
+        return dead;
+    }
+
+    public boolean isHurtInvincible() {
+        return this.hurtInvincibilityTimeLeft > 0;
+    }
+
+    public boolean isInvincible() {
+        return this.playerState == PlayerState.INVINCIBLE || isHurtInvincible();
     }
 }

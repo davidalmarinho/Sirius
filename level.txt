@@ -1,6 +1,6 @@
 [
   {
-    "uid": 0,
+    "uid": 222,
     "name": "Sprite_Object_Gen",
     "componentList": [
       {
@@ -101,7 +101,7 @@
     "doSerialization": true
   },
   {
-    "uid": 1,
+    "uid": 223,
     "name": "Sprite_Object_Gen",
     "componentList": [
       {
@@ -202,7 +202,7 @@
     "doSerialization": true
   },
   {
-    "uid": 2,
+    "uid": 224,
     "name": "Sprite_Object_Gen",
     "componentList": [
       {
@@ -303,7 +303,7 @@
     "doSerialization": true
   },
   {
-    "uid": 3,
+    "uid": 225,
     "name": "Sprite_Object_Gen",
     "componentList": [
       {
@@ -404,7 +404,7 @@
     "doSerialization": true
   },
   {
-    "uid": 4,
+    "uid": 226,
     "name": "Sprite_Object_Gen",
     "componentList": [
       {
@@ -505,7 +505,7 @@
     "doSerialization": true
   },
   {
-    "uid": 5,
+    "uid": 227,
     "name": "Sprite_Object_Gen",
     "componentList": [
       {
@@ -606,7 +606,7 @@
     "doSerialization": true
   },
   {
-    "uid": 6,
+    "uid": 228,
     "name": "Sprite_Object_Gen",
     "componentList": [
       {
@@ -707,7 +707,7 @@
     "doSerialization": true
   },
   {
-    "uid": 7,
+    "uid": 229,
     "name": "Sprite_Object_Gen",
     "componentList": [
       {
@@ -808,7 +808,7 @@
     "doSerialization": true
   },
   {
-    "uid": 8,
+    "uid": 230,
     "name": "Sprite_Object_Gen",
     "componentList": [
       {
@@ -909,7 +909,7 @@
     "doSerialization": true
   },
   {
-    "uid": 9,
+    "uid": 231,
     "name": "Sprite_Object_Gen",
     "componentList": [
       {
@@ -1010,7 +1010,7 @@
     "doSerialization": true
   },
   {
-    "uid": 10,
+    "uid": 232,
     "name": "Sprite_Object_Gen",
     "componentList": [
       {
@@ -1111,7 +1111,7 @@
     "doSerialization": true
   },
   {
-    "uid": 11,
+    "uid": 233,
     "name": "Sprite_Object_Gen",
     "componentList": [
       {
@@ -1212,7 +1212,7 @@
     "doSerialization": true
   },
   {
-    "uid": 12,
+    "uid": 234,
     "name": "Sprite_Object_Gen",
     "componentList": [
       {
@@ -1313,7 +1313,7 @@
     "doSerialization": true
   },
   {
-    "uid": 13,
+    "uid": 235,
     "name": "Sprite_Object_Gen",
     "componentList": [
       {
@@ -1414,7 +1414,7 @@
     "doSerialization": true
   },
   {
-    "uid": 14,
+    "uid": 236,
     "name": "Sprite_Object_Gen",
     "componentList": [
       {
@@ -1515,7 +1515,7 @@
     "doSerialization": true
   },
   {
-    "uid": 15,
+    "uid": 237,
     "name": "Sprite_Object_Gen",
     "componentList": [
       {
@@ -1616,7 +1616,7 @@
     "doSerialization": true
   },
   {
-    "uid": 16,
+    "uid": 238,
     "name": "Sprite_Object_Gen",
     "componentList": [
       {
@@ -1717,7 +1717,7 @@
     "doSerialization": true
   },
   {
-    "uid": 17,
+    "uid": 239,
     "name": "Sprite_Object_Gen",
     "componentList": [
       {
@@ -1818,7 +1818,7 @@
     "doSerialization": true
   },
   {
-    "uid": 18,
+    "uid": 240,
     "name": "Sprite_Object_Gen",
     "componentList": [
       {
@@ -1919,7 +1919,7 @@
     "doSerialization": true
   },
   {
-    "uid": 19,
+    "uid": 241,
     "name": "Sprite_Object_Gen",
     "componentList": [
       {
@@ -2020,7 +2020,7 @@
     "doSerialization": true
   },
   {
-    "uid": 20,
+    "uid": 242,
     "name": "Sprite_Object_Gen",
     "componentList": [
       {
@@ -2121,7 +2121,7 @@
     "doSerialization": true
   },
   {
-    "uid": 21,
+    "uid": 243,
     "name": "Sprite_Object_Gen",
     "componentList": [
       {
@@ -2222,7 +2222,7 @@
     "doSerialization": true
   },
   {
-    "uid": 22,
+    "uid": 244,
     "name": "Sprite_Object_Gen",
     "componentList": [
       {
@@ -2323,7 +2323,7 @@
     "doSerialization": true
   },
   {
-    "uid": 23,
+    "uid": 245,
     "name": "Sprite_Object_Gen",
     "componentList": [
       {
@@ -2424,7 +2424,7 @@
     "doSerialization": true
   },
   {
-    "uid": 24,
+    "uid": 246,
     "name": "Sprite_Object_Gen",
     "componentList": [
       {
@@ -2525,7 +2525,7 @@
     "doSerialization": true
   },
   {
-    "uid": 25,
+    "uid": 247,
     "name": "Sprite_Object_Gen",
     "componentList": [
       {
@@ -2626,7 +2626,7 @@
     "doSerialization": true
   },
   {
-    "uid": 26,
+    "uid": 248,
     "name": "Sprite_Object_Gen",
     "componentList": [
       {
@@ -2727,7 +2727,7 @@
     "doSerialization": true
   },
   {
-    "uid": 27,
+    "uid": 249,
     "name": "Sprite_Object_Gen",
     "componentList": [
       {
@@ -2828,7 +2828,7 @@
     "doSerialization": true
   },
   {
-    "uid": 28,
+    "uid": 250,
     "name": "Sprite_Object_Gen",
     "componentList": [
       {
@@ -2929,7 +2929,7 @@
     "doSerialization": true
   },
   {
-    "uid": 29,
+    "uid": 251,
     "name": "Sprite_Object_Gen",
     "componentList": [
       {
@@ -3030,7 +3030,7 @@
     "doSerialization": true
   },
   {
-    "uid": 30,
+    "uid": 252,
     "name": "Sprite_Object_Gen",
     "componentList": [
       {
@@ -3131,7 +3131,7 @@
     "doSerialization": true
   },
   {
-    "uid": 31,
+    "uid": 253,
     "name": "Sprite_Object_Gen",
     "componentList": [
       {
@@ -3232,7 +3232,7 @@
     "doSerialization": true
   },
   {
-    "uid": 32,
+    "uid": 254,
     "name": "Sprite_Object_Gen",
     "componentList": [
       {
@@ -3333,7 +3333,7 @@
     "doSerialization": true
   },
   {
-    "uid": 33,
+    "uid": 255,
     "name": "Sprite_Object_Gen",
     "componentList": [
       {
@@ -3434,7 +3434,7 @@
     "doSerialization": true
   },
   {
-    "uid": 34,
+    "uid": 256,
     "name": "Sprite_Object_Gen",
     "componentList": [
       {
@@ -3535,7 +3535,7 @@
     "doSerialization": true
   },
   {
-    "uid": 35,
+    "uid": 257,
     "name": "Sprite_Object_Gen",
     "componentList": [
       {
@@ -3636,7 +3636,7 @@
     "doSerialization": true
   },
   {
-    "uid": 36,
+    "uid": 258,
     "name": "Sprite_Object_Gen",
     "componentList": [
       {
@@ -3737,7 +3737,7 @@
     "doSerialization": true
   },
   {
-    "uid": 37,
+    "uid": 259,
     "name": "Sprite_Object_Gen",
     "componentList": [
       {
@@ -3838,7 +3838,7 @@
     "doSerialization": true
   },
   {
-    "uid": 38,
+    "uid": 260,
     "name": "Sprite_Object_Gen",
     "componentList": [
       {
@@ -3939,7 +3939,7 @@
     "doSerialization": true
   },
   {
-    "uid": 39,
+    "uid": 261,
     "name": "Sprite_Object_Gen",
     "componentList": [
       {
@@ -4040,7 +4040,7 @@
     "doSerialization": true
   },
   {
-    "uid": 40,
+    "uid": 262,
     "name": "Sprite_Object_Gen",
     "componentList": [
       {
@@ -4141,7 +4141,7 @@
     "doSerialization": true
   },
   {
-    "uid": 41,
+    "uid": 263,
     "name": "Sprite_Object_Gen",
     "componentList": [
       {
@@ -4242,7 +4242,7 @@
     "doSerialization": true
   },
   {
-    "uid": 42,
+    "uid": 264,
     "name": "Sprite_Object_Gen",
     "componentList": [
       {
@@ -4343,7 +4343,7 @@
     "doSerialization": true
   },
   {
-    "uid": 43,
+    "uid": 265,
     "name": "Sprite_Object_Gen",
     "componentList": [
       {
@@ -4444,7 +4444,7 @@
     "doSerialization": true
   },
   {
-    "uid": 44,
+    "uid": 266,
     "name": "Sprite_Object_Gen",
     "componentList": [
       {
@@ -4545,7 +4545,7 @@
     "doSerialization": true
   },
   {
-    "uid": 45,
+    "uid": 267,
     "name": "Sprite_Object_Gen",
     "componentList": [
       {
@@ -4646,7 +4646,7 @@
     "doSerialization": true
   },
   {
-    "uid": 46,
+    "uid": 268,
     "name": "Sprite_Object_Gen",
     "componentList": [
       {
@@ -4747,7 +4747,7 @@
     "doSerialization": true
   },
   {
-    "uid": 47,
+    "uid": 269,
     "name": "Sprite_Object_Gen",
     "componentList": [
       {
@@ -4848,7 +4848,7 @@
     "doSerialization": true
   },
   {
-    "uid": 48,
+    "uid": 270,
     "name": "Sprite_Object_Gen",
     "componentList": [
       {
@@ -4949,7 +4949,7 @@
     "doSerialization": true
   },
   {
-    "uid": 49,
+    "uid": 271,
     "name": "Sprite_Object_Gen",
     "componentList": [
       {
@@ -5050,7 +5050,7 @@
     "doSerialization": true
   },
   {
-    "uid": 50,
+    "uid": 272,
     "name": "Sprite_Object_Gen",
     "componentList": [
       {
@@ -5151,7 +5151,7 @@
     "doSerialization": true
   },
   {
-    "uid": 51,
+    "uid": 273,
     "name": "Sprite_Object_Gen",
     "componentList": [
       {
@@ -5252,7 +5252,7 @@
     "doSerialization": true
   },
   {
-    "uid": 52,
+    "uid": 274,
     "name": "Sprite_Object_Gen",
     "componentList": [
       {
@@ -5353,7 +5353,7 @@
     "doSerialization": true
   },
   {
-    "uid": 53,
+    "uid": 275,
     "name": "Sprite_Object_Gen",
     "componentList": [
       {
@@ -5454,7 +5454,7 @@
     "doSerialization": true
   },
   {
-    "uid": 54,
+    "uid": 276,
     "name": "Sprite_Object_Gen",
     "componentList": [
       {
@@ -5555,7 +5555,7 @@
     "doSerialization": true
   },
   {
-    "uid": 55,
+    "uid": 277,
     "name": "Sprite_Object_Gen",
     "componentList": [
       {
@@ -5656,7 +5656,7 @@
     "doSerialization": true
   },
   {
-    "uid": 56,
+    "uid": 278,
     "name": "Sprite_Object_Gen",
     "componentList": [
       {
@@ -5757,7 +5757,7 @@
     "doSerialization": true
   },
   {
-    "uid": 57,
+    "uid": 279,
     "name": "Sprite_Object_Gen",
     "componentList": [
       {
@@ -5858,7 +5858,7 @@
     "doSerialization": true
   },
   {
-    "uid": 58,
+    "uid": 280,
     "name": "Sprite_Object_Gen",
     "componentList": [
       {
@@ -5959,7 +5959,7 @@
     "doSerialization": true
   },
   {
-    "uid": 59,
+    "uid": 281,
     "name": "Sprite_Object_Gen",
     "componentList": [
       {
@@ -6060,7 +6060,7 @@
     "doSerialization": true
   },
   {
-    "uid": 60,
+    "uid": 282,
     "name": "Sprite_Object_Gen",
     "componentList": [
       {
@@ -6161,7 +6161,7 @@
     "doSerialization": true
   },
   {
-    "uid": 61,
+    "uid": 283,
     "name": "Sprite_Object_Gen",
     "componentList": [
       {
@@ -6262,7 +6262,7 @@
     "doSerialization": true
   },
   {
-    "uid": 62,
+    "uid": 284,
     "name": "Sprite_Object_Gen",
     "componentList": [
       {
@@ -6363,7 +6363,7 @@
     "doSerialization": true
   },
   {
-    "uid": 63,
+    "uid": 285,
     "name": "Sprite_Object_Gen",
     "componentList": [
       {
@@ -6464,7 +6464,7 @@
     "doSerialization": true
   },
   {
-    "uid": 64,
+    "uid": 286,
     "name": "Sprite_Object_Gen",
     "componentList": [
       {
@@ -6565,7 +6565,7 @@
     "doSerialization": true
   },
   {
-    "uid": 65,
+    "uid": 287,
     "name": "Sprite_Object_Gen",
     "componentList": [
       {
@@ -6666,7 +6666,7 @@
     "doSerialization": true
   },
   {
-    "uid": 66,
+    "uid": 288,
     "name": "Sprite_Object_Gen",
     "componentList": [
       {
@@ -6767,7 +6767,7 @@
     "doSerialization": true
   },
   {
-    "uid": 67,
+    "uid": 289,
     "name": "Sprite_Object_Gen",
     "componentList": [
       {
@@ -6868,7 +6868,7 @@
     "doSerialization": true
   },
   {
-    "uid": 68,
+    "uid": 290,
     "name": "Sprite_Object_Gen",
     "componentList": [
       {
@@ -6969,7 +6969,7 @@
     "doSerialization": true
   },
   {
-    "uid": 69,
+    "uid": 291,
     "name": "Sprite_Object_Gen",
     "componentList": [
       {
@@ -7070,7 +7070,7 @@
     "doSerialization": true
   },
   {
-    "uid": 70,
+    "uid": 292,
     "name": "Sprite_Object_Gen",
     "componentList": [
       {
@@ -7171,7 +7171,7 @@
     "doSerialization": true
   },
   {
-    "uid": 71,
+    "uid": 293,
     "name": "Sprite_Object_Gen",
     "componentList": [
       {
@@ -7272,7 +7272,7 @@
     "doSerialization": true
   },
   {
-    "uid": 72,
+    "uid": 294,
     "name": "Sprite_Object_Gen",
     "componentList": [
       {
@@ -7373,7 +7373,7 @@
     "doSerialization": true
   },
   {
-    "uid": 73,
+    "uid": 295,
     "name": "Sprite_Object_Gen",
     "componentList": [
       {
@@ -7474,7 +7474,7 @@
     "doSerialization": true
   },
   {
-    "uid": 74,
+    "uid": 296,
     "name": "Sprite_Object_Gen",
     "componentList": [
       {
@@ -7575,7 +7575,7 @@
     "doSerialization": true
   },
   {
-    "uid": 75,
+    "uid": 297,
     "name": "Sprite_Object_Gen",
     "componentList": [
       {
@@ -7676,7 +7676,7 @@
     "doSerialization": true
   },
   {
-    "uid": 76,
+    "uid": 298,
     "name": "Sprite_Object_Gen",
     "componentList": [
       {
@@ -7777,7 +7777,7 @@
     "doSerialization": true
   },
   {
-    "uid": 77,
+    "uid": 299,
     "name": "Sprite_Object_Gen",
     "componentList": [
       {
@@ -7878,7 +7878,7 @@
     "doSerialization": true
   },
   {
-    "uid": 78,
+    "uid": 300,
     "name": "Sprite_Object_Gen",
     "componentList": [
       {
@@ -7979,7 +7979,7 @@
     "doSerialization": true
   },
   {
-    "uid": 79,
+    "uid": 301,
     "name": "Sprite_Object_Gen",
     "componentList": [
       {
@@ -8080,7 +8080,7 @@
     "doSerialization": true
   },
   {
-    "uid": 80,
+    "uid": 302,
     "name": "Sprite_Object_Gen",
     "componentList": [
       {
@@ -8181,7 +8181,7 @@
     "doSerialization": true
   },
   {
-    "uid": 81,
+    "uid": 303,
     "name": "Sprite_Object_Gen",
     "componentList": [
       {
@@ -8282,7 +8282,7 @@
     "doSerialization": true
   },
   {
-    "uid": 82,
+    "uid": 304,
     "name": "Sprite_Object_Gen",
     "componentList": [
       {
@@ -8383,7 +8383,7 @@
     "doSerialization": true
   },
   {
-    "uid": 83,
+    "uid": 305,
     "name": "Sprite_Object_Gen",
     "componentList": [
       {
@@ -8484,7 +8484,7 @@
     "doSerialization": true
   },
   {
-    "uid": 84,
+    "uid": 306,
     "name": "Sprite_Object_Gen",
     "componentList": [
       {
@@ -8585,7 +8585,7 @@
     "doSerialization": true
   },
   {
-    "uid": 85,
+    "uid": 307,
     "name": "Sprite_Object_Gen",
     "componentList": [
       {
@@ -8686,7 +8686,7 @@
     "doSerialization": true
   },
   {
-    "uid": 86,
+    "uid": 308,
     "name": "Sprite_Object_Gen",
     "componentList": [
       {
@@ -8787,7 +8787,7 @@
     "doSerialization": true
   },
   {
-    "uid": 87,
+    "uid": 309,
     "name": "Sprite_Object_Gen",
     "componentList": [
       {
@@ -8888,7 +8888,7 @@
     "doSerialization": true
   },
   {
-    "uid": 88,
+    "uid": 310,
     "name": "Sprite_Object_Gen",
     "componentList": [
       {
@@ -8989,7 +8989,7 @@
     "doSerialization": true
   },
   {
-    "uid": 89,
+    "uid": 311,
     "name": "Sprite_Object_Gen",
     "componentList": [
       {
@@ -9090,7 +9090,7 @@
     "doSerialization": true
   },
   {
-    "uid": 90,
+    "uid": 312,
     "name": "Sprite_Object_Gen",
     "componentList": [
       {
@@ -9191,7 +9191,7 @@
     "doSerialization": true
   },
   {
-    "uid": 91,
+    "uid": 313,
     "name": "Sprite_Object_Gen",
     "componentList": [
       {
@@ -9292,7 +9292,7 @@
     "doSerialization": true
   },
   {
-    "uid": 92,
+    "uid": 314,
     "name": "Sprite_Object_Gen",
     "componentList": [
       {
@@ -9393,7 +9393,7 @@
     "doSerialization": true
   },
   {
-    "uid": 93,
+    "uid": 315,
     "name": "Sprite_Object_Gen",
     "componentList": [
       {
@@ -9494,7 +9494,7 @@
     "doSerialization": true
   },
   {
-    "uid": 94,
+    "uid": 316,
     "name": "Sprite_Object_Gen",
     "componentList": [
       {
@@ -9595,7 +9595,7 @@
     "doSerialization": true
   },
   {
-    "uid": 95,
+    "uid": 317,
     "name": "Sprite_Object_Gen",
     "componentList": [
       {
@@ -9696,7 +9696,7 @@
     "doSerialization": true
   },
   {
-    "uid": 96,
+    "uid": 318,
     "name": "Sprite_Object_Gen",
     "componentList": [
       {
@@ -11054,7 +11054,7 @@
     "doSerialization": true
   },
   {
-    "uid": 97,
+    "uid": 319,
     "name": "Sprite_Object_Gen",
     "componentList": [
       {
@@ -11091,19 +11091,19 @@
             },
             "textureCoordinates": [
               {
-                "x": 0.42857143,
+                "x": 0.2857143,
                 "y": 1.0
               },
               {
-                "x": 0.42857143,
-                "y": 0.8
-              },
-              {
                 "x": 0.2857143,
                 "y": 0.8
               },
               {
-                "x": 0.2857143,
+                "x": 0.14285715,
+                "y": 0.8
+              },
+              {
+                "x": 0.14285715,
                 "y": 1.0
               }
             ]
@@ -11311,7 +11311,7 @@
     "doSerialization": true
   },
   {
-    "uid": 98,
+    "uid": 320,
     "name": "Sprite_Object_Gen",
     "componentList": [
       {
@@ -11348,19 +11348,19 @@
             },
             "textureCoordinates": [
               {
-                "x": 0.42857143,
+                "x": 0.2857143,
                 "y": 1.0
               },
               {
-                "x": 0.42857143,
-                "y": 0.8
-              },
-              {
                 "x": 0.2857143,
                 "y": 0.8
               },
               {
-                "x": 0.2857143,
+                "x": 0.14285715,
+                "y": 0.8
+              },
+              {
+                "x": 0.14285715,
                 "y": 1.0
               }
             ]
@@ -11568,7 +11568,7 @@
     "doSerialization": true
   },
   {
-    "uid": 99,
+    "uid": 321,
     "name": "Sprite_Object_Gen",
     "componentList": [
       {
@@ -11605,19 +11605,19 @@
             },
             "textureCoordinates": [
               {
-                "x": 0.42857143,
+                "x": 0.2857143,
                 "y": 1.0
               },
               {
-                "x": 0.42857143,
-                "y": 0.8
-              },
-              {
                 "x": 0.2857143,
                 "y": 0.8
               },
               {
-                "x": 0.2857143,
+                "x": 0.14285715,
+                "y": 0.8
+              },
+              {
+                "x": 0.14285715,
                 "y": 1.0
               }
             ]
@@ -11825,7 +11825,7 @@
     "doSerialization": true
   },
   {
-    "uid": 100,
+    "uid": 322,
     "name": "Sprite_Object_Gen",
     "componentList": [
       {
@@ -11932,7 +11932,7 @@
     "doSerialization": true
   },
   {
-    "uid": 101,
+    "uid": 323,
     "name": "Sprite_Object_Gen",
     "componentList": [
       {
@@ -12029,6 +12029,420 @@
               {
                 "x": 0.71428573,
                 "y": 0.9166667
+              }
+            ]
+          }
+        }
+      }
+    ],
+    "dead": false,
+    "doSerialization": true
+  },
+  {
+    "uid": 324,
+    "name": "Sprite_Object_Gen",
+    "componentList": [
+      {
+        "type": "gameobjects.components.Transform",
+        "properties": {
+          "position": {
+            "x": -246.125,
+            "y": 1.125
+          },
+          "scale": {
+            "x": 0.25,
+            "y": 0.25
+          },
+          "rotation": 0.0,
+          "zIndex": 0
+        }
+      },
+      {
+        "type": "gameobjects.components.SpriteRenderer",
+        "properties": {
+          "color": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0,
+            "w": 1.0
+          },
+          "sprite": {
+            "width": 16,
+            "height": 16,
+            "texture": {
+              "filePath": "assets/images/spritesheets/spritesheet.png",
+              "width": 224,
+              "height": 32
+            },
+            "textureCoordinates": [
+              {
+                "x": 0.14285715,
+                "y": 0.5
+              },
+              {
+                "x": 0.14285715,
+                "y": 0.0
+              },
+              {
+                "x": 0.071428575,
+                "y": 0.0
+              },
+              {
+                "x": 0.071428575,
+                "y": 0.5
+              }
+            ]
+          }
+        }
+      },
+      {
+        "type": "jade.animations.StateMachine",
+        "properties": {
+          "stateTransfers": [
+            [
+              {
+                "state": "Walk",
+                "trigger": "squashMe"
+              },
+              "Squashed"
+            ]
+          ],
+          "animationStateList": [
+            {
+              "title": "Walk",
+              "animationFrameList": [
+                {
+                  "sprite": {
+                    "width": 16,
+                    "height": 16,
+                    "texture": {
+                      "filePath": "assets/images/spritesheets/spritesheet.png",
+                      "width": 224,
+                      "height": 32
+                    },
+                    "textureCoordinates": [
+                      {
+                        "x": 0.071428575,
+                        "y": 0.5
+                      },
+                      {
+                        "x": 0.071428575,
+                        "y": 0.0
+                      },
+                      {
+                        "x": 0.0,
+                        "y": 0.0
+                      },
+                      {
+                        "x": 0.0,
+                        "y": 0.5
+                      }
+                    ]
+                  },
+                  "frameTime": 0.23
+                },
+                {
+                  "sprite": {
+                    "width": 16,
+                    "height": 16,
+                    "texture": {
+                      "filePath": "assets/images/spritesheets/spritesheet.png",
+                      "width": 224,
+                      "height": 32
+                    },
+                    "textureCoordinates": [
+                      {
+                        "x": 0.14285715,
+                        "y": 0.5
+                      },
+                      {
+                        "x": 0.14285715,
+                        "y": 0.0
+                      },
+                      {
+                        "x": 0.071428575,
+                        "y": 0.0
+                      },
+                      {
+                        "x": 0.071428575,
+                        "y": 0.5
+                      }
+                    ]
+                  },
+                  "frameTime": 0.23
+                }
+              ],
+              "doesLoop": true
+            },
+            {
+              "title": "Squashed",
+              "animationFrameList": [
+                {
+                  "sprite": {
+                    "width": 16,
+                    "height": 16,
+                    "texture": {
+                      "filePath": "assets/images/spritesheets/spritesheet.png",
+                      "width": 224,
+                      "height": 32
+                    },
+                    "textureCoordinates": [
+                      {
+                        "x": 0.21428572,
+                        "y": 0.5
+                      },
+                      {
+                        "x": 0.21428572,
+                        "y": 0.0
+                      },
+                      {
+                        "x": 0.14285715,
+                        "y": 0.0
+                      },
+                      {
+                        "x": 0.14285715,
+                        "y": 0.5
+                      }
+                    ]
+                  },
+                  "frameTime": 0.1
+                }
+              ],
+              "doesLoop": false
+            }
+          ],
+          "defaultStateTitle": "Walk"
+        }
+      },
+      {
+        "type": "physics2d.components.RigidBody2d",
+        "properties": {
+          "velocity": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "angularDamping": 0.8,
+          "linearDamping": 0.9,
+          "bodyType": "DYNAMIC",
+          "mass": 15.0,
+          "friction": 0.1,
+          "angularVelocity": 0.0,
+          "gravityScale": 1.0,
+          "sensor": false,
+          "fixedRotation": true,
+          "continuousCollision": true
+        }
+      },
+      {
+        "type": "physics2d.components.CircleCollider",
+        "properties": {
+          "radius": 0.12,
+          "offset": {
+            "x": 0.0,
+            "y": 0.0
+          }
+        }
+      },
+      {
+        "type": "components.GoombaAI",
+        "properties": {
+          "walkSpeed": 0.6,
+          "dead": false
+        }
+      }
+    ],
+    "dead": false,
+    "doSerialization": true
+  },
+  {
+    "uid": 325,
+    "name": "Sprite_Object_Gen",
+    "componentList": [
+      {
+        "type": "physics2d.components.RigidBody2d",
+        "properties": {
+          "velocity": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "angularDamping": 0.8,
+          "linearDamping": 0.9,
+          "bodyType": "STATIC",
+          "mass": 0.0,
+          "friction": 0.1,
+          "angularVelocity": 0.0,
+          "gravityScale": 1.0,
+          "sensor": false,
+          "fixedRotation": false,
+          "continuousCollision": true
+        }
+      },
+      {
+        "type": "physics2d.components.Box2DCollider",
+        "properties": {
+          "halfSize": {
+            "x": 0.25,
+            "y": 0.25
+          },
+          "origin": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "offset": {
+            "x": 0.0,
+            "y": 0.0
+          }
+        }
+      },
+      {
+        "type": "gameobjects.components.Transform",
+        "properties": {
+          "position": {
+            "x": -248.375,
+            "y": 1.125
+          },
+          "scale": {
+            "x": 0.25,
+            "y": 0.25
+          },
+          "rotation": 0.0,
+          "zIndex": 0
+        }
+      },
+      {
+        "type": "gameobjects.components.SpriteRenderer",
+        "properties": {
+          "color": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0,
+            "w": 1.0
+          },
+          "sprite": {
+            "width": 16,
+            "height": 16,
+            "texture": {
+              "filePath": "assets/images/spritesheets/decorationsAndBlocks.png",
+              "width": 112,
+              "height": 192
+            },
+            "textureCoordinates": [
+              {
+                "x": 0.14285715,
+                "y": 0.75
+              },
+              {
+                "x": 0.14285715,
+                "y": 0.6666667
+              },
+              {
+                "x": 0.0,
+                "y": 0.6666667
+              },
+              {
+                "x": 0.0,
+                "y": 0.75
+              }
+            ]
+          }
+        }
+      }
+    ],
+    "dead": false,
+    "doSerialization": true
+  },
+  {
+    "uid": 333,
+    "name": "Sprite_Object_Gen",
+    "componentList": [
+      {
+        "type": "gameobjects.components.game_components.Ground",
+        "properties": {}
+      },
+      {
+        "type": "physics2d.components.RigidBody2d",
+        "properties": {
+          "velocity": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "angularDamping": 0.8,
+          "linearDamping": 0.9,
+          "bodyType": "STATIC",
+          "mass": 0.0,
+          "friction": 0.1,
+          "angularVelocity": 0.0,
+          "gravityScale": 1.0,
+          "sensor": false,
+          "fixedRotation": false,
+          "continuousCollision": true
+        }
+      },
+      {
+        "type": "physics2d.components.Box2DCollider",
+        "properties": {
+          "halfSize": {
+            "x": 0.25,
+            "y": 0.25
+          },
+          "origin": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "offset": {
+            "x": 0.0,
+            "y": 0.0
+          }
+        }
+      },
+      {
+        "type": "gameobjects.components.Transform",
+        "properties": {
+          "position": {
+            "x": -245.625,
+            "y": 1.125
+          },
+          "scale": {
+            "x": 0.25,
+            "y": 0.25
+          },
+          "rotation": 0.0,
+          "zIndex": 0
+        }
+      },
+      {
+        "type": "gameobjects.components.SpriteRenderer",
+        "properties": {
+          "color": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0,
+            "w": 1.0
+          },
+          "sprite": {
+            "width": 16,
+            "height": 16,
+            "texture": {
+              "filePath": "assets/images/spritesheets/decorationsAndBlocks.png",
+              "width": 112,
+              "height": 192
+            },
+            "textureCoordinates": [
+              {
+                "x": 0.14285715,
+                "y": 0.75
+              },
+              {
+                "x": 0.14285715,
+                "y": 0.6666667
+              },
+              {
+                "x": 0.0,
+                "y": 0.6666667
+              },
+              {
+                "x": 0.0,
+                "y": 0.75
               }
             ]
           }
