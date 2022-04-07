@@ -281,6 +281,11 @@ public class PlayerController extends Component {
         }
     }
 
+    public void setPosition(Vector2f newPosition) {
+        this.gameObject.transform.position.set(newPosition);
+        this.rigidBody2d.setPosition(newPosition);
+    }
+
     public void enemyBounce() {
         this.enemyBounce = 8;
     }

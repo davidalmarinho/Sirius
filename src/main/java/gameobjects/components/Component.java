@@ -41,7 +41,7 @@ public abstract class Component {
 
     }
 
-    public void endContact(GameObject collidingObject, Contact contact, Vector2f hitNormal) {
+    public void endCollision(GameObject collidingObject, Contact contact, Vector2f hitNormal) {
 
     }
 
@@ -105,6 +105,8 @@ public abstract class Component {
             if (ImGui.checkbox(name + ": ", val)) {
                 field.set(this, !val);
             }
+        } else if (type == String.class) {
+            field.set(this, JImGui.inputText(field.getName() + ": ", (String) value));
         } else if (type == Vector2f.class) {
             Vector2f val = (Vector2f) value;
             JImGui.drawVec2Control(name, val);

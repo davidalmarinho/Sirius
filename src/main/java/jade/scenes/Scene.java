@@ -141,13 +141,28 @@ public class Scene {
     }
 
     /**
-     * Gets a game object based on its id
+     * Gets a game object based on its id.
+     *
      * @param gameObjectId game object's id
      * @return the game object that stores that id
      */
     public GameObject getGameObject(int gameObjectId) {
         Optional<GameObject> result = this.gameObjectList.stream()
                 .filter(gameObject -> gameObject.getUid() == gameObjectId)
+                .findFirst();
+
+        return result.orElse(null);
+    }
+
+    /**
+     * Gets a game object based on its name.
+     *
+     * @param gameObjectName game object's name
+     * @return the game object that stores that name
+     */
+    public GameObject getGameObject(String gameObjectName) {
+        Optional<GameObject> result = this.gameObjectList.stream()
+                .filter(gameObject -> gameObject.name.equals(gameObjectName))
                 .findFirst();
 
         return result.orElse(null);

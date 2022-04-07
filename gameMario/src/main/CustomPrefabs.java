@@ -343,7 +343,7 @@ public class CustomPrefabs implements ICustomPrefabs {
         return goomba;
     }
 
-    public static GameObject generatePipeDown(Sprite sprite, float xSize, float ySize) {
+    private static GameObject generatePipeDown(Sprite sprite, float xSize, float ySize) {
         Spritesheet spritesheet = AssetPool.getSpritesheet("assets/images/spritesheets/pipes.png");
 
         GameObject pipe = generateSpriteObject(spritesheet.getSprite(0), 0.5f, 0.5f);
@@ -351,7 +351,7 @@ public class CustomPrefabs implements ICustomPrefabs {
         return generatePipe(pipe, Direction.DOWN);
     }
 
-    public static GameObject generatePipeUp(Sprite sprite, float xSize, float ySize) {
+    private static GameObject generatePipeUp(Sprite sprite, float xSize, float ySize) {
         Spritesheet spritesheet = AssetPool.getSpritesheet("assets/images/spritesheets/pipes.png");
 
         GameObject pipe = generateSpriteObject(spritesheet.getSprite(1), 0.5f, 0.5f);
@@ -360,7 +360,7 @@ public class CustomPrefabs implements ICustomPrefabs {
 
     }
 
-    public static GameObject generatePipeRight(Sprite sprite, float xSize, float ySize) {
+    private static GameObject generatePipeRight(Sprite sprite, float xSize, float ySize) {
         Spritesheet spritesheet = AssetPool.getSpritesheet("assets/images/spritesheets/pipes.png");
 
         GameObject pipe = generateSpriteObject(spritesheet.getSprite(2), 0.5f, 0.5f);
@@ -368,7 +368,7 @@ public class CustomPrefabs implements ICustomPrefabs {
         return generatePipe(pipe, Direction.RIGHT);
     }
 
-    public static GameObject generatePipeLeft(Sprite sprite, float xSize, float ySize) {
+    private static GameObject generatePipeLeft(Sprite sprite, float xSize, float ySize) {
         Spritesheet spritesheet = AssetPool.getSpritesheet("assets/images/spritesheets/pipes.png");
 
         GameObject pipe = generateSpriteObject(spritesheet.getSprite(3), 0.5f, 0.5f);
@@ -376,7 +376,7 @@ public class CustomPrefabs implements ICustomPrefabs {
         return generatePipe(pipe, Direction.LEFT);
     }
 
-    public static GameObject generatePipe(GameObject pipe, Direction direction) {
+    private static GameObject generatePipe(GameObject pipe, Direction direction) {
         RigidBody2d rigidBody2d = new RigidBody2d();
         rigidBody2d.setBodyType(BodyTypes.STATIC);
         rigidBody2d.setFixedRotation(true);
