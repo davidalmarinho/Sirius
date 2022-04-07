@@ -10,6 +10,7 @@ import jade.animations.AnimationState;
 import jade.animations.StateMachine;
 import jade.rendering.spritesheet.Spritesheet;;
 import jade.utils.AssetPool;
+import org.joml.Vector2f;
 import physics2d.BodyTypes;
 import physics2d.components.Box2DCollider;
 import physics2d.components.CircleCollider;
@@ -342,6 +343,55 @@ public class CustomPrefabs implements ICustomPrefabs {
         return goomba;
     }
 
+    private static GameObject generatePipeDown(Sprite sprite, float xSize, float ySize) {
+        Spritesheet spritesheet = AssetPool.getSpritesheet("assets/images/spritesheets/pipes.png");
+
+        GameObject pipe = generateSpriteObject(spritesheet.getSprite(0), 0.5f, 0.5f);
+
+        return generatePipe(pipe, Direction.DOWN);
+    }
+
+    private static GameObject generatePipeUp(Sprite sprite, float xSize, float ySize) {
+        Spritesheet spritesheet = AssetPool.getSpritesheet("assets/images/spritesheets/pipes.png");
+
+        GameObject pipe = generateSpriteObject(spritesheet.getSprite(1), 0.5f, 0.5f);
+
+        return generatePipe(pipe, Direction.UP);
+
+    }
+
+    private static GameObject generatePipeRight(Sprite sprite, float xSize, float ySize) {
+        Spritesheet spritesheet = AssetPool.getSpritesheet("assets/images/spritesheets/pipes.png");
+
+        GameObject pipe = generateSpriteObject(spritesheet.getSprite(2), 0.5f, 0.5f);
+
+        return generatePipe(pipe, Direction.RIGHT);
+    }
+
+    private static GameObject generatePipeLeft(Sprite sprite, float xSize, float ySize) {
+        Spritesheet spritesheet = AssetPool.getSpritesheet("assets/images/spritesheets/pipes.png");
+
+        GameObject pipe = generateSpriteObject(spritesheet.getSprite(3), 0.5f, 0.5f);
+
+        return generatePipe(pipe, Direction.LEFT);
+    }
+
+    private static GameObject generatePipe(GameObject pipe, Direction direction) {
+        RigidBody2d rigidBody2d = new RigidBody2d();
+        rigidBody2d.setBodyType(BodyTypes.STATIC);
+        rigidBody2d.setFixedRotation(true);
+        rigidBody2d.setContinuousCollision(false);
+        pipe.addComponent(rigidBody2d);
+
+        Box2DCollider box2DCollider = new Box2DCollider();
+        box2DCollider.setHalfSize(new Vector2f(0.5f, 0.5f));
+        pipe.addComponent(box2DCollider);
+        pipe.addComponent(new Pipe(direction));
+        pipe.addComponent(new Ground());
+
+        return pipe;
+    }
+
     @Override
     public void imgui() {
         Prefabs.addPrefabImGui(CustomPrefabs::generateMario,
@@ -352,5 +402,17 @@ public class CustomPrefabs implements ICustomPrefabs {
         Prefabs.sameLine();
         Prefabs.addPrefabImGui(CustomPrefabs::generateGoomba,
                 AssetPool.getSpritesheet("assets/images/spritesheets/spritesheet.png").getSprite(15));
+        Prefabs.sameLine();
+        Prefabs.addPrefabImGui(CustomPrefabs::generatePipeDown,
+                AssetPool.getSpritesheet("assets/images/spritesheets/pipes.png").getSprite(0));
+        Prefabs.sameLine();
+        Prefabs.addPrefabImGui(CustomPrefabs::generatePipeUp,
+                AssetPool.getSpritesheet("assets/images/spritesheets/pipes.png").getSprite(1));
+        Prefabs.sameLine();
+        Prefabs.addPrefabImGui(CustomPrefabs::generatePipeRight,
+                AssetPool.getSpritesheet("assets/images/spritesheets/pipes.png").getSprite(2));
+        Prefabs.sameLine();
+        Prefabs.addPrefabImGui(CustomPrefabs::generatePipeLeft,
+                AssetPool.getSpritesheet("assets/images/spritesheets/pipes.png").getSprite(3));
     }
 }

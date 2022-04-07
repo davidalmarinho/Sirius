@@ -47,11 +47,11 @@ public class ContactListener implements org.jbox2d.callbacks.ContactListener {
 
         // Notify each component
         for (Component c : objA.componentList) {
-            c.endContact(objB, contact, aNormal);
+            c.endCollision(objB, contact, aNormal);
         }
 
         for (Component c : objB.componentList) {
-            c.endContact(objA, contact, bNormal);
+            c.endCollision(objA, contact, bNormal);
         }
     }
 
