@@ -8,7 +8,6 @@ import gameobjects.GameObjectDeserializer;
 import gameobjects.components.Component;
 import gameobjects.components.ComponentDeserializer;
 import jade.SiriusTheFox;
-import jade.Window;
 import jade.editor.MouseControls;
 import jade.editor.NonPickable;
 import jade.editor.PropertiesWindow;
@@ -168,6 +167,23 @@ public class Scene {
         return result.orElse(null);
     }
 
+    /**
+     * Gets a game object based on its components.
+     *
+     * @param componentClass Component that we are looking to.
+     * @return the game object with the pretended component.
+     */
+    public <T extends Component> GameObject getGameObjectWith(Class<T> componentClass) {
+        return (GameObject) gameObjectList.stream().map(gameObject -> {
+            if (gameObject.hasComponent(componentClass))
+                return gameObject;
+            else {
+                System.err.println("Error: Couldn't find game object with '" + componentClass + "'.");
+                return null;
+            }
+        });
+    }
+
     public Camera getCamera() {
         return camera;
     }
@@ -225,7 +241,7 @@ public class Scene {
             // Save gameObjectList in a txt file
             FileWriter writer = new FileWriter("level.txt");
             List<GameObject> objsToSerialize = new ArrayList<>();
-            for (GameObject obj: gameObjectList) {
+            for (GameObject obj : gameObjectList) {
 
                 // Bug fix --Don't save game objects that are attached to the cursor
                 if (obj.hasComponent(NonPickable.class)) continue;
