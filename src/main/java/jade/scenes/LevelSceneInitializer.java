@@ -35,6 +35,10 @@ public class LevelSceneInitializer implements ISceneInitializer {
                 new Spritesheet(AssetPool.getTexture(Images.PLAYER_BIG_SPRITE_SHEET.getSpritesheet()),
                         16, 32, 42, 0));
 
+        AssetPool.addSpritesheet(Images.TURTLE.getSpritesheet(),
+                new Spritesheet(AssetPool.getTexture(Images.TURTLE.getSpritesheet()),
+                        16, 24, 4, 0));
+
         AssetPool.addSpritesheet(Images.PIPES.getSpritesheet(),
                 new Spritesheet(AssetPool.getTexture(Images.PIPES.getSpritesheet()),
                         32, 32, 4, 0));

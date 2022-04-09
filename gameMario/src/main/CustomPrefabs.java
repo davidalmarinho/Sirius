@@ -392,6 +392,44 @@ public class CustomPrefabs implements ICustomPrefabs {
         return pipe;
     }
 
+    public static GameObject generateTurtle(Sprite sprite, float xSize, float ySize) {
+        Spritesheet turtleSpritesheet = AssetPool.getSpritesheet("assets/images/spritesheets/turtle.png");
+        GameObject turtle = generateSpriteObject(turtleSpritesheet.getSprite(0), 0.25f, 0.35f);
+
+        AnimationState walk = new AnimationState();
+        walk.title = "Walk";
+        float defaultFrameTime = 0.23f;
+        walk.addFrame(turtleSpritesheet.getSprite(0), defaultFrameTime);
+        walk.addFrame(turtleSpritesheet.getSprite(1), defaultFrameTime);
+        walk.setLoop(true);
+
+        AnimationState turtleShell = new AnimationState();
+        turtleShell.title = "TurtleShellSpin";
+        turtleShell.addFrame(turtleSpritesheet.getSprite(2), 0.1f);
+
+        StateMachine stateMachine = new StateMachine();
+        stateMachine.addState(walk);
+        stateMachine.addState(turtleShell);
+        stateMachine.setDefaultState(walk.title);
+        stateMachine.addState(walk.title, turtleShell.title, "squashMe");
+        turtle.addComponent(stateMachine);
+
+        RigidBody2d rigidBody2d = new RigidBody2d();
+        rigidBody2d.setBodyType(BodyTypes.DYNAMIC);
+        rigidBody2d.setMass(15.0f);
+        rigidBody2d.setFixedRotation(true);
+        turtle.addComponent(rigidBody2d);
+
+        CircleCollider circleCollider = new CircleCollider();
+        circleCollider.setRadius(0.13f);
+        circleCollider.setOffset(0.0f, -0.05f);
+        turtle.addComponent(circleCollider);
+
+        turtle.addComponent(new TurtleAI());
+
+        return turtle;
+    }
+
     @Override
     public void imgui() {
         Prefabs.addPrefabImGui(CustomPrefabs::generateMario,
@@ -414,5 +452,8 @@ public class CustomPrefabs implements ICustomPrefabs {
         Prefabs.sameLine();
         Prefabs.addPrefabImGui(CustomPrefabs::generatePipeLeft,
                 AssetPool.getSpritesheet("assets/images/spritesheets/pipes.png").getSprite(3));
+        Prefabs.sameLine();
+        Prefabs.addPrefabImGui(CustomPrefabs::generateTurtle,
+                AssetPool.getSpritesheet("assets/images/spritesheets/turtle.png").getSprite(0));
     }
 }

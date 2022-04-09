@@ -22,7 +22,7 @@ public class GoombaAI extends Component {
     private transient StateMachine stateMachine;
     private boolean dead;
 
-    private void stomp() {
+    public void stomp() {
         this.dead = true;
         this.velocity.zero();
         this.rigidBody2d.setVelocity(new Vector2f());
