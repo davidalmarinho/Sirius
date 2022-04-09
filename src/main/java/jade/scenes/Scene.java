@@ -37,9 +37,9 @@ public class Scene {
     // Game object that we are inspecting
     private boolean running;
 
-    private SceneInitializer sceneInitializer;
+    private ISceneInitializer sceneInitializer;
 
-    public Scene(SceneInitializer sceneInitializer) {
+    public Scene(ISceneInitializer sceneInitializer) {
         this.sceneInitializer = sceneInitializer;
         this.physics2d = new Physics2d();
         this.renderer = new Renderer();
@@ -311,7 +311,7 @@ public class Scene {
         return this.physics2d;
     }
 
-    public SceneInitializer getSceneInitializer() {
+    public ISceneInitializer getSceneInitializer() {
         return sceneInitializer;
     }
 

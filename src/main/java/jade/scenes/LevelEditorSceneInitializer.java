@@ -22,7 +22,7 @@ import java.util.Collection;
 /**
  * Logic to edit levels
  */
-public class LevelEditorSceneInitializer extends SceneInitializer {
+public class LevelEditorSceneInitializer implements ISceneInitializer {
     private Spritesheet sprites;
     private GameObject levelEditorStuff;
 

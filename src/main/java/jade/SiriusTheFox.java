@@ -10,8 +10,9 @@ import jade.rendering.Renderer;
 import jade.rendering.Shader;
 import jade.rendering.debug.DebugDraw;
 import jade.scenes.LevelEditorSceneInitializer;
+import jade.scenes.LevelSceneInitializer;
 import jade.scenes.Scene;
-import jade.scenes.SceneInitializer;
+import jade.scenes.ISceneInitializer;
 import jade.utils.AssetPool;
 import observers.EventSystem;
 import observers.Observer;
@@ -127,7 +128,7 @@ public class SiriusTheFox implements Observer {
         window.freeMemory();
     }
 
-    public static void changeScene(SceneInitializer sceneInitializer) {
+    public static void changeScene(ISceneInitializer sceneInitializer) {
         if (currentScene != null) {
             currentScene.destroy();
         }
@@ -144,7 +145,7 @@ public class SiriusTheFox implements Observer {
             case GAME_ENGINE_START_PLAY:
                 currentScene.save();
                 this.runtimePlaying = true;
-                changeScene(new LevelEditorSceneInitializer());
+                changeScene(new LevelSceneInitializer());
                 break;
             case GAME_ENGINE_STOP_PLAY:
                 this.runtimePlaying = false;
