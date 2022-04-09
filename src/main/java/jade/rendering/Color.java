@@ -32,4 +32,8 @@ public class Color {
     public void setColor(float r, float g, float b, float a) {
         this.color.set(r, g, b, a);
     }
+
+    public void setColor(Color newColor) {
+        this.color.set(newColor.getColor().x, newColor.getColor().y, newColor.getColor().z, newColor.getColor().w);
+    }
 }
