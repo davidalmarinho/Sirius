@@ -2,6 +2,7 @@ package jade.rendering.debug;
 
 import jade.SiriusTheFox;
 import jade.Window;
+import jade.rendering.Camera;
 import jade.rendering.Color;
 import jade.rendering.GlObjects;
 import jade.rendering.Shader;
@@ -17,7 +18,7 @@ import java.util.List;
 import static org.lwjgl.opengl.GL15.*;
 
 public class DebugDraw {
-    private static int MAX_LINES = 500;
+    private static int MAX_LINES = 3000;
     public static float lineThickness = 1.0f;
 
     private static List<Line2D> line2DList = new ArrayList<>();
@@ -50,7 +51,7 @@ public class DebugDraw {
             start();
             started = true;
         }
-        
+
         // Remove dead lines
         for (int i = 0; i < line2DList.size(); i++) {
             if (line2DList.get(i).beginFrame() < 0) {
@@ -65,7 +66,7 @@ public class DebugDraw {
      */
     public static void draw() {
         if (line2DList.isEmpty()) return;
-        
+
         int index = 0;
         float constant = 0.0025f * lineThickness;
         for (Line2D line : line2DList) {
@@ -124,16 +125,16 @@ public class DebugDraw {
         }
 
         GlObjects.replaceVboData(vboID, vertexArray);
-        
+
         // Use our shader
         shader.use();
         shader.uploadMat4f("uProjection", SiriusTheFox.getCurrentScene().getCamera().getProjectionMatrix());
         shader.uploadMat4f("uView", SiriusTheFox.getCurrentScene().getCamera().getViewMatrix());
-        
+
         // Bind vao
         GlObjects.bindVao(vaoID);
         GlObjects.enableAttributes(2);
-        
+
         // Draw the batch
         glDrawElements(GL_TRIANGLES, line2DList.size() * 12, GL_UNSIGNED_INT, 0);
         // Bresenham's line algorithm (Optimize lines drawing)
@@ -148,7 +149,7 @@ public class DebugDraw {
     // ===================================================================
     // Add Line2D
     // ===================================================================
-    
+
     public static void addLine2D(Vector2f from, Vector2f to) {
         addLine2D(from, to, Color.GREEN, 1);
     }
@@ -163,7 +164,19 @@ public class DebugDraw {
 
     public static void addLine2D(Vector2f from, Vector2f to, Color color, int lifetime) {
         if (line2DList.size() >= MAX_LINES) return;
-        DebugDraw.line2DList.add(new Line2D(from, to, color, lifetime));
+
+        Camera camera = SiriusTheFox.getCurrentScene().getCamera();
+        Vector2f unrealBottomLeftCamera = new Vector2f(camera.position).add(new Vector2f(-2.0f, -2.0f));
+        Vector2f unrealTopRightCamera  = new Vector2f(camera.position).add(
+                new Vector2f(camera.getProjectionSize()).mul(camera.getZoom())).add(new Vector2f(4.0f, 4.0f));
+
+        boolean lineInView = ((from.x >= unrealBottomLeftCamera.x && from.x <= unrealTopRightCamera.x)
+                && from.y >= unrealBottomLeftCamera.y && from.y <= unrealTopRightCamera.y)
+                || ((to.x >= unrealBottomLeftCamera.x && to.x <= unrealTopRightCamera.x)
+                && to.y >= unrealBottomLeftCamera.y && to.y <= unrealTopRightCamera.y);
+
+        if (lineInView)
+            DebugDraw.line2DList.add(new Line2D(from, to, color, lifetime));
     }
 
     // ===================================================================
@@ -233,9 +246,9 @@ public class DebugDraw {
     /**
      * Adds a circle to the screen
      *
-     * @param center center's coordinates of the circle
-     * @param radius how big the circle is
-     * @param color its color
+     * @param center   center's coordinates of the circle
+     * @param radius   how big the circle is
+     * @param color    its color
      * @param lifeTime how much time it will take to disappear in fps/second units
      */
     public static void addCircle(Vector2f center, float radius, Color color, int lifeTime) {

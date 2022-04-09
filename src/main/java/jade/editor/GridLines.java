@@ -21,15 +21,15 @@ public class GridLines extends Component {
 
         // Snap to Grid
         final float firstX = ((int) (cameraPos.x / Settings.GRID_WIDTH) - 1) * Settings.GRID_WIDTH; // -1 to move back 1 grid space
-        final float firstY = ((int) (cameraPos.y / Settings.GRID_HEIGHT) - 1) * Settings.GRID_HEIGHT;
+        final float firstY = ((int) (cameraPos.y / Settings.GRID_HEIGHT)) * Settings.GRID_HEIGHT;
 
         // Number of vertical and horizontal lines
         // int numVerticalLines = (int) (Window.getWidth() / projectionSize.x);
         final int numVerticalLines = (int) (projectionSize.x * camera.getZoom() / Settings.GRID_WIDTH) + 2;
         final int numHorizontalLines = (int) (projectionSize.y * camera.getZoom() / Settings.GRID_HEIGHT) + 2;
 
-        final float WIDTH = (int) (projectionSize.x * camera.getZoom()) + Settings.GRID_WIDTH * 2;
-        final float HEIGHT = (int) (projectionSize.y * camera.getZoom()) + Settings.GRID_HEIGHT * 2;
+        final float WIDTH = (int) (projectionSize.x * camera.getZoom()) + Settings.GRID_WIDTH * 5;
+        final float HEIGHT = (int) (projectionSize.y * camera.getZoom()) + Settings.GRID_HEIGHT * 5;
 
         // final int MAX_LINES = numVerticalLines > numHorizontalLines ? numVerticalLines : numHorizontalLines;
         final int MAX_LINES = Math.max(numVerticalLines, numHorizontalLines);
@@ -38,13 +38,11 @@ public class GridLines extends Component {
             float x = firstX + (Settings.GRID_WIDTH * i);
             float y = firstY + (Settings.GRID_HEIGHT * i);
 
-            if (i < numVerticalLines) {
+            if (i < numVerticalLines)
                 DebugDraw.addLine2D(new Vector2f(x, firstY), new Vector2f(x, firstY + HEIGHT), color);
-            }
 
-            if (i < numHorizontalLines) {
+            if (i < numHorizontalLines)
                 DebugDraw.addLine2D(new Vector2f(firstX, y), new Vector2f(firstX + WIDTH, y), color);
-            }
         }
     }
 }
