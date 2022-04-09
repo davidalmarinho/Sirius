@@ -32,6 +32,8 @@ public class SiriusTheFox implements Observer {
 
     private boolean runtimePlaying;
 
+    private ISceneInitializer customSceneInitializer;
+
     private SiriusTheFox() {
         System.out.println("Hello LWJGL " + Version.getVersion() + "!");
 
@@ -145,7 +147,10 @@ public class SiriusTheFox implements Observer {
             case GAME_ENGINE_START_PLAY:
                 currentScene.save();
                 this.runtimePlaying = true;
-                changeScene(new LevelSceneInitializer());
+                if (customSceneInitializer != null)
+                    changeScene(customSceneInitializer.build());
+                else
+                    changeScene(new LevelSceneInitializer());
                 break;
             case GAME_ENGINE_STOP_PLAY:
                 this.runtimePlaying = false;
@@ -162,6 +167,10 @@ public class SiriusTheFox implements Observer {
 
     public void addCustomizedPropertiesWindow(ICustomPropertiesWindow iCustomPropertiesWindow) {
         window.setICustomPropertiesWindow(iCustomPropertiesWindow);
+    }
+
+    public void addCustomLevelSceneInitializer(ISceneInitializer customSceneInitializer) {
+         this.customSceneInitializer = customSceneInitializer;
     }
 
     public void addRuntimeOptionCustomizedPrefabs(ICustomPrefabs iCustomPrefabs) {

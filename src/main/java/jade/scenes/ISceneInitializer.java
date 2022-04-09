@@ -5,4 +5,5 @@ public interface ISceneInitializer {
     void init(Scene scene);
     void loadResources(Scene scene);
     void imgui();
+    ISceneInitializer build();
 }

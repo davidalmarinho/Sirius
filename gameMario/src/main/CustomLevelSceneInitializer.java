@@ -1,16 +1,22 @@
-package jade.scenes;
+package main;
 
+import components.GameCamera;
 import gameobjects.GameObject;
 import gameobjects.components.SpriteRenderer;
 import jade.animations.StateMachine;
 import jade.rendering.spritesheet.Images;
 import jade.rendering.spritesheet.Spritesheet;
+import jade.scenes.ISceneInitializer;
+import jade.scenes.Scene;
 import jade.utils.AssetPool;
 
-public class LevelSceneInitializer implements ISceneInitializer {
+public class CustomLevelSceneInitializer implements ISceneInitializer {
     @Override
     public void init(Scene scene) {
-
+        GameObject cameraObject = scene.createGameObject("GameCamera");
+        cameraObject.addComponent(new GameCamera(scene.getCamera()));
+        cameraObject.start();
+        scene.addGameObject(cameraObject);
     }
 
     @Override
@@ -88,6 +94,6 @@ public class LevelSceneInitializer implements ISceneInitializer {
 
     @Override
     public ISceneInitializer build() {
-        return new LevelSceneInitializer();
+        return new CustomLevelSceneInitializer();
     }
 }

@@ -207,6 +207,11 @@ public class LevelEditorSceneInitializer implements ISceneInitializer {
         ImGui.end();
     }
 
+    @Override
+    public ISceneInitializer build() {
+        return new LevelSceneInitializer();
+    }
+
     public GameObject getLevelEditorStuff() {
         return levelEditorStuff;
     }

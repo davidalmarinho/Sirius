@@ -49,7 +49,7 @@ public class Scene {
     }
 
     public void init() {
-        this.camera = new Camera(new Vector2f(-250, 0));
+        this.camera = new Camera(new Vector2f(0, 0));
         this.sceneInitializer.loadResources(this);
         this.sceneInitializer.init(this);
     }
@@ -174,14 +174,8 @@ public class Scene {
      * @return the game object with the pretended component.
      */
     public <T extends Component> GameObject getGameObjectWith(Class<T> componentClass) {
-        return (GameObject) gameObjectList.stream().map(gameObject -> {
-            if (gameObject.hasComponent(componentClass))
-                return gameObject;
-            else {
-                System.err.println("Error: Couldn't find game object with '" + componentClass + "'.");
-                return null;
-            }
-        });
+        return gameObjectList.stream().filter(gameObject -> gameObject.hasComponent(componentClass))
+                .findFirst().orElse(null);
     }
 
     public Camera getCamera() {
