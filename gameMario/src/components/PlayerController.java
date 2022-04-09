@@ -8,7 +8,9 @@ import jade.SiriusTheFox;
 import jade.animations.StateMachine;
 import jade.input.KeyListener;
 import jade.rendering.Color;
+import jade.scenes.ISceneInitializer;
 import jade.scenes.LevelEditorSceneInitializer;
+import jade.scenes.LevelSceneInitializer;
 import jade.utils.AssetPool;
 import jade.utils.Settings;
 import org.jbox2d.dynamics.contacts.Contact;
@@ -134,7 +136,11 @@ public class PlayerController extends Component {
 
                 // If we are outside of screen's edges
             } else if (!deadGoingUp && gameObject.transform.position.y <= deadMinHeight) {
-                SiriusTheFox.changeScene(new LevelEditorSceneInitializer());
+                ISceneInitializer customSceneInitializer = SiriusTheFox.getCustomSceneInitializer();
+                if (customSceneInitializer != null)
+                    SiriusTheFox.changeScene(customSceneInitializer.build());
+                else
+                    SiriusTheFox.changeScene(new LevelSceneInitializer());
             }
 
             return;

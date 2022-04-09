@@ -26,6 +26,8 @@ public class GameCamera extends Component {
     @Override
     public void start() {
         this.player = SiriusTheFox.getCurrentScene().getGameObjectWith(PlayerController.class);
+        this.gameCamera.clearColor.setColor(skyColor);
+        this.undergroundYLevel = this.gameCamera.position.y - this.gameCamera.getProjectionSize().y - this.cameraBuffer;
     }
 
     @Override

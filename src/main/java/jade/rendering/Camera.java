@@ -17,7 +17,7 @@ public class Camera {
         this.position = position;
         this.projectionMatrix = new Matrix4f();
         this.viewMatrix = new Matrix4f();
-        this.clearColor = new Color(0.0f, 0.0f, 0.0f, 0.0f);
+        this.clearColor = new Color(1.0f, 1.0f, 1.0f, 1.0f);
 
         /* Since gl_Position = viewMatrix * projectionMatrix * aPos, we can use this formula to convert
          * screen coordinates to world coordinates doing:
