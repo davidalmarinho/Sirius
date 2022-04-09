@@ -394,7 +394,7 @@ public class CustomPrefabs implements ICustomPrefabs {
 
     public static GameObject generateTurtle(Sprite sprite, float xSize, float ySize) {
         Spritesheet turtleSpritesheet = AssetPool.getSpritesheet("assets/images/spritesheets/turtle.png");
-        GameObject turtle = generateSpriteObject(turtleSpritesheet.getSprite(4), 0.25f, 0.35f);
+        GameObject turtle = generateSpriteObject(turtleSpritesheet.getSprite(0), 0.25f, 0.35f);
 
         AnimationState walk = new AnimationState();
         walk.title = "Walk";
@@ -425,7 +425,7 @@ public class CustomPrefabs implements ICustomPrefabs {
         circleCollider.setOffset(0.0f, -0.05f);
         turtle.addComponent(circleCollider);
 
-        // turtle.addComponent(new TurtleAI());
+        turtle.addComponent(new TurtleAI());
 
         return turtle;
     }
