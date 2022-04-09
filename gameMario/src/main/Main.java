@@ -11,6 +11,7 @@ public class Main {
         // Add customized operations
         engine.addCustomizedPropertiesWindow(new MyPropertiesWindow());
         engine.addRuntimeOptionCustomizedPrefabs(new CustomPrefabs());
+        engine.addCustomLevelSceneInitializer(new CustomLevelSceneInitializer());
 
         // Run engine
         engine.run();

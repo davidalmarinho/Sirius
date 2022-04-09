@@ -6,12 +6,14 @@ import gameobjects.ICustomPrefabs;
 import jade.editor.ICustomPropertiesWindow;
 import jade.input.Input;
 import jade.input.MouseListener;
+import jade.rendering.Color;
 import jade.rendering.Renderer;
 import jade.rendering.Shader;
 import jade.rendering.debug.DebugDraw;
 import jade.scenes.LevelEditorSceneInitializer;
+import jade.scenes.LevelSceneInitializer;
 import jade.scenes.Scene;
-import jade.scenes.SceneInitializer;
+import jade.scenes.ISceneInitializer;
 import jade.utils.AssetPool;
 import observers.EventSystem;
 import observers.Observer;
@@ -30,6 +32,8 @@ public class SiriusTheFox implements Observer {
     private static Scene currentScene;
 
     private boolean runtimePlaying;
+
+    private ISceneInitializer customSceneInitializer;
 
     private SiriusTheFox() {
         System.out.println("Hello LWJGL " + Version.getVersion() + "!");
@@ -84,15 +88,16 @@ public class SiriusTheFox implements Observer {
 
             window.getFramebuffer().bind();
 
-            // Limpar a frame com uma cor
-            glClearColor(1f, 1f, 1f, 1f); /* Especifica a cor que o glClear vai usar para
-            limpar a color buffers */
+            // Cleanup the frame with a color
+            Color color = currentScene.getCamera().clearColor;
+            glClearColor(color.getColor().x, color.getColor().y, color.getColor().z, color.getColor().w); /* Specifies
+            the color that glClear will use to cleaup buffer's color.*/
 
-            glClear(GL_COLOR_BUFFER_BIT); /* Contar para o OpenGL como limpar a frame (Indicates the buffers
+            glClear(GL_COLOR_BUFFER_BIT); /* Tell OpenGL to cleanup the frame (Indicates the buffers
             currently enabled for color writing).*/
 
             if (dt >= 0) {
-                // System.out.println("FPS: " + 1.0f / dt);
+                System.out.println("FPS: " + 1.0f / dt);
                 if (runtimePlaying)
                     currentScene.update(dt);
                 else
@@ -127,7 +132,7 @@ public class SiriusTheFox implements Observer {
         window.freeMemory();
     }
 
-    public static void changeScene(SceneInitializer sceneInitializer) {
+    public static void changeScene(ISceneInitializer sceneInitializer) {
         if (currentScene != null) {
             currentScene.destroy();
         }
@@ -144,7 +149,10 @@ public class SiriusTheFox implements Observer {
             case GAME_ENGINE_START_PLAY:
                 currentScene.save();
                 this.runtimePlaying = true;
-                changeScene(new LevelEditorSceneInitializer());
+                if (customSceneInitializer != null)
+                    changeScene(customSceneInitializer.build());
+                else
+                    changeScene(new LevelSceneInitializer());
                 break;
             case GAME_ENGINE_STOP_PLAY:
                 this.runtimePlaying = false;
@@ -161,6 +169,10 @@ public class SiriusTheFox implements Observer {
 
     public void addCustomizedPropertiesWindow(ICustomPropertiesWindow iCustomPropertiesWindow) {
         window.setICustomPropertiesWindow(iCustomPropertiesWindow);
+    }
+
+    public void addCustomLevelSceneInitializer(ISceneInitializer customSceneInitializer) {
+         this.customSceneInitializer = customSceneInitializer;
     }
 
     public void addRuntimeOptionCustomizedPrefabs(ICustomPrefabs iCustomPrefabs) {
@@ -181,6 +193,10 @@ public class SiriusTheFox implements Observer {
 
     public static ImGuiLayer getImGuiLayer() {
         return get().window.getImGuiLayer();
+    }
+
+    public static ISceneInitializer getCustomSceneInitializer() {
+        return get().customSceneInitializer;
     }
 
     public static SiriusTheFox get() {

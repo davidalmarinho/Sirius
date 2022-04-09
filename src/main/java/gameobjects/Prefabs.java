@@ -6,7 +6,7 @@ import imgui.ImGui;
 import jade.SiriusTheFox;
 import jade.editor.MouseControls;
 import jade.scenes.LevelEditorSceneInitializer;
-import jade.scenes.SceneInitializer;
+import jade.scenes.ISceneInitializer;
 import jade.utils.Settings;
 import org.joml.Vector2f;
 
@@ -45,7 +45,7 @@ public class Prefabs {
 
             GameObject object = prefabs.generate(sprite, Settings.GRID_WIDTH, Settings.GRID_HEIGHT);
             // Attach object to the mouse cursor -- We have to get the LevelEditorStuff game object to accomplish this objective
-            SceneInitializer sceneInitializer = SiriusTheFox.getCurrentScene().getSceneInitializer();
+            ISceneInitializer sceneInitializer = SiriusTheFox.getCurrentScene().getSceneInitializer();
             if (sceneInitializer instanceof LevelEditorSceneInitializer)
                 ((LevelEditorSceneInitializer) sceneInitializer).getLevelEditorStuff()
                         .getComponent(MouseControls.class).pickupObject(object);
