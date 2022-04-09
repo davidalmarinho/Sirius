@@ -10,7 +10,9 @@ import imgui.ImGui;
 import jade.utils.AssetPool;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class GameObject {
     private static int ID_COUNTER = 0;
@@ -144,7 +146,10 @@ public class GameObject {
     }
 
     public void imgui() {
-        for (Component c : componentList) {
+        List<Component> alphabeticalOrder = componentList.stream()
+                .sorted(Comparator.comparing(component -> component.getClass().getSimpleName()))
+                .collect(Collectors.toList());
+        for (Component c : alphabeticalOrder) {
             // When a bar is opened, we parse to ImGui the fields of that class
             if (ImGui.collapsingHeader(c.getClass().getSimpleName()))
                 c.imgui();
