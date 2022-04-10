@@ -430,6 +430,38 @@ public class CustomPrefabs implements ICustomPrefabs {
         return turtle;
     }
 
+    public static GameObject generateFlagtop(Sprite sprite, float xSize, float ySize) {
+        GameObject flagtop = generateFlag(6);
+        flagtop.addComponent(new Flagpole(true));
+
+        return flagtop;
+    }
+
+    public static GameObject generateFlagpole(Sprite sprite, float xSize, float ySize) {
+        GameObject flagpole = generateFlag(33);
+        flagpole.addComponent(new Flagpole(false));
+        return flagpole;
+    }
+
+    private static GameObject generateFlag(int index) {
+        GameObject flag = generateSpriteObject(AssetPool.getSpritesheet("assets/images/spritesheets/items.png")
+                .getSprite(index), 0.25f, 0.25f);
+
+        RigidBody2d rigidBody2d = new RigidBody2d();
+        rigidBody2d.setBodyType(BodyTypes.DYNAMIC);
+        rigidBody2d.setFixedRotation(true);
+        rigidBody2d.setContinuousCollision(false);
+        flag.addComponent(rigidBody2d);
+
+        Box2DCollider boxCollider = new Box2DCollider();
+        boxCollider.setHalfSize(0.1f, 0.25f);
+        boxCollider.setOffset(-0.075f, 0.0f);
+        flag.addComponent(boxCollider);
+        // flag.addComponent(new Flagpole(true));
+
+        return flag;
+    }
+
     @Override
     public void imgui() {
         Prefabs.addPrefabImGui(CustomPrefabs::generateMario,
@@ -455,5 +487,11 @@ public class CustomPrefabs implements ICustomPrefabs {
         Prefabs.sameLine();
         Prefabs.addPrefabImGui(CustomPrefabs::generateTurtle,
                 AssetPool.getSpritesheet("assets/images/spritesheets/turtle.png").getSprite(0));
+
+        Prefabs.addPrefabImGui(CustomPrefabs::generateFlagtop,
+                AssetPool.getSpritesheet("assets/images/spritesheets/items.png").getSprite(6));
+        Prefabs.sameLine();
+        Prefabs.addPrefabImGui(CustomPrefabs::generateFlagpole,
+                AssetPool.getSpritesheet("assets/images/spritesheets/items.png").getSprite(33));
     }
 }

@@ -47,7 +47,8 @@ public class MouseControls extends Component {
     }
 
     public void place() {
-        GameObject newObj = this.holdingGameObject.copy();
+        // GameObject newObj = new GameObject(this.holdingGameObject);
+        GameObject newObj = this.holdingGameObject.copy(); // 23
 
         if (newObj.hasComponent(StateMachine.class)) newObj.getComponent(StateMachine.class).refreshTextures();
 
@@ -85,6 +86,9 @@ public class MouseControls extends Component {
      * @param gameObjectList List of the all game objects that will be modified based in a game object.
      */
     public void changeAllGameObjects(GameObject blueprintGameObject, List<GameObject> gameObjectList) {
+        //Vector2f bluePrintGoLastPosition = new Vector2f(SiriusTheFox.getImGuiLayer().getPropertiesWindow()
+        //        .getActiveGameObjectLastPosition());
+
         for (int i = gameObjectList.size() - 1; i >= 0; i--) {
             GameObject copyGo = blueprintGameObject.copy();
 
