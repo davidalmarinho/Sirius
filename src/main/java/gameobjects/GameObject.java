@@ -10,6 +10,7 @@ import imgui.ImGui;
 import jade.utils.AssetPool;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -30,6 +31,31 @@ public class GameObject {
 
         this.uid = ID_COUNTER++;
     }
+
+    /*public GameObject(GameObject copyGo) {
+        this(copyGo.name);
+
+        this.addComponent(new Transform());
+        this.transform = this.getComponent(Transform.class);
+
+
+        for (Component c : copyGo.componentList) {
+            c.generrateId();
+        }
+
+        this.componentList = new ArrayList<>(copyGo.componentList);
+        for (Component component : componentList) {
+            component.generrateId();
+        }
+
+        this.dead = copyGo.dead;
+        this.doSerialization = copyGo.doSerialization;
+
+        SpriteRenderer spriteRenderer = this.getComponent(SpriteRenderer.class);
+        if (spriteRenderer != null && spriteRenderer.getTexture() != null) {
+            spriteRenderer.setTexture(AssetPool.getTexture(spriteRenderer.getTexture().getFilePath()));
+        }
+    }*/
 
     public void start() {
         for (int i = 0; i < componentList.size(); i++) {
@@ -188,6 +214,10 @@ public class GameObject {
     public void generateUid() {
         this.uid = ID_COUNTER++;
     }
+
+    /*public int generateUid() {
+        return ID_COUNTER++;
+    }*/
 
     public static void init(int maxId) {
         ID_COUNTER = maxId;

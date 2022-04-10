@@ -1,13 +1,13 @@
 package jade.editor;
 
 import gameobjects.GameObject;
-import gameobjects.ICustomPrefabs;
 import gameobjects.components.Component;
 import gameobjects.components.SpriteRenderer;
 import gameobjects.components.game_components.Ground;
 import imgui.ImGui;
 import jade.SiriusTheFox;
 import jade.rendering.PickingTexture;
+import org.joml.Vector2f;
 import org.joml.Vector4f;
 import physics2d.components.Box2DCollider;
 import physics2d.components.CircleCollider;
@@ -18,15 +18,18 @@ import java.util.List;
 
 public class PropertiesWindow {
     private static PropertiesWindow instance;
-    private ICustomPrefabs iCustomPrefabs;
 
     private List<GameObject> activeGameObjectList;
     private GameObject activeGameObject = null;
+    // private boolean registryLastPosition;
+    // private Vector2f activeGameObjectLastPosition;
     private List<Vector4f> activeGameObjectOriginalColorList;
     private PickingTexture pickingTexture;
 
     private PropertiesWindow(PickingTexture pickingTexture) {
         this.activeGameObjectList = new ArrayList<>();
+        // this.activeGameObjectLastPosition = new Vector2f();
+        // this.registryLastPosition = true;
         this.activeGameObjectOriginalColorList = new ArrayList<>();
         this.pickingTexture = pickingTexture;
     }
@@ -35,6 +38,14 @@ public class PropertiesWindow {
         if ((activeGameObjectList.size() > 0 && activeGameObjectList.get(0) != null)
                 && MouseControls.allComponentsHaveSameType) {
             activeGameObject = activeGameObjectList.get(0);
+/*
+
+            if (registryLastPosition) {
+                activeGameObjectLastPosition = new Vector2f(activeGameObject.transform.position);
+                registryLastPosition = false;
+            }
+*/
+
             // Creates a Window
             ImGui.begin("Properties");
 
@@ -71,7 +82,10 @@ public class PropertiesWindow {
 
             activeGameObject.imgui();
             ImGui.end();
-        }
+        } /*else if (activeGameObjectList.isEmpty()) {
+            activeGameObjectLastPosition.zero();
+            registryLastPosition = true;
+        }*/
     }
 
     public void addActiveGameObject(GameObject activeGameObject) {
@@ -119,10 +133,6 @@ public class PropertiesWindow {
         addMenuItem(activeGameObject, "Add" + component.getClass().getSimpleName(), component);
     }
 
-    public void setInactive() {
-
-    }
-
     public GameObject getActiveGameObject() {
         return activeGameObjectList.size() == 1 ? this.activeGameObjectList.get(0) : null;
     }
@@ -133,6 +143,10 @@ public class PropertiesWindow {
             activeGameObjectList.add(activeGameObject);
         }
     }
+
+    /*public Vector2f getActiveGameObjectLastPosition() {
+        return activeGameObjectLastPosition;
+    }*/
 
     public PickingTexture getPickingTexture() {
         return pickingTexture;

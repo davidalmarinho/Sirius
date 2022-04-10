@@ -62,6 +62,11 @@ public class PlayerController extends Component {
     private transient float blinkTime = 0.0f;
     private transient SpriteRenderer spriteRenderer;
 
+    private boolean win;
+    private transient float timeToCastle = 4.5f;
+    private transient float walkTime = 2.2f;
+    private transient boolean sentEvent;
+
 
     @Override
     public void start() {
@@ -71,6 +76,14 @@ public class PlayerController extends Component {
 
         // Don't want to the Physics to control the Player. We will control the velocity and that stuff by ourselves
         this.rigidBody2d.setGravityScale(0.0f);
+    }
+
+    private void changeScene() {
+        ISceneInitializer customSceneInitializer = SiriusTheFox.getCustomSceneInitializer();
+        if (customSceneInitializer != null)
+            SiriusTheFox.changeScene(customSceneInitializer.build());
+        else
+            SiriusTheFox.changeScene(new LevelSceneInitializer());
     }
 
     public void powerup() {
@@ -120,6 +133,30 @@ public class PlayerController extends Component {
 
     @Override
     public void update(float dt) {
+        if (hasWon()) {
+            if (!isOnGround()) {
+                gameObject.transform.scale.x = -0.25f;
+                gameObject.transform.position.y -= dt;
+                stateMachine.trigger("stopRunning");
+                stateMachine.trigger("stopJumping");
+            } else {
+                if (this.walkTime > 0) {
+                    gameObject.transform.scale.x = 0.25f;
+                    gameObject.transform.position.x += dt;
+                    stateMachine.trigger("startRunning");
+                }
+                if (!AssetPool.getSound("assets/sounds/stage_clear.ogg").isPlaying())
+                    AssetPool.getSound("assets/sounds/stage_clear.ogg").play();
+
+                timeToCastle -= dt;
+                walkTime -= dt;
+
+                if (timeToCastle <= 0)
+                    changeScene();
+            }
+            return;
+        }
+
         // Death animation
         if (dead) {
             if (this.gameObject.transform.position.y < deadMaxHeight && deadGoingUp) {
@@ -136,11 +173,7 @@ public class PlayerController extends Component {
 
                 // If we are outside of screen's edges
             } else if (!deadGoingUp && gameObject.transform.position.y <= deadMinHeight) {
-                ISceneInitializer customSceneInitializer = SiriusTheFox.getCustomSceneInitializer();
-                if (customSceneInitializer != null)
-                    SiriusTheFox.changeScene(customSceneInitializer.build());
-                else
-                    SiriusTheFox.changeScene(new LevelSceneInitializer());
+                changeScene();
             }
 
             return;
@@ -287,6 +320,19 @@ public class PlayerController extends Component {
         }
     }
 
+    public void playWinAnimation(GameObject flagpole) {
+        if (!hasWon()) {
+            win = true;
+            velocity.set(0.0f, 0.0f);
+            acceleration.set(0.0f, 0.0f);
+            rigidBody2d.setVelocity(velocity);
+            rigidBody2d.setSensor(true);
+            rigidBody2d.setBodyType(BodyTypes.STATIC);
+            gameObject.transform.position.x = flagpole.transform.position.x;
+            AssetPool.getSound("assets/sounds/flagpole.ogg").play();
+        }
+    }
+
     public void setPosition(Vector2f newPosition) {
         this.gameObject.transform.position.set(newPosition);
         this.rigidBody2d.setPosition(newPosition);
@@ -305,7 +351,7 @@ public class PlayerController extends Component {
     }
 
     public boolean isHurtInvincible() {
-        return this.hurtInvincibilityTimeLeft > 0;
+        return this.hurtInvincibilityTimeLeft > 0 || hasWon();
     }
 
     public boolean isInvincible() {
@@ -313,6 +359,6 @@ public class PlayerController extends Component {
     }
 
     public boolean hasWon() {
-        return false;
+        return win;
     }
 }
