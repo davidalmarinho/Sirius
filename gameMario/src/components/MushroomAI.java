@@ -19,7 +19,8 @@ public class MushroomAI extends Component {
         if (gameObject.hasComponent(PlayerController.class)) {
             contact.setEnabled(false);
             if (!hitPlayer) {
-                gameObject.getComponent(PlayerController.class).powerup();
+                if (gameObject.getComponent(PlayerController.class).isSmall())
+                    gameObject.getComponent(PlayerController.class).powerup();
                 this.gameObject.destroy();
                 hitPlayer = true;
             }

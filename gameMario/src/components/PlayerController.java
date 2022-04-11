@@ -141,6 +141,7 @@ public class PlayerController extends Component {
                             ? new Vector2f(0.26f, 0.0f) : new Vector2f(-0.26f, 0.0f));
             GameObject fireball = CustomPrefabs.generateFireball(position);
             fireball.getComponent(Fireball.class).goingRight = this.gameObject.transform.scale.x > 0;
+            AssetPool.getSound("assets/sounds/fireball.ogg").play();
             SiriusTheFox.getCurrentScene().addGameObject(fireball);
         }
     }

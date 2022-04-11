@@ -16,7 +16,7 @@ public class GoombaAI extends Component {
     private transient RigidBody2d rigidBody2d;
     private float walkSpeed = 0.6f;
     private transient Vector2f velocity = new Vector2f();
-    private transient Vector2f accleration = new Vector2f();
+    private transient Vector2f acceleration = new Vector2f();
     private transient Vector2f terminalVelocity = new Vector2f();
     private transient float timeToKill = 0.5f;
     private transient StateMachine stateMachine;
@@ -48,13 +48,18 @@ public class GoombaAI extends Component {
         } else if (Math.abs(hitNormal.y) < 0.1f) {
             goingRight = hitNormal.x < 0;
         }
+
+        if (collidingObject.hasComponent(Fireball.class)) {
+            stomp();
+            collidingObject.getComponent(Fireball.class).disappear();
+        }
     }
 
     @Override
     public void start() {
         this.stateMachine = gameObject.getComponent(StateMachine.class);
         this.rigidBody2d = gameObject.getComponent(RigidBody2d.class);
-        this.accleration.y = SiriusTheFox.getPhysics().getGravity().y * 0.7f;
+        this.acceleration.y = SiriusTheFox.getPhysics().getGravity().y * 0.7f;
     }
 
     @Override
@@ -79,13 +84,13 @@ public class GoombaAI extends Component {
             velocity.x = -walkSpeed;
 
         if (isOnGround()) {
-            this.accleration.y = 0;
+            this.acceleration.y = 0;
             this.velocity.y = 0;
         } else {
-            this.accleration.y = SiriusTheFox.getPhysics().getGravity().y * 0.7f;
+            this.acceleration.y = SiriusTheFox.getPhysics().getGravity().y * 0.7f;
         }
 
-        this.velocity.y += this.accleration.y * dt;
+        this.velocity.y += this.acceleration.y * dt;
         this.velocity.y = Math.max(Math.min(this.velocity.y, this.terminalVelocity.y), -terminalVelocity.y);
         this.rigidBody2d.setVelocity(velocity);
     }
