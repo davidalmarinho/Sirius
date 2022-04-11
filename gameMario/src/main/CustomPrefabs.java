@@ -482,6 +482,34 @@ public class CustomPrefabs implements ICustomPrefabs {
         return fireball;
     }
 
+    public static GameObject generateCoin(Sprite sprite, float xSize, float ySize) {
+        Spritesheet items = AssetPool.getSpritesheet("assets/images/spritesheets/items.png");
+        GameObject coin = generateSpriteObject(items.getSprite(7), 0.25f, 0.25f);
+
+        AnimationState coinFlip = new AnimationState();
+        coinFlip.title = "CoinFlip";
+        float defaultFrameTime = 0.23f;
+        coinFlip.addFrame(items.getSprite(7), 0.57f);
+        coinFlip.addFrame(items.getSprite(8), defaultFrameTime);
+        coinFlip.addFrame(items.getSprite(9), defaultFrameTime);
+        coinFlip.setLoop(true);
+
+        StateMachine stateMachine = new StateMachine();
+        stateMachine.addState(coinFlip);
+        stateMachine.setDefaultState(coinFlip.title);
+        coin.addComponent(stateMachine);
+        coin.addComponent(new Coin());
+
+        CircleCollider circleCollider = new CircleCollider();
+        circleCollider.setRadius(0.12f);
+        coin.addComponent(circleCollider);
+        RigidBody2d rb = new RigidBody2d();
+        rb.setBodyType(BodyTypes.STATIC);
+        coin.addComponent(rb);
+
+        return coin;
+    }
+
     @Override
     public void imgui() {
         Prefabs.addPrefabImGui(CustomPrefabs::generateMario,
@@ -513,5 +541,8 @@ public class CustomPrefabs implements ICustomPrefabs {
         Prefabs.sameLine();
         Prefabs.addPrefabImGui(CustomPrefabs::generateFlagpole,
                 AssetPool.getSpritesheet("assets/images/spritesheets/items.png").getSprite(33));
+        Prefabs.sameLine();
+        Prefabs.addPrefabImGui(CustomPrefabs::generateCoin,
+                AssetPool.getSpritesheet("assets/images/spritesheets/items.png").getSprite(7));
     }
 }

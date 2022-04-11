@@ -8886,5 +8886,210 @@
     ],
     "dead": false,
     "doSerialization": true
+  },
+  {
+    "uid": 81,
+    "name": "Sprite_Object_Gen",
+    "componentList": [
+      {
+        "type": "gameobjects.components.Transform",
+        "properties": {
+          "position": {
+            "x": 2.125,
+            "y": 1.375
+          },
+          "scale": {
+            "x": 0.25,
+            "y": 0.25
+          },
+          "rotation": 0.0,
+          "zIndex": 0
+        }
+      },
+      {
+        "type": "gameobjects.components.SpriteRenderer",
+        "properties": {
+          "color": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0,
+            "w": 1.0
+          },
+          "sprite": {
+            "width": 16,
+            "height": 16,
+            "texture": {
+              "filePath": "assets/images/spritesheets/items.png",
+              "width": 112,
+              "height": 80
+            },
+            "textureCoordinates": [
+              {
+                "x": 0.14285715,
+                "y": 0.8
+              },
+              {
+                "x": 0.14285715,
+                "y": 0.6
+              },
+              {
+                "x": 0.0,
+                "y": 0.6
+              },
+              {
+                "x": 0.0,
+                "y": 0.8
+              }
+            ]
+          }
+        }
+      },
+      {
+        "type": "jade.animations.StateMachine",
+        "properties": {
+          "stateTransfers": {},
+          "animationStateList": [
+            {
+              "title": "CoinFlip",
+              "animationFrameList": [
+                {
+                  "sprite": {
+                    "width": 16,
+                    "height": 16,
+                    "texture": {
+                      "filePath": "assets/images/spritesheets/items.png",
+                      "width": 112,
+                      "height": 80
+                    },
+                    "textureCoordinates": [
+                      {
+                        "x": 0.14285715,
+                        "y": 0.8
+                      },
+                      {
+                        "x": 0.14285715,
+                        "y": 0.6
+                      },
+                      {
+                        "x": 0.0,
+                        "y": 0.6
+                      },
+                      {
+                        "x": 0.0,
+                        "y": 0.8
+                      }
+                    ]
+                  },
+                  "frameTime": 0.57
+                },
+                {
+                  "sprite": {
+                    "width": 16,
+                    "height": 16,
+                    "texture": {
+                      "filePath": "assets/images/spritesheets/items.png",
+                      "width": 112,
+                      "height": 80
+                    },
+                    "textureCoordinates": [
+                      {
+                        "x": 0.2857143,
+                        "y": 0.8
+                      },
+                      {
+                        "x": 0.2857143,
+                        "y": 0.6
+                      },
+                      {
+                        "x": 0.14285715,
+                        "y": 0.6
+                      },
+                      {
+                        "x": 0.14285715,
+                        "y": 0.8
+                      }
+                    ]
+                  },
+                  "frameTime": 0.23
+                },
+                {
+                  "sprite": {
+                    "width": 16,
+                    "height": 16,
+                    "texture": {
+                      "filePath": "assets/images/spritesheets/items.png",
+                      "width": 112,
+                      "height": 80
+                    },
+                    "textureCoordinates": [
+                      {
+                        "x": 0.42857143,
+                        "y": 0.8
+                      },
+                      {
+                        "x": 0.42857143,
+                        "y": 0.6
+                      },
+                      {
+                        "x": 0.2857143,
+                        "y": 0.6
+                      },
+                      {
+                        "x": 0.2857143,
+                        "y": 0.8
+                      }
+                    ]
+                  },
+                  "frameTime": 0.23
+                }
+              ],
+              "doesLoop": true
+            }
+          ],
+          "defaultStateTitle": "CoinFlip"
+        }
+      },
+      {
+        "type": "components.Coin",
+        "properties": {
+          "topY": {
+            "x": 1.375,
+            "y": 1.875
+          },
+          "coinSpeed": 1.4
+        }
+      },
+      {
+        "type": "physics2d.components.CircleCollider",
+        "properties": {
+          "radius": 0.12,
+          "offset": {
+            "x": 0.0,
+            "y": 0.0
+          }
+        }
+      },
+      {
+        "type": "physics2d.components.RigidBody2d",
+        "properties": {
+          "velocity": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "angularDamping": 0.8,
+          "linearDamping": 0.9,
+          "bodyType": "STATIC",
+          "mass": 0.0,
+          "friction": 0.1,
+          "angularVelocity": 0.0,
+          "gravityScale": 1.0,
+          "sensor": false,
+          "fixedRotation": false,
+          "continuousCollision": true
+        }
+      }
+    ],
+    "dead": false,
+    "doSerialization": true
   }
 ]
