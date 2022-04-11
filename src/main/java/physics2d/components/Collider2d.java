@@ -5,7 +5,7 @@ import org.joml.Vector2f;
 
 // TODO: 29/03/2022 Delete if is not being used.
 public abstract class Collider2d extends Component {
-    private Vector2f offset;
+    protected Vector2f offset;
 
     public Collider2d() {
         this.offset = new Vector2f();

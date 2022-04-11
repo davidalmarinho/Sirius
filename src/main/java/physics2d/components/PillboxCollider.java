@@ -16,7 +16,6 @@ public class PillboxCollider extends Collider2d {
 
     private float width = 0.1f;
     private float height = 0.2f;
-    private Vector2f offset;
 
     public PillboxCollider() {
         this.circle = new CircleCollider();

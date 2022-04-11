@@ -10,7 +10,6 @@ import org.joml.Vector2f;
 public class CircleCollider extends Collider2d {
     private float radius = 1.0f;
     private transient boolean resetFixtureNextFrame = false;
-    protected Vector2f offset;
 
     public CircleCollider() {
         this.offset = new Vector2f();
