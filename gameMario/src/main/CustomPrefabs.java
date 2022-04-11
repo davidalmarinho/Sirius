@@ -190,7 +190,7 @@ public class CustomPrefabs implements ICustomPrefabs {
         mario.addComponent(stateMachine);
 
         PillboxCollider pb = new PillboxCollider();
-        pb.setSize(0.39f, 0.31f);
+        pb.setSize(0.21f, 0.25f);
 
         RigidBody2d rigidBody2d = new RigidBody2d();
         rigidBody2d.setBodyType(BodyTypes.DYNAMIC);

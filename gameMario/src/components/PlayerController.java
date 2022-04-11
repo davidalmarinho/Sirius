@@ -322,7 +322,7 @@ public class PlayerController extends Component {
                 if (pillboxCollider != null) {
                     jumpBoost /= bigJumpBoostFactor;
                     walkSpeed /= bigJumpBoostFactor;
-                    pillboxCollider.setHeight(0.31f);
+                    pillboxCollider.setHeight(0.42f);
                 }
 
                 hurtInvincibilityTimeLeft = hurtInvincibilityTime;
