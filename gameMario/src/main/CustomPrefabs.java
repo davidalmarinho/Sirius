@@ -457,9 +457,27 @@ public class CustomPrefabs implements ICustomPrefabs {
         boxCollider.setHalfSize(0.1f, 0.25f);
         boxCollider.setOffset(-0.075f, 0.0f);
         flag.addComponent(boxCollider);
-        // flag.addComponent(new Flagpole(true));
 
         return flag;
+    }
+
+    public static GameObject generateFireball(Vector2f position) {
+        GameObject fireball = generateSpriteObject(AssetPool.getSpritesheet("assets/images/spritesheets/items.png")
+                .getSprite(32), 0.18f, 0.18f);
+        fireball.transform.position.set(position);
+
+        RigidBody2d rigidBody2d = new RigidBody2d();
+        rigidBody2d.setBodyType(BodyTypes.DYNAMIC);
+        rigidBody2d.setFixedRotation(true);
+        rigidBody2d.setContinuousCollision(false);
+        fireball.addComponent(rigidBody2d);
+
+        CircleCollider circleCollider = new CircleCollider();
+        circleCollider.setRadius(0.08f);
+        fireball.addComponent(circleCollider);
+        fireball.addComponent(new Fireball());
+
+        return fireball;
     }
 
     @Override
