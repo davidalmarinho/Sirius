@@ -39,6 +39,8 @@ public class Scene {
 
     private ISceneInitializer sceneInitializer;
 
+    private float time = 1.0f;
+
     public Scene(ISceneInitializer sceneInitializer) {
         this.sceneInitializer = sceneInitializer;
         this.physics2d = new Physics2d();
@@ -55,6 +57,15 @@ public class Scene {
     }
 
     public void editorUpdate(float dt) {
+        /*time -= dt;
+
+        if (time <= 0) {
+            for (GameObject gameObject : SiriusTheFox.getCurrentScene().getGameObjectList()) {
+                System.out.println("IDS: " + gameObject.getUid());
+            }
+            time = 1.0f;
+        }*/
+
         // Save and load file
         if (KeyListener.isKeyPressed(GLFW_KEY_LEFT_CONTROL) && KeyListener.isKeyDown(GLFW_KEY_S)) {
             save();

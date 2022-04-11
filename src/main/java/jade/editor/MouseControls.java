@@ -13,14 +13,12 @@ import jade.rendering.Color;
 import jade.rendering.PickingTexture;
 import jade.rendering.debug.DebugDraw;
 import jade.scenes.Scene;
+import jade.utils.AssetPool;
 import jade.utils.Settings;
 import org.joml.Vector2f;
 import org.joml.Vector2i;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 import static org.lwjgl.glfw.GLFW.*;
 
@@ -47,8 +45,7 @@ public class MouseControls extends Component {
     }
 
     public void place() {
-        // GameObject newObj = new GameObject(this.holdingGameObject);
-        GameObject newObj = this.holdingGameObject.copy(); // 23
+        GameObject newObj = this.holdingGameObject.copy();
 
         if (newObj.hasComponent(StateMachine.class)) newObj.getComponent(StateMachine.class).refreshTextures();
 
@@ -97,9 +94,19 @@ public class MouseControls extends Component {
             copyGo.removeComponent(SpriteRenderer.class);
 
             // Modify those components that we have removed
-            copyGo.addComponent(gameObjectList.get(i).getComponent(Transform.class));
+            copyGo.addComponent(gameObjectList.get(i).getComponent(Transform.class).copy());
             copyGo.transform = gameObjectList.get(i).transform.copy();
+
+            // Modify transforms
+            copyGo.transform.zIndex                       = blueprintGameObject.getComponent(Transform.class).zIndex;
+            copyGo.getComponent(Transform.class).zIndex   = blueprintGameObject.getComponent(Transform.class).zIndex;
+            copyGo.transform.rotation                     = blueprintGameObject.getComponent(Transform.class).rotation;
+            copyGo.getComponent(Transform.class).rotation = blueprintGameObject.getComponent(Transform.class).rotation;
+            copyGo.transform.scale                        = blueprintGameObject.getComponent(Transform.class).scale;
+            copyGo.getComponent(Transform.class).scale    = blueprintGameObject.getComponent(Transform.class).scale;
+
             copyGo.addComponent(gameObjectList.get(i).getComponent(SpriteRenderer.class));
+            copyGo.getComponent(SpriteRenderer.class).setDirty(true);
             copyGo.getComponent(SpriteRenderer.class).setColor(new Color(1.0f, 1.0f, 1.0f, 1.0f));
 
             // Mark it with NonPickable component --By this way, it will not be saved if

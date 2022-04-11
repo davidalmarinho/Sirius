@@ -6,7 +6,7 @@ import static org.lwjgl.opengl.GL30.*;
 
 public class FrameBuffer {
     private int fboID = 0; // Frame buffer object id
-    private Texture texture;
+    private Texture texture = null;
 
     public FrameBuffer(int width, int height) {
         // Generate framebuffer
@@ -15,9 +15,6 @@ public class FrameBuffer {
 
         // Create the texture to render the data to, and attach it to our framebuffer
         this.texture = new Texture(width, height);
-
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
         // Attach 2d texture to frame buffer
         glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D,

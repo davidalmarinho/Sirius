@@ -14,7 +14,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 
 public abstract class Component {
-    private transient static int ID_COUNTER = 0;
+    public transient static int ID_COUNTER = 0;
     private transient int uid = -1;
 
     /* Marked as transient, because each component as its parent game object and each
@@ -179,5 +179,9 @@ public abstract class Component {
 
     public int getUid() {
         return uid;
+    }
+
+    public void setUid(int uid) {
+        this.uid = uid;
     }
 }
