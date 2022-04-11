@@ -1,6 +1,7 @@
 package components;
 
 import gameobjects.GameObject;
+import gameobjects.Prefabs;
 import gameobjects.components.Component;
 import gameobjects.components.SpriteRenderer;
 import gameobjects.components.game_components.Ground;
@@ -13,6 +14,7 @@ import jade.scenes.LevelEditorSceneInitializer;
 import jade.scenes.LevelSceneInitializer;
 import jade.utils.AssetPool;
 import jade.utils.Settings;
+import main.CustomPrefabs;
 import org.jbox2d.dynamics.contacts.Contact;
 import org.joml.Vector2f;
 import org.lwjgl.glfw.GLFW;
@@ -21,6 +23,7 @@ import physics2d.Physics2d;
 import physics2d.components.PillboxCollider;
 import physics2d.components.RigidBody2d;
 
+import static org.lwjgl.glfw.GLFW.GLFW_KEY_E;
 import static org.lwjgl.glfw.GLFW.GLFW_KEY_SPACE;
 
 public class PlayerController extends Component {
@@ -129,6 +132,18 @@ public class PlayerController extends Component {
         float yVal = playerState == PlayerState.SMALL ? -0.14f : -0.24f;
 
         return Physics2d.isOnGround(this.gameObject, innerPlayerWidth, yVal);
+    }
+
+    private void shootFireballs() {
+        if (KeyListener.isKeyDown(GLFW_KEY_E) && playerState == PlayerState.FIRE && Fireball.canSpawn()) {
+            Vector2f position = new Vector2f(this.gameObject.transform.position)
+                    .add(this.gameObject.transform.scale.x > 0
+                            ? new Vector2f(0.26f, 0.0f) : new Vector2f(-0.26f, 0.0f));
+            GameObject fireball = CustomPrefabs.generateFireball(position);
+            fireball.getComponent(Fireball.class).goingRight = this.gameObject.transform.scale.x > 0;
+            AssetPool.getSound("assets/sounds/fireball.ogg").play();
+            SiriusTheFox.getCurrentScene().addGameObject(fireball);
+        }
     }
 
     @Override
@@ -278,6 +293,8 @@ public class PlayerController extends Component {
             stateMachine.trigger("jump");
         else
             stateMachine.trigger("stopJumping");
+
+        shootFireballs();
     }
 
     public void hurt() {

@@ -73,6 +73,7 @@ public class CustomLevelSceneInitializer implements ISceneInitializer {
         AssetPool.addSound("assets/sounds/stomp.ogg", false);
         AssetPool.addSound("assets/sounds/kick.ogg", false);
         AssetPool.addSound("assets/sounds/invincible.ogg", false);
+        AssetPool.addSound("assets/sounds/fireball.ogg", false);
 
         // Get the texture that was already loaded after saving the saving file with Gson
         for (GameObject g : scene.getGameObjectList()) {

@@ -50,6 +50,11 @@ public class TurtleAI extends Component {
             if (moving && dead)
                 AssetPool.getSound("assets/sounds/bump.ogg").play();
         }
+
+        if (collidingObject.hasComponent(Fireball.class)) {
+            stomp();
+            collidingObject.getComponent(Fireball.class).disappear();
+        }
     }
 
     @Override
