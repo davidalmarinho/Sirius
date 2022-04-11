@@ -21,6 +21,8 @@ public class GoombaAI extends Component {
     private transient float timeToKill = 0.5f;
     private transient StateMachine stateMachine;
     private boolean dead;
+    private boolean checkGoombaLayer = true;
+    private boolean underground;
 
     public void stomp() {
         this.dead = true;
@@ -69,10 +71,23 @@ public class GoombaAI extends Component {
 
     @Override
     public void update(float dt) {
+        if (checkGoombaLayer) {
+            if (gameObject.transform.position.y < -SiriusTheFox.getCurrentScene()
+                    .getGameObject("GameCamera").getComponent(GameCamera.class).getCameraBuffer()) {
+                underground = true;
+            }
+            checkGoombaLayer = false;
+        }
+
         // Outside camera's edges, we will not update the Goomba
         Camera camera = SiriusTheFox.getCurrentScene().getCamera();
         if (this.gameObject.transform.position.x > camera.position.x + camera.getProjectionSize().x * camera.getZoom())
             return;
+
+        if (SiriusTheFox.getCurrentScene().getGameObject("GameCamera")
+                .getComponent(GameCamera.class).isUnderground() != underground)
+            return;
+
 
         if (dead) {
             timeToKill -= dt;

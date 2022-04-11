@@ -22,9 +22,29 @@ public class TurtleAI extends Component {
     private transient boolean moving;
     private transient StateMachine stateMachine;
     private float movingDebounce = 0.32f;
+    private boolean checkTurtleLayer = true;
+    private boolean undergroundTurtle;
+    private float destroyTime = 2.0f;
 
     @Override
     public void preSolve(GameObject collidingObject, Contact contact, Vector2f hitNormal) {
+        PlayerController playerController = collidingObject.getComponent(PlayerController.class);
+        if (playerController != null) {
+            if (movingDebounce < 0 && !playerController.isDead() &&
+                    !playerController.isHurtInvincible() &&
+                    (moving || !dead) && hitNormal.y < 0.58f) {
+                playerController.hurt();
+
+                if (!playerController.isDead())
+                    contact.setEnabled(false);
+            } else if (!playerController.isDead() && playerController.isHurtInvincible()) {
+                contact.setEnabled(false);
+            }
+        }
+    }
+
+    @Override
+    public void beginCollision(GameObject collidingObject, Contact contact, Vector2f hitNormal) {
         GoombaAI goomba = collidingObject.getComponent(GoombaAI.class);
         if (dead && moving && goomba != null) {
             goomba.stomp();
@@ -44,9 +64,7 @@ public class TurtleAI extends Component {
                     !playerController.isHurtInvincible() &&
                     (moving || !dead) && hitNormal.y < 0.58f) {
                 playerController.hurt();
-                if (!playerController.isDead()) {
-                    contact.setEnabled(false);
-                }
+
             } else if (!playerController.isDead() && !playerController.isHurtInvincible()) {
                 if (dead && hitNormal.y > 0.58f) {
                     playerController.enemyBounce();
@@ -89,6 +107,29 @@ public class TurtleAI extends Component {
 
     @Override
     public void update(float dt) {
+        // Only remove if we are in the same layer as it is.
+        if (SiriusTheFox.getCurrentScene().getGameObject("GameCamera")
+                .getComponent(GameCamera.class).isUnderground() == undergroundTurtle) {
+
+            if (this.gameObject.transform.position.x <
+                    SiriusTheFox.getCurrentScene().getCamera().position.x - 0.5f) {
+                destroyTime -= dt;
+
+                if (destroyTime < 0)
+                    this.gameObject.destroy();
+            } else {
+                destroyTime = 2.0f;
+            }
+        }
+
+        if (checkTurtleLayer) {
+            if (gameObject.transform.position.y < -SiriusTheFox.getCurrentScene()
+                    .getGameObject("GameCamera").getComponent(GameCamera.class).getCameraBuffer()) {
+                undergroundTurtle = true;
+            }
+            checkTurtleLayer = false;
+        }
+
         movingDebounce -= dt;
         Camera camera = SiriusTheFox.getCurrentScene().getCamera();
         if (this.gameObject.transform.position.x >
@@ -120,16 +161,10 @@ public class TurtleAI extends Component {
         this.velocity.y += this.acceleration.y * dt;
         this.velocity.y = Math.max(Math.min(this.velocity.y, this.terminalVelocity.y), -terminalVelocity.y);
         this.rigidBody2d.setVelocity(velocity);
-
-        if (this.gameObject.transform.position.x <
-                SiriusTheFox.getCurrentScene().getCamera().position.x - 0.5f) {// ||
-            //this.gameObject.transform.position.y < 0.0f) {
-            this.gameObject.destroy();
-        }
     }
 
     private boolean isOnGround() {
-        float innerPlayerWidth = 0.25f * 0.6f;
+        float innerPlayerWidth = 0.25f * 0.7f;
         float yVal = -0.2f;
 
         return Physics2d.isOnGround(this.gameObject, innerPlayerWidth, yVal);
@@ -137,7 +172,8 @@ public class TurtleAI extends Component {
 
     private void stomp() {
         dead = true;
-        moving = true;
+        moving = false;
+        this.velocity.zero();
         rigidBody2d.setVelocity(velocity);
         rigidBody2d.setAngularVelocity(0.0f);
         rigidBody2d.setGravityScale(0.0f);

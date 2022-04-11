@@ -93,6 +93,9 @@ public class Pipe extends Component {
             if (playerEntering) {
                 AssetPool.getSound("assets/sounds/pipe.ogg").play();
                 collidingPlayer.setPosition(getPlayerPosition(connectingPipe));
+                GameCamera gameCamera = SiriusTheFox.getCurrentScene()
+                        .getGameObject("GameCamera").getComponent(GameCamera.class);
+                gameCamera.mayChangeHighestX(true);
             }
         }
     }

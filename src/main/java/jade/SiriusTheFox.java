@@ -203,4 +203,8 @@ public class SiriusTheFox implements Observer {
 
         return instance;
     }
+
+    public boolean isRuntimePlaying() {
+        return runtimePlaying;
+    }
 }
