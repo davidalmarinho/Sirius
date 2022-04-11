@@ -2,6 +2,7 @@ package components;
 
 import gameobjects.GameObject;
 import gameobjects.components.Component;
+import gameobjects.components.game_components.Ground;
 import jade.utils.AssetPool;
 import org.jbox2d.dynamics.contacts.Contact;
 import org.joml.Vector2f;
@@ -16,20 +17,26 @@ public class MushroomAI extends Component {
 
     @Override
     public void preSolve(GameObject gameObject, Contact contact, Vector2f contactNormal) {
-        if (gameObject.hasComponent(PlayerController.class)) {
+        PlayerController playerController = gameObject.getComponent(PlayerController.class);
+        if (playerController != null) {
             contact.setEnabled(false);
             if (!hitPlayer) {
-                if (gameObject.getComponent(PlayerController.class).isSmall())
-                    gameObject.getComponent(PlayerController.class).powerup();
+                if (playerController.isSmall()) {
+                    playerController.powerup();
+                } else {
+                    AssetPool.getSound("assets/sounds/coin.ogg").play();
+                }
                 this.gameObject.destroy();
                 hitPlayer = true;
             }
+        } else if (gameObject.getComponent(Ground.class) == null) {
+            contact.setEnabled(false);
+            return;
         }
 
-        // if the contact was more horizontally than vertically
-        if (Math.abs(contactNormal.y) < 0.1f)
-            // Means we have been hit on the left side
+        if (Math.abs(contactNormal.y) < 0.1f) {
             goingRight = contactNormal.x < 0;
+        }
     }
 
     @Override

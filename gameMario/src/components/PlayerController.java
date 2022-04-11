@@ -99,7 +99,7 @@ public class PlayerController extends Component {
                 // Turn the forces stronger
                 jumpBoost *= bigJumpBoostFactor;
                 walkSpeed *= bigJumpBoostFactor;
-                pb.setHeight(0.63f);
+                pb.setHeight(0.42f);
             }
         } else if (playerState == PlayerState.BIG) {
             playerState = PlayerState.FIRE;
@@ -322,7 +322,7 @@ public class PlayerController extends Component {
                 if (pillboxCollider != null) {
                     jumpBoost /= bigJumpBoostFactor;
                     walkSpeed /= bigJumpBoostFactor;
-                    pillboxCollider.setHeight(0.42f);
+                    pillboxCollider.setHeight(0.25f);
                 }
 
                 hurtInvincibilityTimeLeft = hurtInvincibilityTime;

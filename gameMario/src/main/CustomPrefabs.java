@@ -201,6 +201,8 @@ public class CustomPrefabs implements ICustomPrefabs {
         mario.addComponent(rigidBody2d);
         mario.addComponent(pb);
 
+        mario.transform.zIndex = 10;
+
         return mario;
     }
 
