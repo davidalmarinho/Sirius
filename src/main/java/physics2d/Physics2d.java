@@ -150,7 +150,7 @@ public class Physics2d {
         body.createFixture(fixtureDef);
     }
 
-    private void resetCircleCollider(RigidBody2d rb, CircleCollider circleCollider) {
+    public void resetCircleCollider(RigidBody2d rb, CircleCollider circleCollider) {
         Body body = rb.getRawBody();
 
         // If there aren't any colliders, we will cancel this action
@@ -185,8 +185,7 @@ public class Physics2d {
         assert body != null : "Raw body must not be null.";
 
          addBox2DCollider(rb, pillboxCollider.getBoxCollider());
-         addCircleCollider(rb, pillboxCollider.getTopCircle());
-         addCircleCollider(rb, pillboxCollider.getBottomCircle());
+         addCircleCollider(rb, pillboxCollider.getCircle());
     }
 
     public void resetPillboxCollider(RigidBody2d rb, PillboxCollider pillboxCollider) {
