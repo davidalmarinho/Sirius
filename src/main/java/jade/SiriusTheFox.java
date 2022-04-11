@@ -70,7 +70,7 @@ public class SiriusTheFox implements Observer {
             glDisable(GL_BLEND);
             window.getPickingTexture().enableWriting();
             glViewport(0, 0, 1920, 1080);
-            glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+            glClearColor(0f, 0f, 0f, 0f);
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
             Renderer.bindShader(pickingShader);
 
@@ -82,8 +82,6 @@ public class SiriusTheFox implements Observer {
             // ========================================
             // Render pass 2. render actual game
             // ========================================
-            Renderer.bindShader(defaultShader);
-
             DebugDraw.beginFrame();
 
             window.getFramebuffer().bind();
@@ -97,6 +95,7 @@ public class SiriusTheFox implements Observer {
             currently enabled for color writing).*/
 
             if (dt >= 0) {
+                Renderer.bindShader(defaultShader);
                 // System.out.println("FPS: " + 1.0f / dt);
                 if (runtimePlaying)
                     currentScene.update(dt);

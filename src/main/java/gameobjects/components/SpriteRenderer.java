@@ -97,6 +97,10 @@ public class SpriteRenderer extends Component {
         this.dirty = dirty;
     }
 
+    public Sprite getSprite() {
+        return sprite;
+    }
+
     public static class Builder {
         private Vector4f color = new Vector4f(1, 1, 1, 1);
         private Sprite sprite = Sprite.Builder.newInstance().build();
