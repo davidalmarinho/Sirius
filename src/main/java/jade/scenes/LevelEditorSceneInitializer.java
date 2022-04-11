@@ -32,6 +32,10 @@ public class LevelEditorSceneInitializer implements ISceneInitializer {
 
     @Override
     public void init(Scene scene) {
+        // Stop all sounds that were playing before
+        for (Sound sound : AssetPool.getAllSounds())
+            sound.stop();
+
         sprites = AssetPool.getSpritesheet(Images.DECORATIONS_AND_BLOCKS.getSpritesheet());
         Spritesheet gizmos = AssetPool.getSpritesheet(Images.GIZMOS.getTexture());
 

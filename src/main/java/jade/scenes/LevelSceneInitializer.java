@@ -8,6 +8,7 @@ import jade.rendering.spritesheet.Spritesheet;
 import jade.utils.AssetPool;
 
 public class LevelSceneInitializer implements ISceneInitializer {
+
     @Override
     public void init(Scene scene) {
 

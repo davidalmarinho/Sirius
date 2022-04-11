@@ -148,6 +148,11 @@ public class PlayerController extends Component {
 
     @Override
     public void update(float dt) {
+        if (!dead)
+            AssetPool.getSound("assets/sounds/main-theme-overworld.ogg").play();
+        else
+            AssetPool.getSound("assets/sounds/main-theme-overworld.ogg").stop();
+
         if (hasWon()) {
             if (!isOnGround()) {
                 gameObject.transform.scale.x = -0.25f;
