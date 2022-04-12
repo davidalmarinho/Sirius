@@ -136,8 +136,25 @@ public class Physics2d {
         Vector2f halfSize = new Vector2f(box2DCollider.getHalfSize()).mul(0.5f);
 
         Vector2f offset = box2DCollider.getOffset();
-        Vector2f origin = new Vector2f(box2DCollider.getOrigin());
-        shape.setAsBox(halfSize.x, halfSize.y, new Vec2(offset.x, offset.y), 0);
+        Vec2[] vertices = new Vec2[8];
+        float constant = 0.001f;
+
+        vertices[0] = new Vec2(offset.x - halfSize.x + constant, offset.y + halfSize.y);
+        vertices[1] = new Vec2(offset.x + halfSize.x - constant, offset.y + halfSize.y);
+        vertices[2]= new Vec2(offset.x + halfSize.x, offset.y + halfSize.y - constant);
+        vertices[3] = new Vec2(offset.x + halfSize.x, offset.y - halfSize.y + constant);
+        vertices[4] = new Vec2(offset.x + halfSize.x - constant, offset.y - halfSize.y);
+        vertices[5] = new Vec2(offset.x - halfSize.x + constant, offset.y - halfSize.y);
+        vertices[6] = new Vec2(offset.x - halfSize.x, offset.y - halfSize.y + constant);
+        vertices[7] = new Vec2(offset.x - halfSize.x, offset.y + halfSize.y - constant);
+
+        /*vertices[0] = new Vec2(offset.x - halfSize.x, offset.y + halfSize.y);
+        vertices[1] = new Vec2(offset.x + halfSize.x, offset.y + halfSize.y);
+        vertices[2] = new Vec2(offset.x + halfSize.x, offset.y - halfSize.y);
+        vertices[3] = new Vec2(offset.x - halfSize.x, offset.y - halfSize.y);*/
+
+        shape.set(vertices, 8);
+        // shape.setAsBox(halfSize.x, halfSize.y, new Vec2(offset.x, offset.y), 0);
 
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.shape = shape;
@@ -260,8 +277,8 @@ public class Physics2d {
             DebugDraw.addLine2D(raycast2Begin, raycast2End, new Color(1.0f, 0.0f, 0.0f));
         }
 
-        return (info.hitSomething && info.hitObject != null && info.hitObject.hasComponent(Ground.class)
-                && info2.hitSomething && info2.hitObject != null && info2.hitObject.hasComponent(Ground.class));
+        return ((info.hitSomething && info.hitObject != null && info.hitObject.hasComponent(Ground.class))
+                 || (info2.hitSomething && info2.hitObject != null && info2.hitObject.hasComponent(Ground.class)));
     }
 
     public static boolean isOnGround(GameObject gameObject, float innerObjWidth, float height) {

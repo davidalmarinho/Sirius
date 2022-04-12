@@ -148,9 +148,9 @@ public class PlayerController extends Component {
 
     @Override
     public void update(float dt) {
-        if (!dead)
+        if (!dead && !hasWon())
             AssetPool.getSound("assets/sounds/main-theme-overworld.ogg").play();
-        else
+        else if (dead || hasWon())
             AssetPool.getSound("assets/sounds/main-theme-overworld.ogg").stop();
 
         if (hasWon()) {
@@ -241,7 +241,7 @@ public class PlayerController extends Component {
             groundDebounce -= dt;
             this.acceleration.y = SiriusTheFox.getPhysics().getGravity().y * 0.7f;
 
-            // If we are in the ground
+        // If we are in the ground
         } else {
             this.velocity.y = 0.0f;
             this.acceleration.y = 0.0f;
