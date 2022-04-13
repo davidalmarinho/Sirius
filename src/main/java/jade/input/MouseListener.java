@@ -1,7 +1,6 @@
 package jade.input;
 
 import jade.SiriusTheFox;
-import jade.Window;
 import jade.rendering.Camera;
 import org.joml.Matrix4f;
 import org.joml.Vector2f;
@@ -13,6 +12,7 @@ import static org.lwjgl.glfw.GLFW.GLFW_RELEASE;
 public class MouseListener {
     private static MouseListener instance;
     private double xPos, yPos, lastX, lastY;
+    private double gameViewportX, gameViewportY, lastGameViewportX, lastGameViewportY;
     private double scrollX, scrollY;
     private final boolean[] mouseButtons = new boolean[9];
     private final boolean[] lastMouseButtons = new boolean[9];
@@ -32,6 +32,13 @@ public class MouseListener {
         this.lastY    = 0.0;
         this.scrollX  = 0.0;
         this.scrollY  = 0.0;
+
+        this.gameViewportX     = 0.0;
+        this.gameViewportY     = 0.0;
+        this.lastGameViewportX = 0.0;
+        this.lastGameViewportY = 0.0;
+
+
         this.dragging = false;
     }
 
@@ -55,10 +62,16 @@ public class MouseListener {
         }
 
         // Receive actual values -- actual coordinates
-        get().lastX = xPos;
-        get().lastY = yPos;
-        get().xPos = xPos;
-        get().yPos = yPos;
+        get().lastX = get().xPos;
+        get().lastY = get().yPos;
+        get().xPos  = xPos;
+        get().yPos  = yPos;
+
+        Vector2f viewportCoords = screenToGameViewport(new Vector2f((float) xPos, (float) yPos));
+        get().lastGameViewportX = get().gameViewportX;
+        get().lastGameViewportY = get().gameViewportY;
+        get().gameViewportX = viewportCoords.x;
+        get().gameViewportY = viewportCoords.y;
     }
 
     /**
@@ -103,6 +116,11 @@ public class MouseListener {
         get().yPos    = 0.0;
         get().lastX   = 0.0;
         get().lastY   = 0.0;
+
+        get().gameViewportX     = 0.0;
+        get().gameViewportY     = 0.0;
+        get().lastGameViewportX = 0.0;
+        get().lastGameViewportY = 0.0;
 
         get().mouseButtonsDown = 0;
         get().dragging = false;
@@ -236,6 +254,14 @@ public class MouseListener {
 
     public static Vector2f getScreen() {
         return new Vector2f(getScreenX(), getScreenY());
+    }
+
+    public static float getGameViewportDeltaX() {
+        return (float) (get().lastGameViewportX - get().gameViewportX);
+    }
+
+    public static float getGameViewportDeltaY() {
+        return (float) (get().gameViewportY - get().lastGameViewportY);
     }
 
     public static float getScrollX() {

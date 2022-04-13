@@ -234,7 +234,8 @@ public class MouseControls extends Component {
             this.debounce = 0.2f;
 
             // If we are dragging and pressing the mouse's left button
-        } else if (MouseListener.isDragging() && MouseListener.isMouseButtonPressed(GLFW_MOUSE_BUTTON_LEFT)) {
+        } else if (MouseListener.isDragging() && MouseListener.isMouseButtonPressed(GLFW_MOUSE_BUTTON_LEFT)
+                    && SiriusTheFox.getImGuiLayer().getPropertiesWindow().getActiveGameObjectList().size() != 1) {
             // If we aren't dragging
             if (!boxSelectSet) {
                 SiriusTheFox.getImGuiLayer().getPropertiesWindow().clearSelected();
@@ -248,7 +249,8 @@ public class MouseControls extends Component {
             Vector2f halfSize = new Vector2f(boxSelectEndWorld).sub(boxSelectStartWorld).mul(0.5f);
             DebugDraw.addBox2D(new Vector2f(boxSelectStartWorld).add(halfSize), new Vector2f(halfSize).mul(2.0f), 0.0f);
 
-        } else if (boxSelectSet) {
+        } else if (boxSelectSet
+                && SiriusTheFox.getImGuiLayer().getPropertiesWindow().getActiveGameObjectList().size() != 1) {
             PickingTexture pickingTexture = SiriusTheFox.getImGuiLayer().getPropertiesWindow().getPickingTexture();
             boxSelectSet = false;
             int screenStartX = (int) boxSelectStart.x;
