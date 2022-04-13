@@ -109,16 +109,10 @@ public class MouseListener {
         // Arrays.fill(get().mouseButtons, false);
     }
 
-    /**
-     * Gets the world coordinates by using the formula:
-     *     ScreenCoordinates = Position * ViewMatrix * ProjectionMatrix
-     * @param screenCoordinates
-     * @return the actually world coordinates.
-     */
-    public static Vector2f screenToWorld(Vector2f screenCoordinates) {
+    private static Vector2f screenToWorld(Vector2f screenCoordinates, float width, float height) {
         Vector2f normalizedScreenCoordinates = new Vector2f(
-                screenCoordinates.x / Window.getWidth(),
-                screenCoordinates.y / Window.getHeight()
+                screenCoordinates.x / width,
+                screenCoordinates.y / height
         );
 
         normalizedScreenCoordinates.mul(2.0f).sub(new Vector2f(1.0f, 1.0f)); // [-1, 1]
@@ -131,6 +125,22 @@ public class MouseListener {
         tmp.mul(inverseViewMatrix.mul(inverseProjectionMatrix));
 
         return new Vector2f(tmp.x, tmp.y);
+    }
+
+    /**
+     * Gets the world coordinates by using the formula:
+     *     ScreenCoordinates = Position * ViewMatrix * ProjectionMatrix
+     * Perfect to use, for example, for a shooting system.
+     *
+     * @param screenCoordinates The screen coordinates.
+     * @return the actually world coordinates.
+     */
+    public static Vector2f screenToWorld(Vector2f screenCoordinates) {
+        return screenToWorld(screenCoordinates, SiriusTheFox.getWindow().getWidth(), SiriusTheFox.getWindow().getHeight());
+    }
+
+    public static Vector2f screenToGameViewport(Vector2f screenCoordinates) {
+        return screenToWorld(screenCoordinates, SiriusTheFox.getWindow().getMaxWidth(), SiriusTheFox.getWindow().getMaxHeight());
     }
 
     /**
@@ -149,7 +159,7 @@ public class MouseListener {
         Vector2f windowSpace = new Vector2f(normalizedDeviceCoordsSpacePos.x, normalizedDeviceCoordsSpacePos.y)
                 .mul(1.0f / normalizedDeviceCoordsSpacePos.w);
         windowSpace.add(new Vector2f(1.0f, 1.0f)).mul(0.5f);
-        windowSpace.mul(new Vector2f(Window.getWidth(), Window.getHeight()));
+        windowSpace.mul(new Vector2f(SiriusTheFox.getWindow().getWidth(), SiriusTheFox.getWindow().getHeight()));
 
         return windowSpace;
     }
@@ -186,24 +196,42 @@ public class MouseListener {
         return new Vector2f(tmp.x, tmp.y);
     }
 
-    public static float getScreenX() {
+    private static float getXCoordinates(float width) {
         float currentX = getX() - get().gameViewportPos.x;
 
         // This will convert the currentX's range, [0, 1], to [-1, 1]
-        // TODO: 05/01/2022 Change 1920.0f to the size of the monitor
-        currentX = (currentX / get().gameViewportSize.x) * 1920.0f;
+        currentX = (currentX / get().gameViewportSize.x) * width;
 
         return currentX;
     }
 
-    public static float getScreenY() {
+    private static float getYCoordinates(float height) {
         float currentY = getY() - get().gameViewportPos.y;
 
         // This will convert the currentX's range, [0, 1], to [-1, 1]
-        // TODO: 05/01/2022 Change 1080.0f to the size of the monitor
-        currentY = 1080.0f - ((currentY / get().gameViewportSize.y) * 1080.0f); // Use '-' because ImGui has y coordinates flipped comparing to our project
+        currentY = height - ((currentY / get().gameViewportSize.y) * height); // Use '-' because ImGui has y coordinates flipped comparing to our project
 
         return currentY;
+    }
+
+    public static float getGameViewportX() {
+        return getXCoordinates(SiriusTheFox.getWindow().getMaxWidth());
+    }
+
+    public static float getGameViewportY() {
+        return getYCoordinates(SiriusTheFox.getWindow().getMaxHeight());
+    }
+
+    public static float getScreenX() {
+        return getXCoordinates(SiriusTheFox.getWindow().getWidth());
+    }
+
+    public static float getScreenY() {
+        return getYCoordinates(SiriusTheFox.getWindow().getHeight());
+    }
+
+    public static Vector2f getGameViewport() {
+        return new Vector2f(getGameViewportX(), getGameViewportY());
     }
 
     public static Vector2f getScreen() {

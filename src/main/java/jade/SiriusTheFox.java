@@ -21,6 +21,8 @@ import observers.events.Event;
 import org.lwjgl.Version;
 import physics2d.Physics2d;
 
+import java.awt.*;
+
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.opengl.GL11.GL_COLOR_BUFFER_BIT;
@@ -79,7 +81,12 @@ public class SiriusTheFox implements Observer {
             // ========================================
             glDisable(GL_BLEND);
             window.getPickingTexture().enableWriting();
-            glViewport(0, 0, 1920, 1080);
+            if (!exportGame)
+                glViewport(0, 0,
+                        (int) Toolkit.getDefaultToolkit().getScreenSize().getWidth(),
+                        (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight());
+            else
+                glViewport(0, 0, window.getWidth(), window.getHeight());
             glClearColor(0f, 0f, 0f, 0f);
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
             Renderer.bindShader(pickingShader);
@@ -108,7 +115,8 @@ public class SiriusTheFox implements Observer {
 
             if (dt >= 0) {
                 Renderer.bindShader(defaultShader);
-                // System.out.println("FPS: " + 1.0f / dt);
+                window.update();
+
                 if (runtimePlaying)
                     currentScene.update(dt);
                 else
@@ -116,14 +124,16 @@ public class SiriusTheFox implements Observer {
 
                 currentScene.render();
 
-                if (!exportGame)
+                if (!exportGame) {
                     DebugDraw.draw();
+                }
+
+                if (!exportGame) {
+                    window.getFramebuffer().unbind();
+                    window.getImGuiLayer().update(dt, currentScene);
+                }
             }
 
-            if (!exportGame) {
-                window.getFramebuffer().unbind();
-                window.getImGuiLayer().update(dt, currentScene);
-            }
             MouseListener.endFrame();
             window.dispose();
 
@@ -207,6 +217,10 @@ public class SiriusTheFox implements Observer {
 
     public static Window getWindow() {
         return get().window;
+    }
+
+    public static void setWindow(Window window) {
+        SiriusTheFox.get().window = window;
     }
 
     public static Scene getCurrentScene() {

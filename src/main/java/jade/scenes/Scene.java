@@ -8,6 +8,7 @@ import gameobjects.GameObjectDeserializer;
 import gameobjects.components.Component;
 import gameobjects.components.ComponentDeserializer;
 import jade.SiriusTheFox;
+import jade.animations.StateMachine;
 import jade.editor.MouseControls;
 import jade.editor.NonPickable;
 import jade.editor.PropertiesWindow;
@@ -115,7 +116,8 @@ public class Scene {
 
     // Let's suppose that we spawn an enemy while the game is running, we have to add it too
     private void addSceneAtRuntime() {
-        for (GameObject go : pendingGameObjectList) {
+        for (int i = 0; i < pendingGameObjectList.size(); i++) {
+            GameObject go = pendingGameObjectList.get(i);
             gameObjectList.add(go);
             go.start();
             this.renderer.add(go);
@@ -198,6 +200,13 @@ public class Scene {
      */
     public void imgui() {
         this.sceneInitializer.imgui();
+    }
+
+    public void rebuffer() {
+        for (GameObject go : gameObjectList) {
+            if (go.hasComponent(StateMachine.class))
+                go.getComponent(StateMachine.class).refreshTextures();
+        }
     }
 
     public GameObject createGameObject(String name) {
@@ -314,6 +323,10 @@ public class Scene {
 
     public Physics2d getPhysics() {
         return this.physics2d;
+    }
+
+    public Renderer getRenderer() {
+        return renderer;
     }
 
     public ISceneInitializer getSceneInitializer() {

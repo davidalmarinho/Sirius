@@ -25,6 +25,12 @@ public class PickingTexture {
         }
     }
 
+    public void reset(int width, int height) {
+        if (!init(width, height)) {
+            assert false : "Error initializing picking texture.";
+        }
+    }
+
     private boolean init(int width, int height) {
         // Generate framebuffer
         fboId = glGenFramebuffers();

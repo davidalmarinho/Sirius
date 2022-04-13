@@ -22,23 +22,30 @@ import static org.lwjgl.opengl.GL30.GL_FRAMEBUFFER;
 import static org.lwjgl.opengl.GL30.glBindFramebuffer;
 
 public class ImGuiLayer {
-    private final long glfwWindow;
+    private long glfwWindow;
 
     // LWJGL3 renderer (SHOULD be initialized)
-    private final ImGuiImplGl3 imGuiGl3 = new ImGuiImplGl3();
-    private final ImGuiImplGlfw imGuiGlfw = new ImGuiImplGlfw();
+    private final ImGuiImplGl3 imGuiGl3;
+    private final ImGuiImplGlfw imGuiGlfw;
 
-    private final GameViewWindow gameViewWindow;
+    private GameViewWindow gameViewWindow;
     private final PropertiesWindow propertiesWindow;
     private MenuBar menuBar;
     private SceneHierarchy sceneHierarchy;
 
     public ImGuiLayer(long glfwWindow, PickingTexture pickingTexture) {
+        this.imGuiGl3 = new ImGuiImplGl3();
+        this.imGuiGlfw = new ImGuiImplGlfw();
         this.glfwWindow = glfwWindow;
         this.gameViewWindow = new GameViewWindow();
         this.propertiesWindow = PropertiesWindow.get(pickingTexture);
         this.menuBar = new MenuBar();
         this.sceneHierarchy = new SceneHierarchy();
+    }
+
+    public void edit(long glfwWindow) {
+        this.glfwWindow = glfwWindow;
+        this.gameViewWindow = new GameViewWindow();
     }
 
     // Initialize Dear ImGui.
@@ -190,7 +197,7 @@ public class ImGuiLayer {
 
     private void endFrame() {
         glBindFramebuffer(GL_FRAMEBUFFER, 0);
-        glViewport(0, 0, Window.getWidth(), Window.getHeight());
+        glViewport(0, 0, SiriusTheFox.getWindow().getWidth(), SiriusTheFox.getWindow().getHeight());
         glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
 
@@ -207,7 +214,7 @@ public class ImGuiLayer {
     }
 
     // If you want to clean a room after yourself - do it by yourself
-    private void destroyImGui() {
+    public void destroyImGui() {
         imGuiGl3.dispose();
         ImGui.destroyContext();
     }
@@ -222,7 +229,7 @@ public class ImGuiLayer {
         // ImGui.setNextWindowViewport(mainViewport.getID());
 
         ImGui.setNextWindowPos(0.0f, 0.0f, ImGuiCond.Always);
-        ImGui.setNextWindowSize(Window.getWidth(), Window.getHeight());
+        ImGui.setNextWindowSize(SiriusTheFox.getWindow().getWidth(), SiriusTheFox.getWindow().getHeight());
         ImGui.pushStyleVar(ImGuiStyleVar.WindowRounding, 0.0f);
         ImGui.pushStyleVar(ImGuiStyleVar.WindowBorderSize, 0.0f);
         // |= same as doing windowFlags = windowFlags | ImGuiWindowFlags.NoTileBar...

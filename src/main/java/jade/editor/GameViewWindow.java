@@ -4,7 +4,6 @@ import imgui.ImGui;
 import imgui.ImVec2;
 import imgui.flag.ImGuiWindowFlags;
 import jade.SiriusTheFox;
-import jade.Window;
 import jade.input.MouseListener;
 import observers.EventSystem;
 import observers.events.Events;
@@ -70,11 +69,11 @@ public class GameViewWindow {
         ImGui.getContentRegionAvail(windowSize);
 
         float aspectWidth = windowSize.x;
-        float aspectHeight = aspectWidth / Window.getTargetAspectRatio();
+        float aspectHeight = aspectWidth / SiriusTheFox.getWindow().getTargetAspectRatio();
         if (aspectHeight > windowSize.y) {
             // We must switch to pillar box mode
             aspectHeight = windowSize.y;
-            aspectWidth = aspectHeight * Window.getTargetAspectRatio();
+            aspectWidth = aspectHeight * SiriusTheFox.getWindow().getTargetAspectRatio();
         }
 
         return new ImVec2(aspectWidth, aspectHeight);
