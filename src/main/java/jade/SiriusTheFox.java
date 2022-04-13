@@ -33,7 +33,7 @@ public class SiriusTheFox implements Observer {
 
     private boolean runtimePlaying;
 
-    public static boolean exportGame = false;
+    private boolean exportGame = false;
 
     private ISceneInitializer customSceneInitializer;
 
@@ -179,7 +179,7 @@ public class SiriusTheFox implements Observer {
                 currentScene.save();
                 break;
             case EXPORT_GAME:
-                SiriusTheFox.exportGame = true;
+                this.exportGame = true;
                 this.runtimePlaying = true;
                 if (customSceneInitializer != null)
                     changeScene(customSceneInitializer.build());
@@ -199,6 +199,10 @@ public class SiriusTheFox implements Observer {
 
     public void addRuntimeOptionCustomizedPrefabs(ICustomPrefabs iCustomPrefabs) {
         window.setICustomPrefabs(iCustomPrefabs);
+    }
+
+    public void setReadyToExport(boolean readyToExport) {
+        this.exportGame = true;
     }
 
     public static Window getWindow() {
