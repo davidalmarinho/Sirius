@@ -20,7 +20,7 @@ public class MenuBar {
 
             ImGui.endMenu();
         } else if (ImGui.beginMenu("Settings")) {
-            if (ImGui.menuItem("Export Game", ""))
+            if (ImGui.menuItem("Export Game Preview", ""))
                 EventSystem.notify(null, new Event(Events.EXPORT_GAME));
 
             ImGui.endMenu();
