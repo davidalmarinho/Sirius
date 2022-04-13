@@ -8,11 +8,16 @@ import jade.rendering.FrameBuffer;
 import jade.rendering.PickingTexture;
 
 import org.lwjgl.glfw.GLFWErrorCallback;
+import org.lwjgl.glfw.GLFWVidMode;
 import org.lwjgl.opengl.GL;
+import org.lwjgl.system.MemoryStack;
+
+import java.nio.IntBuffer;
 
 import static org.lwjgl.glfw.Callbacks.glfwFreeCallbacks;
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL11.*;
+import static org.lwjgl.system.MemoryStack.stackPush;
 import static org.lwjgl.system.MemoryUtil.NULL;
 
 public class Window {
@@ -22,14 +27,14 @@ public class Window {
     private ICustomPrefabs iCustomPrefabs;
 
     private int width, height;
+    private int maxWidth, maxHeight;
     private final String title;
-    private static Window window;
-    private long glfwWindow; // Vai agir como se fosse um ponteiro
+    private long glfwWindow; // Will act as a pointer
+    private long monitor;
+    private boolean fullscreen = true;
     private ImGuiLayer imGuiLayer;
     private FrameBuffer frameBuffer;
     private PickingTexture pickingTexture;
-
-    private boolean runtimePlaying;
 
     public Window(String title, int width, int height) {
         this.title  = title;
@@ -80,7 +85,10 @@ public class Window {
          * O segundo NULL serve para ligar shared objects. Mas não é multiplataforma, por isso
          * vamos fazê-lo nós.
          */
-        glfwWindow = glfwCreateWindow(this.width, this.height, this.title, NULL, NULL);
+        monitor = glfwGetPrimaryMonitor();
+
+        // TODO: 13/09/2021 Define WIDTH and HEIGHT
+        glfwWindow = glfwCreateWindow(1920, 1080, this.title, NULL, NULL);
 
         // Verificar se a janela foi criada
         if (glfwWindow == NULL) {
@@ -92,12 +100,35 @@ public class Window {
         glfwSetScrollCallback(glfwWindow, MouseListener::mouseScrollCallback);
         glfwSetMouseButtonCallback(glfwWindow, MouseListener::mouseButtonCallback);
         glfwSetWindowSizeCallback(glfwWindow, (w, newWidth, newHeight) -> {
-            SiriusTheFox.getWindow().setWidth(newWidth);
-            SiriusTheFox.getWindow().setHeight(newHeight);
+            setWidth(newWidth);
+            setHeight(newHeight);
         });
 
         // Configurar callbacks do teclado
         glfwSetKeyCallback(glfwWindow, KeyListener::keyCallback);
+
+        try (MemoryStack stack = stackPush()) {
+            IntBuffer pWidth = stack.mallocInt(1);
+            IntBuffer pHeight = stack.mallocInt(1);
+
+            glfwGetWindowSize(glfwWindow, pWidth, pHeight);
+
+            // Center window
+            GLFWVidMode vidMode = glfwGetVideoMode(monitor);
+            assert vidMode != null;
+
+            // Register the max size the window can take
+            maxWidth = vidMode.width();
+            maxHeight = vidMode.height();
+
+            glfwSetWindowPos(glfwWindow,
+                    (vidMode.width() / 2 - pWidth.get(0) / 2),
+                    (vidMode.height() / 2 - pHeight.get(0) / 2));
+
+            if (fullscreen)
+                glfwSetWindowMonitor(glfwWindow, monitor, 0, 0, vidMode.width(), vidMode.height(), 0);
+        }
+
 
         // Contexto do OpenGL
         glfwMakeContextCurrent(glfwWindow);
@@ -122,12 +153,30 @@ public class Window {
         glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
 
         // TODO: 02/01/2022 Gets the full window size and put that here
-        frameBuffer = new FrameBuffer(1920, 1080);
-        pickingTexture = new PickingTexture(1920, 1080);
-        glViewport(0, 0, 1920, 1080);
+        frameBuffer = new FrameBuffer(getWidth(), getHeight());
+        pickingTexture = new PickingTexture(getWidth(), getHeight());
+
+        glViewport(0, 0, getWidth(), getHeight());
 
         imGuiLayer = new ImGuiLayer(glfwWindow, pickingTexture);
         imGuiLayer.initImGui();
+    }
+
+    public void update() {
+        if (KeyListener.isBindPressed(GLFW_KEY_LEFT_CONTROL, GLFW_KEY_F)) {
+            fullscreen = !fullscreen;
+            GLFWVidMode glfwVidMode = glfwGetVideoMode(monitor);
+
+            if (fullscreen)
+                glfwSetWindowMonitor(glfwWindow, monitor, 0, 0, glfwVidMode.width(), glfwVidMode.height(), 0);
+            else
+                glfwSetWindowMonitor(glfwWindow, NULL, 0, 0, 1920, 1080, 0);
+        }
+    }
+
+    public void destroy() {
+        imGuiLayer.destroyImGui();
+        glfwDestroyWindow(glfwWindow);
     }
 
     /**
@@ -149,30 +198,35 @@ public class Window {
             imagem pronta para mostrar antes de apagarmos a outra. */
     }
 
-    // TODO: 20/03/2022 Return the actually window's size
-
-    public static int getWidth() {
-        return 1920; // get().width;
+    public int getWidth() {
+        return width;
     }
-    public static int getHeight() {
-        return 1080; // get().height;
+    public int getHeight() {
+        return height;
     }
 
     public void setWidth(int width) {
         this.width = width;
     }
 
+    public int getMaxWidth() {
+        return maxWidth;
+    }
+
     public void setHeight(int height) {
         this.height = height;
+    }
+
+    public int getMaxHeight() {
+        return maxHeight;
     }
 
     public boolean isWindowClosed() {
         return glfwWindowShouldClose(glfwWindow);
     }
 
-    public static float getTargetAspectRatio() {
-        // TODO: 02/01/2022 Get the current aspect ratio on the monitor
-        return 16.0f/ 9.0f;
+    public float getTargetAspectRatio() {
+        return (float) getWidth() / getHeight();
     }
 
     public FrameBuffer getFramebuffer() {

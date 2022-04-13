@@ -222,8 +222,8 @@ public class MouseControls extends Component {
             Scene currentScene = SiriusTheFox.getCurrentScene();
             PropertiesWindow propertiesWindow = SiriusTheFox.getImGuiLayer().getPropertiesWindow();
 
-            int x = (int) MouseListener.getScreenX();
-            int y = (int) MouseListener.getScreenY();
+            int x = (int) MouseListener.getGameViewportX();
+            int y = (int) MouseListener.getGameViewportY();
             int gameObjectId = pickingTexture.readPixel(x, y);
             GameObject pickedObj = currentScene.getGameObject(gameObjectId);
             if (pickedObj != null && !pickedObj.hasComponent(NonPickable.class)) {
@@ -238,13 +238,13 @@ public class MouseControls extends Component {
             // If we aren't dragging
             if (!boxSelectSet) {
                 SiriusTheFox.getImGuiLayer().getPropertiesWindow().clearSelected();
-                boxSelectStart = MouseListener.getScreen();
+                boxSelectStart = MouseListener.getGameViewport();
                 boxSelectSet = true;
             }
 
-            boxSelectEnd = MouseListener.getScreen();
-            Vector2f boxSelectStartWorld = MouseListener.screenToWorld(boxSelectStart);
-            Vector2f boxSelectEndWorld = MouseListener.screenToWorld(boxSelectEnd);
+            boxSelectEnd = MouseListener.getGameViewport();
+            Vector2f boxSelectStartWorld = MouseListener.screenToGameViewport(boxSelectStart);
+            Vector2f boxSelectEndWorld = MouseListener.screenToGameViewport(boxSelectEnd);
             Vector2f halfSize = new Vector2f(boxSelectEndWorld).sub(boxSelectStartWorld).mul(0.5f);
             DebugDraw.addBox2D(new Vector2f(boxSelectStartWorld).add(halfSize), new Vector2f(halfSize).mul(2.0f), 0.0f);
 

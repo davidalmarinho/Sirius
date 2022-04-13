@@ -26,8 +26,7 @@ public class Audio {
         ALCapabilities alCapabilities = AL.createCapabilities(alcCapabilities);
 
         // If audio library isn't supported
-        assert !alCapabilities.OpenAL10 : "Audio library not suppoerted.";
-
+        assert !alCapabilities.OpenAL10 : "Audio library not supported.";
     }
 
     // Destroy audio context
