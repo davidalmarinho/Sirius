@@ -2,9 +2,9 @@ package components;
 
 import gameobjects.GameObject;
 import gameobjects.components.Component;
-import jade.SiriusTheFox;
-import jade.rendering.Camera;
-import jade.rendering.Color;
+import sirius.SiriusTheFox;
+import sirius.rendering.Camera;
+import sirius.rendering.Color;
 
 public class GameCamera extends Component {
     private transient GameObject player;

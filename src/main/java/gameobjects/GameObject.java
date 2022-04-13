@@ -7,7 +7,7 @@ import gameobjects.components.ComponentDeserializer;
 import gameobjects.components.SpriteRenderer;
 import gameobjects.components.Transform;
 import imgui.ImGui;
-import jade.utils.AssetPool;
+import sirius.utils.AssetPool;
 
 import java.util.ArrayList;
 import java.util.Comparator;

@@ -1,7 +1,7 @@
 package components;
 
 import gameobjects.components.Component;
-import jade.utils.AssetPool;
+import sirius.utils.AssetPool;
 import org.joml.Vector2f;
 
 public class BlockCoin extends Component {

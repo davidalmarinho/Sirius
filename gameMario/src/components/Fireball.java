@@ -2,7 +2,7 @@ package components;
 
 import gameobjects.GameObject;
 import gameobjects.components.Component;
-import jade.SiriusTheFox;
+import sirius.SiriusTheFox;
 import org.jbox2d.dynamics.contacts.Contact;
 import org.joml.Vector2f;
 import physics2d.Physics2d;

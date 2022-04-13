@@ -1,19 +1,17 @@
 package components;
 
 import gameobjects.GameObject;
-import gameobjects.Prefabs;
 import gameobjects.components.Component;
 import gameobjects.components.SpriteRenderer;
 import gameobjects.components.game_components.Ground;
-import jade.SiriusTheFox;
-import jade.animations.StateMachine;
-import jade.input.KeyListener;
-import jade.rendering.Color;
-import jade.scenes.ISceneInitializer;
-import jade.scenes.LevelEditorSceneInitializer;
-import jade.scenes.LevelSceneInitializer;
-import jade.utils.AssetPool;
-import jade.utils.Settings;
+import sirius.SiriusTheFox;
+import sirius.animations.StateMachine;
+import sirius.input.KeyListener;
+import sirius.rendering.Color;
+import sirius.scenes.ISceneInitializer;
+import sirius.scenes.LevelSceneInitializer;
+import sirius.utils.AssetPool;
+import sirius.utils.Settings;
 import main.CustomPrefabs;
 import org.jbox2d.dynamics.contacts.Contact;
 import org.joml.Vector2f;
