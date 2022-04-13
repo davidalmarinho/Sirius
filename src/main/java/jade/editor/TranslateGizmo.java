@@ -13,13 +13,11 @@ class TranslateGizmo extends Gizmo {
     public void editorUpdate(float dt) {
         if (activeGameObject != null) {
             // Dragging x axis gizmo
-            if (xAxisActive && !yAxisActive) {
-                // TODO: 09/03/2022 Fix gizmos
-                activeGameObject.transform.position.x -= MouseListener.getWorld().x;
+            if (xAxisActive && !yAxisActive)
+                activeGameObject.transform.position.x -= MouseListener.getGameViewportDeltaX();
             // Dragging y axis gizmo
-            } else if (yAxisActive) {
-                activeGameObject.transform.position.y -= MouseListener.getWorld().y;
-            }
+            else if (yAxisActive)
+                activeGameObject.transform.position.y -= MouseListener.getGameViewportDeltaY();
         }
         super.editorUpdate(dt);
     }
