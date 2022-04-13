@@ -7,7 +7,7 @@ import jade.SiriusTheFox;
 import jade.Window;
 import jade.input.MouseListener;
 import observers.EventSystem;
-import observers.events.EEventType;
+import observers.events.Events;
 import observers.events.Event;
 import org.joml.Vector2f;
 
@@ -25,12 +25,12 @@ public class GameViewWindow {
         ImGui.beginMenuBar();
         if (ImGui.menuItem("Play", "", playing, !playing)) {
             playing = true;
-            EventSystem.notify(null, new Event(EEventType.GAME_ENGINE_START_PLAY));
+            EventSystem.notify(null, new Event(Events.GAME_ENGINE_START_PLAY));
         }
 
         if (ImGui.menuItem("Stop", "", !playing, playing)) {
             playing = false;
-            EventSystem.notify(null, new Event(EEventType.GAME_ENGINE_STOP_PLAY));
+            EventSystem.notify(null, new Event(Events.GAME_ENGINE_STOP_PLAY));
         }
         ImGui.endMenuBar();
 

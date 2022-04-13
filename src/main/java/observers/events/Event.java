@@ -1,12 +1,12 @@
 package observers.events;
 
 public class Event {
-    public EEventType type;
+    public Events type;
 
     /**
      * Constructor for Event class.
      */
-    public Event(EEventType eventType) {
+    public Event(Events eventType) {
         this.type = eventType;
     }
 
@@ -16,6 +16,6 @@ public class Event {
      * their own event types.
      */
     public Event() {
-        this(EEventType.USER_EVENT);
+        this(Events.USER_EVENT);
     }
 }

@@ -33,13 +33,15 @@ public class SiriusTheFox implements Observer {
 
     private boolean runtimePlaying;
 
+    public static boolean exportGame = false;
+
     private ISceneInitializer customSceneInitializer;
 
     private SiriusTheFox() {
         System.out.println("Hello LWJGL " + Version.getVersion() + "!");
 
         window = new Window("Mario", 1920, 1080);
-        audio  = new Audio();
+        audio = new Audio();
 
         EventSystem.addObserver(this);
     }
@@ -50,7 +52,15 @@ public class SiriusTheFox implements Observer {
         window.start();
 
         // Colocar a scene
-        changeScene(new LevelEditorSceneInitializer());
+        if (!exportGame)
+            changeScene(new LevelEditorSceneInitializer());
+        else {
+            this.runtimePlaying = true;
+            if (customSceneInitializer != null)
+                changeScene(customSceneInitializer.build());
+            else
+                changeScene(new LevelSceneInitializer());
+        }
     }
 
     public void loop() {
@@ -82,9 +92,11 @@ public class SiriusTheFox implements Observer {
             // ========================================
             // Render pass 2. render actual game
             // ========================================
-            DebugDraw.beginFrame();
+            if (!exportGame)
+                DebugDraw.beginFrame();
 
-            window.getFramebuffer().bind();
+            if (!exportGame)
+                window.getFramebuffer().bind();
 
             // Cleanup the frame with a color
             Color color = currentScene.getCamera().clearColor;
@@ -103,12 +115,15 @@ public class SiriusTheFox implements Observer {
                     currentScene.editorUpdate(dt);
 
                 currentScene.render();
-                DebugDraw.draw();
+
+                if (!exportGame)
+                    DebugDraw.draw();
             }
 
-            window.getFramebuffer().unbind();
-
-            window.getImGuiLayer().update(dt, currentScene);
+            if (!exportGame) {
+                window.getFramebuffer().unbind();
+                window.getImGuiLayer().update(dt, currentScene);
+            }
             MouseListener.endFrame();
             window.dispose();
 
@@ -163,6 +178,14 @@ public class SiriusTheFox implements Observer {
             case SAVE_LEVEL:
                 currentScene.save();
                 break;
+            case EXPORT_GAME:
+                SiriusTheFox.exportGame = true;
+                this.runtimePlaying = true;
+                if (customSceneInitializer != null)
+                    changeScene(customSceneInitializer.build());
+                else
+                    changeScene(new LevelSceneInitializer());
+                break;
         }
     }
 
@@ -171,7 +194,7 @@ public class SiriusTheFox implements Observer {
     }
 
     public void addCustomLevelSceneInitializer(ISceneInitializer customSceneInitializer) {
-         this.customSceneInitializer = customSceneInitializer;
+        this.customSceneInitializer = customSceneInitializer;
     }
 
     public void addRuntimeOptionCustomizedPrefabs(ICustomPrefabs iCustomPrefabs) {
