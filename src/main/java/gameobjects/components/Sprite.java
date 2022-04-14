@@ -1,6 +1,6 @@
 package gameobjects.components;
 
-import jade.rendering.spritesheet.Texture;
+import sirius.rendering.spritesheet.Texture;
 import org.joml.Vector2f;
 
 public class Sprite {

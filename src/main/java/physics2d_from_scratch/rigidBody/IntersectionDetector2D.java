@@ -1,7 +1,7 @@
 package physics2d_from_scratch.rigidBody;
 
-import jade.rendering.debug.Line2D;
-import jade.utils.JMath;
+import sirius.rendering.debug.Line2D;
+import sirius.utils.JMath;
 import org.joml.Vector2f;
 import physics2d_from_scratch.primitives.*;
 

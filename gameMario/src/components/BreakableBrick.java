@@ -1,6 +1,6 @@
 package components;
 
-import jade.utils.AssetPool;
+import sirius.utils.AssetPool;
 
 public class BreakableBrick extends Block {
 

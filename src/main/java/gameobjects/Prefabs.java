@@ -3,11 +3,11 @@ package gameobjects;
 import gameobjects.components.Sprite;
 import gameobjects.components.SpriteRenderer;
 import imgui.ImGui;
-import jade.SiriusTheFox;
-import jade.editor.MouseControls;
-import jade.scenes.LevelEditorSceneInitializer;
-import jade.scenes.ISceneInitializer;
-import jade.utils.Settings;
+import sirius.SiriusTheFox;
+import sirius.editor.MouseControls;
+import sirius.scenes.LevelEditorSceneInitializer;
+import sirius.scenes.ISceneInitializer;
+import sirius.utils.Settings;
 import org.joml.Vector2f;
 
 public class Prefabs {

@@ -1,6 +1,6 @@
 package physics2d_from_scratch.primitives;
 
-import jade.utils.JMath;
+import sirius.utils.JMath;
 import org.joml.Vector2f;
 import physics2d_from_scratch.rigidBody.RigidBody2D;
 

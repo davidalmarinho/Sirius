@@ -2,7 +2,7 @@ package components;
 
 import gameobjects.GameObject;
 import gameobjects.components.Component;
-import jade.utils.AssetPool;
+import sirius.utils.AssetPool;
 import org.jbox2d.dynamics.contacts.Contact;
 import org.joml.Vector2f;
 

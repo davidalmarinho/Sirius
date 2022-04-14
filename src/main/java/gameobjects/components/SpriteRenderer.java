@@ -1,8 +1,8 @@
 package gameobjects.components;
 
-import jade.editor.JImGui;
-import jade.rendering.Color;
-import jade.rendering.spritesheet.Texture;
+import sirius.editor.JImGui;
+import sirius.rendering.Color;
+import sirius.rendering.spritesheet.Texture;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
 

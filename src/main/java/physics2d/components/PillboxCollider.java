@@ -1,6 +1,6 @@
 package physics2d.components;
 
-import jade.SiriusTheFox;
+import sirius.SiriusTheFox;
 import org.joml.Vector2f;
 
 /**

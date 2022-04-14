@@ -2,8 +2,8 @@ package components;
 
 import gameobjects.GameObject;
 import gameobjects.IPrefabs;
-import jade.SiriusTheFox;
-import jade.animations.StateMachine;
+import sirius.SiriusTheFox;
+import sirius.animations.StateMachine;
 import main.CustomPrefabs;
 
 public class QuestionBlock extends Block {

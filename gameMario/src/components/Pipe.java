@@ -2,9 +2,9 @@ package components;
 
 import gameobjects.GameObject;
 import gameobjects.components.Component;
-import jade.SiriusTheFox;
-import jade.input.KeyListener;
-import jade.utils.AssetPool;
+import sirius.SiriusTheFox;
+import sirius.input.KeyListener;
+import sirius.utils.AssetPool;
 import main.Direction;
 import org.jbox2d.dynamics.contacts.Contact;
 import org.joml.Vector2f;

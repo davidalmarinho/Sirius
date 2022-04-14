@@ -2,10 +2,10 @@ package components;
 
 import gameobjects.GameObject;
 import gameobjects.components.Component;
-import jade.SiriusTheFox;
-import jade.animations.StateMachine;
-import jade.rendering.Camera;
-import jade.utils.AssetPool;
+import sirius.SiriusTheFox;
+import sirius.animations.StateMachine;
+import sirius.rendering.Camera;
+import sirius.utils.AssetPool;
 import org.jbox2d.dynamics.contacts.Contact;
 import org.joml.Vector2f;
 import physics2d.Physics2d;

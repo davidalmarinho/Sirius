@@ -1,6 +1,6 @@
 package physics2d_from_scratch;
 
-import jade.rendering.debug.Line2D;
+import sirius.rendering.debug.Line2D;
 import org.joml.Vector2f;
 import org.junit.jupiter.api.Test;
 import physics2d_from_scratch.primitives.Box2D;

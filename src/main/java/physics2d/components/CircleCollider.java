@@ -1,10 +1,9 @@
 package physics2d.components;
 
 import gameobjects.GameObject;
-import jade.SiriusTheFox;
-import jade.Window;
-import jade.rendering.Color;
-import jade.rendering.debug.DebugDraw;
+import sirius.SiriusTheFox;
+import sirius.rendering.Color;
+import sirius.rendering.debug.DebugDraw;
 import org.joml.Vector2f;
 
 public class CircleCollider extends Collider2d {

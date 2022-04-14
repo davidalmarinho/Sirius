@@ -3,12 +3,12 @@ package main;
 import components.GameCamera;
 import gameobjects.GameObject;
 import gameobjects.components.SpriteRenderer;
-import jade.animations.StateMachine;
-import jade.rendering.spritesheet.Images;
-import jade.rendering.spritesheet.Spritesheet;
-import jade.scenes.ISceneInitializer;
-import jade.scenes.Scene;
-import jade.utils.AssetPool;
+import sirius.animations.StateMachine;
+import sirius.rendering.spritesheet.Images;
+import sirius.rendering.spritesheet.Spritesheet;
+import sirius.scenes.ISceneInitializer;
+import sirius.scenes.Scene;
+import sirius.utils.AssetPool;
 
 public class CustomLevelSceneInitializer implements ISceneInitializer {
     @Override

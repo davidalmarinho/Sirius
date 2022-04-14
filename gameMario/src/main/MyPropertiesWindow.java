@@ -1,11 +1,10 @@
 package main;
 
 import components.BreakableBrick;
-import gameobjects.components.game_components.Ground;
 import components.PlayerController;
 import gameobjects.GameObject;
-import jade.editor.ICustomPropertiesWindow;
-import jade.editor.PropertiesWindow;
+import sirius.editor.ICustomPropertiesWindow;
+import sirius.editor.PropertiesWindow;
 
 public class MyPropertiesWindow implements ICustomPropertiesWindow {
 

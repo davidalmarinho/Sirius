@@ -1,6 +1,6 @@
 package main;
 
-import jade.SiriusTheFox;
+import sirius.SiriusTheFox;
 
 public class Main {
 
