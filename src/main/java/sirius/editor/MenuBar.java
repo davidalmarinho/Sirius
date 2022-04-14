@@ -6,6 +6,7 @@ import sirius.SiriusTheFox;
 import observers.EventSystem;
 import observers.events.Events;
 import observers.events.Event;
+import sirius.input.KeyListener;
 import sirius.levels.Level;
 import sirius.utils.AssetPool;
 
@@ -30,12 +31,15 @@ public class MenuBar {
                     try {
                         Level level = new Level("level" + lvl.get() + ".txt",
                                 "assets/levels/level" + lvl.get() + ".txt", lvl.get());
-                        if (AssetPool.getLevel(level.getId()) != null) {
+
+                        // Checks if we don't create an existing level
+                        if (AssetPool.getLevel(level.getId()) != null)
                             System.err.println("Error: Level " + level.getId() + " already exists.");
-                        } else {
+                        else {
                             new FileWriter(level.getPath());
                             AssetPool.addLevel(level);
                         }
+
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -67,7 +71,7 @@ public class MenuBar {
         }
 
         if (ImGui.beginMenu("Settings")) {
-            if (ImGui.menuItem("Export Game Preview", ""))
+            if (ImGui.menuItem("Export Game Preview", "Ctrl + E"))
                 EventSystem.notify(null, new Event(Events.EXPORT_GAME));
 
             ImGui.endMenu();

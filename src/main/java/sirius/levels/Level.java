@@ -2,6 +2,7 @@ package sirius.levels;
 
 public class Level {
     public static int currentLevel = 1;
+    public static int maxLevel = 1;
 
     private String levelName;
     private String levelPath;

@@ -7,6 +7,7 @@ import gameobjects.components.game_components.Ground;
 import sirius.SiriusTheFox;
 import sirius.animations.StateMachine;
 import sirius.input.KeyListener;
+import sirius.levels.Level;
 import sirius.rendering.Color;
 import sirius.scenes.ISceneInitializer;
 import sirius.scenes.LevelSceneInitializer;
@@ -342,6 +343,9 @@ public class PlayerController extends Component {
 
     public void playWinAnimation(GameObject flagpole) {
         if (!hasWon()) {
+            Level.currentLevel++;
+            if (Level.currentLevel == Level.maxLevel)
+                Level.currentLevel = 1;
             win = true;
             velocity.set(0.0f, 0.0f);
             acceleration.set(0.0f, 0.0f);

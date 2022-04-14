@@ -7,6 +7,9 @@ import gameobjects.GameObject;
 import gameobjects.GameObjectDeserializer;
 import gameobjects.components.Component;
 import gameobjects.components.ComponentDeserializer;
+import observers.EventSystem;
+import observers.events.Event;
+import observers.events.Events;
 import sirius.SiriusTheFox;
 import sirius.editor.MouseControls;
 import sirius.editor.NonPickable;
@@ -70,11 +73,13 @@ public class Scene {
         }*/
 
         // Save and load file
-        if (KeyListener.isKeyPressed(GLFW_KEY_LEFT_CONTROL) && KeyListener.isKeyDown(GLFW_KEY_S)) {
+        if (KeyListener.isBindPressed(GLFW_KEY_LEFT_CONTROL, GLFW_KEY_S)
+                && !SiriusTheFox.get().isRuntimePlaying()) {
             save();
-        } else if (KeyListener.isKeyDown(GLFW_KEY_LEFT_CONTROL) && KeyListener.isKeyDown(GLFW_KEY_O)) {
+        } else if (KeyListener.isBindPressed(GLFW_KEY_LEFT_CONTROL, GLFW_KEY_O))
             load();
-        }
+        else if (KeyListener.isBindPressed(GLFW_KEY_LEFT_CONTROL, GLFW_KEY_E))
+            EventSystem.notify(null, new Event(Events.EXPORT_GAME));
 
         this.camera.adjustProjection();
 
@@ -236,6 +241,8 @@ public class Scene {
 
             expectedCurrentLevel++;
         }
+
+        Level.maxLevel = expectedCurrentLevel;
     }
 
     public void save() {
@@ -249,7 +256,6 @@ public class Scene {
             MouseControls mouseControls = levelEditor.getLevelEditorStuff().getComponent(MouseControls.class);
 
             if (propertiesWindow.getActiveGameObjectList().size() > 1) {
-                System.out.println("reach her");
                 List<GameObject> activeGameObjectList = new ArrayList<>(propertiesWindow.getActiveGameObjectList());
                 mouseControls.changeAllGameObjects(activeGameObjectList.get(0), activeGameObjectList);
                 propertiesWindow.clearSelected();
@@ -269,7 +275,7 @@ public class Scene {
 
         try {
             // Save gameObjectList in a txt file
-            FileWriter writer = new FileWriter("level.txt");
+            FileWriter writer = new FileWriter(AssetPool.getLevel(Level.currentLevel).getPath());
             List<GameObject> objsToSerialize = new ArrayList<>();
             for (GameObject obj : gameObjectList) {
 
