@@ -183,6 +183,7 @@ public class SiriusTheFox implements Observer {
                 changeScene(new LevelEditorSceneInitializer());
                 break;
             case LOAD_LEVEL:
+                currentScene.load();
                 changeScene(new LevelEditorSceneInitializer());
                 break;
             case SAVE_LEVEL:

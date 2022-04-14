@@ -1,24 +1,27 @@
 package sirius.levels;
 
-import com.sun.istack.internal.NotNull;
-
 public class Level {
-    public static int currentLevel = 0;
-    private String customName;
-    @NotNull
+    public static int currentLevel = 1;
+
     private String levelName;
+    private String levelPath;
+    private int id = 0;
 
-    public Level(String levelName) {
-        this.customName = levelName;
-        this.levelName = "level" + currentLevel + ".txt";
+    public Level(String levelName, String levelPath, int currentLevel) {
+        this.levelName = levelName;
+        this.levelPath = levelPath;
+        this.id = currentLevel;
     }
 
-    public Level(String levelName, int currentLevel) {
-        this.customName = levelName;
-        this.levelName = "level" + currentLevel + ".txt";
+    public String getName() {
+        return levelName;
     }
 
-    public String getCustomLevelName() {
-        return customName;
+    public String getPath() {
+        return levelPath;
+    }
+
+    public int getId() {
+        return id;
     }
 }

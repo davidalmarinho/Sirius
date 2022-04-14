@@ -12,10 +12,12 @@ import sirius.editor.MouseControls;
 import sirius.editor.NonPickable;
 import sirius.editor.PropertiesWindow;
 import sirius.input.KeyListener;
+import sirius.levels.Level;
 import sirius.rendering.Camera;
 import sirius.rendering.Renderer;
 import org.joml.Vector2f;
 import physics2d.Physics2d;
+import sirius.utils.AssetPool;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -24,6 +26,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 import static org.lwjgl.glfw.GLFW.*;
@@ -46,6 +49,8 @@ public class Scene {
         gameObjectList = new ArrayList<>();
         pendingGameObjectList = new ArrayList<>();
         running = false;
+
+        loadLevels();
     }
 
     public void init() {
@@ -212,6 +217,27 @@ public class Scene {
         }
     }
 
+    public void loadLevels() {
+        File folder = new File("assets/levels");
+        File[] listOfFiles = folder.listFiles();
+
+        int expectedCurrentLevel = 1;
+        for (int i = 0; i < Objects.requireNonNull(listOfFiles).length; i++) {
+            if (listOfFiles[i].isFile()) {
+                String[] navigator = listOfFiles[i].getName().split("level");
+                String[] navigator1 = navigator[1].split(".txt");
+                int curLvl = Integer.parseInt(navigator1[0]);
+                while (curLvl != expectedCurrentLevel) {
+                    System.out.println("Warning: Level " + expectedCurrentLevel + " doesn't exist!");
+                    expectedCurrentLevel ++;
+                }
+                AssetPool.addLevel(new Level(listOfFiles[i].getName(), listOfFiles[i].getPath(), curLvl));
+            }
+
+            expectedCurrentLevel++;
+        }
+    }
+
     public void save() {
         // ===============================================================================
         // Bug fix:
@@ -271,9 +297,10 @@ public class Scene {
                 .create();
         String inFile = "";
         try {
-            File file = new File("level.txt");
+            Level level = AssetPool.getLevel(Level.currentLevel);
+            File file = new File(level.getPath());
             if (file.exists()) {
-                inFile = new String(Files.readAllBytes(Paths.get("level.txt")));
+                inFile = new String(Files.readAllBytes(Paths.get(file.getPath())));
             }
         } catch (IOException e) {
             e.printStackTrace();

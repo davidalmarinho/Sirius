@@ -1,20 +1,19 @@
 package sirius.utils;
 
 import sirius.Sound;
+import sirius.levels.Level;
 import sirius.rendering.spritesheet.Spritesheet;
 import sirius.rendering.Shader;
 import sirius.rendering.spritesheet.Texture;
 
 import java.io.File;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class AssetPool {
     // Estático para as referências não serem limpas pelo coletor de lixo
     private static Map<String, Shader> shaders = new HashMap<>();
     private static Map<String, Texture> textures = new HashMap<>();
-    // private static Map<String, Level> shaders = new HashMap<>();
+    private static List<Level> levelList = new ArrayList<>();
     private static Map<String, Spritesheet> spritesheets = new HashMap<>();
     public static Map<String, Sound> stringSoundHashMap = new HashMap<>();
 
@@ -83,5 +82,21 @@ public class AssetPool {
             AssetPool.stringSoundHashMap.put(file.getAbsolutePath(), sound);
             return sound;
         }
+    }
+
+    public static void addLevel(Level level) {
+        if (levelList.stream().anyMatch(level1 -> level.getPath().equals(level1.getPath()))) {
+            return;
+        }
+
+        levelList.add(level);
+    }
+
+    public static Level getLevel(int id) {
+        return levelList.stream().filter(level -> level.getId() == id).findFirst().orElse(null);
+    }
+
+    public static List<Level> getLevelList() {
+        return levelList;
     }
 }
