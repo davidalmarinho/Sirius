@@ -43,7 +43,9 @@ public class MouseListener {
     }
 
     public static void updateLastButtons() {
-        System.arraycopy(get().mouseButtons, 0, get().lastMouseButtons, 0, get().mouseButtons.length);
+        for (int i = 0; i < get().mouseButtons.length; i++) {
+            get().lastMouseButtons[i] = get().mouseButtons[i];
+        }
     }
 
     /**
