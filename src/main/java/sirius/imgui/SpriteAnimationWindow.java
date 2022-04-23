@@ -1,5 +1,6 @@
 package sirius.imgui;
 
+import gameobjects.GameObject;
 import imgui.ImGui;
 import imgui.extension.imnodes.ImNodes;
 import imgui.extension.imnodes.ImNodesContext;
@@ -7,6 +8,7 @@ import imgui.extension.imnodes.flag.ImNodesPinShape;
 import imgui.flag.*;
 import imgui.type.ImBoolean;
 import imgui.type.ImInt;
+import sirius.SiriusTheFox;
 import sirius.input.MouseListener;
 
 import java.awt.*;
@@ -29,9 +31,31 @@ public class SpriteAnimationWindow {
         this.graph = new Graph();
     }
 
+    private void addTrigger(Graph.GraphNode node, int index) {
+        ImNodes.beginInputAttribute(node.getInputPinIds()[index], ImNodesPinShape.Quad);
+        ImNodes.endInputAttribute();
+
+        ImGui.sameLine();
+        ImGui.pushID("nodeTrigger: " + node.id);
+        float val = 11.3f;
+        int charsNumber = node.trigger.get().length();
+        float currentSize = (charsNumber + 1) * val; // +1 to maintain the integrity of this logic
+        float maxSize = 20.8f * val;
+        if (charsNumber == 0) {
+            ImGui.setNextItemWidth(val * 2);
+        } else
+            ImGui.setNextItemWidth(Math.min(currentSize, maxSize));
+
+        ImGui.inputText("", node.trigger);
+        ImGui.popID();
+        ImGui.sameLine();
+
+        ImNodes.beginOutputAttribute(node.getOutputPinIds()[index]);
+        ImGui.text("");
+        ImNodes.endOutputAttribute();
+    }
+
     public void imgui() {
-        // ImGui.setNextWindowSize(500, 400, ImGuiCond.Once);
-        // ImGui.setNextWindowPos(ImGui.getMainViewport().getPosX() + 100, ImGui.getMainViewport().getPosY() + 100, ImGuiCond.Once);
         if (ImGui.begin("ImNodes Demo", new ImBoolean(true))) {
             ImGui.text("This a demo graph editor for ImNodes");
 
@@ -46,52 +70,42 @@ public class SpriteAnimationWindow {
                 }
             }
 
+
             ImNodes.editorContextSet(CONTEXT);
             ImNodes.beginNodeEditor();
 
-            for (Graph.GraphNode node : graph.nodes.values()) {
-                ImNodes.beginNode(node.id);
+            GameObject activeGameObject = SiriusTheFox.getImGuiLayer().getPropertiesWindow().getActiveGameObject();
+            if (activeGameObject != null) {
+                for (Graph.GraphNode node : graph.nodes.values()) {
+                    ImNodes.beginNode(node.id);
 
-                ImNodes.beginNodeTitleBar();
-                // TODO: 16/04/2022 Get correct values for titles
-                ImGui.pushID("nodeName: " + node.id);
-                float val = 11.5f;
-                int charsNumber = node.name.get().length();
-                float currentSize = (charsNumber + 1) * val; // +1 to maintain the integrity of this logic
-                float maxSize = 16.8f * val;
-                if (charsNumber == 0) {
-                    ImGui.setNextItemWidth(val * 2);
-                } else
-                    ImGui.setNextItemWidth(Math.min(currentSize, maxSize));
-                ImGui.inputText("", node.name);
-                ImGui.popID();
+                    ImNodes.beginNodeTitleBar();
+                    ImGui.textUnformatted(activeGameObject.name);
 
-                ImNodes.endNodeTitleBar();
+                    // TODO: 23/04/2022 Save nodes in files to after load animations to all game objects that have the same name  
+                    
+                    /*ImGui.pushID("nodeName: " + node.id);
+                    float val = 11.5f;
+                    int charsNumber = node.name.get().length();
+                    float currentSize = (charsNumber + 1) * val; // +1 to maintain the integrity of this logic
+                    float maxSize = 16.8f * val;
+                    if (charsNumber == 0) {
+                        ImGui.setNextItemWidth(val * 2);
+                    } else
+                        ImGui.setNextItemWidth(Math.min(currentSize, maxSize));
+                    ImGui.inputText("", node.name);
+                    ImGui.popID();*/
 
-                ImNodes.beginInputAttribute(node.getInputPinIds()[0], ImNodesPinShape.CircleFilled);
-                ImGui.text("");
-                ImNodes.endInputAttribute();
+                    ImNodes.endNodeTitleBar();
 
-                ImGui.sameLine();
-                ImGui.pushID("nodeTrigger: " + node.id);
-                val = 11.3f;
-                charsNumber = node.trigger.get().length();
-                currentSize = (charsNumber + 1) * val; // +1 to maintain the integrity of this logic
-                maxSize = 20.8f * val;
-                if (charsNumber == 0) {
-                    ImGui.setNextItemWidth(val * 2);
-                } else
-                    ImGui.setNextItemWidth(Math.min(currentSize, maxSize));
+                    addTrigger(node, 0);
+                    /*if (ImGui.button("Add trigger", 130f, 30f)) {
+                        for (int index = 1; index < node.inputPinIds.length; index++)
+                            addTrigger(node, index);
+                    }*/
 
-                ImGui.inputText("", node.trigger);
-                ImGui.popID();
-                ImGui.sameLine();
-
-                ImNodes.beginOutputAttribute(node.getOutputPinIds()[0]);
-                ImGui.text("");
-                ImNodes.endOutputAttribute();
-
-                ImNodes.endNode();
+                    ImNodes.endNode();
+                }
             }
 
             int uniqueLinkId = 1;
