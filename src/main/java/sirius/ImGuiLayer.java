@@ -184,7 +184,7 @@ public class ImGuiLayer {
 
         // Any Dear ImGui code SHOULD go between ImGui.newFrame()/ImGui.render() methods
         setupDockSpace();
-        ImGui.showDemoWindow();
+        // ImGui.showDemoWindow();
         currentScene.imgui();
         gameViewWindow.imgui();
         propertiesWindow.imgui();
