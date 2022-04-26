@@ -10,10 +10,15 @@ import imgui.type.ImBoolean;
 import imgui.type.ImInt;
 import sirius.SiriusTheFox;
 import sirius.input.KeyListener;
-import sirius.input.MouseListener;
+import sirius.utils.Settings;
 
 import java.awt.*;
+import java.io.File;
+import java.io.IOException;
 import java.net.URI;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.List;
 
 import static org.lwjgl.glfw.GLFW.*;
 
@@ -32,6 +37,37 @@ public class SpriteAnimationWindow {
     public SpriteAnimationWindow() {
         ImNodes.createContext();
         this.graph = new Graph();
+    }
+
+    /**
+     * Checks if there is a file that doesn't belong to any game object.
+     */
+    private void checkIniFiles() {
+        // Getting all .txt files' path
+        File iniNodesFilesDirectory = new File(Settings.iniFilesForNodes);
+        File[] iniFiles = iniNodesFilesDirectory.listFiles();
+
+        List<GameObject> gameObjectList = SiriusTheFox.getCurrentScene().getGameObjectList();
+
+        assert iniFiles != null;
+        for (File iniFile : iniFiles) {
+            // Transform file's name into game object's name
+            String[] iniNavigator = iniFile.getName().split("Animation.txt");
+            String iniFileName = iniNavigator[0];
+
+            // Remove whitespaces from game objects name, because the iniFileName also doesn't have whitespaces
+            // Also check if there is a file that doesn't coincide with game objects' name.
+            boolean mayDeleteIniFile = gameObjectList.stream().noneMatch(
+                    go -> go.name.replaceAll("\\s", "").equals(iniFileName));
+
+            if (mayDeleteIniFile) {
+                try {
+                    Files.delete(Paths.get(iniFile.getPath()));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
     }
 
     private void addTrigger(Graph.GraphNode node, int index) {
@@ -242,12 +278,26 @@ public class SpriteAnimationWindow {
             }
 
             // TODO: 26/04/2022 Same bind key to save level scene... May be dangerous
-            if (KeyListener.isBindPressed(GLFW_KEY_LEFT_CONTROL, GLFW_KEY_S)) {
-                ImNodes.saveCurrentEditorStateToIniFile("assets/animations/animation.txt");
+            if (KeyListener.isBindPressed(GLFW_KEY_LEFT_CONTROL, GLFW_KEY_S) && activeGameObject != null) {
+                checkIniFiles();
+                /*File file = new File(Settings.iniFilesForNodes);
+                if (!file.exists()) {
+                    System.err.println("Error: Couldn't access '" + Settings.iniFilesForNodes + "' find directory");
+                    System.exit(-1);
+                }*/
+
+                String gameObjectNameWithoutSpaces = activeGameObject.name.replaceAll("\\s", "");
+
+                String filePath = Settings.iniFilesForNodes + gameObjectNameWithoutSpaces + "Animation.txt";// File file1 = new File(filePath);
+                ImNodes.saveCurrentEditorStateToIniFile(filePath);
             }
 
         } else
             collapsed = true;
+
+        if (KeyListener.isKeyDown(GLFW_KEY_U)) {
+            checkIniFiles();
+        }
 
         ImGui.end();
     }
