@@ -9,12 +9,13 @@ import imgui.flag.*;
 import imgui.type.ImBoolean;
 import imgui.type.ImInt;
 import sirius.SiriusTheFox;
+import sirius.input.KeyListener;
 import sirius.input.MouseListener;
 
 import java.awt.*;
 import java.net.URI;
 
-import static org.lwjgl.glfw.GLFW.GLFW_MOUSE_BUTTON_LEFT;
+import static org.lwjgl.glfw.GLFW.*;
 
 public class SpriteAnimationWindow {
 
@@ -147,8 +148,8 @@ public class SpriteAnimationWindow {
             final boolean isEditorHovered = ImNodes.isEditorHovered();
             ImNodes.endNodeEditor();
 
-            boolean mouseClicked = MouseListener.isMouseButtonPressed(GLFW_MOUSE_BUTTON_LEFT);
-            boolean oneFrameMouse = MouseListener.isMouseButtonDown(GLFW_MOUSE_BUTTON_LEFT);
+            boolean mouseClicked = ImGui.isMouseDown(GLFW_MOUSE_BUTTON_LEFT);
+            boolean oneFrameMouse = ImGui.isMouseClicked(GLFW_MOUSE_BUTTON_LEFT);
 
             for (Graph.GraphNode node : graph.nodes.values()) {
                 for (int i = 0; i < node.inputPinIds.length; i++) {
@@ -178,7 +179,7 @@ public class SpriteAnimationWindow {
             // System.out.println("Out: " + Graph.GraphNode.currentOutput);
 
             // Checks
-            if (!MouseListener.isMouseButtonPressed(GLFW_MOUSE_BUTTON_LEFT)) {
+            if (!ImGui.isMouseDown(GLFW_MOUSE_BUTTON_LEFT)) {
                 if (Graph.GraphNode.currentInput.size() > Graph.GraphNode.currentOutput.size())
                     Graph.GraphNode.currentInput.remove(Graph.GraphNode.currentInput.size() - 1);
                 else if (Graph.GraphNode.currentOutput.size() > Graph.GraphNode.currentInput.size())
@@ -186,7 +187,7 @@ public class SpriteAnimationWindow {
             }
 
             if (Graph.GraphNode.currentOutput.size() == Graph.GraphNode.currentInput.size()
-                    && !MouseListener.isMouseButtonPressed(GLFW_MOUSE_BUTTON_LEFT)) {
+                    && !ImGui.isMouseDown(GLFW_MOUSE_BUTTON_LEFT)) {
                 for (int i = Graph.GraphNode.currentInput.size() - 1; i >= 0; i--) {
                     int[] values = {Graph.GraphNode.currentInput.get(i), Graph.GraphNode.currentOutput.get(i)};
 
@@ -239,6 +240,12 @@ public class SpriteAnimationWindow {
                 }
                 ImGui.endPopup();
             }
+
+            // TODO: 26/04/2022 Same bind key to save level scene... May be dangerous
+            if (KeyListener.isBindPressed(GLFW_KEY_LEFT_CONTROL, GLFW_KEY_S)) {
+                ImNodes.saveCurrentEditorStateToIniFile("assets/animations/animation.txt");
+            }
+
         } else
             collapsed = true;
 

@@ -1,0 +1,11 @@
+[editor]
+panning=0,0
+
+[node.1]
+origin=148,148
+
+[node.2]
+origin=569,147
+
+[node.3]
+origin=611,266
