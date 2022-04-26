@@ -110,7 +110,7 @@ public class ImGuiLayer {
             }
 
             // Set a personalized callback when we are with the cursor outside an ImGui window
-            if (!io.getWantCaptureMouse() || gameViewWindow.getWantCaptureMouse()) {
+            if ((!io.getWantCaptureMouse() || gameViewWindow.getWantCaptureMouse()) && spriteAnimationWindow.isCollapsed()) {
                 MouseListener.mouseButtonCallback(w, button, action, mods);
             }
         });

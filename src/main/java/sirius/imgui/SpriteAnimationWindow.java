@@ -26,6 +26,8 @@ public class SpriteAnimationWindow {
 
     private Graph graph;
 
+    private boolean collapsed;
+
     public SpriteAnimationWindow() {
         ImNodes.createContext();
         this.graph = new Graph();
@@ -57,6 +59,8 @@ public class SpriteAnimationWindow {
 
     public void imgui() {
         if (ImGui.begin("ImNodes Demo", new ImBoolean(true))) {
+            this.collapsed = false;
+
             ImGui.text("This a demo graph editor for ImNodes");
 
             ImGui.alignTextToFramePadding();
@@ -235,7 +239,13 @@ public class SpriteAnimationWindow {
                 }
                 ImGui.endPopup();
             }
-        }
+        } else
+            collapsed = true;
+
         ImGui.end();
+    }
+
+    public boolean isCollapsed() {
+        return collapsed;
     }
 }
