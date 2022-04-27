@@ -1,5 +1,6 @@
 package sirius;
 
+import sirius.imgui.Canva;
 import sirius.imgui.GameViewWindow;
 import sirius.editor.MenuBar;
 import sirius.editor.PropertiesWindow;
@@ -34,6 +35,7 @@ public class ImGuiLayer {
     private MenuBar menuBar;
     private SceneHierarchy sceneHierarchy;
     private SpriteAnimationWindow spriteAnimationWindow;
+    private Canva canva;
 
     public ImGuiLayer(long glfwWindow, PickingTexture pickingTexture) {
         this.imGuiGl3 = new ImGuiImplGl3();
@@ -44,6 +46,7 @@ public class ImGuiLayer {
         this.menuBar = new MenuBar();
         this.sceneHierarchy = new SceneHierarchy();
         this.spriteAnimationWindow = new SpriteAnimationWindow();
+        this.canva = new Canva();
     }
 
     public void edit(long glfwWindow) {
@@ -110,7 +113,7 @@ public class ImGuiLayer {
             }
 
             // Set a personalized callback when we are with the cursor outside an ImGui window
-            if ((!io.getWantCaptureMouse() || gameViewWindow.getWantCaptureMouse()) && spriteAnimationWindow.isCollapsed()) {
+            if ((!io.getWantCaptureMouse() || gameViewWindow.getWantCaptureMouse()) && canva.isCollapsed()) {
                 MouseListener.mouseButtonCallback(w, button, action, mods);
             }
         });
@@ -184,12 +187,13 @@ public class ImGuiLayer {
 
         // Any Dear ImGui code SHOULD go between ImGui.newFrame()/ImGui.render() methods
         setupDockSpace();
-        // ImGui.showDemoWindow();
+        ImGui.showDemoWindow();
         currentScene.imgui();
         gameViewWindow.imgui();
         propertiesWindow.imgui();
         sceneHierarchy.imgui();
-        spriteAnimationWindow.imgui();
+        // spriteAnimationWindow.imgui();
+        canva.imgui();
 
         // We have to end ImGui before we render ImGui
         endFrame();
