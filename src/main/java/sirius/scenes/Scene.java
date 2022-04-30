@@ -27,10 +27,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 
 import static org.lwjgl.glfw.GLFW.*;
 
@@ -225,21 +222,44 @@ public class Scene {
     public void loadLevels() {
         File folder = new File("assets/levels");
         File[] listOfFiles = folder.listFiles();
+        assert listOfFiles != null;
+
+        // Order the files
+        Arrays.sort(listOfFiles);
 
         int expectedCurrentLevel = 1;
-        for (int i = 0; i < Objects.requireNonNull(listOfFiles).length; i++) {
+        for (int i = 0; i < listOfFiles.length; i++) {
             if (listOfFiles[i].isFile()) {
+                // Check if the file doesn't have "level" and ".txt" letters
+                if (!listOfFiles[i].getName().contains("level") || !listOfFiles[i].getName().contains(".txt")) {
+                    System.err.println("Warning: '" + listOfFiles[i].getName()
+                            + "' can't be recognized as a level file.");
+                    continue;
+                }
+
                 String[] navigator = listOfFiles[i].getName().split("level");
                 String[] navigator1 = navigator[1].split(".txt");
                 int curLvl = Integer.parseInt(navigator1[0]);
-                while (curLvl != expectedCurrentLevel) {
-                    System.out.println("Warning: Level " + expectedCurrentLevel + " doesn't exist!");
-                    expectedCurrentLevel ++;
-                }
-                AssetPool.addLevel(new Level(listOfFiles[i].getName(), listOfFiles[i].getPath(), curLvl));
-            }
 
-            expectedCurrentLevel++;
+                // Add level if it exists
+                if (curLvl == expectedCurrentLevel) {
+                    AssetPool.addLevel(new Level(listOfFiles[i].getName(), listOfFiles[i].getPath(), curLvl));
+                // Check if the levels' is fine.
+                } else {
+                    int deltaLevels = curLvl - expectedCurrentLevel;
+                    int nonexistentLevel = expectedCurrentLevel;
+                    for (int j = 0; j < deltaLevels; j++) {
+                        System.err.println("Warning: Level " + nonexistentLevel + " doesn't exist!");
+                        nonexistentLevel++;
+                    }
+                    expectedCurrentLevel = nonexistentLevel;
+
+                    // Add level if it is all fine now
+                    if (curLvl == expectedCurrentLevel)
+                        AssetPool.addLevel(new Level(listOfFiles[i].getName(), listOfFiles[i].getPath(), curLvl));
+                }
+                expectedCurrentLevel++;
+            }
         }
 
         Level.maxLevel = expectedCurrentLevel;
