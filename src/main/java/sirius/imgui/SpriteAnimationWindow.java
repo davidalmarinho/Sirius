@@ -146,7 +146,6 @@ public class SpriteAnimationWindow {
         } else {
             collapsed = true;
         }
-
         ImGui.end();
     }
 
