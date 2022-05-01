@@ -1,305 +1,157 @@
 package sirius.imgui;
 
-import gameobjects.GameObject;
-import imgui.ImGui;
-import imgui.extension.imnodes.ImNodes;
-import imgui.extension.imnodes.ImNodesContext;
-import imgui.extension.imnodes.flag.ImNodesPinShape;
-import imgui.flag.*;
+import imgui.*;
+import imgui.flag.ImGuiButtonFlags;
+import imgui.flag.ImGuiMouseButton;
+import imgui.flag.ImGuiPopupFlags;
 import imgui.type.ImBoolean;
-import imgui.type.ImInt;
-import sirius.SiriusTheFox;
-import sirius.input.KeyListener;
-import sirius.utils.Settings;
 
-import java.awt.*;
-import java.io.File;
-import java.io.IOException;
-import java.net.URI;
-import java.nio.file.Files;
-import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
 
-import static org.lwjgl.glfw.GLFW.*;
-
 public class SpriteAnimationWindow {
+    private List<AnimationBox> animationBoxList;
 
-    private static final ImNodesContext CONTEXT = new ImNodesContext();
-    private static final String URL = "https://github.com/Nelarius/imnodes/tree/857cc86";
+    private List<ImVec2> pointList;
+    private ImVec2 scrolling;
 
-    private static final ImInt LINK_A = new ImInt();
-    private static final ImInt LINK_B = new ImInt();
+    private boolean addingLine = false;
+    private float thickness = 2.0f;
 
-    private Graph graph;
-
-    private boolean collapsed;
+    private boolean collapsed = false;
 
     public SpriteAnimationWindow() {
-        ImNodes.createContext();
-        this.graph = new Graph();
+        this.animationBoxList = new ArrayList<>();
+        this.pointList = new ArrayList<>();
+        this.scrolling = new ImVec2();
     }
 
     /**
-     * Checks if there is a file that doesn't belong to any game object.
+     * Computes the floating-point remainder of a / b.
+     * @param a float
+     * @param b float
+     * @return computed floating-point remainder of a / b
      */
-    private void checkIniFiles() {
-        // Getting all .txt files' path
-        File iniNodesFilesDirectory = new File(Settings.iniFilesForNodes);
-        File[] iniFiles = iniNodesFilesDirectory.listFiles();
-
-        List<GameObject> gameObjectList = SiriusTheFox.getCurrentScene().getGameObjectList();
-
-        assert iniFiles != null;
-        for (File iniFile : iniFiles) {
-            // Transform file's name into game object's name
-            String[] iniNavigator = iniFile.getName().split("Animation.txt");
-            String iniFileName = iniNavigator[0];
-
-            // Remove whitespaces from game objects name, because the iniFileName also doesn't have whitespaces
-            // Also check if there is a file that doesn't coincide with game objects' name.
-            boolean mayDeleteIniFile = gameObjectList.stream().noneMatch(
-                    go -> go.name.replaceAll("\\s", "").equals(iniFileName));
-
-            if (mayDeleteIniFile) {
-                try {
-                    Files.delete(Paths.get(iniFile.getPath()));
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-    }
-
-    private void addTrigger(Graph.GraphNode node, int index) {
-        ImNodes.beginInputAttribute(node.getInputPinIds()[index], ImNodesPinShape.Quad);
-        ImNodes.endInputAttribute();
-
-        ImGui.sameLine();
-        ImGui.pushID("nodeTrigger: " + node.id);
-        float val = 11.3f;
-        int charsNumber = node.trigger.get().length();
-        float currentSize = (charsNumber + 1) * val; // +1 to maintain the integrity of this logic
-        float maxSize = 20.8f * val;
-        if (charsNumber == 0) {
-            ImGui.setNextItemWidth(val * 2);
-        } else
-            ImGui.setNextItemWidth(Math.min(currentSize, maxSize));
-
-        ImGui.inputText("", node.trigger);
-        ImGui.popID();
-        ImGui.sameLine();
-
-        ImNodes.beginOutputAttribute(node.getOutputPinIds()[index]);
-        ImGui.text("");
-        ImNodes.endOutputAttribute();
+    private float fmodf(float a, float b) {
+        int result = (int) Math.floor(a / b);
+        return a - result * b;
     }
 
     public void imgui() {
-        if (ImGui.begin("ImNodes Demo", new ImBoolean(true))) {
-            this.collapsed = false;
+        if (ImGui.begin("Sprite Animation Window", new ImBoolean(true))) {
+            collapsed = false;
+            ImGui.text("Mouse Left: drag to add lines,\nMouse Right: drag to scroll, click for context menu.");
 
-            ImGui.text("This a demo graph editor for ImNodes");
+            // Typically you would use a BeginChild()/EndChild() pair to benefit from a clipping region + own scrolling.
+            // Here we demonstrate that this can be replaced by simple offsetting + custom drawing + PushClipRect/PopClipRect() calls.
+            // To use a child window instead we could use, e.g:
+            //      ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0, 0));      // Disable padding
+            //      ImGui::PushStyleColor(ImGuiCol_ChildBg, IM_COL32(50, 50, 50, 255));  // Set a background color
+            //      ImGui::BeginChild("canvas", ImVec2(0.0f, 0.0f), true, ImGuiWindowFlags_NoMove);
+            //      ImGui::PopStyleColor();
+            //      ImGui::PopStyleVar();
+            //      [...]
+            //      ImGui::EndChild();
 
-            ImGui.alignTextToFramePadding();
-            ImGui.text("Repo:");
-            ImGui.sameLine();
-            if (ImGui.button(URL)) {
-                try {
-                    Desktop.getDesktop().browse(new URI(URL));
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+            // Using InvisibleButton() as a convenience 1) it will advance the layout cursor and 2) allows us to use IsItemHovered()/IsItemActive()
+            ImVec2 canvasP0 = ImGui.getCursorScreenPos();      // ImDrawList API uses screen coordinates!
+            ImVec2 canvasSize = ImGui.getContentRegionAvail();   // Resize canvas to what's available
+
+            if (canvasSize.x < 50.0f) canvasSize.x = 50.0f;
+            if (canvasSize.y < 50.0f) canvasSize.y = 50.0f;
+            ImVec2 canvasP1 = new ImVec2(canvasP0.x + canvasSize.x, canvasP0.y + canvasSize.y);
+
+            // Draw border and background color
+            ImGuiIO io = ImGui.getIO();
+            ImDrawList drawList = ImGui.getWindowDrawList();
+            drawList.addRectFilled(canvasP0.x, canvasP0.y, canvasP1.x, canvasP1.y,
+                    ImColor.intToColor(50, 50, 50, 255));
+            drawList.addRect(canvasP0.x, canvasP0.y, canvasP1.x, canvasP1.y,
+                    ImColor.intToColor(255, 255, 255, 255));
+
+            // This will catch our interactions
+            ImGui.invisibleButton("canvas", canvasSize.x, canvasSize.y,
+                    ImGuiButtonFlags.MouseButtonLeft | ImGuiButtonFlags.MouseButtonRight);
+
+            boolean isHovered = ImGui.isItemHovered(); // Hovered
+            boolean isActive  = ImGui.isItemActive();  // Held
+
+            ImVec2 origin = new ImVec2(canvasP0.x + scrolling.x, canvasP0.y + scrolling.y); // Lock scrolled origin
+
+            ImVec2 mousePosInCanvas = new ImVec2(io.getMousePos().x - origin.x, io.getMousePos().y - origin.y);
+
+            // Add first and second point
+            if (isHovered && !addingLine && ImGui.isMouseClicked(ImGuiMouseButton.Left)) {
+                pointList.add(mousePosInCanvas);
+                pointList.add(mousePosInCanvas);
+                addingLine = true;
+            }
+            if (addingLine) {
+                pointList.set(pointList.size() - 1, mousePosInCanvas);
+                if (!ImGui.isMouseDown(ImGuiMouseButton.Left))
+                    addingLine = false;
             }
 
-
-            ImNodes.editorContextSet(CONTEXT);
-            ImNodes.beginNodeEditor();
-
-            GameObject activeGameObject = SiriusTheFox.getImGuiLayer().getPropertiesWindow().getActiveGameObject();
-            if (activeGameObject != null) {
-                for (Graph.GraphNode node : graph.nodes.values()) {
-                    ImNodes.beginNode(node.id);
-
-                    ImNodes.beginNodeTitleBar();
-                    ImGui.textUnformatted(activeGameObject.name);
-
-                    // TODO: 23/04/2022 Save nodes in files to after load animations to all game objects that have the same name  
-                    
-                    /*ImGui.pushID("nodeName: " + node.id);
-                    float val = 11.5f;
-                    int charsNumber = node.name.get().length();
-                    float currentSize = (charsNumber + 1) * val; // +1 to maintain the integrity of this logic
-                    float maxSize = 16.8f * val;
-                    if (charsNumber == 0) {
-                        ImGui.setNextItemWidth(val * 2);
-                    } else
-                        ImGui.setNextItemWidth(Math.min(currentSize, maxSize));
-                    ImGui.inputText("", node.name);
-                    ImGui.popID();*/
-
-                    ImNodes.endNodeTitleBar();
-
-                    addTrigger(node, 0);
-                    /*if (ImGui.button("Add trigger", 130f, 30f)) {
-                        for (int index = 1; index < node.inputPinIds.length; index++)
-                            addTrigger(node, index);
-                    }*/
-
-                    ImNodes.endNode();
-                }
+            // Pan (we use a zero mouse threshold when there's no context menu)
+            // You may decide to make that threshold dynamic based on whether the mouse is hovering something etc.
+            float mouseThresholdForPan = -1.0f;
+            if (isActive && ImGui.isMouseDragging(ImGuiMouseButton.Right, mouseThresholdForPan)) {
+                scrolling.x += io.getMouseDelta().x;
+                scrolling.y += io.getMouseDelta().y;
             }
 
-            int uniqueLinkId = 1;
-            // for (Graph.GraphNode node : graph.nodes.values()) {
-                /*if (graph.nodes.containsKey(node.outputNodeId)) {
-                    for (int i = 0; i < node.getInputPinIds().length; i++) {
-                        for (int j = 0; j < node.getOutputPinIds().length; j++) {
-                            for (int k = 0; k < Graph.GraphNode.currentInput.size(); k++) {
-                                if (k == Graph.GraphNode.currentOutput.size())
-                                    break;
-                                if (graph.nodes.get(node.outputNodeId).getInputPinIds()[i] == Graph.GraphNode.currentInput.get(k)
-                                        && node.getOutputPinIds()[j] == Graph.GraphNode.currentOutput.get(k))
-                                    ImNodes.link(uniqueLinkId++, node.getOutputPinIds()[j], graph.nodes.get(node.outputNodeId).getInputPinIds()[i]);
-                            }
-                        }
-                    }
-                }*/
-            // }
-                int highestSize = Math.max(Graph.GraphNode.currentInput.size(), Graph.GraphNode.currentOutput.size());
-                boolean inputGreatest = Graph.GraphNode.currentInput.size() > Graph.GraphNode.currentOutput.size();
-                for (int i = 0; i < highestSize; i++) {
-                    if (Graph.GraphNode.currentInput.size() != Graph.GraphNode.currentOutput.size()) {
-                        if (inputGreatest) {
-                            if (i == Graph.GraphNode.currentInput.size() - 1)
-                                break;
-                        } else {
-                            if (i == Graph.GraphNode.currentOutput.size() - 1)
-                                break;
-                        }
-                    }
+            // Context menu (under default mouse threshold)
+            ImVec2 dragDelta = ImGui.getMouseDragDelta(ImGuiMouseButton.Right);
+            if (dragDelta.x == 0.0f && dragDelta.y == 0.0f)
+                ImGui.openPopupOnItemClick("context", ImGuiPopupFlags.MouseButtonRight);
 
-                    ImNodes.link(uniqueLinkId++, Graph.GraphNode.currentOutput.get(i), Graph.GraphNode.currentInput.get(i));
-                }
-
-            final boolean isEditorHovered = ImNodes.isEditorHovered();
-            ImNodes.endNodeEditor();
-
-            boolean mouseClicked = ImGui.isMouseDown(GLFW_MOUSE_BUTTON_LEFT);
-            boolean oneFrameMouse = ImGui.isMouseClicked(GLFW_MOUSE_BUTTON_LEFT);
-
-            for (Graph.GraphNode node : graph.nodes.values()) {
-                for (int i = 0; i < node.inputPinIds.length; i++) {
-                    if ((ImNodes.getHoveredPin() == node.inputPinIds[i] && mouseClicked && oneFrameMouse)
-                            || (ImNodes.getHoveredPin() == node.inputPinIds[i] && mouseClicked
-                                && Graph.GraphNode.currentInput.size() < Graph.GraphNode.currentOutput.size())) {
-                        Graph.GraphNode.currentInput.add(node.inputPinIds[i]);
-                        break;
-                    }
-                }
-
-                for (int i = 0; i < node.outputPinIds.length; i++) {
-                    if (
-                            (ImNodes.getHoveredPin() == node.outputPinIds[i] && mouseClicked
-                            // && Graph.GraphNode.currentOutput.stream().noneMatch(t -> t == ImNodes.getHoveredPin())
-                                    && oneFrameMouse)
-                            || (ImNodes.getHoveredPin() == node.outputPinIds[i] && mouseClicked
-                                    && Graph.GraphNode.currentOutput.size() < Graph.GraphNode.currentInput.size())
-                    ) {
-                        Graph.GraphNode.currentOutput.add(node.outputPinIds[i]);
-                        break;
-                    }
-                }
+            // Draw grid + all lines in the canvas
+            drawList.pushClipRect(canvasP0.x, canvasP0.y, canvasP1.x, canvasP1.y, false);
+            float GRID_STEP = 64.0f;
+            for (float x = fmodf(scrolling.x, GRID_STEP); x < canvasSize.x; x += GRID_STEP) {
+                drawList.addLine(canvasP0.x + x, canvasP0.y, canvasP0.x + x, canvasP1.y,
+                        ImColor.intToColor(200, 200, 200, 40));
+            }
+            for (float y = fmodf(scrolling.y, GRID_STEP); y < canvasSize.y; y += GRID_STEP) {
+                drawList.addLine(canvasP0.x, canvasP0.y + y, canvasP1.x, canvasP0.y + y,
+                        ImColor.intToColor(200, 200, 200, 40));
+            }
+            for (int n = 0; n < pointList.size(); n += 2) {
+                drawList.addLine(origin.x + pointList.get(n).x, origin.y + pointList.get(n).y,
+                        origin.x + pointList.get(n + 1).x, origin.y + pointList.get(n + 1).y,
+                        ImColor.intToColor(255, 255, 0, 255), thickness);
             }
 
-            // System.out.println("In: " + Graph.GraphNode.currentInput);
-            // System.out.println("Out: " + Graph.GraphNode.currentOutput);
+            // Draw animation boxes in SpriteWindowAnimation's canvas
+            for (AnimationBox animationBox : animationBoxList)
+                animationBox.imgui();
 
-            // Checks
-            if (!ImGui.isMouseDown(GLFW_MOUSE_BUTTON_LEFT)) {
-                if (Graph.GraphNode.currentInput.size() > Graph.GraphNode.currentOutput.size())
-                    Graph.GraphNode.currentInput.remove(Graph.GraphNode.currentInput.size() - 1);
-                else if (Graph.GraphNode.currentOutput.size() > Graph.GraphNode.currentInput.size())
-                    Graph.GraphNode.currentOutput.remove(Graph.GraphNode.currentOutput.size() - 1);
-            }
+            drawList.popClipRect();
 
-            if (Graph.GraphNode.currentOutput.size() == Graph.GraphNode.currentInput.size()
-                    && !ImGui.isMouseDown(GLFW_MOUSE_BUTTON_LEFT)) {
-                for (int i = Graph.GraphNode.currentInput.size() - 1; i >= 0; i--) {
-                    int[] values = {Graph.GraphNode.currentInput.get(i), Graph.GraphNode.currentOutput.get(i)};
-
-                    for (int j = Graph.GraphNode.currentInput.size() - 1; j >= 0; j--) {
-                        if (i == j) continue;
-                        int[] values2 = {Graph.GraphNode.currentInput.get(j), Graph.GraphNode.currentOutput.get(j)};
-
-                        if (values[0] == values2[0] && values[1] == values2[1]) {
-                            Graph.GraphNode.currentInput.remove(i);
-                            Graph.GraphNode.currentOutput.remove(i);
-                        }
-                    }
+            // Menu properties
+            if (ImGui.beginPopup("context")) {
+                addingLine = false;
+                if (ImGui.menuItem("Add Animation Box", "")) {
+                    animationBoxList.add(new AnimationBox("haha"));
                 }
-            }
-
-            if (ImNodes.isLinkCreated(LINK_A, LINK_B)) {
-                final Graph.GraphNode source = graph.findByOutput(LINK_A.get());
-                final Graph.GraphNode target = graph.findByInput(LINK_B.get());
-                if (source != null && target != null && source.outputNodeId != target.id) {
-                    source.outputNodeId = target.id;
+                if (ImGui.menuItem("Remove one", "", false, pointList.size() > 0)) {
+                    pointList.remove(pointList.size() - 1);
+                    pointList.remove(pointList.size() - 1);
                 }
-            }
-
-            if (ImGui.isMouseClicked(ImGuiMouseButton.Right)) {
-                final int hoveredNode = ImNodes.getHoveredNode();
-                if (hoveredNode != -1) {
-                    ImGui.openPopup("node_context");
-                    ImGui.getStateStorage().setInt(ImGui.getID("delete_node_id"), hoveredNode);
-                } else if (isEditorHovered) {
-                    ImGui.openPopup("node_editor_context");
-                }
-            }
-
-            if (ImGui.isPopupOpen("node_context")) {
-                final int targetNode = ImGui.getStateStorage().getInt(ImGui.getID("delete_node_id"));
-                if (ImGui.beginPopup("node_context")) {
-                    if (ImGui.button("Delete " + graph.nodes.get(targetNode).getName())) {
-                        graph.nodes.remove(targetNode);
-                        ImGui.closeCurrentPopup();
-                    }
-                    ImGui.endPopup();
-                }
-            }
-
-            if (ImGui.beginPopup("node_editor_context")) {
-                if (ImGui.button("Create New Node")) {
-                    final Graph.GraphNode node = graph.createGraphNode(2, 2);
-                    ImNodes.setNodeScreenSpacePos(node.id, ImGui.getMousePosX(), ImGui.getMousePosY());
-                    ImGui.closeCurrentPopup();
+                if (ImGui.menuItem("Remove all", "", false, pointList.size() > 0)) {
+                    pointList.clear();
                 }
                 ImGui.endPopup();
             }
-
-            // TODO: 26/04/2022 Same bind key to save level scene... May be dangerous
-            if (KeyListener.isBindPressed(GLFW_KEY_LEFT_CONTROL, GLFW_KEY_S) && activeGameObject != null) {
-                checkIniFiles();
-                /*File file = new File(Settings.iniFilesForNodes);
-                if (!file.exists()) {
-                    System.err.println("Error: Couldn't access '" + Settings.iniFilesForNodes + "' find directory");
-                    System.exit(-1);
-                }*/
-
-                String gameObjectNameWithoutSpaces = activeGameObject.name.replaceAll("\\s", "");
-
-                String filePath = Settings.iniFilesForNodes + gameObjectNameWithoutSpaces + "Animation.txt";// File file1 = new File(filePath);
-                ImNodes.saveCurrentEditorStateToIniFile(filePath);
-            }
-
-        } else
+        } else {
             collapsed = true;
-
-        if (KeyListener.isKeyDown(GLFW_KEY_U)) {
-            checkIniFiles();
         }
 
         ImGui.end();
+    }
+
+    public void setThickness(float thickness) {
+        this.thickness = thickness;
     }
 
     public boolean isCollapsed() {
