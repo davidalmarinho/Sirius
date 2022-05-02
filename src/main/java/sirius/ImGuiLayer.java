@@ -193,7 +193,6 @@ public class ImGuiLayer {
         gameViewWindow.imgui();
         propertiesWindow.imgui();
         sceneHierarchy.imgui();
-        // spriteAnimationWindow.imgui();
         nodeGraph.imgui();
         // spriteAnimationWindow.imgui();
 
