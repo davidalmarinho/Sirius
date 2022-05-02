@@ -1,5 +1,6 @@
 package sirius;
 
+import sirius.imgui.NodeGraph;
 import sirius.imgui.SpriteAnimationWindow;
 import sirius.imgui.GameViewWindow;
 import sirius.editor.MenuBar;
@@ -33,7 +34,8 @@ public class ImGuiLayer {
     private final PropertiesWindow propertiesWindow;
     private MenuBar menuBar;
     private SceneHierarchy sceneHierarchy;
-    private SpriteAnimationWindow spriteAnimationWindow;
+    // private SpriteAnimationWindow spriteAnimationWindow;
+    public NodeGraph nodeGraph;
 
     public ImGuiLayer(long glfwWindow, PickingTexture pickingTexture) {
         this.imGuiGl3 = new ImGuiImplGl3();
@@ -43,7 +45,8 @@ public class ImGuiLayer {
         this.propertiesWindow = PropertiesWindow.get(pickingTexture);
         this.menuBar = new MenuBar();
         this.sceneHierarchy = new SceneHierarchy();
-        this.spriteAnimationWindow = new SpriteAnimationWindow();
+        // this.spriteAnimationWindow = new SpriteAnimationWindow();
+        this.nodeGraph = new NodeGraph();
     }
 
     public void edit(long glfwWindow) {
@@ -110,7 +113,8 @@ public class ImGuiLayer {
             }
 
             // Set a personalized callback when we are with the cursor outside an ImGui window
-            if ((!io.getWantCaptureMouse() || gameViewWindow.getWantCaptureMouse()) && spriteAnimationWindow.isCollapsed()) {
+            if ((!io.getWantCaptureMouse() || gameViewWindow.getWantCaptureMouse())
+                    && nodeGraph.isCollapsed()) {
                 MouseListener.mouseButtonCallback(w, button, action, mods);
             }
         });
@@ -190,7 +194,8 @@ public class ImGuiLayer {
         propertiesWindow.imgui();
         sceneHierarchy.imgui();
         // spriteAnimationWindow.imgui();
-        spriteAnimationWindow.imgui();
+        nodeGraph.imgui();
+        // spriteAnimationWindow.imgui();
 
         // We have to end ImGui before we render ImGui
         endFrame();

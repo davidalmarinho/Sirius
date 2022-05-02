@@ -80,7 +80,7 @@ public class DebugDraw {
                     // Bottom right
                     position.set(new Vector2f(line.getEnd()).sub(0.0f, constant));
                 else if (i == 2)
-                    // Bottom lef
+                    // Bottom left
                     position.set(new Vector2f(line.getStart()).sub(0.0f, constant));
                 else if (i == 3)
                     // Top left

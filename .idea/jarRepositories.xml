@@ -26,5 +26,10 @@
       <option name="name" value="maven" />
       <option name="url" value="https://github.com/SpaiR/imgui-java/releases/tag/v1.85.0" />
     </remote-repository>
+    <remote-repository>
+      <option name="id" value="maven" />
+      <option name="name" value="maven" />
+      <option name="url" value="https://github.com/davidalmarinho/imgui-java/releases/tag/v1.86.4" />
+    </remote-repository>
   </component>
 </project>
