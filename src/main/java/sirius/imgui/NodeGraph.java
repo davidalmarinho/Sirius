@@ -4,10 +4,8 @@ import gameobjects.GameObject;
 import imgui.ImGui;
 import imgui.extension.imnodes.ImNodes;
 import imgui.extension.imnodes.ImNodesContext;
-import imgui.extension.imnodes.flag.ImNodesAttributeFlags;
 import imgui.extension.imnodes.flag.ImNodesMiniMapLocation;
 import imgui.extension.imnodes.flag.ImNodesPinShape;
-import imgui.extension.imnodes.flag.ImNodesStyleVar;
 import imgui.flag.*;
 import imgui.type.ImBoolean;
 import imgui.type.ImInt;
@@ -73,30 +71,6 @@ public class NodeGraph {
         }
     }
 
-    private void addTrigger(Graph.GraphNode node, int index) {
-        ImNodes.beginInputAttribute(node.getInputPinIds()[index], ImNodesPinShape.Quad);
-        ImNodes.endInputAttribute();
-
-        ImGui.sameLine();
-        ImGui.pushID("nodeTrigger: " + node.id);
-        float val = 11.3f;
-        int charsNumber = node.trigger.get().length();
-        float currentSize = (charsNumber + 1) * val; // +1 to maintain the integrity of this logic
-        float maxSize = 20.8f * val;
-        if (charsNumber == 0) {
-            ImGui.setNextItemWidth(val * 2);
-        } else
-            ImGui.setNextItemWidth(Math.min(currentSize, maxSize));
-
-        ImGui.inputText("", node.trigger);
-        ImGui.popID();
-        ImGui.sameLine();
-
-        ImNodes.beginOutputAttribute(node.getOutputPinIds()[index]);
-        ImGui.text("");
-        ImNodes.endOutputAttribute();
-    }
-
     public void imgui() {
         if (ImGui.begin("ImNodes Demo", new ImBoolean(true))) {
             this.collapsed = false;
@@ -142,7 +116,32 @@ public class NodeGraph {
 
                     ImNodes.endNodeTitleBar();
 
-                    addTrigger(node, 0);
+                    ImNodes.beginInputAttribute(node.getInputPinIds()[0], ImNodesPinShape.Quad);
+                    ImNodes.endInputAttribute();
+
+                    ImGui.sameLine();
+                    ImGui.pushID("nodeTrigger: " + node.id);
+                    float val = 11.3f;
+                    int charsNumber = node.trigger.get().length();
+                    float currentSize = (charsNumber + 1) * val; // +1 to maintain the integrity of this logic
+                    float maxSize = 20.8f * val;
+                    if (charsNumber == 0) {
+                        ImGui.setNextItemWidth(val * 2);
+                    } else
+                        ImGui.setNextItemWidth(Math.min(currentSize, maxSize));
+
+                    ImGui.inputText("", node.trigger);
+                    ImGui.popID();
+                    ImGui.sameLine();
+
+                    ImNodes.beginOutputAttribute(node.getOutputPinIds()[0], ImNodesPinShape.QuadFilled);
+                    ImNodes.endOutputAttribute();
+
+                    ImNodes.beginInputAttribute(node.getInputPinIds()[1], ImNodesPinShape.QuadFilled);
+                    ImNodes.endInputAttribute();
+                    ImGui.sameLine();
+                    ImNodes.beginOutputAttribute(node.getOutputPinIds()[1], ImNodesPinShape.Quad);
+                    ImNodes.endOutputAttribute();
                     /*if (ImGui.button("Add trigger", 130f, 30f)) {
                         for (int index = 1; index < node.inputPinIds.length; index++)
                             addTrigger(node, index);

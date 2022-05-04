@@ -1,4 +1,4 @@
-package sirius.imgui;
+package sirius.imgui.sprite_animation_window;
 
 import imgui.*;
 import imgui.flag.ImGuiButtonFlags;
@@ -124,7 +124,7 @@ public class SpriteAnimationWindow {
 
             // Draw animation boxes in SpriteWindowAnimation's canvas
             for (AnimationBox animationBox : animationBoxList)
-                animationBox.imgui();
+                animationBox.imgui(origin);
 
             drawList.popClipRect();
 
@@ -132,7 +132,7 @@ public class SpriteAnimationWindow {
             if (ImGui.beginPopup("context")) {
                 addingLine = false;
                 if (ImGui.menuItem("Add Animation Box", "")) {
-                    animationBoxList.add(new AnimationBox("haha"));
+                    animationBoxList.add(new AnimationBox("haha", mousePosInCanvas));
                 }
                 if (ImGui.menuItem("Remove one", "", false, pointList.size() > 0)) {
                     pointList.remove(pointList.size() - 1);
