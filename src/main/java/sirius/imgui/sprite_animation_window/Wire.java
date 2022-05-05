@@ -1,18 +1,28 @@
 package sirius.imgui.sprite_animation_window;
 
+import imgui.ImGui;
 import imgui.ImVec2;
-import org.jbox2d.common.Vec2;
 
 public class Wire {
     private int id;
     private float startX, startY;
     private float endX, endY;
 
-    public Wire(Vec2 start, Vec2 end) {
+    public Wire(ImVec2 start, ImVec2 end) {
         this.startX = start.x;
         this.startY = start.y;
         this.endX   = end.x;
         this.endY   = end.y;
+    }
+
+    public Wire(Wire wire) {
+        this(wire.getStart(), wire.getEnd());
+    }
+
+    public void imgui() {
+        if (ImGui.isMouseHoveringRect(startX, startY, endX, endY, true)) {
+            // System.out.println("I was hereee");
+        }
     }
 
     public ImVec2 getStart() {

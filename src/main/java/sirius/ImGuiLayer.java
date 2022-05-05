@@ -113,8 +113,7 @@ public class ImGuiLayer {
             }
 
             // Set a personalized callback when we are with the cursor outside an ImGui window
-            if ((!io.getWantCaptureMouse() || gameViewWindow.getWantCaptureMouse())
-                    && spriteAnimationWindow.isCollapsed()) {
+            if ((!io.getWantCaptureMouse() || gameViewWindow.getWantCaptureMouse())) {
                 MouseListener.mouseButtonCallback(w, button, action, mods);
             }
         });
@@ -124,12 +123,7 @@ public class ImGuiLayer {
             io.setMouseWheel(io.getMouseWheel() + (float) yOffset);
 
             // Just use the personalized scroll when inside of game viewport window
-            boolean insideGameViewportX = MouseListener.getX() > gameViewWindow.getLeftX()
-                    && MouseListener.getX() < gameViewWindow.getRightX();
-            boolean insideGameViewportY = MouseListener.getY() > gameViewWindow.getBottomY()
-                    && MouseListener.getY() < gameViewWindow.getTopY();
-
-            if (insideGameViewportX && insideGameViewportY)
+            if (gameViewWindow.getWantCaptureMouse())
                 MouseListener.mouseScrollCallback(w, xOffset, yOffset);
         });
 

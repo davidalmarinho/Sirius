@@ -1,9 +1,7 @@
 package sirius.imgui.sprite_animation_window;
 
 import imgui.*;
-import imgui.flag.ImGuiButtonFlags;
-import imgui.flag.ImGuiMouseButton;
-import imgui.flag.ImGuiPopupFlags;
+import imgui.flag.*;
 import imgui.type.ImBoolean;
 
 import java.util.ArrayList;
@@ -11,6 +9,7 @@ import java.util.List;
 
 public class SpriteAnimationWindow {
     private List<AnimationBox> animationBoxList;
+    private List<Wire> wireList;
 
     private List<ImVec2> pointList;
     private ImVec2 scrolling;
@@ -22,12 +21,15 @@ public class SpriteAnimationWindow {
 
     public SpriteAnimationWindow() {
         this.animationBoxList = new ArrayList<>();
+        this.wireList = new ArrayList<>();
         this.pointList = new ArrayList<>();
         this.scrolling = new ImVec2();
+        animationBoxList.add(new AnimationBox("I'm a box", 300, 300));
     }
 
     /**
      * Computes the floating-point remainder of a / b.
+     *
      * @param a float
      * @param b float
      * @return computed floating-point remainder of a / b
@@ -39,7 +41,6 @@ public class SpriteAnimationWindow {
 
     public void imgui() {
         if (ImGui.begin("Sprite Animation Window", new ImBoolean(true))) {
-            collapsed = false;
             ImGui.text("Mouse Left: drag to add lines,\nMouse Right: drag to scroll, click for context menu.");
 
             // Typically you would use a BeginChild()/EndChild() pair to benefit from a clipping region + own scrolling.
@@ -53,9 +54,18 @@ public class SpriteAnimationWindow {
             //      [...]
             //      ImGui::EndChild();
 
+
             // Using InvisibleButton() as a convenience 1) it will advance the layout cursor and 2) allows us to use IsItemHovered()/IsItemActive()
             ImVec2 canvasP0 = ImGui.getCursorScreenPos();      // ImDrawList API uses screen coordinates!
             ImVec2 canvasSize = ImGui.getContentRegionAvail();   // Resize canvas to what's available
+
+            ImGui.pushStyleVar(ImGuiStyleVar.WindowPadding, 0, 0);
+            ImGui.pushStyleColor(ImGuiCol.ChildBg, ImColor.intToColor(50, 50, 50, 255));
+            // We will catch all the interactions on this window
+            ImGui.beginChild("canvas", canvasSize.x, canvasSize.y, true,
+                    ImGuiWindowFlags.NoMove);
+            ImGui.popStyleColor();
+            ImGui.popStyleVar();
 
             if (canvasSize.x < 50.0f) canvasSize.x = 50.0f;
             if (canvasSize.y < 50.0f) canvasSize.y = 50.0f;
@@ -64,17 +74,8 @@ public class SpriteAnimationWindow {
             // Draw border and background color
             ImGuiIO io = ImGui.getIO();
             ImDrawList drawList = ImGui.getWindowDrawList();
-            drawList.addRectFilled(canvasP0.x, canvasP0.y, canvasP1.x, canvasP1.y,
-                    ImColor.intToColor(50, 50, 50, 255));
-            drawList.addRect(canvasP0.x, canvasP0.y, canvasP1.x, canvasP1.y,
-                    ImColor.intToColor(255, 255, 255, 255));
 
-            // This will catch our interactions
-            ImGui.invisibleButton("canvas", canvasSize.x, canvasSize.y,
-                    ImGuiButtonFlags.MouseButtonLeft | ImGuiButtonFlags.MouseButtonRight);
-
-            boolean isHovered = ImGui.isItemHovered(); // Hovered
-            boolean isActive  = ImGui.isItemActive();  // Held
+            boolean isHovered = ImGui.isWindowHovered();
 
             ImVec2 origin = new ImVec2(canvasP0.x + scrolling.x, canvasP0.y + scrolling.y); // Lock scrolled origin
 
@@ -82,12 +83,14 @@ public class SpriteAnimationWindow {
 
             // Add first and second point
             if (isHovered && !addingLine && ImGui.isMouseClicked(ImGuiMouseButton.Left)) {
-                pointList.add(mousePosInCanvas);
-                pointList.add(mousePosInCanvas);
+                ImVec2 startPos = new ImVec2(mousePosInCanvas.x + canvasP0.x, mousePosInCanvas.y + canvasP0.y);
+                wireList.add(new Wire(startPos, startPos));
                 addingLine = true;
             }
             if (addingLine) {
-                pointList.set(pointList.size() - 1, mousePosInCanvas);
+                final int SIZE_WIRE_LIST = wireList.size();
+                wireList.get(SIZE_WIRE_LIST - 1).setEnd(mousePosInCanvas.x + canvasP0.x, mousePosInCanvas.y + canvasP0.y);
+                
                 if (!ImGui.isMouseDown(ImGuiMouseButton.Left))
                     addingLine = false;
             }
@@ -95,17 +98,20 @@ public class SpriteAnimationWindow {
             // Pan (we use a zero mouse threshold when there's no context menu)
             // You may decide to make that threshold dynamic based on whether the mouse is hovering something etc.
             float mouseThresholdForPan = -1.0f;
-            if (isActive && ImGui.isMouseDragging(ImGuiMouseButton.Right, mouseThresholdForPan)) {
+            if (isHovered && ImGui.isMouseDragging(ImGuiMouseButton.Right, mouseThresholdForPan)) {
                 scrolling.x += io.getMouseDelta().x;
                 scrolling.y += io.getMouseDelta().y;
             }
 
             // Context menu (under default mouse threshold)
             ImVec2 dragDelta = ImGui.getMouseDragDelta(ImGuiMouseButton.Right);
-            if (dragDelta.x == 0.0f && dragDelta.y == 0.0f)
-                ImGui.openPopupOnItemClick("context", ImGuiPopupFlags.MouseButtonRight);
+            if (dragDelta.x == 0.0f && dragDelta.y == 0.0f) {
+                if (ImGui.isMouseDown(ImGuiMouseButton.Right)) {
+                    ImGui.openPopupOnItemClick("context");
+                }
+            }
 
-            // Draw grid + all lines in the canvas
+            // Draw grid
             drawList.pushClipRect(canvasP0.x, canvasP0.y, canvasP1.x, canvasP1.y, false);
             float GRID_STEP = 64.0f;
             for (float x = fmodf(scrolling.x, GRID_STEP); x < canvasSize.x; x += GRID_STEP) {
@@ -116,20 +122,26 @@ public class SpriteAnimationWindow {
                 drawList.addLine(canvasP0.x, canvasP0.y + y, canvasP1.x, canvasP0.y + y,
                         ImColor.intToColor(200, 200, 200, 40));
             }
-            for (int n = 0; n < pointList.size(); n += 2) {
-                drawList.addLine(origin.x + pointList.get(n).x, origin.y + pointList.get(n).y,
-                        origin.x + pointList.get(n + 1).x, origin.y + pointList.get(n + 1).y,
+
+            // Draw linked lines
+            for (Wire wire : wireList) {
+                drawList.addLine(wire.getStart().x + scrolling.x, wire.getStart().y + scrolling.y,
+                        wire.getEnd().x + scrolling.x, wire.getEnd().y + scrolling.y,
                         ImColor.intToColor(255, 255, 0, 255), thickness);
             }
 
+            // TODO: 05/05/2022 Just for tests --for now
+            for (Wire wire : wireList)
+                wire.imgui();
+
             // Draw animation boxes in SpriteWindowAnimation's canvas
-            for (AnimationBox animationBox : animationBoxList)
-                animationBox.imgui(origin);
+            for (int i = 0; i < animationBoxList.size(); i++) {
+                animationBoxList.get(i).imgui(origin, scrolling);
+            }
 
-            drawList.popClipRect();
-
+            // TODO: 05/05/2022 Popup window doesn't work anymore
             // Menu properties
-            if (ImGui.beginPopup("context")) {
+            if (ImGui.beginPopup("context", ImGuiWindowFlags.NoMove)) {
                 addingLine = false;
                 if (ImGui.menuItem("Add Animation Box", "")) {
                     animationBoxList.add(new AnimationBox("haha", mousePosInCanvas));
@@ -138,23 +150,15 @@ public class SpriteAnimationWindow {
                     pointList.remove(pointList.size() - 1);
                     pointList.remove(pointList.size() - 1);
                 }
-                if (ImGui.menuItem("Remove all", "", false, pointList.size() > 0)) {
-                    pointList.clear();
+                if (ImGui.menuItem("Remove all", "", false, wireList.size() > 0)) {
+                    wireList.clear();
                 }
                 ImGui.endPopup();
             }
-        } else {
-            collapsed = true;
+
+            drawList.popClipRect();
+            ImGui.endChild();
         }
-
         ImGui.end();
-    }
-
-    public void setThickness(float thickness) {
-        this.thickness = thickness;
-    }
-
-    public boolean isCollapsed() {
-        return collapsed;
     }
 }

@@ -13,6 +13,7 @@ import org.joml.Vector2f;
 public class GameViewWindow {
     private float leftX, rightX, topY, bottomY;
     private boolean playing;
+    private boolean collapsed;
 
     public void imgui() {
         ImGui.begin("Game Viewport",
@@ -55,6 +56,8 @@ public class GameViewWindow {
         MouseListener.setGameViewportPos(new Vector2f(topLeft.x, topLeft.y));
         MouseListener.setGameViewportSize(new Vector2f(windowSize.x, windowSize.y));
 
+        this.collapsed = !ImGui.isWindowHovered();
+
         ImGui.end();
     }
 
@@ -93,7 +96,8 @@ public class GameViewWindow {
 
     public boolean getWantCaptureMouse() {
         return MouseListener.getX() >= leftX && MouseListener.getX() <= rightX
-                && MouseListener.getY() >= bottomY && MouseListener.getY() <= topY;
+                && MouseListener.getY() >= bottomY && MouseListener.getY() <= topY
+                && !collapsed;
     }
 
     public float getLeftX() {
