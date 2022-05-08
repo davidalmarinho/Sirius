@@ -19,12 +19,6 @@ public class Wire {
         this(wire.getStart(), wire.getEnd());
     }
 
-    public void imgui() {
-        if (ImGui.isMouseHoveringRect(startX, startY, endX, endY, true)) {
-            // System.out.println("I was hereee");
-        }
-    }
-
     public ImVec2 getStart() {
         return new ImVec2(startX, startY);
     }

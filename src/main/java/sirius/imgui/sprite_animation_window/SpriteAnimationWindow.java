@@ -123,20 +123,16 @@ public class SpriteAnimationWindow {
                         ImColor.intToColor(200, 200, 200, 40));
             }
 
+            // Draw animation boxes in SpriteWindowAnimation's canvas
+            for (int i = 0; i < animationBoxList.size(); i++) {
+                animationBoxList.get(i).imgui(origin, scrolling);
+            }
+
             // Draw linked lines
             for (Wire wire : wireList) {
                 drawList.addLine(wire.getStart().x + scrolling.x, wire.getStart().y + scrolling.y,
                         wire.getEnd().x + scrolling.x, wire.getEnd().y + scrolling.y,
                         ImColor.intToColor(255, 255, 0, 255), thickness);
-            }
-
-            // TODO: 05/05/2022 Just for tests --for now
-            for (Wire wire : wireList)
-                wire.imgui();
-
-            // Draw animation boxes in SpriteWindowAnimation's canvas
-            for (int i = 0; i < animationBoxList.size(); i++) {
-                animationBoxList.get(i).imgui(origin, scrolling);
             }
 
             // TODO: 05/05/2022 Popup window doesn't work anymore
