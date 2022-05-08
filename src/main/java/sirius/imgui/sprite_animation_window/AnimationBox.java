@@ -8,34 +8,32 @@ import imgui.flag.ImDrawFlags;
 import imgui.flag.ImGuiInputTextFlags;
 import imgui.flag.ImGuiWindowFlags;
 import imgui.type.ImString;
-import org.joml.Vector2f;
 
 public class AnimationBox {
+    public static int maxId = 0;
     private int id;
     private ImString trigger;
     public float x, y;
     private float width, height;
-    private Vector2f pointsFieldSize;
 
     public AnimationBox(String trigger, float x, float y) {
-        this.id++;
+        maxId++;
+        this.id = maxId;
         this.trigger = new ImString(trigger, 32);
         this.x = x;
         this.y = y;
         this.width = 128.0f;
         this.height = 128.0f;
-        this.pointsFieldSize = new Vector2f();
     }
     public AnimationBox(String trigger, ImVec2 position) {
         this(trigger, position.x, position.y);
     }
 
     public void imgui(ImVec2 origin, ImVec2 scrolling) {
-        // TODO: 05/05/2022 Child window has weird movement when moving in canvas
-        ImGui.setCursorPos(ImGui.getCursorPosX() + x - getWidth() / 2 + scrolling.x,
-                ImGui.getCursorPosY() + y - getHeight() / 2 + scrolling.y);
+        // Reserve the region to draw the animation box
+        ImGui.setCursorPos(x - getWidth() / 2 + scrolling.x, + y - getHeight() / 2 + scrolling.y);
         ImGui.beginChild("box" + id, width, height, false, ImGuiWindowFlags.AlwaysAutoResize
-                | ImGuiWindowFlags.NoCollapse);
+                | ImGuiWindowFlags.NoCollapse | ImGuiWindowFlags.NoScrollbar);
 
         // Check what size the animation box will have --it changes depending on how many characters we have in text field
         final float BREAKER_WIDTH = 48f;

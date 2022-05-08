@@ -17,7 +17,7 @@ public class SpriteAnimationWindow {
     private boolean addingLine = false;
     private float thickness = 2.0f;
 
-    private boolean collapsed = false;
+    private boolean mayOpenPopupWindow = false;
 
     public SpriteAnimationWindow() {
         this.animationBoxList = new ArrayList<>();
@@ -106,8 +106,8 @@ public class SpriteAnimationWindow {
             // Context menu (under default mouse threshold)
             ImVec2 dragDelta = ImGui.getMouseDragDelta(ImGuiMouseButton.Right);
             if (dragDelta.x == 0.0f && dragDelta.y == 0.0f) {
-                if (ImGui.isMouseDown(ImGuiMouseButton.Right)) {
-                    ImGui.openPopupOnItemClick("context");
+                if (ImGui.isMouseClicked(ImGuiMouseButton.Right)) {
+                    mayOpenPopupWindow = !mayOpenPopupWindow;
                 }
             }
 
@@ -135,24 +135,26 @@ public class SpriteAnimationWindow {
                         ImColor.intToColor(255, 255, 0, 255), thickness);
             }
 
-            // TODO: 05/05/2022 Popup window doesn't work anymore
-            // Menu properties
-            if (ImGui.beginPopup("context", ImGuiWindowFlags.NoMove)) {
-                addingLine = false;
-                if (ImGui.menuItem("Add Animation Box", "")) {
-                    animationBoxList.add(new AnimationBox("haha", mousePosInCanvas));
+            drawList.popClipRect();
+
+            // Menu popup properties
+            if (mayOpenPopupWindow) {
+                if (ImGui.beginPopupContextWindow("context")) {
+                    addingLine = false;
+                    if (ImGui.menuItem("Add Animation Box", "")) {
+                        animationBoxList.add(new AnimationBox("haha", mousePosInCanvas.x + scrolling.x, mousePosInCanvas.y - scrolling.y));
+                    }
+                    if (ImGui.menuItem("Remove one", "", false, pointList.size() > 0)) {
+                        pointList.remove(pointList.size() - 1);
+                        pointList.remove(pointList.size() - 1);
+                    }
+                    if (ImGui.menuItem("Remove all", "", false, wireList.size() > 0)) {
+                        wireList.clear();
+                    }
+                    ImGui.endPopup();
                 }
-                if (ImGui.menuItem("Remove one", "", false, pointList.size() > 0)) {
-                    pointList.remove(pointList.size() - 1);
-                    pointList.remove(pointList.size() - 1);
-                }
-                if (ImGui.menuItem("Remove all", "", false, wireList.size() > 0)) {
-                    wireList.clear();
-                }
-                ImGui.endPopup();
             }
 
-            drawList.popClipRect();
             ImGui.endChild();
         }
         ImGui.end();
