@@ -17,6 +17,7 @@ public class SpriteAnimationWindow {
     private boolean addingLine = false;
     private float thickness = 2.0f;
 
+    private float debouncePopWindow;
     private boolean mayOpenPopupWindow = false;
 
     public SpriteAnimationWindow() {
@@ -63,7 +64,8 @@ public class SpriteAnimationWindow {
             ImGui.pushStyleColor(ImGuiCol.ChildBg, ImColor.intToColor(50, 50, 50, 255));
             // We will catch all the interactions on this window
             ImGui.beginChild("canvas", canvasSize.x, canvasSize.y, true,
-                    ImGuiWindowFlags.NoMove);
+                    ImGuiWindowFlags.NoMove | ImGuiWindowFlags.NoScrollbar
+                            | ImGuiWindowFlags.NoScrollWithMouse);
             ImGui.popStyleColor();
             ImGui.popStyleVar();
 
@@ -98,13 +100,13 @@ public class SpriteAnimationWindow {
             // Pan (we use a zero mouse threshold when there's no context menu)
             // You may decide to make that threshold dynamic based on whether the mouse is hovering something etc.
             float mouseThresholdForPan = -1.0f;
-            if (isHovered && ImGui.isMouseDragging(ImGuiMouseButton.Right, mouseThresholdForPan)) {
+            if (isHovered && ImGui.isMouseDragging(ImGuiMouseButton.Middle, mouseThresholdForPan)) {
                 scrolling.x += io.getMouseDelta().x;
                 scrolling.y += io.getMouseDelta().y;
             }
 
             // Context menu (under default mouse threshold)
-            ImVec2 dragDelta = ImGui.getMouseDragDelta(ImGuiMouseButton.Right);
+            ImVec2 dragDelta = ImGui.getMouseDragDelta(ImGuiMouseButton.Middle);
             if (dragDelta.x == 0.0f && dragDelta.y == 0.0f) {
                 if (ImGui.isMouseClicked(ImGuiMouseButton.Right)) {
                     mayOpenPopupWindow = !mayOpenPopupWindow;
@@ -142,7 +144,8 @@ public class SpriteAnimationWindow {
                 if (ImGui.beginPopupContextWindow("context")) {
                     addingLine = false;
                     if (ImGui.menuItem("Add Animation Box", "")) {
-                        animationBoxList.add(new AnimationBox("haha", mousePosInCanvas.x + scrolling.x, mousePosInCanvas.y - scrolling.y));
+                        animationBoxList.add(new AnimationBox("haha", mousePosInCanvas.x,
+                                mousePosInCanvas.y));
                     }
                     if (ImGui.menuItem("Remove one", "", false, pointList.size() > 0)) {
                         pointList.remove(pointList.size() - 1);
