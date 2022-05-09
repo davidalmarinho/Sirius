@@ -31,7 +31,7 @@ public class Window {
     private final String title;
     private long glfwWindow; // Will act as a pointer
     private long monitor;
-    private boolean fullscreen = true;
+    private boolean fullscreen = false;
     private ImGuiLayer imGuiLayer;
     private FrameBuffer frameBuffer;
     private PickingTexture pickingTexture;

@@ -4,20 +4,19 @@ import imgui.ImColor;
 import imgui.ImDrawList;
 import imgui.ImGui;
 import imgui.ImVec2;
-import org.joml.Vector2f;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class PointField {
-    private Vector2f position;
-    private Vector2f size;
+    private ImVec2 position;
+    private ImVec2 size;
 
     private List<Point> pointList;
 
     public PointField(float x, float y, float width, float height) {
-        this.position = new Vector2f(x, y);
-        this.size = new Vector2f(width, height);
+        this.position = new ImVec2(x, y);
+        this.size = new ImVec2(width, height);
         this.pointList = new ArrayList<>();
     }
 
@@ -32,7 +31,7 @@ public class PointField {
                 objPosToCanvas.y + getPosition().y - getHeight() / 2,
                 objPosToCanvas.x + getPosition().x + getWidth() / 2,
                 objPosToCanvas.y + getPosition().y + getHeight() / 2,
-                ImColor.intToColor(0, 0, 0, 255), 0.0f);
+                ImColor.intToColor(0, 255, 0, 255), 0.0f);
     }
 
     /**
@@ -66,20 +65,36 @@ public class PointField {
         this.pointList.add(point);
     }
 
-    public Vector2f getPosition() {
+    public ImVec2 getPosition() {
         return position;
     }
 
-    public Vector2f getSize() {
+    public void setPosition(float x, float y) {
+        this.position = new ImVec2(x, y);
+    }
+
+    public ImVec2 getSize() {
         return size;
+    }
+
+    public void setSize(float width, float height) {
+        this.size = new ImVec2(width, height);
     }
 
     public float getWidth() {
         return this.size.x;
     }
 
+    public void setWidth(float width) {
+        this.size.x = width;
+    }
+
     public float getHeight() {
         return this.size.y;
+    }
+
+    public void setHeight(float height) {
+        this.size.y = height;
     }
 
     public List<Point> getPointList() {

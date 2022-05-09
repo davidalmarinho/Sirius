@@ -6,7 +6,7 @@ import imgui.ImGui;
 import imgui.ImVec2;
 
 public class Point {
-    private ImVec2 position;
+    public ImVec2 position;
     private float radius;
 
     public Point(ImVec2 position, float radius) {
@@ -22,10 +22,6 @@ public class Point {
         ImDrawList imDrawList = ImGui.getWindowDrawList();
         imDrawList.addCircleFilled(scrolling.x + position.x, scrolling.y + position.y,
                 radius, ImColor.intToColor(247, 179, 43, 255));
-    }
-
-    public ImVec2 getPosition() {
-        return position;
     }
 
     public void setRadius(float radius) {

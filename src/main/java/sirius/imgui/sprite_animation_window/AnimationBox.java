@@ -15,34 +15,73 @@ public class AnimationBox {
     private int id;
     private ImString trigger;
     public float x, y;
-    private float width, height;
+    private float width, height, lastWidth;
     private PointField[] pointFields;
+    private boolean updatePointFields;
 
     private final float THICKNESS = 10.0f;
     private final float ROUNDING  = 20.0f;
 
     public AnimationBox(String trigger, float x, float y) {
         maxId++;
-        this.id = maxId;
+        this.id      = maxId;
         this.trigger = new ImString(trigger, 32);
-        this.x = x;
-        this.y = y;
-        this.width = 128.0f;
-        this.height = 128.0f;
+        this.x       = x;
+        this.y       = y;
+
+        this.width       = 128.0f;
+        this.height      = 128.0f;
+        this.lastWidth   = this.width;
         this.pointFields = new PointField[4];
 
-        // Up
-        this.pointFields[0] = new PointField(x, y - getHeight() / 2, getWidth(), THICKNESS);
-        // Right
-        this.pointFields[1] = new PointField(x + getWidth() / 2 + ROUNDING, y, THICKNESS, getHeight() - ROUNDING * 2);
-        // Down
-        this.pointFields[2] = new PointField(x, y + getHeight() / 2, getWidth(), THICKNESS);
-        // Left
-        this.pointFields[3] = new PointField(x - getWidth() / 2 - ROUNDING, y, THICKNESS, getHeight() - ROUNDING * 2);
+        setPointFields();
     }
 
     public AnimationBox(String trigger, ImVec2 position) {
         this(trigger, position.x, position.y);
+    }
+
+    private void setPointFields() {
+        // up
+        float yPointField0     = y - getHeight() / 2;
+        float widthPointField0 = getWidth() - THICKNESS * 2 - ROUNDING;
+
+        // right
+        float xPointField1      = x + getWidth() / 2;
+        float heightPointField1 = getHeight() - ROUNDING * 2;
+
+        // down
+        float yPointField2     = y + getHeight() / 2;
+        float widthPointField2 = getWidth() - THICKNESS * 2 - ROUNDING;
+
+        // left
+        float xPointField3      = x - getWidth() / 2;
+        float heightPointField3 = getHeight() - ROUNDING * 2;
+
+        // Create the point fields if they don't exist
+        if (this.pointFields[0] == null) {
+            // Up
+            this.pointFields[0] = new PointField(x, yPointField0, widthPointField0, THICKNESS);
+            // Right
+            this.pointFields[1] = new PointField(xPointField1, y, THICKNESS, heightPointField1);
+            // Down
+            this.pointFields[2] = new PointField(x, yPointField2, widthPointField2, THICKNESS);
+            // Left
+            this.pointFields[3] = new PointField(xPointField3, y, THICKNESS, heightPointField3);
+        } else {
+            // Up
+            this.pointFields[0].setPosition(x, yPointField0);
+            this.pointFields[0].setSize(widthPointField0, THICKNESS);
+            // Right
+            this.pointFields[1].setPosition(xPointField1, y);
+            this.pointFields[1].setSize(THICKNESS, heightPointField1);
+            // Down
+            this.pointFields[2].setPosition(x, yPointField2);
+            this.pointFields[2].setSize(widthPointField2, THICKNESS);
+            // Left
+            this.pointFields[3].setPosition(xPointField3, y);
+            this.pointFields[3].setSize(THICKNESS, heightPointField3);
+        }
     }
 
     public void imgui(ImVec2 origin, ImVec2 scrolling) {
@@ -116,6 +155,32 @@ public class AnimationBox {
             // Draw the points
             for (Point point : pointField.getPointList()) {
                 point.imgui(origin);
+            }
+        }
+
+        // When we shrink or enlarge the animation box, we should update the point fields' interactions rectangles
+        float dtWidth = 0.0f;
+        if (lastWidth != width) {
+            dtWidth   = width - lastWidth;
+            lastWidth = width;
+            updatePointFields = true;
+        }
+
+        // Updates the point fields' positions and sizes, because the animation box has been resized
+        if (updatePointFields) {
+            updatePointFields = false;
+            setPointFields();
+
+            // Update points --move them because the animation box has been resized
+            for (PointField pointField : pointFields) {
+                for (Point point : pointField.getPointList()) {
+                    // Move left
+                    if (point.position.x < this.x)
+                        point.position.x -= dtWidth / 2; // divide by 2 because the box increases in both sides, left and right
+                    // Move right
+                    else
+                        point.position.x += dtWidth / 2;
+                }
             }
         }
     }
