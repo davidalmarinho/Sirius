@@ -12,19 +12,23 @@ import imgui.type.ImString;
 
 public class AnimationBox {
     public static int maxId = 0;
-    private int id;
+    private final int ID;
     private ImString trigger;
     public float x, y;
     private float width, height, lastWidth;
+
+    private boolean mouseAboveAnimationBox;
+
     private PointField[] pointFields;
     private boolean updatePointFields;
+    private boolean mayCheckForUncheckedPoints;
 
     private final float THICKNESS = 10.0f;
     private final float ROUNDING  = 20.0f;
 
     public AnimationBox(String trigger, float x, float y) {
         maxId++;
-        this.id      = maxId;
+        this.ID = maxId;
         this.trigger = new ImString(trigger, 32);
         this.x       = x;
         this.y       = y;
@@ -33,7 +37,6 @@ public class AnimationBox {
         this.height      = 128.0f;
         this.lastWidth   = this.width;
         this.pointFields = new PointField[4];
-
         setPointFields();
     }
 
@@ -58,7 +61,7 @@ public class AnimationBox {
         float xPointField3      = x - getWidth() / 2;
         float heightPointField3 = getHeight() - ROUNDING * 2;
 
-        // Create the point fields if they don't exist
+        // Create the point fields if they don't exist --areas where we are able to create points
         if (this.pointFields[0] == null) {
             // Up
             this.pointFields[0] = new PointField(x, yPointField0, widthPointField0, THICKNESS);
@@ -84,19 +87,38 @@ public class AnimationBox {
         }
     }
 
-    public void imgui(ImVec2 origin, ImVec2 scrolling) {
-        // Draw the outlines of the box
+    private void deleteUnlinkedPoints() {
+        if (mayCheckForUncheckedPoints) {
+            // We do this check to make sure that the point is unlinked
+            if (SpriteAnimationWindow.pointList.size() % 2 == 0) {
+                mayCheckForUncheckedPoints = false;
+                return;
+            }
+
+            // If is an unlinked point, remove it
+            for (PointField pointField : pointFields) {
+                if (pointField.hasUnLinkedPoint) {
+                    // Remove the last points from the lists
+                    SpriteAnimationWindow.pointList.remove(SpriteAnimationWindow.pointList.size() - 1);
+                    pointField.removeLastPoint();
+                    pointField.hasUnLinkedPoint = false;
+                }
+            }
+            mayCheckForUncheckedPoints = false;
+        }
+
+
+        if (ImGui.isMouseReleased(ImGuiMouseButton.Left)) {
+            mayCheckForUncheckedPoints = true;
+        }
+    }
+
+    private void drawAnimationBox(ImVec2 origin, ImVec2 scrolling) {
         ImDrawList drawList = ImGui.getWindowDrawList();
-        drawList.addRect(
-                origin.x + x - getWidth() / 2,
-                origin.y + y - getHeight() / 2,
-                origin.x + x + getWidth() / 2,
-                origin.y + y + getHeight() / 2,
-                ImColor.intToColor(255, 255, 255, 255), ROUNDING, ImDrawFlags.RoundCornersAll, THICKNESS);
 
         // Reserve the region to draw the animation box
         ImGui.setCursorPos(x - getWidth() / 2 + scrolling.x, + y - getHeight() / 2 + scrolling.y);
-        ImGui.beginChild("box" + id, width, height, false, ImGuiWindowFlags.AlwaysAutoResize
+        ImGui.beginChild("box" + ID, width, height, false, ImGuiWindowFlags.AlwaysAutoResize
                 | ImGuiWindowFlags.NoCollapse | ImGuiWindowFlags.NoScrollbar);
 
         // Check what size the animation box will have --it changes depending on how many characters we have in text field
@@ -121,7 +143,7 @@ public class AnimationBox {
 
         // Center the animation box input text box
         ImGui.setCursorPos(ImGui.getCursorPosX() + 22, ImGui.getCursorPosY() + getHeight() / 3);
-        ImGui.pushID("nodeTrigger: " + id);
+        ImGui.pushID("nodeTrigger: " + ID);
 
         // Changes the animation box input text box size
         if (charsNumber < 10)
@@ -133,22 +155,45 @@ public class AnimationBox {
         ImGui.popID();
 
         // Checks if the mouse is above of the AnimationBox
-        boolean aboveChild = ImGui.isWindowHovered();
+        mouseAboveAnimationBox = ImGui.isWindowHovered();
 
         ImGui.endChild();
+    }
 
-        // Checks if a line can be created
+    public void imgui(ImVec2 origin, ImVec2 scrolling) {
+        // Draw the outlines of the animation box
+        ImDrawList drawList = ImGui.getWindowDrawList();
+        drawList.addRect(
+                origin.x + x - getWidth() / 2,
+                origin.y + y - getHeight() / 2,
+                origin.x + x + getWidth() / 2,
+                origin.y + y + getHeight() / 2,
+                ImColor.intToColor(255, 255, 255, 255), ROUNDING, ImDrawFlags.RoundCornersAll, THICKNESS);
+
+        drawAnimationBox(origin, scrolling);
+
+        // Create points to after join them and form a line, if the left mouse button isn't realised
+        boolean mouseReleasedOrClicked =
+                ImGui.isMouseClicked(ImGuiMouseButton.Left) || ImGui.isMouseReleased(ImGuiMouseButton.Left);
         for (PointField pointField : pointFields) {
+            if (pointField.hasUnLinkedPoint && SpriteAnimationWindow.pointList.size() % 2 == 0)
+                pointField.hasUnLinkedPoint = false;
+
             // pointField.debug(origin);
-            if (pointField.isMouseAbove(origin) && !aboveChild) {
+            if (pointField.isMouseAbove(origin) && !mouseAboveAnimationBox) {
                 drawList.addCircleFilled(ImGui.getMousePosX(), ImGui.getMousePosY(),
                         6.0f, ImColor.intToColor(247, 179, 43, 150));
 
-                // TODO: 08/05/2022 If 2 points doesn't exist, a line can't be drawn
                 // Establish a union between 2 point --draw a line between 2 points
-                if (ImGui.isMouseClicked(ImGuiMouseButton.Left) || ImGui.isMouseReleased(ImGuiMouseButton.Left)) {
+                if (mouseReleasedOrClicked) {
                     ImVec2 pointPos = new ImVec2(ImGui.getMousePosX() - origin.x, ImGui.getMousePosY() - origin.y);
-                    pointField.addPoint(new Point(pointPos, 6.0f));
+                    Point newPoint = new Point(pointPos, 6.0f);
+                    pointField.addPoint(newPoint);
+                    SpriteAnimationWindow.pointList.add(newPoint);
+
+                    // Mark in which point field a possible unlinked point is
+                    if (SpriteAnimationWindow.pointList.size() % 2 != 0)
+                        pointField.hasUnLinkedPoint = true;
                 }
             }
 
@@ -175,14 +220,25 @@ public class AnimationBox {
             for (PointField pointField : pointFields) {
                 for (Point point : pointField.getPointList()) {
                     // Move left
-                    if (point.position.x < this.x)
-                        point.position.x -= dtWidth / 2; // divide by 2 because the box increases in both sides, left and right
+                    float moveValue = dtWidth / 4; // honestly, I don't know why I divide by 4, it was a guess,
+                    // but it just make it works
+                    if (point.position.x < this.x) {
+                        point.position.x -= moveValue;
+                        SpriteAnimationWindow.pointList.stream()
+                                .filter(saPoint -> point.getId() == saPoint.getId())
+                                .forEach(saPoint -> saPoint.position.x -= moveValue);
                     // Move right
-                    else
-                        point.position.x += dtWidth / 2;
+                    } else {
+                        point.position.x += moveValue;
+                        SpriteAnimationWindow.pointList.stream()
+                                .filter(saPoint -> point.getId() == saPoint.getId())
+                                .forEach(saPoint -> saPoint.position.x += moveValue);
+                    }
                 }
             }
         }
+
+        deleteUnlinkedPoints();
     }
 
     public float getWidth() {

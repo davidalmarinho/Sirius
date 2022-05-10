@@ -1,6 +1,5 @@
 package sirius;
 
-import sirius.imgui.NodeGraph;
 import sirius.imgui.sprite_animation_window.SpriteAnimationWindow;
 import sirius.imgui.GameViewWindow;
 import sirius.editor.MenuBar;
@@ -35,7 +34,6 @@ public class ImGuiLayer {
     private MenuBar menuBar;
     private SceneHierarchy sceneHierarchy;
     private SpriteAnimationWindow spriteAnimationWindow;
-    public NodeGraph nodeGraph;
 
     public ImGuiLayer(long glfwWindow, PickingTexture pickingTexture) {
         this.imGuiGl3 = new ImGuiImplGl3();
@@ -46,7 +44,6 @@ public class ImGuiLayer {
         this.menuBar = new MenuBar();
         this.sceneHierarchy = new SceneHierarchy();
         this.spriteAnimationWindow = new SpriteAnimationWindow();
-        this.nodeGraph = new NodeGraph();
     }
 
     public void edit(long glfwWindow) {
@@ -187,7 +184,6 @@ public class ImGuiLayer {
         gameViewWindow.imgui();
         propertiesWindow.imgui();
         sceneHierarchy.imgui();
-        nodeGraph.imgui();
         spriteAnimationWindow.imgui();
 
         // We have to end ImGui before we render ImGui

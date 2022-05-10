@@ -1,10 +1,8 @@
 package sirius.imgui.sprite_animation_window;
 
-import imgui.ImGui;
 import imgui.ImVec2;
 
 public class Wire {
-    private int id;
     private float startX, startY;
     private float endX, endY;
 
@@ -13,6 +11,10 @@ public class Wire {
         this.startY = start.y;
         this.endX   = end.x;
         this.endY   = end.y;
+    }
+
+    public Wire() {
+        this(new ImVec2(), new ImVec2());
     }
 
     public Wire(Wire wire) {

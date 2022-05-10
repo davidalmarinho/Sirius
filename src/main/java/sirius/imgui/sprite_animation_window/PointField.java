@@ -14,6 +14,10 @@ public class PointField {
 
     private List<Point> pointList;
 
+    // Mark the point field that has an un-linked point --if has one, we will remove it when we release the
+    // mouse left button.
+    public boolean hasUnLinkedPoint = false;
+
     public PointField(float x, float y, float width, float height) {
         this.position = new ImVec2(x, y);
         this.size = new ImVec2(width, height);
@@ -63,6 +67,10 @@ public class PointField {
      */
     public void addPoint(Point point) {
         this.pointList.add(point);
+    }
+
+    public void removeLastPoint() {
+        this.pointList.remove(this.pointList.size() - 1);
     }
 
     public ImVec2 getPosition() {

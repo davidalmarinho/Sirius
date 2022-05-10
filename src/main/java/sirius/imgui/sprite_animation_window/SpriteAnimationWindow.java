@@ -8,22 +8,23 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SpriteAnimationWindow {
+    public static List<Point> pointList;
     private List<AnimationBox> animationBoxList;
     private List<Wire> wireList;
+    private Wire wire;
 
-    private List<ImVec2> pointList;
     private ImVec2 scrolling;
 
     private boolean addingLine = false;
     private float thickness = 2.0f;
 
-    private float debouncePopWindow;
     private boolean mayOpenPopupWindow = false;
 
     public SpriteAnimationWindow() {
+        this.wire = new Wire();
+        pointList = new ArrayList<>();
         this.animationBoxList = new ArrayList<>();
         this.wireList = new ArrayList<>();
-        this.pointList = new ArrayList<>();
         this.scrolling = new ImVec2();
         animationBoxList.add(new AnimationBox("I'm a box", 300, 300));
     }
@@ -42,19 +43,7 @@ public class SpriteAnimationWindow {
 
     public void imgui() {
         if (ImGui.begin("Sprite Animation Window", new ImBoolean(true))) {
-            ImGui.text("Mouse Left: drag to add lines,\nMouse Right: drag to scroll, click for context menu.");
-
-            // Typically you would use a BeginChild()/EndChild() pair to benefit from a clipping region + own scrolling.
-            // Here we demonstrate that this can be replaced by simple offsetting + custom drawing + PushClipRect/PopClipRect() calls.
-            // To use a child window instead we could use, e.g:
-            //      ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0, 0));      // Disable padding
-            //      ImGui::PushStyleColor(ImGuiCol_ChildBg, IM_COL32(50, 50, 50, 255));  // Set a background color
-            //      ImGui::BeginChild("canvas", ImVec2(0.0f, 0.0f), true, ImGuiWindowFlags_NoMove);
-            //      ImGui::PopStyleColor();
-            //      ImGui::PopStyleVar();
-            //      [...]
-            //      ImGui::EndChild();
-
+            ImGui.text("Mouse Left: drag to add lines,\nMouse Middle: drag to scroll,\nMouse Right: click for context menu.");
 
             // Using InvisibleButton() as a convenience 1) it will advance the layout cursor and 2) allows us to use IsItemHovered()/IsItemActive()
             ImVec2 canvasP0 = ImGui.getCursorScreenPos();      // ImDrawList API uses screen coordinates!
@@ -87,10 +76,13 @@ public class SpriteAnimationWindow {
             if (isHovered && !addingLine && ImGui.isMouseClicked(ImGuiMouseButton.Left)) {
                 ImVec2 startPos = new ImVec2(mousePosInCanvas.x + canvasP0.x, mousePosInCanvas.y + canvasP0.y);
                 wireList.add(new Wire(startPos, startPos));
+                wire.setStart(startPos.x, startPos.y);
+                wire.setEnd(startPos.x, startPos.y);
                 addingLine = true;
             }
             if (addingLine) {
                 final int SIZE_WIRE_LIST = wireList.size();
+                wire.setEnd(mousePosInCanvas.x + canvasP0.x, mousePosInCanvas.y + canvasP0.y);
                 wireList.get(SIZE_WIRE_LIST - 1).setEnd(mousePosInCanvas.x + canvasP0.x, mousePosInCanvas.y + canvasP0.y);
                 
                 if (!ImGui.isMouseDown(ImGuiMouseButton.Left))
@@ -131,10 +123,32 @@ public class SpriteAnimationWindow {
             }
 
             // Draw linked lines
-            for (Wire wire : wireList) {
+            for (int i = 0; i < pointList.size(); i += 2) {
+                if (pointList.size() <= 1) break;
+
+                // Prevents from IndexOutOfBoundsException
+                if (pointList.size() % 2 != 0 && i == pointList.size() - 1)
+                    continue;
+
+                drawList.addLine(
+                        pointList.get(i).position.x + origin.x,
+                        pointList.get(i).position.y + origin.y,
+                        pointList.get(i + 1).position.x + origin.x,
+                        pointList.get(i + 1).position.y + origin.y,
+                        ImColor.intToColor(255, 255, 0, 255), thickness);
+            }
+
+            // Draw a line when a point is looking for linking
+            if (pointList.size() % 2 != 0) {
                 drawList.addLine(wire.getStart().x + scrolling.x, wire.getStart().y + scrolling.y,
                         wire.getEnd().x + scrolling.x, wire.getEnd().y + scrolling.y,
                         ImColor.intToColor(255, 255, 0, 255), thickness);
+
+                // Stop drawing the line
+                if (ImGui.isMouseReleased(ImGuiMouseButton.Left)) {
+                    wire.setStart(0, 0);
+                    wire.setEnd(0, 0);
+                }
             }
 
             drawList.popClipRect();
@@ -147,13 +161,10 @@ public class SpriteAnimationWindow {
                         animationBoxList.add(new AnimationBox("haha", mousePosInCanvas.x,
                                 mousePosInCanvas.y));
                     }
-                    if (ImGui.menuItem("Remove one", "", false, pointList.size() > 0)) {
-                        pointList.remove(pointList.size() - 1);
-                        pointList.remove(pointList.size() - 1);
-                    }
-                    if (ImGui.menuItem("Remove all", "", false, wireList.size() > 0)) {
-                        wireList.clear();
-                    }
+                    // if (ImGui.menuItem("Remove one", "", false, pointList.size() > 0)) {
+                        // pointList.remove(pointList.size() - 1);
+                        // pointList.remove(pointList.size() - 1);
+                    // }
                     ImGui.endPopup();
                 }
             }
