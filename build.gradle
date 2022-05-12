@@ -13,7 +13,7 @@ repositories {
     }
     mavenCentral()
     maven {
-        url "https://github.com/SpaiR/imgui-java/releases/tag/v1.85.0"
+        url "https://github.com/davidalmarinho/imgui-java/releases/tag/v1.86.4"
     }
 }
 
@@ -28,7 +28,7 @@ test {
 
 project.ext.lwjglVersion = "3.2.3"
 project.ext.jomlVersion = "1.10.1"
-project.ext.imguiVersion = '1.85.0'
+project.ext.imguiVersion = '1.86.4'
 
 /**
  * Sets the project.ext.lwjglNatives variable with the current operating system.

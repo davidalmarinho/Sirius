@@ -1,6 +1,7 @@
 package sirius;
 
-import sirius.editor.GameViewWindow;
+import sirius.imgui.sprite_animation_window.SpriteAnimationWindow;
+import sirius.imgui.GameViewWindow;
 import sirius.editor.MenuBar;
 import sirius.editor.PropertiesWindow;
 import imgui.*;
@@ -32,6 +33,7 @@ public class ImGuiLayer {
     private final PropertiesWindow propertiesWindow;
     private MenuBar menuBar;
     private SceneHierarchy sceneHierarchy;
+    private SpriteAnimationWindow spriteAnimationWindow;
 
     public ImGuiLayer(long glfwWindow, PickingTexture pickingTexture) {
         this.imGuiGl3 = new ImGuiImplGl3();
@@ -41,6 +43,7 @@ public class ImGuiLayer {
         this.propertiesWindow = PropertiesWindow.get(pickingTexture);
         this.menuBar = new MenuBar();
         this.sceneHierarchy = new SceneHierarchy();
+        this.spriteAnimationWindow = new SpriteAnimationWindow();
     }
 
     public void edit(long glfwWindow) {
@@ -107,7 +110,7 @@ public class ImGuiLayer {
             }
 
             // Set a personalized callback when we are with the cursor outside an ImGui window
-            if (!io.getWantCaptureMouse() || gameViewWindow.getWantCaptureMouse()) {
+            if ((!io.getWantCaptureMouse() || gameViewWindow.getWantCaptureMouse())) {
                 MouseListener.mouseButtonCallback(w, button, action, mods);
             }
         });
@@ -117,12 +120,7 @@ public class ImGuiLayer {
             io.setMouseWheel(io.getMouseWheel() + (float) yOffset);
 
             // Just use the personalized scroll when inside of game viewport window
-            boolean insideGameViewportX = MouseListener.getX() > gameViewWindow.getLeftX()
-                    && MouseListener.getX() < gameViewWindow.getRightX();
-            boolean insideGameViewportY = MouseListener.getY() > gameViewWindow.getBottomY()
-                    && MouseListener.getY() < gameViewWindow.getTopY();
-
-            if (insideGameViewportX && insideGameViewportY)
+            if (gameViewWindow.getWantCaptureMouse())
                 MouseListener.mouseScrollCallback(w, xOffset, yOffset);
         });
 
@@ -186,6 +184,7 @@ public class ImGuiLayer {
         gameViewWindow.imgui();
         propertiesWindow.imgui();
         sceneHierarchy.imgui();
+        spriteAnimationWindow.imgui();
 
         // We have to end ImGui before we render ImGui
         endFrame();

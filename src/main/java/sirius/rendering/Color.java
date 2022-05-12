@@ -29,6 +29,33 @@ public class Color {
         return this.color;
     }
 
+    // TODO: 27/04/2022 Broken
+    public int getDecimal32() {
+        int opacity = (int) (this.color.w * 255.0f) << 24;
+        int red     = (int) (this.color.x * 255.0f) << 16;
+        int green   = (int) (this.color.y * 255.0f) << 8;
+        int blue    = (int) (this.color.z * 255.0f);
+
+        return opacity + red + green + blue;
+    }
+
+    public int getDecimal16() {
+        int red     = (int) (this.color.x * 255.0f) << 16;
+        int green   = (int) (this.color.y * 255.0f) << 8;
+        int blue    = (int) (this.color.z * 255.0f);
+
+        return red + green + blue;
+    }
+
+    /*public int getDecimal() {
+        int opacity = (int) (this.color.w / 255.0f) << 24;
+        int red     = (int) (this.color.x / 255.0f) << 16;
+        int green   = (int) (this.color.y / 255.0f) << 8;
+        int blue    = (int) (this.color.z / 255.0f);
+
+        return opacity + red + green + blue;
+    }*/
+
     public void setColor(float r, float g, float b, float a) {
         this.color.set(r, g, b, a);
     }
