@@ -9,16 +9,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PointField {
+    private String name;
     private ImVec2 position;
     private ImVec2 size;
 
     private List<Point> pointList;
 
-    // Mark the point field that has an un-linked point --if has one, we will remove it when we release the
+    // Mark the point field that has an un-linked point --if it has one, we will remove it when we release the
     // mouse left button.
     public boolean hasUnLinkedPoint = false;
 
-    public PointField(float x, float y, float width, float height) {
+    public PointField(String name, float x, float y, float width, float height) {
+        this.name = name;
         this.position = new ImVec2(x, y);
         this.size = new ImVec2(width, height);
         this.pointList = new ArrayList<>();
@@ -50,6 +52,10 @@ public class PointField {
                 canvasPosition.y + position.y - size.y / 2,
                 canvasPosition.x + position.x + size.x / 2,
                 canvasPosition.y + position.y + size.y / 2);
+    }
+
+    public String getName() {
+        return name;
     }
 
     /**

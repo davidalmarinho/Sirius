@@ -10,6 +10,9 @@ import imgui.flag.ImGuiMouseButton;
 import imgui.flag.ImGuiWindowFlags;
 import imgui.type.ImString;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class AnimationBox {
     public static int maxId = 0;
     private final int ID;
@@ -18,17 +21,19 @@ public class AnimationBox {
     private float width, height, lastWidth;
 
     private boolean mouseAboveAnimationBox;
+    private boolean movingAnimationBox;
 
     private PointField[] pointFields;
     private boolean updatePointFields;
     private boolean mayCheckForUncheckedPoints;
+    private boolean checkPointsSameBox;
 
     private final float THICKNESS = 10.0f;
     private final float ROUNDING  = 20.0f;
 
     public AnimationBox(String trigger, float x, float y) {
-        maxId++;
         this.ID = maxId;
+        maxId++;
         this.trigger = new ImString(trigger, 32);
         this.x       = x;
         this.y       = y;
@@ -64,13 +69,13 @@ public class AnimationBox {
         // Create the point fields if they don't exist --areas where we are able to create points
         if (this.pointFields[0] == null) {
             // Up
-            this.pointFields[0] = new PointField(x, yPointField0, widthPointField0, THICKNESS);
+            this.pointFields[0] = new PointField("up", x, yPointField0, widthPointField0, THICKNESS);
             // Right
-            this.pointFields[1] = new PointField(xPointField1, y, THICKNESS, heightPointField1);
+            this.pointFields[1] = new PointField("right", xPointField1, y, THICKNESS, heightPointField1);
             // Down
-            this.pointFields[2] = new PointField(x, yPointField2, widthPointField2, THICKNESS);
+            this.pointFields[2] = new PointField("down", x, yPointField2, widthPointField2, THICKNESS);
             // Left
-            this.pointFields[3] = new PointField(xPointField3, y, THICKNESS, heightPointField3);
+            this.pointFields[3] = new PointField("left", xPointField3, y, THICKNESS, heightPointField3);
         } else {
             // Up
             this.pointFields[0].setPosition(x, yPointField0);
@@ -87,7 +92,7 @@ public class AnimationBox {
         }
     }
 
-    private void deleteUnlinkedPoints() {
+    private void delUnlinkedPoints() {
         if (mayCheckForUncheckedPoints) {
             // We do this check to make sure that the point is unlinked
             if (SpriteAnimationWindow.pointList.size() % 2 == 0) {
@@ -110,6 +115,118 @@ public class AnimationBox {
 
         if (ImGui.isMouseReleased(ImGuiMouseButton.Left)) {
             mayCheckForUncheckedPoints = true;
+        }
+    }
+
+    /**
+     * Checks if a point has the same id of a point part of a point field.
+     *
+     * @param point Point that we want to check to see if it has the same id of a point part of a point field.
+     * @return true if the point has the same id of a point part of a point field.
+     */
+    private boolean isSameId(Point point) {
+        for (PointField pointField : pointFields) {
+            if (isSameId(pointField.getPointList(), point)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Checks if a point has the same id of a point part of a points' list.
+     *
+     * @param pointList List that we will check if it has a point with the same id has the desired point.
+     * @param point Desired point that we want to check to see if it has the same id of a point part of a point field.
+     * @return true if the point has the same id of a point part of a point field.
+     */
+    private boolean isSameId(List<Point> pointList, Point point) {
+        return pointList.stream().anyMatch(point1 -> point.getId() == point1.getId());
+    }
+
+    /**
+     * To maintain the state machine integrity, 2 points can't be linked in the same animation box,
+     * because we don't want go, for example, from idle_state to idle_state.
+     */
+    private void delPointsSameBox() {
+        if (!checkPointsSameBox) return;
+        checkPointsSameBox = false;
+
+        // Get the 2 last points added to rendering
+        List<Point> saPointList = SpriteAnimationWindow.pointList;
+        Point[] last2Points = {saPointList.get(saPointList.size() - 1), saPointList.get(saPointList.size() - 2)};
+
+        // If samePoint var reaches 2, we will have to delete the 2 lastPoints added, because
+        // that means that the 2 last added points are located in the same animation box.
+        int samePoint = 0;
+        if (isSameId(last2Points[0]))
+            samePoint++;
+        if (isSameId(last2Points[1]))
+            samePoint++;
+
+        if (samePoint == 2) {
+            // Search for where are the 2 last points added located, and erase them.
+            for (PointField pointField : pointFields) {
+                if (isSameId(pointField.getPointList(), last2Points[0]))
+                    pointField.removeLastPoint();
+                if (isSameId(pointField.getPointList(), last2Points[1]))
+                    pointField.removeLastPoint();
+            }
+
+            // Remove the 2 last points added to the rendering
+            saPointList.remove(last2Points[0]);
+            saPointList.remove(last2Points[1]);
+        }
+    }
+
+    /**
+     * Instructions to move the box when we drag the mouse.
+     */
+    private void moveBox(ImVec2 origin) {
+        if (mouseAboveAnimationBox && ImGui.isMouseDragging(ImGuiMouseButton.Left))
+            movingAnimationBox = true;
+
+        if (movingAnimationBox) {
+            this.x = ImGui.getMousePosX() - origin.x;
+            this.y = ImGui.getMousePosY() - origin.y;
+            List<ImVec2> deltaPoints = new ArrayList<>();
+
+            // Calculate how many x and y units that a point is from its position and from the point field
+            // that it is located
+            for (PointField pointField : pointFields) {
+                for (Point point : pointField.getPointList()) {
+                    float pointX = point.position.x;
+                    float pointY = point.position.y;
+                    float deltaPointX = pointX - pointField.getPosition().x;
+                    float deltaPointY = pointY - pointField.getPosition().y;
+                    deltaPoints.add(new ImVec2(deltaPointX, deltaPointY));
+                }
+            }
+
+            // Set point fields' positions
+            setPointFields();
+
+            // Replace the points positions with the correct position after the animation box was moved
+            int counter = 0;
+            for (PointField pointField : pointFields) {
+                for (Point point : pointField.getPointList()) {
+                    point.position.set(pointField
+                            .getPosition().x + deltaPoints.get(counter).x, pointField.getPosition().y + deltaPoints.get(counter).y);
+                    counter++;
+                }
+            }
+
+            // Load the new points positions to the drawing list in Sprite Animation Window
+            for (PointField pointField : pointFields) {
+                for (Point p : pointField.getPointList()) {
+                    SpriteAnimationWindow.pointList.stream().filter(point -> p.getId() == point.getId())
+                            .findFirst().ifPresent(asP -> asP.position.set(new ImVec2(p.position)));
+                }
+            }
+
+            // If we aren't dragging the mouse, we can't be moving the window
+            if (!ImGui.isMouseDragging(ImGuiMouseButton.Left))
+                movingAnimationBox = false;
         }
     }
 
@@ -157,6 +274,8 @@ public class AnimationBox {
         // Checks if the mouse is above of the AnimationBox
         mouseAboveAnimationBox = ImGui.isWindowHovered();
 
+        moveBox(origin);
+
         ImGui.endChild();
     }
 
@@ -176,24 +295,31 @@ public class AnimationBox {
         boolean mouseReleasedOrClicked =
                 ImGui.isMouseClicked(ImGuiMouseButton.Left) || ImGui.isMouseReleased(ImGuiMouseButton.Left);
         for (PointField pointField : pointFields) {
-            if (pointField.hasUnLinkedPoint && SpriteAnimationWindow.pointList.size() % 2 == 0)
-                pointField.hasUnLinkedPoint = false;
+            if (!movingAnimationBox) {
+                if (pointField.hasUnLinkedPoint && SpriteAnimationWindow.pointList.size() % 2 == 0)
+                    pointField.hasUnLinkedPoint = false;
 
-            // pointField.debug(origin);
-            if (pointField.isMouseAbove(origin) && !mouseAboveAnimationBox) {
-                drawList.addCircleFilled(ImGui.getMousePosX(), ImGui.getMousePosY(),
-                        6.0f, ImColor.intToColor(247, 179, 43, 150));
+                // pointField.debug(origin);
+                if (pointField.isMouseAbove(origin) && !mouseAboveAnimationBox) {
+                    drawList.addCircleFilled(ImGui.getMousePosX(), ImGui.getMousePosY(),
+                            6.0f, ImColor.intToColor(247, 179, 43, 150));
 
-                // Establish a union between 2 point --draw a line between 2 points
-                if (mouseReleasedOrClicked) {
-                    ImVec2 pointPos = new ImVec2(ImGui.getMousePosX() - origin.x, ImGui.getMousePosY() - origin.y);
-                    Point newPoint = new Point(pointPos, 6.0f);
-                    pointField.addPoint(newPoint);
-                    SpriteAnimationWindow.pointList.add(newPoint);
+                    // Establish a union between 2 point --draw a line between 2 points
+                    if (mouseReleasedOrClicked) {
+                        ImVec2 pointPos = new ImVec2(ImGui.getMousePosX() - origin.x, ImGui.getMousePosY() - origin.y);
+                        Point newPoint = new Point(pointPos, 6.0f);
+                        SpriteAnimationWindow.pointList.add(new Point(newPoint));
+                        pointField.addPoint(newPoint);
 
-                    // Mark in which point field a possible unlinked point is
-                    if (SpriteAnimationWindow.pointList.size() % 2 != 0)
-                        pointField.hasUnLinkedPoint = true;
+                        // Mark in which point field a possible unlinked point is
+                        if (SpriteAnimationWindow.pointList.size() % 2 != 0) {
+                            pointField.hasUnLinkedPoint = true;
+                            // Mark check to see if there are 2 points in the same animation box
+                        } else {
+                            checkPointsSameBox = true;
+                            SpriteAnimationWindow.lookMessyLines = true;
+                        }
+                    }
                 }
             }
 
@@ -238,7 +364,24 @@ public class AnimationBox {
             }
         }
 
-        deleteUnlinkedPoints();
+        delUnlinkedPoints();
+        delPointsSameBox();
+    }
+
+    public int getId() {
+        return ID;
+    }
+
+    public float getX() {
+        return x;
+    }
+
+    public float getY() {
+        return y;
+    }
+
+    public PointField[] getPointFields() {
+        return pointFields;
     }
 
     public float getWidth() {

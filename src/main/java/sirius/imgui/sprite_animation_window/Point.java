@@ -12,10 +12,16 @@ public class Point {
     private float radius;
 
     public Point(ImVec2 position, float radius) {
-        this.id = maxId;
-        maxId++;
+        this.id       = maxId;
         this.position = position;
-        this.radius = radius;
+        this.radius   = radius;
+        maxId++;
+    }
+
+    public Point(Point newPoint) {
+        this.id       = newPoint.id;
+        this.position = new ImVec2(newPoint.position);
+        this.radius   = newPoint.radius;
     }
 
     public Point() {

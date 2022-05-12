@@ -9,6 +9,7 @@ import java.util.List;
 
 public class SpriteAnimationWindow {
     public static List<Point> pointList;
+    public static boolean lookMessyLines;
     private List<AnimationBox> animationBoxList;
     private List<Wire> wireList;
     private Wire wire;
@@ -41,9 +42,24 @@ public class SpriteAnimationWindow {
         return a - result * b;
     }
 
+    /**
+     * Get an animation box based on its id.
+     *
+     * @param id Animation box's id.
+     * @return The animation box with desired id.
+     */
+    private AnimationBox getAnimationBox(int id) {
+        return animationBoxList.stream()
+                .filter(animationBox -> animationBox.getId() == id)
+                .findFirst()
+                .orElse(null);
+    }
+
     public void imgui() {
         if (ImGui.begin("Sprite Animation Window", new ImBoolean(true))) {
-            ImGui.text("Mouse Left: drag to add lines,\nMouse Middle: drag to scroll,\nMouse Right: click for context menu.");
+            ImGui.text("Mouse Left: drag to add lines, or drag inside the boxes to move them." +
+                    "\nMouse Middle: drag to scroll," +
+                    "\nMouse Right: click for context menu.");
 
             // Using InvisibleButton() as a convenience 1) it will advance the layout cursor and 2) allows us to use IsItemHovered()/IsItemActive()
             ImVec2 canvasP0 = ImGui.getCursorScreenPos();      // ImDrawList API uses screen coordinates!
@@ -51,6 +67,7 @@ public class SpriteAnimationWindow {
 
             ImGui.pushStyleVar(ImGuiStyleVar.WindowPadding, 0, 0);
             ImGui.pushStyleColor(ImGuiCol.ChildBg, ImColor.intToColor(50, 50, 50, 255));
+
             // We will catch all the interactions on this window
             ImGui.beginChild("canvas", canvasSize.x, canvasSize.y, true,
                     ImGuiWindowFlags.NoMove | ImGuiWindowFlags.NoScrollbar
@@ -172,5 +189,62 @@ public class SpriteAnimationWindow {
             ImGui.endChild();
         }
         ImGui.end();
+
+        // TODO: 11/05/2022 See if this implementation is worth it, since when moving the animation boxes, the lines may break and that isn't cool
+        /*int boxFrom = 0, boxTo = 0;
+        String pointFieldTo = "", pointFieldFrom = "";
+
+        if (pointList.size() % 2 != 0) return;
+        for (AnimationBox animationBox : animationBoxList) {
+            if (pointList.size() < 2) break;
+
+            final int PointListSize = pointList.size();
+            Point[] last2Points = {pointList.get(PointListSize - 1), pointList.get(PointListSize - 2)};
+
+            for (PointField pointField : animationBox.getPointFields()) {
+                if (pointField.getPointList().stream().anyMatch(point -> last2Points[1].getId() == point.getId())) {
+                    boxFrom = animationBox.getId();
+                    pointFieldFrom = pointField.getName();
+                }
+
+                if (pointField.getPointList().stream().anyMatch(point -> last2Points[0].getId() == point.getId())) {
+                    boxTo = animationBox.getId();
+                    pointFieldTo = pointField.getName();
+                }
+            }
+        }
+
+        if (!lookMessyLines) return;
+        lookMessyLines = false;
+
+        boolean check = false;
+
+        // HAS BUGS HERE!!!
+
+        // If the line is drawn from left to right
+        if (getAnimationBox(boxFrom).getX() + getAnimationBox(boxFrom).getWidth() < getAnimationBox(boxTo).getX()) {
+            check = pointFieldFrom.equals("right") && pointFieldTo.equals("left");
+        // Else if the line is drawn from right to left
+        } else if (getAnimationBox(boxFrom).getX() > getAnimationBox(boxTo).getX()) {
+            check = pointFieldFrom.equals("left") && pointFieldTo.equals("right");
+        }
+
+        if (!check) {
+            // If the line is drawn from down to up
+            if (getAnimationBox(boxFrom).getY() < getAnimationBox(boxTo).getY()) {
+                check = pointFieldFrom.equals("down") && pointFieldTo.equals("up");
+            // Else if the line is draw from down to up
+            } else if (getAnimationBox(boxFrom).getY() > getAnimationBox(boxTo).getY()) {
+                check = pointFieldFrom.equals("up") && pointFieldTo.equals("down");
+            }
+        }
+
+        // Means that the user is drawing, for example, from the left side of a box to the left side of
+        // another box. That destroys the simplicity of the state machine user interface, so we won't
+        // let that happen.
+        if (!check) {
+            pointList.remove(pointList.size() - 1);
+            pointList.remove(pointList.size() - 1);
+        }*/
     }
 }
