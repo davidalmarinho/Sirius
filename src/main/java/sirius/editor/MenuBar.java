@@ -29,8 +29,8 @@ public class MenuBar {
 
                 if (ImGui.button("Create")) {
                     try {
-                        Level level = new Level("level" + lvl.get() + ".txt",
-                                "assets/levels/level" + lvl.get() + ".txt", lvl.get());
+                        Level level = new Level("level" + lvl.get() + ".json",
+                                "assets/levels/level" + lvl.get() + ".json", lvl.get());
 
                         // Checks if we don't create an existing level
                         if (AssetPool.getLevel(level.getId()) != null)

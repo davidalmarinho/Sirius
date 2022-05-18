@@ -225,21 +225,23 @@ public class Scene {
         assert listOfFiles != null;
 
         // Order the files
+        // TODO: 18/05/2022 Doesn't work properly
         Arrays.sort(listOfFiles);
 
         int expectedCurrentLevel = 1;
         for (int i = 0; i < listOfFiles.length; i++) {
             if (listOfFiles[i].isFile()) {
                 // Check if the file doesn't have "level" and ".txt" letters
-                if (!listOfFiles[i].getName().contains("level") || !listOfFiles[i].getName().contains(".txt")) {
+                if (!listOfFiles[i].getName().contains("level") || !listOfFiles[i].getName().contains(".json")) {
                     System.err.println("Warning: '" + listOfFiles[i].getName()
                             + "' can't be recognized as a level file.");
                     continue;
                 }
 
                 String[] navigator = listOfFiles[i].getName().split("level");
-                String[] navigator1 = navigator[1].split(".txt");
+                String[] navigator1 = navigator[1].split(".json");
                 int curLvl = Integer.parseInt(navigator1[0]);
+                System.out.println(curLvl);
 
                 // Add level if it exists
                 if (curLvl == expectedCurrentLevel) {
