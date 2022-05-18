@@ -14,8 +14,10 @@ import java.util.List;
 
 // State Machine Child will also be called Canvas in the comments
 public class StateMachineChild {
+    private boolean hovered;
     public ImBoolean showStateMachineChild;
 
+    public AnimationBox activeAnimationBox;
     public static List<Point> pointList;
     public static boolean lookMessyLines;
     private List<AnimationBox> animationBoxList;
@@ -49,7 +51,7 @@ public class StateMachineChild {
      * @param id Animation box's id.
      * @return The animation box with desired id.
      */
-    private AnimationBox getAnimationBox(int id) {
+    public AnimationBox getAnimationBox(int id) {
         return animationBoxList.stream()
                 .filter(animationBox -> animationBox.getId() == id)
                 .findFirst()
@@ -104,6 +106,12 @@ public class StateMachineChild {
     }
 
     public void imgui(ImVec2 contentRegionAvailable) {
+        activeAnimationBox = animationBoxList
+                .stream()
+                .filter(animationBox -> getAnimationBox(animationBox.getId()).isSelected())
+                .findFirst()
+                .orElse(null);
+
         ImVec2 canvasSize = contentRegionAvailable;   // Resize canvas to what's available
         ImVec2 canvasP0 = ImGui.getCursorScreenPos(); // ImDrawList API uses screen coordinates!
 
@@ -125,7 +133,7 @@ public class StateMachineChild {
         ImDrawList drawList = ImGui.getWindowDrawList();
 
         // Check if the cursor is above of sprite animation window
-        boolean isHovered = ImGui.isWindowHovered();
+        hovered = ImGui.isWindowHovered();
 
         // Lock scrolled origin
         ImVec2 origin = new ImVec2(canvasP0.x + scrolling.x, canvasP0.y + scrolling.y);
@@ -134,7 +142,7 @@ public class StateMachineChild {
         ImVec2 mousePosInCanvas = new ImVec2(io.getMousePos().x - origin.x, io.getMousePos().y - origin.y);
 
         // Add first and second point
-        if (isHovered && !addingLine && ImGui.isMouseClicked(ImGuiMouseButton.Left)) {
+        if (hovered && !addingLine && ImGui.isMouseClicked(ImGuiMouseButton.Left)) {
             ImVec2 startPos = new ImVec2(mousePosInCanvas.x + canvasP0.x, mousePosInCanvas.y + canvasP0.y);
             wireList.add(new Wire(startPos, startPos));
             wire.setStart(startPos.x, startPos.y);
@@ -153,7 +161,7 @@ public class StateMachineChild {
         // Pan (we use a zero mouse threshold when there's no context menu)
         // You may decide to make that threshold dynamic based on whether the mouse is hovering something etc.
         float mouseThresholdForPan = -1.0f;
-        if (isHovered && ImGui.isMouseDragging(ImGuiMouseButton.Middle, mouseThresholdForPan)) {
+        if (hovered && ImGui.isMouseDragging(ImGuiMouseButton.Middle, mouseThresholdForPan)) {
             scrolling.x += io.getMouseDelta().x;
             scrolling.y += io.getMouseDelta().y;
         }
@@ -233,6 +241,18 @@ public class StateMachineChild {
         }
 
         ImGui.endChild();
+    }
+
+    public boolean isHovered() {
+        return hovered;
+    }
+
+    public List<AnimationBox> getAnimationBoxList() {
+        return animationBoxList;
+    }
+
+    public AnimationBox getActiveBox() {
+        return activeAnimationBox;
     }
 
     public boolean isShowStateMachineChild() {

@@ -3,6 +3,8 @@ package gameobjects.components;
 import sirius.rendering.spritesheet.Texture;
 import org.joml.Vector2f;
 
+import java.util.Arrays;
+
 public class Sprite {
     private int width, height;
     private Texture texture;
@@ -10,6 +12,16 @@ public class Sprite {
 
     private Sprite() {
 
+    }
+
+    @Override
+    public String toString() {
+        return "Sprite{" +
+                "width=" + width +
+                ", height=" + height +
+                ", texture=" + texture +
+                ", textureCoordinates=" + Arrays.toString(textureCoordinates) +
+                '}';
     }
 
     public Texture getTexture() {

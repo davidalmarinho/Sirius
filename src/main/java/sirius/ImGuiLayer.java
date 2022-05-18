@@ -43,7 +43,7 @@ public class ImGuiLayer {
         this.propertiesWindow = PropertiesWindow.get(pickingTexture);
         this.menuBar = new MenuBar();
         this.sceneHierarchy = new SceneHierarchy();
-        this.spriteAnimationWindow = new SpriteAnimationWindow();
+        this.spriteAnimationWindow = SpriteAnimationWindow.get();
     }
 
     public void edit(long glfwWindow) {

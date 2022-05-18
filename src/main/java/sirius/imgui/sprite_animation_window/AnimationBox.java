@@ -9,15 +9,19 @@ import imgui.flag.ImGuiInputTextFlags;
 import imgui.flag.ImGuiMouseButton;
 import imgui.flag.ImGuiWindowFlags;
 import imgui.type.ImString;
+import sirius.animations.Frame;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class AnimationBox {
     public static int maxId = 0;
+
     private final int ID;
     private ImString trigger;
     public float x, y;
+    // TODO: 16/05/2022 Make this work
+    private List<Frame> frameList;
     private float width, height, lastWidth;
 
     private boolean mouseAboveAnimationBox;
@@ -31,12 +35,15 @@ public class AnimationBox {
     private final float THICKNESS = 10.0f;
     private final float ROUNDING  = 20.0f;
 
+    private boolean selected;
+
     public AnimationBox(String trigger, float x, float y) {
         this.ID = maxId;
         maxId++;
-        this.trigger = new ImString(trigger, 32);
-        this.x       = x;
-        this.y       = y;
+        this.frameList = new ArrayList<>();
+        this.trigger   = new ImString(trigger, 32);
+        this.x         = x;
+        this.y         = y;
 
         this.width       = 128.0f;
         this.height      = 128.0f;
@@ -230,6 +237,13 @@ public class AnimationBox {
         }
     }
 
+    private void unselectPreviousBoxes() {
+        for (AnimationBox animationBox : SpriteAnimationWindow.getStateMachineChild().getAnimationBoxList()) {
+            if (animationBox.selected)
+                animationBox.selected = false;
+        }
+    }
+
     private void drawAnimationBox(ImVec2 origin, ImVec2 scrolling) {
         ImDrawList drawList = ImGui.getWindowDrawList();
 
@@ -269,10 +283,27 @@ public class AnimationBox {
             ImGui.setNextItemWidth(Math.min(currentSize, maxSize));
 
         ImGui.inputText("", this.trigger, ImGuiInputTextFlags.AutoSelectAll);
+
+        // Select the box if the text input field was activated
+        if (ImGui.isItemActivated())
+            selected = true;
+
         ImGui.popID();
 
         // Checks if the mouse is above of the AnimationBox
         mouseAboveAnimationBox = ImGui.isWindowHovered();
+
+        // Box is selected if the mouse left is pressed and if the mouse is inside the box
+        if (mouseAboveAnimationBox && ImGui.isMouseClicked(ImGuiMouseButton.Left)) {
+            // If there are any animation boxes selected, we will want them to become unselected
+            unselectPreviousBoxes();
+
+            selected = true;
+            // Box can't be unselected if the mouse left isn't inside the state machine child
+        } else if (SpriteAnimationWindow.getStateMachineChild().isHovered()
+                && !mouseAboveAnimationBox && ImGui.isMouseClicked(ImGuiMouseButton.Left)) {
+            selected = false;
+        }
 
         moveBox(origin);
 
@@ -282,12 +313,22 @@ public class AnimationBox {
     public void imgui(ImVec2 origin, ImVec2 scrolling) {
         // Draw the outlines of the animation box
         ImDrawList drawList = ImGui.getWindowDrawList();
-        drawList.addRect(
-                origin.x + x - getWidth() / 2,
-                origin.y + y - getHeight() / 2,
-                origin.x + x + getWidth() / 2,
-                origin.y + y + getHeight() / 2,
-                ImColor.intToColor(255, 255, 255, 255), ROUNDING, ImDrawFlags.RoundCornersAll, THICKNESS);
+
+        if (!selected) {
+            drawList.addRect(
+                    origin.x + x - getWidth() / 2,
+                    origin.y + y - getHeight() / 2,
+                    origin.x + x + getWidth() / 2,
+                    origin.y + y + getHeight() / 2,
+                    ImColor.intToColor(255, 255, 255, 255), ROUNDING, ImDrawFlags.RoundCornersAll, THICKNESS);
+        } else {
+            drawList.addRect(
+                    origin.x + x - getWidth() / 2,
+                    origin.y + y - getHeight() / 2,
+                    origin.x + x + getWidth() / 2,
+                    origin.y + y + getHeight() / 2,
+                    ImColor.intToColor(200, 200, 200, 255), ROUNDING, ImDrawFlags.RoundCornersAll, THICKNESS);
+        }
 
         drawAnimationBox(origin, scrolling);
 
@@ -366,6 +407,14 @@ public class AnimationBox {
 
         delUnlinkedPoints();
         delPointsSameBox();
+    }
+
+    public String getTrigger() {
+        return trigger.get();
+    }
+
+    public boolean isSelected() {
+        return selected;
     }
 
     public int getId() {

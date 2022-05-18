@@ -4,10 +4,11 @@ import imgui.*;
 import imgui.type.ImBoolean;
 
 public class SpriteAnimationWindow {
+    private static SpriteAnimationWindow instance;
     private ConfigChild configChild;
     private StateMachineChild stateMachineChild;
 
-    public SpriteAnimationWindow() {
+    private SpriteAnimationWindow() {
         this.configChild = new ConfigChild();
         this.stateMachineChild = new StateMachineChild();
     }
@@ -24,7 +25,7 @@ public class SpriteAnimationWindow {
             // config child's size has to be 240
             if (configChild.isShowConfigChild()) {
                 if (stateMachineChild.isShowStateMachineChild())
-                    configChild.imgui(new ImVec2(240, ImGui.getContentRegionAvailY()));
+                    configChild.imgui(new ImVec2(300, ImGui.getContentRegionAvailY()));
                 else
                     configChild.imgui(ImGui.getContentRegionAvail());
             }
@@ -34,5 +35,15 @@ public class SpriteAnimationWindow {
 
         }
         ImGui.end();
+    }
+
+    public static SpriteAnimationWindow get() {
+        if (instance == null) instance = new SpriteAnimationWindow();
+
+        return instance;
+    }
+
+    public static StateMachineChild getStateMachineChild() {
+        return get().stateMachineChild;
     }
 }

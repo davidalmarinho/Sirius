@@ -7,15 +7,15 @@ import sirius.rendering.Shader;
 import sirius.rendering.spritesheet.Texture;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.*;
 
 public class AssetPool {
-    // Estático para as referências não serem limpas pelo coletor de lixo
     private static Map<String, Shader> shaders = new HashMap<>();
     private static Map<String, Texture> textures = new HashMap<>();
     private static List<Level> levelList = new ArrayList<>();
     private static Map<String, Spritesheet> spritesheets = new HashMap<>();
-    public static Map<String, Sound> stringSoundHashMap = new HashMap<>();
+    private static Map<String, Sound> stringSoundHashMap = new HashMap<>();
 
 
     public static Shader getShader(String filePath) {
@@ -98,5 +98,47 @@ public class AssetPool {
 
     public static List<Level> getLevelList() {
         return levelList;
+    }
+
+    /**
+     * Gets the path of all loaded spritesheets.
+     *
+     * @return An array with all loaded spritesheets.
+     */
+    public static String[] getSpritesheetsPaths() {
+        String[] spritesheetsPaths = new String[spritesheets.size()];
+
+        int i = 0;
+        for (String key : spritesheets.keySet()) {
+            // TODO: 18/05/2022 Get the path that doesn't depends on the OS
+            spritesheetsPaths[i] = key;
+            i++;
+        }
+
+        return spritesheetsPaths;
+    }
+
+    /**
+     * Transforms the spritesheet path into a short name.
+     * Example:
+     *      'assets/spritesheetCharacter.png' turns into 'spritesheetCharacter'
+     *      'assets/dungeons.png' turns into 'dungeons'
+     *
+     *
+     * @return The name of the spritesheet.
+     */
+    public static String[] getSpritesheetsNames() {
+        String[] spritesheetsNames = new String[spritesheets.size()];
+
+        int i = 0;
+        File file;
+        for (String key : spritesheets.keySet()) {
+            file = new File(key);
+            String name = file.getName();
+            spritesheetsNames[i] = name.split("\\.")[0];
+            i++;
+        }
+
+        return spritesheetsNames;
     }
 }
