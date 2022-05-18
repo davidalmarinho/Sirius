@@ -83,4 +83,16 @@ public class KeyListener {
 
         return instance;
     }
+
+    public static boolean isAnyKeyPressed() {
+        boolean pressedKey = false;
+        for (boolean key : get().keys) {
+            if (key) {
+                pressedKey = true;
+                break;
+            }
+        }
+
+        return pressedKey;
+    }
 }

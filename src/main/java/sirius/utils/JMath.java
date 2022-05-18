@@ -77,4 +77,16 @@ public class JMath {
     public static boolean compare(Vector2f vec1, Vector2f vec2) {
         return compare(vec1, vec2, Float.MIN_VALUE);
     }
+
+    /**
+     * Computes the floating-point remainder of a / b.
+     *
+     * @param a float
+     * @param b float
+     * @return computed floating-point remainder of a / b
+     */
+    public static float fmodf(float a, float b) {
+        int result = (int) Math.floor(a / b);
+        return a - result * b;
+    }
 }

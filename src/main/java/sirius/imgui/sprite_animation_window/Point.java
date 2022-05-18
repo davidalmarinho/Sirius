@@ -35,6 +35,11 @@ public class Point {
         ImDrawList imDrawList = ImGui.getWindowDrawList();
         imDrawList.addCircleFilled(origin.x + position.x, origin.y + position.y,
                 radius, ImColor.intToColor(247, 179, 43, 255));
+        /*imDrawList.addTriangleFilled(
+                origin.x + position.x + 5, origin.y + position.y + 5,
+                origin.x + position.x + 5 + 10, origin.y + position.y - 5 - 10,
+                origin.x + position.x + 5 + 20, origin.y + position.y + 5,
+                ImColor.intToColor(247, 179, 43, 255));*/
     }
 
     public int getId() {

@@ -179,13 +179,11 @@ public class LevelEditorSceneInitializer implements ISceneInitializer {
                     // Keep in the same line if we still have items and if the current item isn't bigger than the window itself
                     if (i + 1 < sprites.size() && nextButtonX2 < windowX2)
                         ImGui.sameLine();
-
                 }
                 ImGui.endTabItem();
             }
 
             if (ImGui.beginTabItem("Prefabs")) {
-
                 // Check if we have customized prefabs
                 ICustomPrefabs customPrefabs = SiriusTheFox.getWindow().getICustomPrefabs();
                 if (customPrefabs != null) {
