@@ -1,6 +1,6 @@
 package gameobjects.components;
 
-import sirius.editor.JImGui;
+import sirius.editor.imgui.JImGui;
 import sirius.rendering.Color;
 import sirius.rendering.spritesheet.Texture;
 import org.joml.Vector2f;

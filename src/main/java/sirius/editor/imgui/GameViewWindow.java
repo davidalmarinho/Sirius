@@ -1,4 +1,4 @@
-package sirius.imgui;
+package sirius.editor.imgui;
 
 import imgui.ImGui;
 import imgui.ImVec2;

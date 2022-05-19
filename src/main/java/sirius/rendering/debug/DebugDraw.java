@@ -16,8 +16,8 @@ import java.util.List;
 import static org.lwjgl.opengl.GL15.*;
 
 public class DebugDraw {
-    private static int MAX_LINES = 3000;
-    public static float lineThickness = 1.0f;
+    private static int MAX_LINES = 400;
+    public static float lineThickness = 2.0f;
 
     private static List<Line2D> line2DList = new ArrayList<>();
     // 6 floats per vertex (x, y, z, r, g, b) , 2 vertices per line

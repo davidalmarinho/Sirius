@@ -1,4 +1,4 @@
-package sirius.editor;
+package sirius.editor.imgui;
 
 import imgui.ImGui;
 import imgui.type.ImInt;
@@ -6,7 +6,6 @@ import sirius.SiriusTheFox;
 import observers.EventSystem;
 import observers.events.Events;
 import observers.events.Event;
-import sirius.input.KeyListener;
 import sirius.levels.Level;
 import sirius.utils.AssetPool;
 

@@ -1,4 +1,4 @@
-package sirius.imgui.sprite_animation_window;
+package sirius.editor.imgui.sprite_animation_window;
 
 import gameobjects.GameObject;
 import gameobjects.components.SpriteRenderer;
@@ -7,7 +7,7 @@ import imgui.ImVec2;
 import imgui.flag.ImGuiWindowFlags;
 import imgui.type.ImBoolean;
 import sirius.animations.Frame;
-import sirius.editor.JImGui;
+import sirius.editor.imgui.JImGui;
 import sirius.utils.AssetPool;
 
 import java.util.ArrayList;

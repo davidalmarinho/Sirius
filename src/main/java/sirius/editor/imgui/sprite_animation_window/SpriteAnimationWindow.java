@@ -1,4 +1,4 @@
-package sirius.imgui.sprite_animation_window;
+package sirius.editor.imgui.sprite_animation_window;
 
 import imgui.*;
 import imgui.type.ImBoolean;

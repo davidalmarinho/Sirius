@@ -1,6 +1,6 @@
 package gameobjects.components;
 
-import sirius.editor.JImGui;
+import sirius.editor.imgui.JImGui;
 import org.joml.Vector2f;
 
 public class Transform extends Component {

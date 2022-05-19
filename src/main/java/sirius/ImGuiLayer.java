@@ -1,8 +1,8 @@
 package sirius;
 
-import sirius.imgui.sprite_animation_window.SpriteAnimationWindow;
-import sirius.imgui.GameViewWindow;
-import sirius.editor.MenuBar;
+import sirius.editor.imgui.sprite_animation_window.SpriteAnimationWindow;
+import sirius.editor.imgui.GameViewWindow;
+import sirius.editor.imgui.MenuBar;
 import sirius.editor.PropertiesWindow;
 import imgui.*;
 import imgui.callback.ImStrConsumer;

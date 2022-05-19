@@ -1,6 +1,6 @@
 package gameobjects.components;
 
-import sirius.editor.JImGui;
+import sirius.editor.imgui.JImGui;
 import imgui.ImGui;
 import gameobjects.GameObject;
 import imgui.type.ImInt;
