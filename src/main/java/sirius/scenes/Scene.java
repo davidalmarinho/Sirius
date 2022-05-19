@@ -221,50 +221,45 @@ public class Scene {
 
     public void loadLevels() {
         File folder = new File("assets/levels");
-        File[] listOfFiles = folder.listFiles();
-        assert listOfFiles != null;
+        File[] listOfLevels = folder.listFiles();
+        assert listOfLevels != null;
 
-        // Order the files
-        // TODO: 18/05/2022 Doesn't work properly
-        Arrays.sort(listOfFiles);
+        // Sort level's list according its size --secondarily the names are also alphabetical ordered
+        Arrays.sort(listOfLevels, Comparator.comparingInt(o -> o.getName().length()));
 
-        int expectedCurrentLevel = 1;
-        for (int i = 0; i < listOfFiles.length; i++) {
-            if (listOfFiles[i].isFile()) {
-                // Check if the file doesn't have "level" and ".txt" letters
-                if (!listOfFiles[i].getName().contains("level") || !listOfFiles[i].getName().contains(".json")) {
-                    System.err.println("Warning: '" + listOfFiles[i].getName()
-                            + "' can't be recognized as a level file.");
-                    continue;
-                }
+        // Array to store what levels were loaded
+        int[] loadedLevels = new int[listOfLevels.length];
 
-                String[] navigator = listOfFiles[i].getName().split("level");
-                String[] navigator1 = navigator[1].split(".json");
-                int curLvl = Integer.parseInt(navigator1[0]);
-                System.out.println(curLvl);
-
-                // Add level if it exists
-                if (curLvl == expectedCurrentLevel) {
-                    AssetPool.addLevel(new Level(listOfFiles[i].getName(), listOfFiles[i].getPath(), curLvl));
-                // Check if the levels' is fine.
-                } else {
-                    int deltaLevels = curLvl - expectedCurrentLevel;
-                    int nonexistentLevel = expectedCurrentLevel;
-                    for (int j = 0; j < deltaLevels; j++) {
-                        System.err.println("Warning: Level " + nonexistentLevel + " doesn't exist!");
-                        nonexistentLevel++;
-                    }
-                    expectedCurrentLevel = nonexistentLevel;
-
-                    // Add level if it is all fine now
-                    if (curLvl == expectedCurrentLevel)
-                        AssetPool.addLevel(new Level(listOfFiles[i].getName(), listOfFiles[i].getPath(), curLvl));
-                }
-                expectedCurrentLevel++;
+        // Load levels to the asset pool
+        for (int i = 0; i < listOfLevels.length; i++) {
+            // Check if the saved file is valid
+            if (!listOfLevels[i].getName().contains("level") || !listOfLevels[i].getName().contains(".json")) {
+                System.err.println("Warning: '" + listOfLevels[i].getName()
+                        + "' can't be recognized as a level file.");
+                continue;
             }
+
+            String[] navigator = listOfLevels[i].getName().split("level");
+            String[] navigator1 = navigator[1].split(".json");
+            int curLvl = Integer.parseInt(navigator1[0]);
+            AssetPool.addLevel(new Level(listOfLevels[i].getName(), listOfLevels[i].getPath(), curLvl));
+            loadedLevels[i] = curLvl;
         }
 
-        Level.maxLevel = expectedCurrentLevel;
+        Arrays.sort(loadedLevels);
+
+        // Throw a warning if there are missing levels
+        int expectedLevel = 1;
+        for (int i = 0; i < loadedLevels.length; i++) {
+            while (expectedLevel != loadedLevels[i]) {
+                System.err.println("Warning: Level " + expectedLevel + " doesn't exist!");
+                expectedLevel++;
+            }
+
+            expectedLevel++;
+        }
+
+        Level.maxLevel = loadedLevels[loadedLevels.length - 1];
     }
 
     public void save() {
