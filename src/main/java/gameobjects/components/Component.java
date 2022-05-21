@@ -13,7 +13,7 @@ import org.joml.Vector4f;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 
-public abstract class Component {
+public class Component {
     public transient static int ID_COUNTER = 0;
     private transient int uid = -1;
 
@@ -21,6 +21,7 @@ public abstract class Component {
      * parent game object as its components and that components have, again, a parent game object.
      */
     public transient GameObject gameObject = null;
+
     /**
      * We have this method, because we can't access the gameObject
      * inside builder's method.

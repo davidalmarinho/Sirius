@@ -201,7 +201,7 @@ public class CustomPrefabs implements ICustomPrefabs {
         mario.addComponent(rigidBody2d);
         mario.addComponent(pb);
 
-        mario.transform.zIndex = 10;
+        mario.setZIndex(10);
 
         return mario;
     }
@@ -466,7 +466,7 @@ public class CustomPrefabs implements ICustomPrefabs {
     public static GameObject generateFireball(Vector2f position) {
         GameObject fireball = generateSpriteObject(AssetPool.getSpritesheet("assets/images/spritesheets/items.png")
                 .getSprite(32), 0.18f, 0.18f);
-        fireball.transform.position.set(position);
+        fireball.setPosition(position);
 
         RigidBody2d rigidBody2d = new RigidBody2d();
         rigidBody2d.setBodyType(BodyTypes.DYNAMIC);

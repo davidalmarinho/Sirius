@@ -39,7 +39,8 @@ public class MouseControls extends Component {
         holdingGameObject = go;
         holdingGameObject.getComponent(SpriteRenderer.class).setColor(new Color(0.8f, 0.8f, 0.8f, 0.8f));
         this.holdingGameObject.addComponent(new NonPickable());
-        SiriusTheFox.getCurrentScene().addGameObject(go);
+        this.holdingGameObject.setZIndex(Integer.MIN_VALUE);
+        SiriusTheFox.getCurrentScene().addGameObject(holdingGameObject);
     }
 
     public void place() {
@@ -49,6 +50,8 @@ public class MouseControls extends Component {
 
         newObj.getComponent(SpriteRenderer.class).setColor(new Color(1.0f, 1.0f, 1.0f, 1.0f));
         newObj.removeComponent(NonPickable.class);
+        newObj.setZIndex(0);
+
         SiriusTheFox.getCurrentScene().addGameObject(newObj);
     }
 
@@ -56,13 +59,14 @@ public class MouseControls extends Component {
         PropertiesWindow propertiesWindow = SiriusTheFox.getImGuiLayer().getPropertiesWindow();
         Vector2f start        = new Vector2f(x, y);
         Vector2f end          = new Vector2f(start).add(new Vector2f(Settings.GRID_WIDTH, Settings.GRID_HEIGHT));
-        Vector2f startScreenf = MouseListener.worldToScreen(start);
-        Vector2f endScreenf   = MouseListener.worldToScreen(end);
+        Vector2f startScreenf = MouseListener.worldToGameViewport(start);
+        Vector2f endScreenf   = MouseListener.worldToGameViewport(end);
 
         Vector2i startScreen = new Vector2i((int) startScreenf.x + 2, (int) startScreenf.y + 2); // +2 pixels, to ensure that we don't pick objects in a different square
         Vector2i endScreen = new Vector2i((int) endScreenf.x - 2, (int) endScreenf.y - 2);
         float[] gameObjectsIds = propertiesWindow.getPickingTexture().readPixels(startScreen, endScreen);
 
+        // Z index compromizes this
         for (int i = 0; i < gameObjectsIds.length; i++) {
             if (gameObjectsIds[i] >= 0) {
                 GameObject pickedObj = SiriusTheFox.getCurrentScene().getGameObject((int) gameObjectsIds[i]);
@@ -88,20 +92,13 @@ public class MouseControls extends Component {
             GameObject copyGo = blueprintGameObject.copy();
 
             // Remove some components that we want to modify
+            Vector2f copyGoPos = gameObjectList.get(i).getComponent(Transform.class).position;
             copyGo.removeComponent(Transform.class);
             copyGo.removeComponent(SpriteRenderer.class);
 
             // Modify those components that we have removed
-            copyGo.addComponent(gameObjectList.get(i).getComponent(Transform.class).copy());
-            copyGo.transform = gameObjectList.get(i).transform.copy();
-
-            // Modify transforms
-            copyGo.transform.zIndex                       = blueprintGameObject.getComponent(Transform.class).zIndex;
-            copyGo.getComponent(Transform.class).zIndex   = blueprintGameObject.getComponent(Transform.class).zIndex;
-            copyGo.transform.rotation                     = blueprintGameObject.getComponent(Transform.class).rotation;
-            copyGo.getComponent(Transform.class).rotation = blueprintGameObject.getComponent(Transform.class).rotation;
-            copyGo.transform.scale                        = blueprintGameObject.getComponent(Transform.class).scale;
-            copyGo.getComponent(Transform.class).scale    = blueprintGameObject.getComponent(Transform.class).scale;
+            copyGo.addComponent(blueprintGameObject.getComponent(Transform.class).copy());
+            copyGo.setPosition(copyGoPos);
 
             copyGo.addComponent(gameObjectList.get(i).getComponent(SpriteRenderer.class));
             copyGo.getComponent(SpriteRenderer.class).setDirty(true);
@@ -188,21 +185,22 @@ public class MouseControls extends Component {
 
         if (holdingGameObject != null) {
             // Place game object
-            holdingGameObject.transform.position.x = MouseListener.getWorld().x;
-            // holdingGameObject.getComponent(Transform.class).position.x = MouseListener.getWorld().x;
-            holdingGameObject.transform.position.y = MouseListener.getWorld().y;
-            // holdingGameObject.getComponent(Transform.class).position.y = MouseListener.getWorld().y;
+            holdingGameObject.setPosition(MouseListener.getWorld().x, holdingGameObject.getPosition().y);
+            holdingGameObject.setPosition(holdingGameObject.getPosition().x, MouseListener.getWorld().y);
 
-            holdingGameObject.transform.position.x = ((int) Math.floor(holdingGameObject.transform.position.x / Settings.GRID_WIDTH) * Settings.GRID_WIDTH) + Settings.GRID_WIDTH / 2.0f;
-            // holdingGameObject.getComponent(Transform.class).position.x = ((int) Math.floor(holdingGameObject.transform.position.x / Settings.GRID_WIDTH) * Settings.GRID_WIDTH) + Settings.GRID_WIDTH / 2.0f;
-            holdingGameObject.transform.position.y = ((int) Math.floor(holdingGameObject.transform.position.y / Settings.GRID_HEIGHT) * Settings.GRID_HEIGHT) + Settings.GRID_HEIGHT / 2.0f;
-            // holdingGameObject.getComponent(Transform.class).position.x = ((int) Math.floor(holdingGameObject.transform.position.y / Settings.GRID_HEIGHT) * Settings.GRID_HEIGHT) + Settings.GRID_HEIGHT / 2.0f;
+            holdingGameObject.setPosition(
+                    ((int) Math.floor(holdingGameObject.getPosition().x / Settings.GRID_WIDTH)
+                            * Settings.GRID_WIDTH) + Settings.GRID_WIDTH / 2.0f,
+                    holdingGameObject.getPosition().y);
+            holdingGameObject.setPosition(holdingGameObject.getPosition().x,
+                    ((int) Math.floor(holdingGameObject.getPosition().y / Settings.GRID_HEIGHT)
+                            * Settings.GRID_HEIGHT) + Settings.GRID_HEIGHT / 2.0f);
 
             if (MouseListener.isMouseButtonPressed(GLFW_MOUSE_BUTTON_LEFT)) {
                 float halfWidth  = Settings.GRID_WIDTH / 2.0f;
                 float halfHeight = Settings.GRID_HEIGHT / 2.0f;
-                boolean isntBlockInSquare = !isBlockInSquare(holdingGameObject.transform.position.x - halfWidth,
-                        holdingGameObject.transform.position.y - halfHeight);
+                boolean isntBlockInSquare = !isBlockInSquare(holdingGameObject.getPosition().x - halfWidth,
+                        holdingGameObject.getPosition().y - halfHeight);
 
                 // Fix duplicated game object placement bug
                 if (MouseListener.isDragging() && isntBlockInSquare) {
@@ -214,6 +212,8 @@ public class MouseControls extends Component {
             }
 
             if (KeyListener.isKeyDown(GLFW_KEY_ESCAPE) || KeyListener.isKeyDown(GLFW_KEY_DELETE)) {
+                // SiriusTheFox.getCurrentScene()
+
                 // Destroy game object
                 holdingGameObject.destroy();
                 holdingGameObject = null;

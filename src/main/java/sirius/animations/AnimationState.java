@@ -8,14 +8,22 @@ import java.util.List;
 
 public class AnimationState {
     public String title;
-    public List<Frame> animationFrameList = new ArrayList<>();
+    public List<Frame> animationFrameList;
 
     // Show something if the animation system crashes
-    private static Sprite defaultSprite = Sprite.Builder.newInstance().build();
+    private static final Sprite defaultSprite;
 
     private transient float timeTracker = 0.0f;
     private transient int currentSprite = 0;
     private boolean doesLoop = false;
+
+    public AnimationState() {
+        this.animationFrameList = new ArrayList<>();
+    }
+
+    static {
+        defaultSprite = Sprite.Builder.newInstance().build();
+    }
 
     public void addFrame(Sprite sprite, float frameTime) {
         animationFrameList.add(new Frame(sprite, frameTime));

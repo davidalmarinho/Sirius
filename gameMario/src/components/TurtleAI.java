@@ -111,7 +111,7 @@ public class TurtleAI extends Component {
         if (SiriusTheFox.getCurrentScene().getGameObject("GameCamera")
                 .getComponent(GameCamera.class).isUnderground() == undergroundTurtle) {
 
-            if (this.gameObject.transform.position.x <
+            if (this.gameObject.getPosition().x <
                     SiriusTheFox.getCurrentScene().getCamera().position.x - 0.5f) {
                 destroyTime -= dt;
 
@@ -123,7 +123,7 @@ public class TurtleAI extends Component {
         }
 
         if (checkTurtleLayer) {
-            if (gameObject.transform.position.y < -SiriusTheFox.getCurrentScene()
+            if (gameObject.getPosition().y < -SiriusTheFox.getCurrentScene()
                     .getGameObject("GameCamera").getComponent(GameCamera.class).getCameraBuffer()) {
                 undergroundTurtle = true;
             }
@@ -132,18 +132,18 @@ public class TurtleAI extends Component {
 
         movingDebounce -= dt;
         Camera camera = SiriusTheFox.getCurrentScene().getCamera();
-        if (this.gameObject.transform.position.x >
+        if (this.gameObject.getPosition().x >
                 camera.position.x + camera.getProjectionSize().x * camera.getZoom()) {
             return;
         }
 
         if (!dead || moving) {
             if (goingRight) {
-                gameObject.transform.scale.x = -0.25f;
+                gameObject.setScale(-0.25f, gameObject.getScale().y);
                 velocity.x = walkSpeed;
                 acceleration.x = 0;
             } else {
-                gameObject.transform.scale.x = 0.25f;
+                gameObject.setScale(0.25f, gameObject.getScale().y);
                 velocity.x = -walkSpeed;
                 acceleration.x = 0;
             }

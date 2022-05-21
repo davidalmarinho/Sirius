@@ -41,8 +41,8 @@ public class QuestionBlock extends Block {
 
     private void spawnItem(IPrefabs iPrefabs) {
         GameObject item = iPrefabs.generate(null, 0.25f, 0.25f);
-        item.transform.position.set(gameObject.transform.position);
-        item.transform.position.y += 0.25f;
+        item.setPosition(gameObject.getPosition());
+        item.transform(0, 0.25f);
         SiriusTheFox.getCurrentScene().addGameObject(item);
     }
 
@@ -63,8 +63,8 @@ public class QuestionBlock extends Block {
 
     private void doCoin() {
         GameObject coin = CustomPrefabs.generateCoin();
-        coin.transform.position.set(gameObject.transform.position);
-        coin.transform.position.y += 0.25f;
+        coin.setPosition(gameObject.getPosition());
+        coin.transform(0, 0.25f);
         SiriusTheFox.getCurrentScene().addGameObject(coin);
     }
 }

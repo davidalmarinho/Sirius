@@ -37,18 +37,18 @@ public class GameCamera extends Component {
         if (player == null) return;
 
         if (!player.getComponent(PlayerController.class).hasWon()) {
-            gameCamera.position.x = Math.max(player.transform.position.x - 2.5f, highestX);
+            gameCamera.position.x = Math.max(player.getPosition().x - 2.5f, highestX);
             highestX              = Math.max(highestX, gameCamera.position.x);
 
             if (changeHighestX) {
-                highestX = player.transform.position.x - 2.5f;
+                highestX = player.getPosition().x - 2.5f;
                 changeHighestX = false;
             }
 
-            if (player.transform.position.y < -playerHeight) {
+            if (player.getPosition().y < -playerHeight) {
                 this.gameCamera.position.y = undergroundYLevel;
                 this.gameCamera.clearColor.setColor(undergroundColor);
-            } else if (player.transform.position.y >= 0.0f) {
+            } else if (player.getPosition().y >= 0.0f) {
                 this.gameCamera.position.y = 0.0f;
                 this.gameCamera.clearColor.setColor(skyColor);
             }
@@ -60,7 +60,7 @@ public class GameCamera extends Component {
     }
 
     public boolean isUnderground() {
-        return player.transform.position.y < -playerHeight;
+        return player.getPosition().y < -playerHeight;
     }
 
     public float getCameraBuffer() {

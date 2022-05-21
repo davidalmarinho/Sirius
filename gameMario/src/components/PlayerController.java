@@ -92,7 +92,7 @@ public class PlayerController extends Component {
         if (playerState == PlayerState.SMALL) {
             playerState = PlayerState.BIG;
             AssetPool.getSound("assets/sounds/powerup.ogg").play();
-            gameObject.transform.scale.y = 0.42f;
+            gameObject.setScale(gameObject.getScale().x, 0.42f);
             PillboxCollider pb = gameObject.getComponent(PillboxCollider.class);
             if (pb != null) {
                 // Turn the forces stronger
@@ -135,11 +135,11 @@ public class PlayerController extends Component {
 
     private void shootFireballs() {
         if (KeyListener.isKeyDown(GLFW_KEY_E) && playerState == PlayerState.FIRE && Fireball.canSpawn()) {
-            Vector2f position = new Vector2f(this.gameObject.transform.position)
-                    .add(this.gameObject.transform.scale.x > 0
+            Vector2f position = new Vector2f(this.gameObject.getPosition())
+                    .add(this.gameObject.getScale().x > 0
                             ? new Vector2f(0.26f, 0.0f) : new Vector2f(-0.26f, 0.0f));
             GameObject fireball = CustomPrefabs.generateFireball(position);
-            fireball.getComponent(Fireball.class).goingRight = this.gameObject.transform.scale.x > 0;
+            fireball.getComponent(Fireball.class).goingRight = this.gameObject.getScale().x > 0;
             AssetPool.getSound("assets/sounds/fireball.ogg").play();
             SiriusTheFox.getCurrentScene().addGameObject(fireball);
         }
@@ -154,14 +154,14 @@ public class PlayerController extends Component {
 
         if (hasWon()) {
             if (!isOnGround()) {
-                gameObject.transform.scale.x = -0.25f;
-                gameObject.transform.position.y -= dt;
+                gameObject.setScale(-0.25f, gameObject.getScale().y);
+                gameObject.transform(0, -dt);
                 stateMachine.trigger("stopRunning");
                 stateMachine.trigger("stopJumping");
             } else {
                 if (this.walkTime > 0) {
-                    gameObject.transform.scale.x = 0.25f;
-                    gameObject.transform.position.x += dt;
+                    gameObject.setScale(0.25f, gameObject.getScale().y);
+                    gameObject.transform(dt, 0);
                     stateMachine.trigger("startRunning");
                 }
                 if (!AssetPool.getSound("assets/sounds/stage_clear.ogg").isPlaying())
@@ -178,11 +178,11 @@ public class PlayerController extends Component {
 
         // Death animation
         if (dead) {
-            if (this.gameObject.transform.position.y < deadMaxHeight && deadGoingUp) {
-                this.gameObject.transform.position.y += dt * walkSpeed / 2.0f;
-            } else if (this.gameObject.transform.position.y >= deadMaxHeight && deadGoingUp) {
+            if (this.gameObject.getPosition().y < deadMaxHeight && deadGoingUp) {
+                this.gameObject.getPosition().y += dt * walkSpeed / 2.0f;
+            } else if (this.gameObject.getPosition().y >= deadMaxHeight && deadGoingUp) {
                 deadGoingUp = false;
-            } else  if (!deadGoingUp && gameObject.transform.position.y > deadMinHeight) {
+            } else  if (!deadGoingUp && gameObject.getPosition().y > deadMinHeight) {
                 this.rigidBody2d.setBodyType(BodyTypes.KINEMATIC);
                 this.acceleration.y = SiriusTheFox.getPhysics().getGravity().y * 0.7f;
                 this.velocity.y += this.acceleration.y * dt;
@@ -191,7 +191,7 @@ public class PlayerController extends Component {
                 this.rigidBody2d.setAngularVelocity(0);
 
                 // If we are outside of screen's edges
-            } else if (!deadGoingUp && gameObject.transform.position.y <= deadMinHeight) {
+            } else if (!deadGoingUp && gameObject.getPosition().y <= deadMinHeight) {
                 changeScene();
             }
 
@@ -251,7 +251,7 @@ public class PlayerController extends Component {
             this.acceleration.x = walkSpeed;
 
             // Changes player's direction when he switches direction
-            this.gameObject.transform.scale.x = playerWith;
+            this.gameObject.setScale(playerWith, gameObject.getScale().y);
             if (this.velocity.x < 0) {
                 this.stateMachine.trigger("switchDirection");
                 this.velocity.x += slowDownForce;
@@ -262,7 +262,7 @@ public class PlayerController extends Component {
             this.acceleration.x = -walkSpeed;
 
             // Changes player's direction when he switches direction
-            this.gameObject.transform.scale.x = -playerWith;
+            this.gameObject.setScale(-playerWith, gameObject.getScale().y);
             if (this.velocity.x > 0) {
                 this.stateMachine.trigger("switchDirection");
                 this.velocity.x -= slowDownForce;
@@ -312,14 +312,14 @@ public class PlayerController extends Component {
                 this.dead = true;
                 this.rigidBody2d.setSensor(true);
                 AssetPool.getSound("assets/sounds/mario_die.ogg").play();
-                deadMaxHeight = this.gameObject.transform.position.y + 0.3f;
+                deadMaxHeight = this.gameObject.getPosition().y + 0.3f;
                 this.rigidBody2d.setBodyType(BodyTypes.STATIC);
-                if (gameObject.transform.position.y > 0) deadMinHeight = -0.25f;
+                if (gameObject.getPosition().y > 0) deadMinHeight = -0.25f;
                 break;
 
             case BIG:
                 this.playerState = PlayerState.SMALL;
-                gameObject.transform.scale.y = 0.25f;
+                gameObject.setScale(gameObject.getScale().x, 0.25f);
                 PillboxCollider pillboxCollider = gameObject.getComponent(PillboxCollider.class);
 
                 // We are small, so the jumps have to be smaller too
@@ -352,13 +352,13 @@ public class PlayerController extends Component {
             rigidBody2d.setVelocity(velocity);
             rigidBody2d.setSensor(true);
             rigidBody2d.setBodyType(BodyTypes.STATIC);
-            gameObject.transform.position.x = flagpole.transform.position.x;
+            gameObject.setPosition(flagpole.getPosition().x, gameObject.getPosition().y);
             AssetPool.getSound("assets/sounds/flagpole.ogg").play();
         }
     }
 
     public void setPosition(Vector2f newPosition) {
-        this.gameObject.transform.position.set(newPosition);
+        this.gameObject.setPosition(newPosition);
         this.rigidBody2d.setPosition(newPosition);
     }
 

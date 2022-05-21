@@ -2,11 +2,11 @@ package gameobjects;
 
 import com.google.gson.*;
 import gameobjects.components.Component;
-import gameobjects.components.Transform;
 
 import java.lang.reflect.Type;
 
 public class GameObjectDeserializer implements JsonDeserializer<GameObject> {
+
     @Override
     public GameObject deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
         JsonObject jsonObject = json.getAsJsonObject();
@@ -18,7 +18,7 @@ public class GameObjectDeserializer implements JsonDeserializer<GameObject> {
             Component c = context.deserialize(e, Component.class);
             go.addComponent(c);
         }
-        go.transform = go.getComponent(Transform.class);
+
         return go;
     }
 }

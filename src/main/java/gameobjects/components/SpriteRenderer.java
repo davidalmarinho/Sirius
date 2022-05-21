@@ -21,21 +21,21 @@ public class SpriteRenderer extends Component {
 
     @Override
     public void start() {
-        this.lastTransform = gameObject.transform.copy();
+        this.lastTransform = gameObject.getTransform().copy();
     }
 
     @Override
     public void editorUpdate(float dt) {
-        if (!lastTransform.equals(gameObject.transform)) {
-            this.gameObject.transform.copy(this.lastTransform);
+        if (!lastTransform.equals(gameObject.getTransform())) {
+            this.gameObject.getTransform().copy(this.lastTransform);
             dirty = true;
         }
     }
 
     @Override
     public void update(float dt) {
-        if (!lastTransform.equals(gameObject.transform)) {
-            this.gameObject.transform.copy(this.lastTransform);
+        if (!lastTransform.equals(gameObject.getTransform())) {
+            this.gameObject.getTransform().copy(this.lastTransform);
             dirty = true;
         }
     }

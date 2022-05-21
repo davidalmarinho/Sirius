@@ -19,7 +19,7 @@ public abstract class Block extends Component {
 
     @Override
     public void start() {
-        this.bopStart = new Vector2f(this.gameObject.transform.position);
+        this.bopStart = new Vector2f(this.gameObject.getPosition());
         this.topBopLocation = new Vector2f(bopStart).add(0.0f, 0.02f);
     }
 
@@ -27,15 +27,15 @@ public abstract class Block extends Component {
     public void update(float dt) {
         if (doBopAnimation) {
             if (bopGoingUp) {
-                if (this.gameObject.transform.position.y < topBopLocation.y)
-                    this.gameObject.transform.position.y += bopSpeed * dt;
+                if (this.gameObject.getPosition().y < topBopLocation.y)
+                    this.gameObject.transform(0, bopSpeed * dt);
                 else
                     bopGoingUp = false;
             } else {
-                if (this.gameObject.transform.position.y > bopStart.y)
-                    this.gameObject.transform.position.y -= bopSpeed * dt;
+                if (this.gameObject.getPosition().y > bopStart.y)
+                    this.gameObject.transform(0, -bopSpeed * dt);
                 else {
-                    this.gameObject.transform.position.y = this.bopStart.y;
+                    this.gameObject.setPosition(gameObject.getPosition().x, this.bopStart.y);
                     bopGoingUp = true;
                     doBopAnimation = false;
                 }

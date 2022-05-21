@@ -19,7 +19,7 @@ public class CircleCollider extends Collider2d {
         GameObject activeGameObject = SiriusTheFox.getImGuiLayer().getPropertiesWindow().getActiveGameObject();
         if (activeGameObject == null || activeGameObject != gameObject) return;
 
-        Vector2f center = new Vector2f(gameObject.transform.position).add(getOffset());
+        Vector2f center = new Vector2f(gameObject.getPosition()).add(getOffset());
         DebugDraw.addCircle(center, radius, Color.GREEN);
 
         if (resetFixtureNextFrame)

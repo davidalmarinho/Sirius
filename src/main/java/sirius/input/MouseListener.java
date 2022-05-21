@@ -170,6 +170,14 @@ public class MouseListener {
      * @return the actually world coordinates.
      */
     public static Vector2f worldToScreen(Vector2f worldCoordinates) {
+        return worldToScreen(worldCoordinates, SiriusTheFox.getWindow().getWidth(), SiriusTheFox.getWindow().getHeight());
+    }
+
+    public static Vector2f worldToGameViewport(Vector2f worldCoordinates) {
+        return worldToScreen(worldCoordinates, SiriusTheFox.getWindow().getMaxWidth(), SiriusTheFox.getWindow().getMaxHeight());
+    }
+
+    private static Vector2f worldToScreen(Vector2f worldCoordinates, float windowWidth, float windowHeight) {
         Camera camera = SiriusTheFox.getCurrentScene().getCamera();
         Vector4f normalizedDeviceCoordsSpacePos = new Vector4f(worldCoordinates.x, worldCoordinates.y, 0.0f, 1.0f);
         Matrix4f viewMatrix = new Matrix4f(camera.getViewMatrix());
@@ -179,7 +187,7 @@ public class MouseListener {
         Vector2f windowSpace = new Vector2f(normalizedDeviceCoordsSpacePos.x, normalizedDeviceCoordsSpacePos.y)
                 .mul(1.0f / normalizedDeviceCoordsSpacePos.w);
         windowSpace.add(new Vector2f(1.0f, 1.0f)).mul(0.5f);
-        windowSpace.mul(new Vector2f(SiriusTheFox.getWindow().getWidth(), SiriusTheFox.getWindow().getHeight()));
+        windowSpace.mul(new Vector2f(1920.0f, 1080.0f));
 
         return windowSpace;
     }

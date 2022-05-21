@@ -29,7 +29,7 @@ public class Renderer {
         boolean added = false;
         for (RenderBatch renderBatch : batches) {
             // Se tivermos espaço no renderBatch atual, colocamos o sprite nesse
-            if (renderBatch.hasRoom() && renderBatch.getzIndex() == spriteRenderer.gameObject.transform.zIndex) {
+            if (renderBatch.hasRoom() && renderBatch.getzIndex() == spriteRenderer.gameObject.getTransform().zIndex) {
                 Texture texture = spriteRenderer.getTexture();
                 if (texture == null ||renderBatch.hasRoomTexture() || renderBatch.hasTexture(texture)) {
                     renderBatch.addSprite(spriteRenderer);
@@ -41,7 +41,8 @@ public class Renderer {
 
         if (!added) {
             // Se não, o renderBatch atual está cheio e precisamos de outro
-            RenderBatch newRenderBatch = new RenderBatch(MAX_BATCH_SIZE, spriteRenderer.gameObject.transform.zIndex, this);
+            RenderBatch newRenderBatch = new RenderBatch(MAX_BATCH_SIZE,
+                    spriteRenderer.gameObject.getTransform().zIndex, this);
             newRenderBatch.start();
             batches.add(newRenderBatch);
             newRenderBatch.addSprite(spriteRenderer);

@@ -41,25 +41,23 @@ public class RigidBody2d extends Component {
     public void update(float dt) {
         if (rawBody != null) {
             if (this.bodyType == BodyTypes.DYNAMIC || this.bodyType == BodyTypes.KINEMATIC) {
-                gameObject.transform.position.set(
-                        rawBody.getPosition().x, rawBody.getPosition().y
-                );
-                gameObject.transform.rotation = (float) Math.toDegrees(rawBody.getAngle());
+                gameObject.setPosition(rawBody.getPosition().x, rawBody.getPosition().y);
+                gameObject.setRotation((float) Math.toDegrees(rawBody.getAngle()));
                 Vec2 vel = rawBody.getLinearVelocity();
                 this.velocity.set(vel.x, vel.y);
 
             // In this body type, the game object can't be moved
             } else if (this.bodyType == BodyTypes.STATIC) {
                 this.rawBody.setTransform(new Vec2(
-                        this.gameObject.transform.position.x, this.gameObject.transform.position.y),
-                        this.gameObject.transform.rotation);
+                        this.gameObject.getPosition().x, this.gameObject.getPosition().y),
+                        this.gameObject.getRotation());
             }
         }
     }
 
     public void setPosition(Vector2f position) {
         if (rawBody != null) {
-            rawBody.setTransform(new Vec2(position.x, position.y), this.gameObject.transform.rotation);
+            rawBody.setTransform(new Vec2(position.x, position.y), this.gameObject.getRotation());
         }
     }
 

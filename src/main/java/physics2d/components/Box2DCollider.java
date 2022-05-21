@@ -20,8 +20,8 @@ public class Box2DCollider extends Collider2d {
         GameObject activeGameObject = SiriusTheFox.getImGuiLayer().getPropertiesWindow().getActiveGameObject();
         if (activeGameObject == null || activeGameObject != gameObject) return;
 
-        Vector2f center = new Vector2f(gameObject.transform.position).add(getOffset());
-        DebugDraw.addBox2D(center, this.halfSize, this.gameObject.transform.rotation, Color.DARK_GREEN);
+        Vector2f center = new Vector2f(gameObject.getPosition()).add(getOffset());
+        DebugDraw.addBox2D(center, this.halfSize, this.gameObject.getRotation(), Color.DARK_GREEN);
     }
 
     /**

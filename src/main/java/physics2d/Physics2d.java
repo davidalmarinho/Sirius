@@ -60,7 +60,7 @@ public class Physics2d {
     public void add(GameObject gameObject) {
         RigidBody2d rigidBody2d = gameObject.getComponent(RigidBody2d.class);
         if (rigidBody2d != null && rigidBody2d.getRawBody() == null) {
-            Transform transform = gameObject.transform;
+            Transform transform = gameObject.getTransform();
 
             // Tell how to create the body
             BodyDef bodyDef = new BodyDef();
@@ -256,7 +256,7 @@ public class Physics2d {
     }
 
     public static boolean isOnGround(GameObject gameObject, float innerObjWidth, float height, boolean showRaycast) {
-        Vector2f raycastBegin = new Vector2f(gameObject.transform.position);
+        Vector2f raycastBegin = new Vector2f(gameObject.getPosition());
         // float innerPlayerWidth = this.playerWith * 0.6f;
 
         // Get object's left foot

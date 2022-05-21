@@ -6,16 +6,20 @@ import imgui.ImGui;
 import imgui.type.ImBoolean;
 import imgui.type.ImString;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 public class StateMachine extends Component {
-    public HashMap<StateTrigger, String> stateTransfers = new HashMap<>();
-    private List<AnimationState> animationStateList = new ArrayList<>();
-    private transient AnimationState currentState = null;
-    private String defaultStateTitle = "";
+    public HashMap<StateTrigger, String> stateTransfers;
+    private List<AnimationState> animationStateList;
+    private transient AnimationState currentState;
+    private String defaultStateTitle;
+
+    public StateMachine() {
+        this.stateTransfers     = new HashMap<>();
+        this.animationStateList = new ArrayList<>();
+        this.currentState       = null;
+        this.defaultStateTitle  = "";
+    }
 
     public void refreshTextures() {
         for (AnimationState animationState : animationStateList) {

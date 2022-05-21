@@ -138,12 +138,14 @@ public class RenderBatch implements Comparable<RenderBatch> {
             }
         }
 
-        boolean isRotated = sprite.gameObject.transform.rotation != 0.0f;
+        boolean isRotated = sprite.gameObject.getTransform().rotation != 0.0f;
         Matrix4f transformMatrix = new Matrix4f().identity();
         if (isRotated) {
-            transformMatrix.translate(sprite.gameObject.transform.position.x, sprite.gameObject.transform.position.y, 0.0f);
-            transformMatrix.rotate((float) Math.toRadians(sprite.gameObject.transform.rotation), 0, 0, 1);
-            transformMatrix.scale(sprite.gameObject.transform.scale.x, sprite.gameObject.transform.scale.y, 1);
+            transformMatrix.translate(sprite.gameObject.getTransform().position.x,
+                    sprite.gameObject.getTransform().position.y, 0.0f);
+            transformMatrix.rotate((float) Math.toRadians(sprite.gameObject.getTransform().rotation), 0, 0, 1);
+            transformMatrix.scale(sprite.gameObject.getTransform().scale.x,
+                    sprite.gameObject.getTransform().scale.y, 1);
         }
 
         // Add the 4 vertices with its properties
@@ -168,8 +170,8 @@ public class RenderBatch implements Comparable<RenderBatch> {
             }
 
             Vector4f currentPos = new Vector4f(
-                    sprite.gameObject.transform.position.x + (xAdd * sprite.gameObject.transform.scale.x),
-                    sprite.gameObject.transform.position.y + (yAdd * sprite.gameObject.transform.scale.y),
+                    sprite.gameObject.getTransform().position.x + (xAdd * sprite.gameObject.getTransform().scale.x),
+                    sprite.gameObject.getTransform().position.y + (yAdd * sprite.gameObject.getTransform().scale.y),
                     0, 1);
 
             if (isRotated) {
@@ -216,7 +218,7 @@ public class RenderBatch implements Comparable<RenderBatch> {
             }
 
             // TODO: 27/02/2022 Get better solution
-            if (sprite.gameObject.transform.zIndex != this.zIndex) {
+            if (sprite.gameObject.getTransform().zIndex != this.zIndex) {
                 destroyIfExists(sprite.gameObject);
                 renderer.add(sprite.gameObject);
                 i--;

@@ -7,6 +7,7 @@ import gameobjects.components.ComponentDeserializer;
 import gameobjects.components.SpriteRenderer;
 import gameobjects.components.Transform;
 import imgui.ImGui;
+import org.joml.Vector2f;
 import sirius.utils.AssetPool;
 
 import java.util.ArrayList;
@@ -20,7 +21,6 @@ public class GameObject {
 
     public String name;
     public List<Component> componentList;
-    public transient Transform transform;
     private boolean dead;
     private boolean doSerialization = true;
 
@@ -109,7 +109,6 @@ public class GameObject {
     }
 
     public GameObject copy() {
-        // TODO: 27/02/2022 Make this better please
         Gson gson = new GsonBuilder()
                 .setPrettyPrinting()
                 .registerTypeAdapter(Component.class, new ComponentDeserializer())
@@ -183,6 +182,62 @@ public class GameObject {
         }
 
         return numberOfEqualComponents == componentList.size();
+    }
+
+    public void transform(float x, float y) {
+        this.getTransform().position.x += x;
+        this.getTransform().position.y += y;
+    }
+
+    public void scale(float x, float y) {
+        this.getTransform().scale.x += x;
+        this.getTransform().scale.y += y;
+    }
+
+    public void rotate(float angleDegrees) {
+        this.getTransform().rotation += angleDegrees;
+    }
+
+    public void zIndex(int zIndexIncrement) {
+        this.getTransform().zIndex += zIndexIncrement;
+    }
+
+    public Vector2f getPosition() {
+        return this.getTransform().position;
+    }
+
+    public void setPosition(float x, float y) {
+        this.getTransform().position.x = x;
+        this.getTransform().position.y = y;
+    }
+
+    public void setPosition(Vector2f position) {
+        setPosition(position.x, position.y);
+    }
+
+    public Vector2f getScale() {
+        return this.getTransform().scale;
+    }
+
+    public void setScale(float x, float y) {
+        this.getTransform().scale.x = x;
+        this.getTransform().scale.y = y;
+    }
+
+    public float getRotation() {
+        return this.getTransform().rotation;
+    }
+
+    public void setRotation(float angleDegrees) {
+        this.getTransform().rotation = angleDegrees;
+    }
+
+    public void setZIndex(int zIndex) {
+        this.getTransform().zIndex = zIndex;
+    }
+
+    public Transform getTransform() {
+        return this.getComponent(Transform.class);
     }
 
     public void generateUid() {

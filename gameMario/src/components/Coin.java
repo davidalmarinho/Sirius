@@ -13,15 +13,15 @@ public class Coin extends Component {
 
     @Override
     public void start() {
-        topY = new Vector2f(this.gameObject.transform.position.y).add(0, 0.5f);
+        topY = new Vector2f(this.gameObject.getTransform().position.y).add(0, 0.5f);
     }
 
     @Override
     public void update(float dt) {
         if (playAnim) {
-            if (this.gameObject.transform.position.y < topY.y) {
-                this.gameObject.transform.position.y += dt * coinSpeed;
-                this.gameObject.transform.scale.x -= (0.5f * dt) % -1.0f;
+            if (this.gameObject.getPosition().y < topY.y) {
+                this.gameObject.transform(0, dt * coinSpeed);
+                this.gameObject.scale(-(0.5f * dt) % -1.0f, 0);
             } else {
                 gameObject.destroy();
             }

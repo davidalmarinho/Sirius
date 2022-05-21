@@ -80,6 +80,12 @@ public class Scene {
 
         this.camera.adjustProjection();
 
+        if (KeyListener.isKeyDown(GLFW_KEY_T)) {
+            for (GameObject go : gameObjectList) {
+                System.out.println("ID: " + go.getUid());
+            }
+        }
+
         for (int i = 0; i < gameObjectList.size(); i++) {
             GameObject go = gameObjectList.get(i);
             go.editorUpdate(dt);
@@ -209,7 +215,6 @@ public class Scene {
     public GameObject createGameObject(String name) {
         GameObject go = new GameObject(name);
         go.addComponent(new Transform());
-        go.transform = go.getComponent(Transform.class);
         return go;
     }
 

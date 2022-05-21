@@ -14,10 +14,10 @@ class TranslateGizmo extends Gizmo {
         if (activeGameObject != null) {
             // Dragging x axis gizmo
             if (xAxisActive && !yAxisActive)
-                activeGameObject.transform.position.x -= MouseListener.getGameViewportDeltaX();
+                activeGameObject.transform(-MouseListener.getGameViewportDeltaX(), 0);
             // Dragging y axis gizmo
             else if (yAxisActive)
-                activeGameObject.transform.position.y -= MouseListener.getGameViewportDeltaY();
+                activeGameObject.transform(0, -MouseListener.getGameViewportDeltaY());
         }
         super.editorUpdate(dt);
     }

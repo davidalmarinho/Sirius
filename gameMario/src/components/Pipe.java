@@ -104,13 +104,13 @@ public class Pipe extends Component {
         Pipe pipeComponent = pipe.getComponent(Pipe.class);
         switch (pipeComponent.direction) {
             case UP:
-                return new Vector2f(pipe.transform.position).add(0.0f, 0.5f);
+                return new Vector2f(pipe.getTransform().position).add(0.0f, 0.5f);
             case LEFT:
-                return new Vector2f(pipe.transform.position).add(-0.5f, 0.0f);
+                return new Vector2f(pipe.getTransform().position).add(-0.5f, 0.0f);
             case DOWN:
-                return new Vector2f(pipe.transform.position).add(0.0f, -0.5f);
+                return new Vector2f(pipe.getTransform().position).add(0.0f, -0.5f);
             case RIGHT:
-                return new Vector2f(pipe.transform.position).add(0.5f, 0.0f);
+                return new Vector2f(pipe.getTransform().position).add(0.5f, 0.0f);
         }
 
         return new Vector2f();
