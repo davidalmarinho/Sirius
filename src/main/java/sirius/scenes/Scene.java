@@ -229,9 +229,6 @@ public class Scene {
         File[] listOfLevels = folder.listFiles();
         assert listOfLevels != null;
 
-        // Sort level's list according its size --secondarily the names are also alphabetical ordered
-        Arrays.sort(listOfLevels, Comparator.comparingInt(o -> o.getName().length()));
-
         // Array to store what levels were loaded
         int[] loadedLevels = new int[listOfLevels.length];
 
@@ -247,11 +244,25 @@ public class Scene {
             String[] navigator = listOfLevels[i].getName().split("level");
             String[] navigator1 = navigator[1].split(".json");
             int curLvl = Integer.parseInt(navigator1[0]);
-            AssetPool.addLevel(new Level(listOfLevels[i].getName(), listOfLevels[i].getPath(), curLvl));
             loadedLevels[i] = curLvl;
         }
 
         Arrays.sort(loadedLevels);
+
+        for (int i = 0; i < loadedLevels.length; i++) {
+            int curLvl = loadedLevels[i];
+            for (int j = 0; j < listOfLevels.length; j++) {
+                String lvlName = listOfLevels[j].getName();
+                String[] navigator = lvlName.split("level");
+                String[] navigator1 = navigator[1].split(".json");
+                int levelFile = Integer.parseInt(navigator1[0]);
+
+                if (curLvl == levelFile) {
+                    AssetPool.addLevel(new Level(lvlName, listOfLevels[j].getPath(), curLvl));
+                    break;
+                }
+            }
+        }
 
         // Throw a warning if there are missing levels
         int expectedLevel = 1;
