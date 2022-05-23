@@ -1,0 +1,3827 @@
+[
+  {
+    "uid": 997,
+    "name": "Sprite_Object_Gen",
+    "componentList": [
+      {
+        "type": "gameobjects.components.Transform",
+        "properties": {
+          "position": {
+            "x": 0.125,
+            "y": 0.375
+          },
+          "scale": {
+            "x": 0.25,
+            "y": 0.25
+          },
+          "rotation": 0.0,
+          "zIndex": 0
+        }
+      },
+      {
+        "type": "gameobjects.components.SpriteRenderer",
+        "properties": {
+          "color": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0,
+            "w": 1.0
+          },
+          "sprite": {
+            "width": 16,
+            "height": 16,
+            "texture": {
+              "filePath": "assets/images/spritesheets/decorationsAndBlocks.png",
+              "width": 112,
+              "height": 192
+            },
+            "textureCoordinates": [
+              {
+                "x": 0.14285715,
+                "y": 1.0
+              },
+              {
+                "x": 0.14285715,
+                "y": 0.9166667
+              },
+              {
+                "x": 0.0,
+                "y": 0.9166667
+              },
+              {
+                "x": 0.0,
+                "y": 1.0
+              }
+            ]
+          }
+        }
+      }
+    ],
+    "dead": false,
+    "doSerialization": true
+  },
+  {
+    "uid": 998,
+    "name": "Sprite_Object_Gen",
+    "componentList": [
+      {
+        "type": "gameobjects.components.Transform",
+        "properties": {
+          "position": {
+            "x": 0.125,
+            "y": 0.125
+          },
+          "scale": {
+            "x": 0.25,
+            "y": 0.25
+          },
+          "rotation": 0.0,
+          "zIndex": 0
+        }
+      },
+      {
+        "type": "gameobjects.components.SpriteRenderer",
+        "properties": {
+          "color": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0,
+            "w": 1.0
+          },
+          "sprite": {
+            "width": 16,
+            "height": 16,
+            "texture": {
+              "filePath": "assets/images/spritesheets/decorationsAndBlocks.png",
+              "width": 112,
+              "height": 192
+            },
+            "textureCoordinates": [
+              {
+                "x": 0.14285715,
+                "y": 1.0
+              },
+              {
+                "x": 0.14285715,
+                "y": 0.9166667
+              },
+              {
+                "x": 0.0,
+                "y": 0.9166667
+              },
+              {
+                "x": 0.0,
+                "y": 1.0
+              }
+            ]
+          }
+        }
+      }
+    ],
+    "dead": false,
+    "doSerialization": true
+  },
+  {
+    "uid": 999,
+    "name": "Sprite_Object_Gen",
+    "componentList": [
+      {
+        "type": "gameobjects.components.Transform",
+        "properties": {
+          "position": {
+            "x": 0.375,
+            "y": 0.125
+          },
+          "scale": {
+            "x": 0.25,
+            "y": 0.25
+          },
+          "rotation": 0.0,
+          "zIndex": 0
+        }
+      },
+      {
+        "type": "gameobjects.components.SpriteRenderer",
+        "properties": {
+          "color": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0,
+            "w": 1.0
+          },
+          "sprite": {
+            "width": 16,
+            "height": 16,
+            "texture": {
+              "filePath": "assets/images/spritesheets/decorationsAndBlocks.png",
+              "width": 112,
+              "height": 192
+            },
+            "textureCoordinates": [
+              {
+                "x": 0.14285715,
+                "y": 1.0
+              },
+              {
+                "x": 0.14285715,
+                "y": 0.9166667
+              },
+              {
+                "x": 0.0,
+                "y": 0.9166667
+              },
+              {
+                "x": 0.0,
+                "y": 1.0
+              }
+            ]
+          }
+        }
+      }
+    ],
+    "dead": false,
+    "doSerialization": true
+  },
+  {
+    "uid": 1000,
+    "name": "Sprite_Object_Gen",
+    "componentList": [
+      {
+        "type": "gameobjects.components.Transform",
+        "properties": {
+          "position": {
+            "x": 0.375,
+            "y": 0.375
+          },
+          "scale": {
+            "x": 0.25,
+            "y": 0.25
+          },
+          "rotation": 0.0,
+          "zIndex": 0
+        }
+      },
+      {
+        "type": "gameobjects.components.SpriteRenderer",
+        "properties": {
+          "color": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0,
+            "w": 1.0
+          },
+          "sprite": {
+            "width": 16,
+            "height": 16,
+            "texture": {
+              "filePath": "assets/images/spritesheets/decorationsAndBlocks.png",
+              "width": 112,
+              "height": 192
+            },
+            "textureCoordinates": [
+              {
+                "x": 0.14285715,
+                "y": 1.0
+              },
+              {
+                "x": 0.14285715,
+                "y": 0.9166667
+              },
+              {
+                "x": 0.0,
+                "y": 0.9166667
+              },
+              {
+                "x": 0.0,
+                "y": 1.0
+              }
+            ]
+          }
+        }
+      }
+    ],
+    "dead": false,
+    "doSerialization": true
+  },
+  {
+    "uid": 1001,
+    "name": "Sprite_Object_Gen",
+    "componentList": [
+      {
+        "type": "gameobjects.components.Transform",
+        "properties": {
+          "position": {
+            "x": 0.625,
+            "y": 0.375
+          },
+          "scale": {
+            "x": 0.25,
+            "y": 0.25
+          },
+          "rotation": 0.0,
+          "zIndex": 0
+        }
+      },
+      {
+        "type": "gameobjects.components.SpriteRenderer",
+        "properties": {
+          "color": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0,
+            "w": 1.0
+          },
+          "sprite": {
+            "width": 16,
+            "height": 16,
+            "texture": {
+              "filePath": "assets/images/spritesheets/decorationsAndBlocks.png",
+              "width": 112,
+              "height": 192
+            },
+            "textureCoordinates": [
+              {
+                "x": 0.14285715,
+                "y": 1.0
+              },
+              {
+                "x": 0.14285715,
+                "y": 0.9166667
+              },
+              {
+                "x": 0.0,
+                "y": 0.9166667
+              },
+              {
+                "x": 0.0,
+                "y": 1.0
+              }
+            ]
+          }
+        }
+      }
+    ],
+    "dead": false,
+    "doSerialization": true
+  },
+  {
+    "uid": 1002,
+    "name": "Sprite_Object_Gen",
+    "componentList": [
+      {
+        "type": "gameobjects.components.Transform",
+        "properties": {
+          "position": {
+            "x": 0.625,
+            "y": 0.125
+          },
+          "scale": {
+            "x": 0.25,
+            "y": 0.25
+          },
+          "rotation": 0.0,
+          "zIndex": 0
+        }
+      },
+      {
+        "type": "gameobjects.components.SpriteRenderer",
+        "properties": {
+          "color": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0,
+            "w": 1.0
+          },
+          "sprite": {
+            "width": 16,
+            "height": 16,
+            "texture": {
+              "filePath": "assets/images/spritesheets/decorationsAndBlocks.png",
+              "width": 112,
+              "height": 192
+            },
+            "textureCoordinates": [
+              {
+                "x": 0.14285715,
+                "y": 1.0
+              },
+              {
+                "x": 0.14285715,
+                "y": 0.9166667
+              },
+              {
+                "x": 0.0,
+                "y": 0.9166667
+              },
+              {
+                "x": 0.0,
+                "y": 1.0
+              }
+            ]
+          }
+        }
+      }
+    ],
+    "dead": false,
+    "doSerialization": true
+  },
+  {
+    "uid": 1003,
+    "name": "Sprite_Object_Gen",
+    "componentList": [
+      {
+        "type": "gameobjects.components.Transform",
+        "properties": {
+          "position": {
+            "x": 0.875,
+            "y": 0.125
+          },
+          "scale": {
+            "x": 0.25,
+            "y": 0.25
+          },
+          "rotation": 0.0,
+          "zIndex": 0
+        }
+      },
+      {
+        "type": "gameobjects.components.SpriteRenderer",
+        "properties": {
+          "color": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0,
+            "w": 1.0
+          },
+          "sprite": {
+            "width": 16,
+            "height": 16,
+            "texture": {
+              "filePath": "assets/images/spritesheets/decorationsAndBlocks.png",
+              "width": 112,
+              "height": 192
+            },
+            "textureCoordinates": [
+              {
+                "x": 0.14285715,
+                "y": 1.0
+              },
+              {
+                "x": 0.14285715,
+                "y": 0.9166667
+              },
+              {
+                "x": 0.0,
+                "y": 0.9166667
+              },
+              {
+                "x": 0.0,
+                "y": 1.0
+              }
+            ]
+          }
+        }
+      }
+    ],
+    "dead": false,
+    "doSerialization": true
+  },
+  {
+    "uid": 1004,
+    "name": "Sprite_Object_Gen",
+    "componentList": [
+      {
+        "type": "gameobjects.components.Transform",
+        "properties": {
+          "position": {
+            "x": 0.875,
+            "y": 0.375
+          },
+          "scale": {
+            "x": 0.25,
+            "y": 0.25
+          },
+          "rotation": 0.0,
+          "zIndex": 0
+        }
+      },
+      {
+        "type": "gameobjects.components.SpriteRenderer",
+        "properties": {
+          "color": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0,
+            "w": 1.0
+          },
+          "sprite": {
+            "width": 16,
+            "height": 16,
+            "texture": {
+              "filePath": "assets/images/spritesheets/decorationsAndBlocks.png",
+              "width": 112,
+              "height": 192
+            },
+            "textureCoordinates": [
+              {
+                "x": 0.14285715,
+                "y": 1.0
+              },
+              {
+                "x": 0.14285715,
+                "y": 0.9166667
+              },
+              {
+                "x": 0.0,
+                "y": 0.9166667
+              },
+              {
+                "x": 0.0,
+                "y": 1.0
+              }
+            ]
+          }
+        }
+      }
+    ],
+    "dead": false,
+    "doSerialization": true
+  },
+  {
+    "uid": 1005,
+    "name": "Sprite_Object_Gen",
+    "componentList": [
+      {
+        "type": "gameobjects.components.Transform",
+        "properties": {
+          "position": {
+            "x": 0.375,
+            "y": 0.875
+          },
+          "scale": {
+            "x": 0.25,
+            "y": 0.25
+          },
+          "rotation": 0.0,
+          "zIndex": 0
+        }
+      },
+      {
+        "type": "gameobjects.components.SpriteRenderer",
+        "properties": {
+          "color": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0,
+            "w": 1.0
+          },
+          "sprite": {
+            "width": 16,
+            "height": 16,
+            "texture": {
+              "filePath": "assets/images/spritesheets/spritesheet.png",
+              "width": 224,
+              "height": 32
+            },
+            "textureCoordinates": [
+              {
+                "x": 0.071428575,
+                "y": 1.0
+              },
+              {
+                "x": 0.071428575,
+                "y": 0.5
+              },
+              {
+                "x": 0.0,
+                "y": 0.5
+              },
+              {
+                "x": 0.0,
+                "y": 1.0
+              }
+            ]
+          }
+        }
+      },
+      {
+        "type": "sirius.animations.StateMachine",
+        "properties": {
+          "stateTransfers": [
+            [
+              {
+                "state": "Big Switch Direction",
+                "trigger": "powerup"
+              },
+              "Fire Switch Direction"
+            ],
+            [
+              {
+                "state": "BigRun",
+                "trigger": "damage"
+              },
+              "Run"
+            ],
+            [
+              {
+                "state": "FireJump",
+                "trigger": "damage"
+              },
+              "BigJump"
+            ],
+            [
+              {
+                "state": "BigRun",
+                "trigger": "die"
+              },
+              "Run"
+            ],
+            [
+              {
+                "state": "FireRun",
+                "trigger": "switchDirection"
+              },
+              "Fire Switch Direction"
+            ],
+            [
+              {
+                "state": "FireRun",
+                "trigger": "jump"
+              },
+              "FireJump"
+            ],
+            [
+              {
+                "state": "BigJump",
+                "trigger": "powerup"
+              },
+              "FireJump"
+            ],
+            [
+              {
+                "state": "FireJump",
+                "trigger": "stopJumping"
+              },
+              "FireIdle"
+            ],
+            [
+              {
+                "state": "FireJump",
+                "trigger": "die"
+              },
+              "BigJump"
+            ],
+            [
+              {
+                "state": "BigIdle",
+                "trigger": "die"
+              },
+              "Idle"
+            ],
+            [
+              {
+                "state": "BigRun",
+                "trigger": "stopRunning"
+              },
+              "BigIdle"
+            ],
+            [
+              {
+                "state": "Fire Switch Direction",
+                "trigger": "jump"
+              },
+              "FireJump"
+            ],
+            [
+              {
+                "state": "Switch Direction",
+                "trigger": "stopRunning"
+              },
+              "Idle"
+            ],
+            [
+              {
+                "state": "BigJump",
+                "trigger": "damage"
+              },
+              "Jump"
+            ],
+            [
+              {
+                "state": "Idle",
+                "trigger": "powerup"
+              },
+              "BigIdle"
+            ],
+            [
+              {
+                "state": "Run",
+                "trigger": "die"
+              },
+              "Die"
+            ],
+            [
+              {
+                "state": "FireIdle",
+                "trigger": "damage"
+              },
+              "BigIdle"
+            ],
+            [
+              {
+                "state": "Big Switch Direction",
+                "trigger": "damage"
+              },
+              "Switch Direction"
+            ],
+            [
+              {
+                "state": "BigJump",
+                "trigger": "stopJumping"
+              },
+              "BigIdle"
+            ],
+            [
+              {
+                "state": "Big Switch Direction",
+                "trigger": "die"
+              },
+              "Switch Direction"
+            ],
+            [
+              {
+                "state": "BigRun",
+                "trigger": "powerup"
+              },
+              "FireRun"
+            ],
+            [
+              {
+                "state": "Run",
+                "trigger": "jump"
+              },
+              "Jump"
+            ],
+            [
+              {
+                "state": "Fire Switch Direction",
+                "trigger": "damage"
+              },
+              "Big Switch Direction"
+            ],
+            [
+              {
+                "state": "BigIdle",
+                "trigger": "powerup"
+              },
+              "FireIdle"
+            ],
+            [
+              {
+                "state": "Big Switch Direction",
+                "trigger": "jump"
+              },
+              "BigJump"
+            ],
+            [
+              {
+                "state": "Jump",
+                "trigger": "stopJumping"
+              },
+              "Idle"
+            ],
+            [
+              {
+                "state": "Big Switch Direction",
+                "trigger": "startRunning"
+              },
+              "BigRun"
+            ],
+            [
+              {
+                "state": "FireRun",
+                "trigger": "damage"
+              },
+              "BigRun"
+            ],
+            [
+              {
+                "state": "BigRun",
+                "trigger": "switchDirection"
+              },
+              "Big Switch Direction"
+            ],
+            [
+              {
+                "state": "FireRun",
+                "trigger": "stopRunning"
+              },
+              "FireIdle"
+            ],
+            [
+              {
+                "state": "BigIdle",
+                "trigger": "jump"
+              },
+              "BigJump"
+            ],
+            [
+              {
+                "state": "Run",
+                "trigger": "switchDirection"
+              },
+              "Switch Direction"
+            ],
+            [
+              {
+                "state": "FireRun",
+                "trigger": "die"
+              },
+              "BigRun"
+            ],
+            [
+              {
+                "state": "Fire Switch Direction",
+                "trigger": "die"
+              },
+              "Big Switch Direction"
+            ],
+            [
+              {
+                "state": "FireIdle",
+                "trigger": "jump"
+              },
+              "FireJump"
+            ],
+            [
+              {
+                "state": "Switch Direction",
+                "trigger": "powerup"
+              },
+              "Big Switch Direction"
+            ],
+            [
+              {
+                "state": "Jump",
+                "trigger": "die"
+              },
+              "Die"
+            ],
+            [
+              {
+                "state": "Big Switch Direction",
+                "trigger": "stopRunning"
+              },
+              "BigIdle"
+            ],
+            [
+              {
+                "state": "Fire Switch Direction",
+                "trigger": "startRunning"
+              },
+              "FireRun"
+            ],
+            [
+              {
+                "state": "FireIdle",
+                "trigger": "die"
+              },
+              "BigIdle"
+            ],
+            [
+              {
+                "state": "Run",
+                "trigger": "powerup"
+              },
+              "BigRun"
+            ],
+            [
+              {
+                "state": "Idle",
+                "trigger": "die"
+              },
+              "Die"
+            ],
+            [
+              {
+                "state": "BigIdle",
+                "trigger": "startRunning"
+              },
+              "BigRun"
+            ],
+            [
+              {
+                "state": "Idle",
+                "trigger": "jump"
+              },
+              "Jump"
+            ],
+            [
+              {
+                "state": "Run",
+                "trigger": "stopRunning"
+              },
+              "Idle"
+            ],
+            [
+              {
+                "state": "BigJump",
+                "trigger": "die"
+              },
+              "Jump"
+            ],
+            [
+              {
+                "state": "FireIdle",
+                "trigger": "startRunning"
+              },
+              "FireRun"
+            ],
+            [
+              {
+                "state": "Switch Direction",
+                "trigger": "jump"
+              },
+              "Jump"
+            ],
+            [
+              {
+                "state": "Idle",
+                "trigger": "startRunning"
+              },
+              "Run"
+            ],
+            [
+              {
+                "state": "Switch Direction",
+                "trigger": "startRunning"
+              },
+              "Run"
+            ],
+            [
+              {
+                "state": "BigRun",
+                "trigger": "jump"
+              },
+              "BigJump"
+            ],
+            [
+              {
+                "state": "Switch Direction",
+                "trigger": "die"
+              },
+              "Die"
+            ],
+            [
+              {
+                "state": "Fire Switch Direction",
+                "trigger": "stopRunning"
+              },
+              "FireIdle"
+            ],
+            [
+              {
+                "state": "Jump",
+                "trigger": "powerup"
+              },
+              "BigJump"
+            ],
+            [
+              {
+                "state": "BigIdle",
+                "trigger": "damage"
+              },
+              "Idle"
+            ]
+          ],
+          "animationStateList": [
+            {
+              "title": "Run",
+              "animationFrameList": [
+                {
+                  "sprite": {
+                    "width": 16,
+                    "height": 16,
+                    "texture": {
+                      "filePath": "assets/images/spritesheets/spritesheet.png",
+                      "width": 224,
+                      "height": 32
+                    },
+                    "textureCoordinates": [
+                      {
+                        "x": 0.071428575,
+                        "y": 1.0
+                      },
+                      {
+                        "x": 0.071428575,
+                        "y": 0.5
+                      },
+                      {
+                        "x": 0.0,
+                        "y": 0.5
+                      },
+                      {
+                        "x": 0.0,
+                        "y": 1.0
+                      }
+                    ]
+                  },
+                  "frameTime": 0.2
+                },
+                {
+                  "sprite": {
+                    "width": 16,
+                    "height": 16,
+                    "texture": {
+                      "filePath": "assets/images/spritesheets/spritesheet.png",
+                      "width": 224,
+                      "height": 32
+                    },
+                    "textureCoordinates": [
+                      {
+                        "x": 0.21428572,
+                        "y": 1.0
+                      },
+                      {
+                        "x": 0.21428572,
+                        "y": 0.5
+                      },
+                      {
+                        "x": 0.14285715,
+                        "y": 0.5
+                      },
+                      {
+                        "x": 0.14285715,
+                        "y": 1.0
+                      }
+                    ]
+                  },
+                  "frameTime": 0.2
+                },
+                {
+                  "sprite": {
+                    "width": 16,
+                    "height": 16,
+                    "texture": {
+                      "filePath": "assets/images/spritesheets/spritesheet.png",
+                      "width": 224,
+                      "height": 32
+                    },
+                    "textureCoordinates": [
+                      {
+                        "x": 0.2857143,
+                        "y": 1.0
+                      },
+                      {
+                        "x": 0.2857143,
+                        "y": 0.5
+                      },
+                      {
+                        "x": 0.21428572,
+                        "y": 0.5
+                      },
+                      {
+                        "x": 0.21428572,
+                        "y": 1.0
+                      }
+                    ]
+                  },
+                  "frameTime": 0.2
+                },
+                {
+                  "sprite": {
+                    "width": 16,
+                    "height": 16,
+                    "texture": {
+                      "filePath": "assets/images/spritesheets/spritesheet.png",
+                      "width": 224,
+                      "height": 32
+                    },
+                    "textureCoordinates": [
+                      {
+                        "x": 0.21428572,
+                        "y": 1.0
+                      },
+                      {
+                        "x": 0.21428572,
+                        "y": 0.5
+                      },
+                      {
+                        "x": 0.14285715,
+                        "y": 0.5
+                      },
+                      {
+                        "x": 0.14285715,
+                        "y": 1.0
+                      }
+                    ]
+                  },
+                  "frameTime": 0.2
+                }
+              ],
+              "doesLoop": true
+            },
+            {
+              "title": "Idle",
+              "animationFrameList": [
+                {
+                  "sprite": {
+                    "width": 16,
+                    "height": 16,
+                    "texture": {
+                      "filePath": "assets/images/spritesheets/spritesheet.png",
+                      "width": 224,
+                      "height": 32
+                    },
+                    "textureCoordinates": [
+                      {
+                        "x": 0.071428575,
+                        "y": 1.0
+                      },
+                      {
+                        "x": 0.071428575,
+                        "y": 0.5
+                      },
+                      {
+                        "x": 0.0,
+                        "y": 0.5
+                      },
+                      {
+                        "x": 0.0,
+                        "y": 1.0
+                      }
+                    ]
+                  },
+                  "frameTime": 0.1
+                }
+              ],
+              "doesLoop": false
+            },
+            {
+              "title": "Switch Direction",
+              "animationFrameList": [
+                {
+                  "sprite": {
+                    "width": 16,
+                    "height": 16,
+                    "texture": {
+                      "filePath": "assets/images/spritesheets/spritesheet.png",
+                      "width": 224,
+                      "height": 32
+                    },
+                    "textureCoordinates": [
+                      {
+                        "x": 0.35714287,
+                        "y": 1.0
+                      },
+                      {
+                        "x": 0.35714287,
+                        "y": 0.5
+                      },
+                      {
+                        "x": 0.2857143,
+                        "y": 0.5
+                      },
+                      {
+                        "x": 0.2857143,
+                        "y": 1.0
+                      }
+                    ]
+                  },
+                  "frameTime": 0.1
+                }
+              ],
+              "doesLoop": false
+            },
+            {
+              "title": "Jump",
+              "animationFrameList": [
+                {
+                  "sprite": {
+                    "width": 16,
+                    "height": 16,
+                    "texture": {
+                      "filePath": "assets/images/spritesheets/spritesheet.png",
+                      "width": 224,
+                      "height": 32
+                    },
+                    "textureCoordinates": [
+                      {
+                        "x": 0.42857143,
+                        "y": 1.0
+                      },
+                      {
+                        "x": 0.42857143,
+                        "y": 0.5
+                      },
+                      {
+                        "x": 0.35714287,
+                        "y": 0.5
+                      },
+                      {
+                        "x": 0.35714287,
+                        "y": 1.0
+                      }
+                    ]
+                  },
+                  "frameTime": 0.1
+                }
+              ],
+              "doesLoop": false
+            },
+            {
+              "title": "Die",
+              "animationFrameList": [
+                {
+                  "sprite": {
+                    "width": 16,
+                    "height": 16,
+                    "texture": {
+                      "filePath": "assets/images/spritesheets/spritesheet.png",
+                      "width": 224,
+                      "height": 32
+                    },
+                    "textureCoordinates": [
+                      {
+                        "x": 0.5,
+                        "y": 1.0
+                      },
+                      {
+                        "x": 0.5,
+                        "y": 0.5
+                      },
+                      {
+                        "x": 0.42857143,
+                        "y": 0.5
+                      },
+                      {
+                        "x": 0.42857143,
+                        "y": 1.0
+                      }
+                    ]
+                  },
+                  "frameTime": 0.1
+                }
+              ],
+              "doesLoop": false
+            },
+            {
+              "title": "BigRun",
+              "animationFrameList": [
+                {
+                  "sprite": {
+                    "width": 16,
+                    "height": 32,
+                    "texture": {
+                      "filePath": "assets/images/spritesheets/bigSpritesheet.png",
+                      "width": 336,
+                      "height": 64
+                    },
+                    "textureCoordinates": [
+                      {
+                        "x": 0.04761905,
+                        "y": 1.0
+                      },
+                      {
+                        "x": 0.04761905,
+                        "y": 0.5
+                      },
+                      {
+                        "x": 0.0,
+                        "y": 0.5
+                      },
+                      {
+                        "x": 0.0,
+                        "y": 1.0
+                      }
+                    ]
+                  },
+                  "frameTime": 0.2
+                },
+                {
+                  "sprite": {
+                    "width": 16,
+                    "height": 32,
+                    "texture": {
+                      "filePath": "assets/images/spritesheets/bigSpritesheet.png",
+                      "width": 336,
+                      "height": 64
+                    },
+                    "textureCoordinates": [
+                      {
+                        "x": 0.0952381,
+                        "y": 1.0
+                      },
+                      {
+                        "x": 0.0952381,
+                        "y": 0.5
+                      },
+                      {
+                        "x": 0.04761905,
+                        "y": 0.5
+                      },
+                      {
+                        "x": 0.04761905,
+                        "y": 1.0
+                      }
+                    ]
+                  },
+                  "frameTime": 0.2
+                },
+                {
+                  "sprite": {
+                    "width": 16,
+                    "height": 32,
+                    "texture": {
+                      "filePath": "assets/images/spritesheets/bigSpritesheet.png",
+                      "width": 336,
+                      "height": 64
+                    },
+                    "textureCoordinates": [
+                      {
+                        "x": 0.14285715,
+                        "y": 1.0
+                      },
+                      {
+                        "x": 0.14285715,
+                        "y": 0.5
+                      },
+                      {
+                        "x": 0.0952381,
+                        "y": 0.5
+                      },
+                      {
+                        "x": 0.0952381,
+                        "y": 1.0
+                      }
+                    ]
+                  },
+                  "frameTime": 0.2
+                },
+                {
+                  "sprite": {
+                    "width": 16,
+                    "height": 32,
+                    "texture": {
+                      "filePath": "assets/images/spritesheets/bigSpritesheet.png",
+                      "width": 336,
+                      "height": 64
+                    },
+                    "textureCoordinates": [
+                      {
+                        "x": 0.1904762,
+                        "y": 1.0
+                      },
+                      {
+                        "x": 0.1904762,
+                        "y": 0.5
+                      },
+                      {
+                        "x": 0.14285715,
+                        "y": 0.5
+                      },
+                      {
+                        "x": 0.14285715,
+                        "y": 1.0
+                      }
+                    ]
+                  },
+                  "frameTime": 0.2
+                },
+                {
+                  "sprite": {
+                    "width": 16,
+                    "height": 32,
+                    "texture": {
+                      "filePath": "assets/images/spritesheets/bigSpritesheet.png",
+                      "width": 336,
+                      "height": 64
+                    },
+                    "textureCoordinates": [
+                      {
+                        "x": 0.14285715,
+                        "y": 1.0
+                      },
+                      {
+                        "x": 0.14285715,
+                        "y": 0.5
+                      },
+                      {
+                        "x": 0.0952381,
+                        "y": 0.5
+                      },
+                      {
+                        "x": 0.0952381,
+                        "y": 1.0
+                      }
+                    ]
+                  },
+                  "frameTime": 0.2
+                },
+                {
+                  "sprite": {
+                    "width": 16,
+                    "height": 32,
+                    "texture": {
+                      "filePath": "assets/images/spritesheets/bigSpritesheet.png",
+                      "width": 336,
+                      "height": 64
+                    },
+                    "textureCoordinates": [
+                      {
+                        "x": 0.0952381,
+                        "y": 1.0
+                      },
+                      {
+                        "x": 0.0952381,
+                        "y": 0.5
+                      },
+                      {
+                        "x": 0.04761905,
+                        "y": 0.5
+                      },
+                      {
+                        "x": 0.04761905,
+                        "y": 1.0
+                      }
+                    ]
+                  },
+                  "frameTime": 0.2
+                }
+              ],
+              "doesLoop": true
+            },
+            {
+              "title": "BigIdle",
+              "animationFrameList": [
+                {
+                  "sprite": {
+                    "width": 16,
+                    "height": 32,
+                    "texture": {
+                      "filePath": "assets/images/spritesheets/bigSpritesheet.png",
+                      "width": 336,
+                      "height": 64
+                    },
+                    "textureCoordinates": [
+                      {
+                        "x": 0.04761905,
+                        "y": 1.0
+                      },
+                      {
+                        "x": 0.04761905,
+                        "y": 0.5
+                      },
+                      {
+                        "x": 0.0,
+                        "y": 0.5
+                      },
+                      {
+                        "x": 0.0,
+                        "y": 1.0
+                      }
+                    ]
+                  },
+                  "frameTime": 0.1
+                }
+              ],
+              "doesLoop": false
+            },
+            {
+              "title": "Big Switch Direction",
+              "animationFrameList": [
+                {
+                  "sprite": {
+                    "width": 16,
+                    "height": 32,
+                    "texture": {
+                      "filePath": "assets/images/spritesheets/bigSpritesheet.png",
+                      "width": 336,
+                      "height": 64
+                    },
+                    "textureCoordinates": [
+                      {
+                        "x": 0.23809524,
+                        "y": 1.0
+                      },
+                      {
+                        "x": 0.23809524,
+                        "y": 0.5
+                      },
+                      {
+                        "x": 0.1904762,
+                        "y": 0.5
+                      },
+                      {
+                        "x": 0.1904762,
+                        "y": 1.0
+                      }
+                    ]
+                  },
+                  "frameTime": 0.1
+                }
+              ],
+              "doesLoop": false
+            },
+            {
+              "title": "BigJump",
+              "animationFrameList": [
+                {
+                  "sprite": {
+                    "width": 16,
+                    "height": 32,
+                    "texture": {
+                      "filePath": "assets/images/spritesheets/bigSpritesheet.png",
+                      "width": 336,
+                      "height": 64
+                    },
+                    "textureCoordinates": [
+                      {
+                        "x": 0.2857143,
+                        "y": 1.0
+                      },
+                      {
+                        "x": 0.2857143,
+                        "y": 0.5
+                      },
+                      {
+                        "x": 0.23809524,
+                        "y": 0.5
+                      },
+                      {
+                        "x": 0.23809524,
+                        "y": 1.0
+                      }
+                    ]
+                  },
+                  "frameTime": 0.1
+                }
+              ],
+              "doesLoop": false
+            },
+            {
+              "title": "FireRun",
+              "animationFrameList": [
+                {
+                  "sprite": {
+                    "width": 16,
+                    "height": 32,
+                    "texture": {
+                      "filePath": "assets/images/spritesheets/bigSpritesheet.png",
+                      "width": 336,
+                      "height": 64
+                    },
+                    "textureCoordinates": [
+                      {
+                        "x": 0.04761905,
+                        "y": 0.5
+                      },
+                      {
+                        "x": 0.04761905,
+                        "y": 0.0
+                      },
+                      {
+                        "x": 0.0,
+                        "y": 0.0
+                      },
+                      {
+                        "x": 0.0,
+                        "y": 0.5
+                      }
+                    ]
+                  },
+                  "frameTime": 0.2
+                },
+                {
+                  "sprite": {
+                    "width": 16,
+                    "height": 32,
+                    "texture": {
+                      "filePath": "assets/images/spritesheets/bigSpritesheet.png",
+                      "width": 336,
+                      "height": 64
+                    },
+                    "textureCoordinates": [
+                      {
+                        "x": 0.0952381,
+                        "y": 0.5
+                      },
+                      {
+                        "x": 0.0952381,
+                        "y": 0.0
+                      },
+                      {
+                        "x": 0.04761905,
+                        "y": 0.0
+                      },
+                      {
+                        "x": 0.04761905,
+                        "y": 0.5
+                      }
+                    ]
+                  },
+                  "frameTime": 0.2
+                },
+                {
+                  "sprite": {
+                    "width": 16,
+                    "height": 32,
+                    "texture": {
+                      "filePath": "assets/images/spritesheets/bigSpritesheet.png",
+                      "width": 336,
+                      "height": 64
+                    },
+                    "textureCoordinates": [
+                      {
+                        "x": 0.14285715,
+                        "y": 0.5
+                      },
+                      {
+                        "x": 0.14285715,
+                        "y": 0.0
+                      },
+                      {
+                        "x": 0.0952381,
+                        "y": 0.0
+                      },
+                      {
+                        "x": 0.0952381,
+                        "y": 0.5
+                      }
+                    ]
+                  },
+                  "frameTime": 0.2
+                },
+                {
+                  "sprite": {
+                    "width": 16,
+                    "height": 32,
+                    "texture": {
+                      "filePath": "assets/images/spritesheets/bigSpritesheet.png",
+                      "width": 336,
+                      "height": 64
+                    },
+                    "textureCoordinates": [
+                      {
+                        "x": 0.1904762,
+                        "y": 0.5
+                      },
+                      {
+                        "x": 0.1904762,
+                        "y": 0.0
+                      },
+                      {
+                        "x": 0.14285715,
+                        "y": 0.0
+                      },
+                      {
+                        "x": 0.14285715,
+                        "y": 0.5
+                      }
+                    ]
+                  },
+                  "frameTime": 0.2
+                },
+                {
+                  "sprite": {
+                    "width": 16,
+                    "height": 32,
+                    "texture": {
+                      "filePath": "assets/images/spritesheets/bigSpritesheet.png",
+                      "width": 336,
+                      "height": 64
+                    },
+                    "textureCoordinates": [
+                      {
+                        "x": 0.14285715,
+                        "y": 0.5
+                      },
+                      {
+                        "x": 0.14285715,
+                        "y": 0.0
+                      },
+                      {
+                        "x": 0.0952381,
+                        "y": 0.0
+                      },
+                      {
+                        "x": 0.0952381,
+                        "y": 0.5
+                      }
+                    ]
+                  },
+                  "frameTime": 0.2
+                },
+                {
+                  "sprite": {
+                    "width": 16,
+                    "height": 32,
+                    "texture": {
+                      "filePath": "assets/images/spritesheets/bigSpritesheet.png",
+                      "width": 336,
+                      "height": 64
+                    },
+                    "textureCoordinates": [
+                      {
+                        "x": 0.0952381,
+                        "y": 0.5
+                      },
+                      {
+                        "x": 0.0952381,
+                        "y": 0.0
+                      },
+                      {
+                        "x": 0.04761905,
+                        "y": 0.0
+                      },
+                      {
+                        "x": 0.04761905,
+                        "y": 0.5
+                      }
+                    ]
+                  },
+                  "frameTime": 0.2
+                }
+              ],
+              "doesLoop": true
+            },
+            {
+              "title": "FireIdle",
+              "animationFrameList": [
+                {
+                  "sprite": {
+                    "width": 16,
+                    "height": 32,
+                    "texture": {
+                      "filePath": "assets/images/spritesheets/bigSpritesheet.png",
+                      "width": 336,
+                      "height": 64
+                    },
+                    "textureCoordinates": [
+                      {
+                        "x": 0.04761905,
+                        "y": 0.5
+                      },
+                      {
+                        "x": 0.04761905,
+                        "y": 0.0
+                      },
+                      {
+                        "x": 0.0,
+                        "y": 0.0
+                      },
+                      {
+                        "x": 0.0,
+                        "y": 0.5
+                      }
+                    ]
+                  },
+                  "frameTime": 0.1
+                }
+              ],
+              "doesLoop": false
+            },
+            {
+              "title": "Fire Switch Direction",
+              "animationFrameList": [
+                {
+                  "sprite": {
+                    "width": 16,
+                    "height": 32,
+                    "texture": {
+                      "filePath": "assets/images/spritesheets/bigSpritesheet.png",
+                      "width": 336,
+                      "height": 64
+                    },
+                    "textureCoordinates": [
+                      {
+                        "x": 0.23809524,
+                        "y": 0.5
+                      },
+                      {
+                        "x": 0.23809524,
+                        "y": 0.0
+                      },
+                      {
+                        "x": 0.1904762,
+                        "y": 0.0
+                      },
+                      {
+                        "x": 0.1904762,
+                        "y": 0.5
+                      }
+                    ]
+                  },
+                  "frameTime": 0.1
+                }
+              ],
+              "doesLoop": false
+            },
+            {
+              "title": "FireJump",
+              "animationFrameList": [
+                {
+                  "sprite": {
+                    "width": 16,
+                    "height": 32,
+                    "texture": {
+                      "filePath": "assets/images/spritesheets/bigSpritesheet.png",
+                      "width": 336,
+                      "height": 64
+                    },
+                    "textureCoordinates": [
+                      {
+                        "x": 0.2857143,
+                        "y": 0.5
+                      },
+                      {
+                        "x": 0.2857143,
+                        "y": 0.0
+                      },
+                      {
+                        "x": 0.23809524,
+                        "y": 0.0
+                      },
+                      {
+                        "x": 0.23809524,
+                        "y": 0.5
+                      }
+                    ]
+                  },
+                  "frameTime": 0.1
+                }
+              ],
+              "doesLoop": false
+            }
+          ],
+          "defaultStateTitle": "Idle"
+        }
+      },
+      {
+        "type": "physics2d.components.RigidBody2d",
+        "properties": {
+          "velocity": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "angularDamping": 0.8,
+          "linearDamping": 0.9,
+          "bodyType": "DYNAMIC",
+          "mass": 25.0,
+          "friction": 0.1,
+          "angularVelocity": 0.0,
+          "gravityScale": 0.0,
+          "sensor": false,
+          "fixedRotation": true,
+          "continuousCollision": false
+        }
+      },
+      {
+        "type": "physics2d.components.PillboxCollider",
+        "properties": {
+          "width": 0.21,
+          "height": 0.25,
+          "offset": {
+            "x": 0.0,
+            "y": 0.0
+          }
+        }
+      },
+      {
+        "type": "components.PlayerController",
+        "properties": {
+          "walkSpeed": 1.9,
+          "jumpBoost": 1.0,
+          "jumpImpulse": 3.0,
+          "slowDownForce": 0.5,
+          "terminalVelocity": {
+            "x": 2.1,
+            "y": 3.1
+          },
+          "playerState": "SMALL",
+          "win": false
+        }
+      }
+    ],
+    "dead": false,
+    "doSerialization": true
+  },
+  {
+    "uid": 1006,
+    "name": "Sprite_Object_Gen",
+    "componentList": [
+      {
+        "type": "gameobjects.components.Transform",
+        "properties": {
+          "position": {
+            "x": 0.875,
+            "y": 1.125
+          },
+          "scale": {
+            "x": 0.25,
+            "y": 0.25
+          },
+          "rotation": 0.0,
+          "zIndex": 0
+        }
+      },
+      {
+        "type": "gameobjects.components.SpriteRenderer",
+        "properties": {
+          "color": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0,
+            "w": 1.0
+          },
+          "sprite": {
+            "width": 16,
+            "height": 16,
+            "texture": {
+              "filePath": "assets/images/spritesheets/items.png",
+              "width": 112,
+              "height": 80
+            },
+            "textureCoordinates": [
+              {
+                "x": 0.2857143,
+                "y": 0.8
+              },
+              {
+                "x": 0.2857143,
+                "y": 0.6
+              },
+              {
+                "x": 0.14285715,
+                "y": 0.6
+              },
+              {
+                "x": 0.14285715,
+                "y": 0.8
+              }
+            ]
+          }
+        }
+      },
+      {
+        "type": "sirius.animations.StateMachine",
+        "properties": {
+          "stateTransfers": {},
+          "animationStateList": [
+            {
+              "title": "CoinFlip",
+              "animationFrameList": [
+                {
+                  "sprite": {
+                    "width": 16,
+                    "height": 16,
+                    "texture": {
+                      "filePath": "assets/images/spritesheets/items.png",
+                      "width": 112,
+                      "height": 80
+                    },
+                    "textureCoordinates": [
+                      {
+                        "x": 0.14285715,
+                        "y": 0.8
+                      },
+                      {
+                        "x": 0.14285715,
+                        "y": 0.6
+                      },
+                      {
+                        "x": 0.0,
+                        "y": 0.6
+                      },
+                      {
+                        "x": 0.0,
+                        "y": 0.8
+                      }
+                    ]
+                  },
+                  "frameTime": 0.57
+                },
+                {
+                  "sprite": {
+                    "width": 16,
+                    "height": 16,
+                    "texture": {
+                      "filePath": "assets/images/spritesheets/items.png",
+                      "width": 112,
+                      "height": 80
+                    },
+                    "textureCoordinates": [
+                      {
+                        "x": 0.2857143,
+                        "y": 0.8
+                      },
+                      {
+                        "x": 0.2857143,
+                        "y": 0.6
+                      },
+                      {
+                        "x": 0.14285715,
+                        "y": 0.6
+                      },
+                      {
+                        "x": 0.14285715,
+                        "y": 0.8
+                      }
+                    ]
+                  },
+                  "frameTime": 0.23
+                },
+                {
+                  "sprite": {
+                    "width": 16,
+                    "height": 16,
+                    "texture": {
+                      "filePath": "assets/images/spritesheets/items.png",
+                      "width": 112,
+                      "height": 80
+                    },
+                    "textureCoordinates": [
+                      {
+                        "x": 0.42857143,
+                        "y": 0.8
+                      },
+                      {
+                        "x": 0.42857143,
+                        "y": 0.6
+                      },
+                      {
+                        "x": 0.2857143,
+                        "y": 0.6
+                      },
+                      {
+                        "x": 0.2857143,
+                        "y": 0.8
+                      }
+                    ]
+                  },
+                  "frameTime": 0.23
+                }
+              ],
+              "doesLoop": true
+            }
+          ],
+          "defaultStateTitle": "CoinFlip"
+        }
+      },
+      {
+        "type": "components.Coin",
+        "properties": {
+          "topY": {
+            "x": 1.125,
+            "y": 1.625
+          },
+          "coinSpeed": 1.4
+        }
+      },
+      {
+        "type": "physics2d.components.CircleCollider",
+        "properties": {
+          "radius": 0.12,
+          "offset": {
+            "x": 0.0,
+            "y": 0.0
+          }
+        }
+      },
+      {
+        "type": "physics2d.components.RigidBody2d",
+        "properties": {
+          "velocity": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "angularDamping": 0.8,
+          "linearDamping": 0.9,
+          "bodyType": "STATIC",
+          "mass": 0.0,
+          "friction": 0.1,
+          "angularVelocity": 0.0,
+          "gravityScale": 1.0,
+          "sensor": false,
+          "fixedRotation": false,
+          "continuousCollision": true
+        }
+      }
+    ],
+    "dead": false,
+    "doSerialization": true
+  },
+  {
+    "uid": 1007,
+    "name": "Sprite_Object_Gen",
+    "componentList": [
+      {
+        "type": "gameobjects.components.Transform",
+        "properties": {
+          "position": {
+            "x": 1.125,
+            "y": 1.125
+          },
+          "scale": {
+            "x": 0.25,
+            "y": 0.25
+          },
+          "rotation": 0.0,
+          "zIndex": 0
+        }
+      },
+      {
+        "type": "gameobjects.components.SpriteRenderer",
+        "properties": {
+          "color": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0,
+            "w": 1.0
+          },
+          "sprite": {
+            "width": 16,
+            "height": 16,
+            "texture": {
+              "filePath": "assets/images/spritesheets/items.png",
+              "width": 112,
+              "height": 80
+            },
+            "textureCoordinates": [
+              {
+                "x": 0.2857143,
+                "y": 0.8
+              },
+              {
+                "x": 0.2857143,
+                "y": 0.6
+              },
+              {
+                "x": 0.14285715,
+                "y": 0.6
+              },
+              {
+                "x": 0.14285715,
+                "y": 0.8
+              }
+            ]
+          }
+        }
+      },
+      {
+        "type": "sirius.animations.StateMachine",
+        "properties": {
+          "stateTransfers": {},
+          "animationStateList": [
+            {
+              "title": "CoinFlip",
+              "animationFrameList": [
+                {
+                  "sprite": {
+                    "width": 16,
+                    "height": 16,
+                    "texture": {
+                      "filePath": "assets/images/spritesheets/items.png",
+                      "width": 112,
+                      "height": 80
+                    },
+                    "textureCoordinates": [
+                      {
+                        "x": 0.14285715,
+                        "y": 0.8
+                      },
+                      {
+                        "x": 0.14285715,
+                        "y": 0.6
+                      },
+                      {
+                        "x": 0.0,
+                        "y": 0.6
+                      },
+                      {
+                        "x": 0.0,
+                        "y": 0.8
+                      }
+                    ]
+                  },
+                  "frameTime": 0.57
+                },
+                {
+                  "sprite": {
+                    "width": 16,
+                    "height": 16,
+                    "texture": {
+                      "filePath": "assets/images/spritesheets/items.png",
+                      "width": 112,
+                      "height": 80
+                    },
+                    "textureCoordinates": [
+                      {
+                        "x": 0.2857143,
+                        "y": 0.8
+                      },
+                      {
+                        "x": 0.2857143,
+                        "y": 0.6
+                      },
+                      {
+                        "x": 0.14285715,
+                        "y": 0.6
+                      },
+                      {
+                        "x": 0.14285715,
+                        "y": 0.8
+                      }
+                    ]
+                  },
+                  "frameTime": 0.23
+                },
+                {
+                  "sprite": {
+                    "width": 16,
+                    "height": 16,
+                    "texture": {
+                      "filePath": "assets/images/spritesheets/items.png",
+                      "width": 112,
+                      "height": 80
+                    },
+                    "textureCoordinates": [
+                      {
+                        "x": 0.42857143,
+                        "y": 0.8
+                      },
+                      {
+                        "x": 0.42857143,
+                        "y": 0.6
+                      },
+                      {
+                        "x": 0.2857143,
+                        "y": 0.6
+                      },
+                      {
+                        "x": 0.2857143,
+                        "y": 0.8
+                      }
+                    ]
+                  },
+                  "frameTime": 0.23
+                }
+              ],
+              "doesLoop": true
+            }
+          ],
+          "defaultStateTitle": "CoinFlip"
+        }
+      },
+      {
+        "type": "components.Coin",
+        "properties": {
+          "topY": {
+            "x": 1.125,
+            "y": 1.625
+          },
+          "coinSpeed": 1.4
+        }
+      },
+      {
+        "type": "physics2d.components.CircleCollider",
+        "properties": {
+          "radius": 0.12,
+          "offset": {
+            "x": 0.0,
+            "y": 0.0
+          }
+        }
+      },
+      {
+        "type": "physics2d.components.RigidBody2d",
+        "properties": {
+          "velocity": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "angularDamping": 0.8,
+          "linearDamping": 0.9,
+          "bodyType": "STATIC",
+          "mass": 0.0,
+          "friction": 0.1,
+          "angularVelocity": 0.0,
+          "gravityScale": 1.0,
+          "sensor": false,
+          "fixedRotation": false,
+          "continuousCollision": true
+        }
+      }
+    ],
+    "dead": false,
+    "doSerialization": true
+  },
+  {
+    "uid": 1008,
+    "name": "Sprite_Object_Gen",
+    "componentList": [
+      {
+        "type": "gameobjects.components.Transform",
+        "properties": {
+          "position": {
+            "x": 1.375,
+            "y": 1.125
+          },
+          "scale": {
+            "x": 0.25,
+            "y": 0.25
+          },
+          "rotation": 0.0,
+          "zIndex": 0
+        }
+      },
+      {
+        "type": "gameobjects.components.SpriteRenderer",
+        "properties": {
+          "color": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0,
+            "w": 1.0
+          },
+          "sprite": {
+            "width": 16,
+            "height": 16,
+            "texture": {
+              "filePath": "assets/images/spritesheets/items.png",
+              "width": 112,
+              "height": 80
+            },
+            "textureCoordinates": [
+              {
+                "x": 0.2857143,
+                "y": 0.8
+              },
+              {
+                "x": 0.2857143,
+                "y": 0.6
+              },
+              {
+                "x": 0.14285715,
+                "y": 0.6
+              },
+              {
+                "x": 0.14285715,
+                "y": 0.8
+              }
+            ]
+          }
+        }
+      },
+      {
+        "type": "sirius.animations.StateMachine",
+        "properties": {
+          "stateTransfers": {},
+          "animationStateList": [
+            {
+              "title": "CoinFlip",
+              "animationFrameList": [
+                {
+                  "sprite": {
+                    "width": 16,
+                    "height": 16,
+                    "texture": {
+                      "filePath": "assets/images/spritesheets/items.png",
+                      "width": 112,
+                      "height": 80
+                    },
+                    "textureCoordinates": [
+                      {
+                        "x": 0.14285715,
+                        "y": 0.8
+                      },
+                      {
+                        "x": 0.14285715,
+                        "y": 0.6
+                      },
+                      {
+                        "x": 0.0,
+                        "y": 0.6
+                      },
+                      {
+                        "x": 0.0,
+                        "y": 0.8
+                      }
+                    ]
+                  },
+                  "frameTime": 0.57
+                },
+                {
+                  "sprite": {
+                    "width": 16,
+                    "height": 16,
+                    "texture": {
+                      "filePath": "assets/images/spritesheets/items.png",
+                      "width": 112,
+                      "height": 80
+                    },
+                    "textureCoordinates": [
+                      {
+                        "x": 0.2857143,
+                        "y": 0.8
+                      },
+                      {
+                        "x": 0.2857143,
+                        "y": 0.6
+                      },
+                      {
+                        "x": 0.14285715,
+                        "y": 0.6
+                      },
+                      {
+                        "x": 0.14285715,
+                        "y": 0.8
+                      }
+                    ]
+                  },
+                  "frameTime": 0.23
+                },
+                {
+                  "sprite": {
+                    "width": 16,
+                    "height": 16,
+                    "texture": {
+                      "filePath": "assets/images/spritesheets/items.png",
+                      "width": 112,
+                      "height": 80
+                    },
+                    "textureCoordinates": [
+                      {
+                        "x": 0.42857143,
+                        "y": 0.8
+                      },
+                      {
+                        "x": 0.42857143,
+                        "y": 0.6
+                      },
+                      {
+                        "x": 0.2857143,
+                        "y": 0.6
+                      },
+                      {
+                        "x": 0.2857143,
+                        "y": 0.8
+                      }
+                    ]
+                  },
+                  "frameTime": 0.23
+                }
+              ],
+              "doesLoop": true
+            }
+          ],
+          "defaultStateTitle": "CoinFlip"
+        }
+      },
+      {
+        "type": "components.Coin",
+        "properties": {
+          "topY": {
+            "x": 1.125,
+            "y": 1.625
+          },
+          "coinSpeed": 1.4
+        }
+      },
+      {
+        "type": "physics2d.components.CircleCollider",
+        "properties": {
+          "radius": 0.12,
+          "offset": {
+            "x": 0.0,
+            "y": 0.0
+          }
+        }
+      },
+      {
+        "type": "physics2d.components.RigidBody2d",
+        "properties": {
+          "velocity": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "angularDamping": 0.8,
+          "linearDamping": 0.9,
+          "bodyType": "STATIC",
+          "mass": 0.0,
+          "friction": 0.1,
+          "angularVelocity": 0.0,
+          "gravityScale": 1.0,
+          "sensor": false,
+          "fixedRotation": false,
+          "continuousCollision": true
+        }
+      }
+    ],
+    "dead": false,
+    "doSerialization": true
+  },
+  {
+    "uid": 1009,
+    "name": "Sprite_Object_Gen",
+    "componentList": [
+      {
+        "type": "gameobjects.components.Transform",
+        "properties": {
+          "position": {
+            "x": 1.625,
+            "y": 1.125
+          },
+          "scale": {
+            "x": 0.25,
+            "y": 0.25
+          },
+          "rotation": 0.0,
+          "zIndex": 0
+        }
+      },
+      {
+        "type": "gameobjects.components.SpriteRenderer",
+        "properties": {
+          "color": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0,
+            "w": 1.0
+          },
+          "sprite": {
+            "width": 16,
+            "height": 16,
+            "texture": {
+              "filePath": "assets/images/spritesheets/items.png",
+              "width": 112,
+              "height": 80
+            },
+            "textureCoordinates": [
+              {
+                "x": 0.2857143,
+                "y": 0.8
+              },
+              {
+                "x": 0.2857143,
+                "y": 0.6
+              },
+              {
+                "x": 0.14285715,
+                "y": 0.6
+              },
+              {
+                "x": 0.14285715,
+                "y": 0.8
+              }
+            ]
+          }
+        }
+      },
+      {
+        "type": "sirius.animations.StateMachine",
+        "properties": {
+          "stateTransfers": {},
+          "animationStateList": [
+            {
+              "title": "CoinFlip",
+              "animationFrameList": [
+                {
+                  "sprite": {
+                    "width": 16,
+                    "height": 16,
+                    "texture": {
+                      "filePath": "assets/images/spritesheets/items.png",
+                      "width": 112,
+                      "height": 80
+                    },
+                    "textureCoordinates": [
+                      {
+                        "x": 0.14285715,
+                        "y": 0.8
+                      },
+                      {
+                        "x": 0.14285715,
+                        "y": 0.6
+                      },
+                      {
+                        "x": 0.0,
+                        "y": 0.6
+                      },
+                      {
+                        "x": 0.0,
+                        "y": 0.8
+                      }
+                    ]
+                  },
+                  "frameTime": 0.57
+                },
+                {
+                  "sprite": {
+                    "width": 16,
+                    "height": 16,
+                    "texture": {
+                      "filePath": "assets/images/spritesheets/items.png",
+                      "width": 112,
+                      "height": 80
+                    },
+                    "textureCoordinates": [
+                      {
+                        "x": 0.2857143,
+                        "y": 0.8
+                      },
+                      {
+                        "x": 0.2857143,
+                        "y": 0.6
+                      },
+                      {
+                        "x": 0.14285715,
+                        "y": 0.6
+                      },
+                      {
+                        "x": 0.14285715,
+                        "y": 0.8
+                      }
+                    ]
+                  },
+                  "frameTime": 0.23
+                },
+                {
+                  "sprite": {
+                    "width": 16,
+                    "height": 16,
+                    "texture": {
+                      "filePath": "assets/images/spritesheets/items.png",
+                      "width": 112,
+                      "height": 80
+                    },
+                    "textureCoordinates": [
+                      {
+                        "x": 0.42857143,
+                        "y": 0.8
+                      },
+                      {
+                        "x": 0.42857143,
+                        "y": 0.6
+                      },
+                      {
+                        "x": 0.2857143,
+                        "y": 0.6
+                      },
+                      {
+                        "x": 0.2857143,
+                        "y": 0.8
+                      }
+                    ]
+                  },
+                  "frameTime": 0.23
+                }
+              ],
+              "doesLoop": true
+            }
+          ],
+          "defaultStateTitle": "CoinFlip"
+        }
+      },
+      {
+        "type": "components.Coin",
+        "properties": {
+          "topY": {
+            "x": 1.125,
+            "y": 1.625
+          },
+          "coinSpeed": 1.4
+        }
+      },
+      {
+        "type": "physics2d.components.CircleCollider",
+        "properties": {
+          "radius": 0.12,
+          "offset": {
+            "x": 0.0,
+            "y": 0.0
+          }
+        }
+      },
+      {
+        "type": "physics2d.components.RigidBody2d",
+        "properties": {
+          "velocity": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "angularDamping": 0.8,
+          "linearDamping": 0.9,
+          "bodyType": "STATIC",
+          "mass": 0.0,
+          "friction": 0.1,
+          "angularVelocity": 0.0,
+          "gravityScale": 1.0,
+          "sensor": false,
+          "fixedRotation": false,
+          "continuousCollision": true
+        }
+      }
+    ],
+    "dead": false,
+    "doSerialization": true
+  },
+  {
+    "uid": 1010,
+    "name": "Sprite_Object_Gen",
+    "componentList": [
+      {
+        "type": "gameobjects.components.Transform",
+        "properties": {
+          "position": {
+            "x": 1.875,
+            "y": 1.125
+          },
+          "scale": {
+            "x": 0.25,
+            "y": 0.25
+          },
+          "rotation": 0.0,
+          "zIndex": 0
+        }
+      },
+      {
+        "type": "gameobjects.components.SpriteRenderer",
+        "properties": {
+          "color": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0,
+            "w": 1.0
+          },
+          "sprite": {
+            "width": 16,
+            "height": 16,
+            "texture": {
+              "filePath": "assets/images/spritesheets/items.png",
+              "width": 112,
+              "height": 80
+            },
+            "textureCoordinates": [
+              {
+                "x": 0.2857143,
+                "y": 0.8
+              },
+              {
+                "x": 0.2857143,
+                "y": 0.6
+              },
+              {
+                "x": 0.14285715,
+                "y": 0.6
+              },
+              {
+                "x": 0.14285715,
+                "y": 0.8
+              }
+            ]
+          }
+        }
+      },
+      {
+        "type": "sirius.animations.StateMachine",
+        "properties": {
+          "stateTransfers": {},
+          "animationStateList": [
+            {
+              "title": "CoinFlip",
+              "animationFrameList": [
+                {
+                  "sprite": {
+                    "width": 16,
+                    "height": 16,
+                    "texture": {
+                      "filePath": "assets/images/spritesheets/items.png",
+                      "width": 112,
+                      "height": 80
+                    },
+                    "textureCoordinates": [
+                      {
+                        "x": 0.14285715,
+                        "y": 0.8
+                      },
+                      {
+                        "x": 0.14285715,
+                        "y": 0.6
+                      },
+                      {
+                        "x": 0.0,
+                        "y": 0.6
+                      },
+                      {
+                        "x": 0.0,
+                        "y": 0.8
+                      }
+                    ]
+                  },
+                  "frameTime": 0.57
+                },
+                {
+                  "sprite": {
+                    "width": 16,
+                    "height": 16,
+                    "texture": {
+                      "filePath": "assets/images/spritesheets/items.png",
+                      "width": 112,
+                      "height": 80
+                    },
+                    "textureCoordinates": [
+                      {
+                        "x": 0.2857143,
+                        "y": 0.8
+                      },
+                      {
+                        "x": 0.2857143,
+                        "y": 0.6
+                      },
+                      {
+                        "x": 0.14285715,
+                        "y": 0.6
+                      },
+                      {
+                        "x": 0.14285715,
+                        "y": 0.8
+                      }
+                    ]
+                  },
+                  "frameTime": 0.23
+                },
+                {
+                  "sprite": {
+                    "width": 16,
+                    "height": 16,
+                    "texture": {
+                      "filePath": "assets/images/spritesheets/items.png",
+                      "width": 112,
+                      "height": 80
+                    },
+                    "textureCoordinates": [
+                      {
+                        "x": 0.42857143,
+                        "y": 0.8
+                      },
+                      {
+                        "x": 0.42857143,
+                        "y": 0.6
+                      },
+                      {
+                        "x": 0.2857143,
+                        "y": 0.6
+                      },
+                      {
+                        "x": 0.2857143,
+                        "y": 0.8
+                      }
+                    ]
+                  },
+                  "frameTime": 0.23
+                }
+              ],
+              "doesLoop": true
+            }
+          ],
+          "defaultStateTitle": "CoinFlip"
+        }
+      },
+      {
+        "type": "components.Coin",
+        "properties": {
+          "topY": {
+            "x": 1.125,
+            "y": 1.625
+          },
+          "coinSpeed": 1.4
+        }
+      },
+      {
+        "type": "physics2d.components.CircleCollider",
+        "properties": {
+          "radius": 0.12,
+          "offset": {
+            "x": 0.0,
+            "y": 0.0
+          }
+        }
+      },
+      {
+        "type": "physics2d.components.RigidBody2d",
+        "properties": {
+          "velocity": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "angularDamping": 0.8,
+          "linearDamping": 0.9,
+          "bodyType": "STATIC",
+          "mass": 0.0,
+          "friction": 0.1,
+          "angularVelocity": 0.0,
+          "gravityScale": 1.0,
+          "sensor": false,
+          "fixedRotation": false,
+          "continuousCollision": true
+        }
+      }
+    ],
+    "dead": false,
+    "doSerialization": true
+  },
+  {
+    "uid": 1011,
+    "name": "Sprite_Object_Gen",
+    "componentList": [
+      {
+        "type": "physics2d.components.RigidBody2d",
+        "properties": {
+          "velocity": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "angularDamping": 0.8,
+          "linearDamping": 0.9,
+          "bodyType": "STATIC",
+          "mass": 0.0,
+          "friction": 0.1,
+          "angularVelocity": 0.0,
+          "gravityScale": 1.0,
+          "sensor": false,
+          "fixedRotation": false,
+          "continuousCollision": true
+        }
+      },
+      {
+        "type": "physics2d.components.Box2DCollider",
+        "properties": {
+          "halfSize": {
+            "x": 0.25,
+            "y": 0.25
+          },
+          "origin": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "offset": {
+            "x": 0.0,
+            "y": 0.0
+          }
+        }
+      },
+      {
+        "type": "gameobjects.components.game_components.Ground",
+        "properties": {}
+      },
+      {
+        "type": "gameobjects.components.Transform",
+        "properties": {
+          "position": {
+            "x": 0.875,
+            "y": 0.625
+          },
+          "scale": {
+            "x": 0.25,
+            "y": 0.25
+          },
+          "rotation": 0.0,
+          "zIndex": 0
+        }
+      },
+      {
+        "type": "gameobjects.components.SpriteRenderer",
+        "properties": {
+          "color": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0,
+            "w": 1.0
+          },
+          "sprite": {
+            "width": 16,
+            "height": 16,
+            "texture": {
+              "filePath": "assets/images/spritesheets/decorationsAndBlocks.png",
+              "width": 112,
+              "height": 192
+            },
+            "textureCoordinates": [
+              {
+                "x": 0.14285715,
+                "y": 1.0
+              },
+              {
+                "x": 0.14285715,
+                "y": 0.9166667
+              },
+              {
+                "x": 0.0,
+                "y": 0.9166667
+              },
+              {
+                "x": 0.0,
+                "y": 1.0
+              }
+            ]
+          }
+        }
+      }
+    ],
+    "dead": false,
+    "doSerialization": true
+  },
+  {
+    "uid": 1012,
+    "name": "Sprite_Object_Gen",
+    "componentList": [
+      {
+        "type": "physics2d.components.RigidBody2d",
+        "properties": {
+          "velocity": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "angularDamping": 0.8,
+          "linearDamping": 0.9,
+          "bodyType": "STATIC",
+          "mass": 0.0,
+          "friction": 0.1,
+          "angularVelocity": 0.0,
+          "gravityScale": 1.0,
+          "sensor": false,
+          "fixedRotation": false,
+          "continuousCollision": true
+        }
+      },
+      {
+        "type": "physics2d.components.Box2DCollider",
+        "properties": {
+          "halfSize": {
+            "x": 0.25,
+            "y": 0.25
+          },
+          "origin": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "offset": {
+            "x": 0.0,
+            "y": 0.0
+          }
+        }
+      },
+      {
+        "type": "gameobjects.components.game_components.Ground",
+        "properties": {}
+      },
+      {
+        "type": "gameobjects.components.Transform",
+        "properties": {
+          "position": {
+            "x": 0.625,
+            "y": 0.625
+          },
+          "scale": {
+            "x": 0.25,
+            "y": 0.25
+          },
+          "rotation": 0.0,
+          "zIndex": 0
+        }
+      },
+      {
+        "type": "gameobjects.components.SpriteRenderer",
+        "properties": {
+          "color": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0,
+            "w": 1.0
+          },
+          "sprite": {
+            "width": 16,
+            "height": 16,
+            "texture": {
+              "filePath": "assets/images/spritesheets/decorationsAndBlocks.png",
+              "width": 112,
+              "height": 192
+            },
+            "textureCoordinates": [
+              {
+                "x": 0.14285715,
+                "y": 1.0
+              },
+              {
+                "x": 0.14285715,
+                "y": 0.9166667
+              },
+              {
+                "x": 0.0,
+                "y": 0.9166667
+              },
+              {
+                "x": 0.0,
+                "y": 1.0
+              }
+            ]
+          }
+        }
+      }
+    ],
+    "dead": false,
+    "doSerialization": true
+  },
+  {
+    "uid": 1013,
+    "name": "Sprite_Object_Gen",
+    "componentList": [
+      {
+        "type": "physics2d.components.RigidBody2d",
+        "properties": {
+          "velocity": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "angularDamping": 0.8,
+          "linearDamping": 0.9,
+          "bodyType": "STATIC",
+          "mass": 0.0,
+          "friction": 0.1,
+          "angularVelocity": 0.0,
+          "gravityScale": 1.0,
+          "sensor": false,
+          "fixedRotation": false,
+          "continuousCollision": true
+        }
+      },
+      {
+        "type": "physics2d.components.Box2DCollider",
+        "properties": {
+          "halfSize": {
+            "x": 0.25,
+            "y": 0.25
+          },
+          "origin": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "offset": {
+            "x": 0.0,
+            "y": 0.0
+          }
+        }
+      },
+      {
+        "type": "gameobjects.components.game_components.Ground",
+        "properties": {}
+      },
+      {
+        "type": "gameobjects.components.Transform",
+        "properties": {
+          "position": {
+            "x": 0.375,
+            "y": 0.625
+          },
+          "scale": {
+            "x": 0.25,
+            "y": 0.25
+          },
+          "rotation": 0.0,
+          "zIndex": 0
+        }
+      },
+      {
+        "type": "gameobjects.components.SpriteRenderer",
+        "properties": {
+          "color": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0,
+            "w": 1.0
+          },
+          "sprite": {
+            "width": 16,
+            "height": 16,
+            "texture": {
+              "filePath": "assets/images/spritesheets/decorationsAndBlocks.png",
+              "width": 112,
+              "height": 192
+            },
+            "textureCoordinates": [
+              {
+                "x": 0.14285715,
+                "y": 1.0
+              },
+              {
+                "x": 0.14285715,
+                "y": 0.9166667
+              },
+              {
+                "x": 0.0,
+                "y": 0.9166667
+              },
+              {
+                "x": 0.0,
+                "y": 1.0
+              }
+            ]
+          }
+        }
+      }
+    ],
+    "dead": false,
+    "doSerialization": true
+  },
+  {
+    "uid": 1014,
+    "name": "Sprite_Object_Gen",
+    "componentList": [
+      {
+        "type": "physics2d.components.RigidBody2d",
+        "properties": {
+          "velocity": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "angularDamping": 0.8,
+          "linearDamping": 0.9,
+          "bodyType": "STATIC",
+          "mass": 0.0,
+          "friction": 0.1,
+          "angularVelocity": 0.0,
+          "gravityScale": 1.0,
+          "sensor": false,
+          "fixedRotation": false,
+          "continuousCollision": true
+        }
+      },
+      {
+        "type": "physics2d.components.Box2DCollider",
+        "properties": {
+          "halfSize": {
+            "x": 0.25,
+            "y": 0.25
+          },
+          "origin": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "offset": {
+            "x": 0.0,
+            "y": 0.0
+          }
+        }
+      },
+      {
+        "type": "gameobjects.components.game_components.Ground",
+        "properties": {}
+      },
+      {
+        "type": "gameobjects.components.Transform",
+        "properties": {
+          "position": {
+            "x": 0.125,
+            "y": 0.625
+          },
+          "scale": {
+            "x": 0.25,
+            "y": 0.25
+          },
+          "rotation": 0.0,
+          "zIndex": 0
+        }
+      },
+      {
+        "type": "gameobjects.components.SpriteRenderer",
+        "properties": {
+          "color": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0,
+            "w": 1.0
+          },
+          "sprite": {
+            "width": 16,
+            "height": 16,
+            "texture": {
+              "filePath": "assets/images/spritesheets/decorationsAndBlocks.png",
+              "width": 112,
+              "height": 192
+            },
+            "textureCoordinates": [
+              {
+                "x": 0.14285715,
+                "y": 1.0
+              },
+              {
+                "x": 0.14285715,
+                "y": 0.9166667
+              },
+              {
+                "x": 0.0,
+                "y": 0.9166667
+              },
+              {
+                "x": 0.0,
+                "y": 1.0
+              }
+            ]
+          }
+        }
+      }
+    ],
+    "dead": false,
+    "doSerialization": true
+  },
+  {
+    "uid": 1022,
+    "name": "Sprite_Object_Gen",
+    "componentList": [
+      {
+        "type": "gameobjects.components.Transform",
+        "properties": {
+          "position": {
+            "x": 1.625,
+            "y": 0.625
+          },
+          "scale": {
+            "x": 0.25,
+            "y": 0.25
+          },
+          "rotation": 0.0,
+          "zIndex": 0
+        }
+      },
+      {
+        "type": "gameobjects.components.SpriteRenderer",
+        "properties": {
+          "color": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0,
+            "w": 1.0
+          },
+          "sprite": {
+            "width": 16,
+            "height": 16,
+            "texture": {
+              "filePath": "assets/images/spritesheets/decorationsAndBlocks.png",
+              "width": 112,
+              "height": 192
+            },
+            "textureCoordinates": [
+              {
+                "x": 0.14285715,
+                "y": 0.41666666
+              },
+              {
+                "x": 0.14285715,
+                "y": 0.33333334
+              },
+              {
+                "x": 0.0,
+                "y": 0.33333334
+              },
+              {
+                "x": 0.0,
+                "y": 0.41666666
+              }
+            ]
+          }
+        }
+      }
+    ],
+    "dead": false,
+    "doSerialization": true
+  },
+  {
+    "uid": 1024,
+    "name": "Sprite_Object_Gen",
+    "componentList": [
+      {
+        "type": "gameobjects.components.Transform",
+        "properties": {
+          "position": {
+            "x": 1.875,
+            "y": 0.625
+          },
+          "scale": {
+            "x": 0.25,
+            "y": 0.25
+          },
+          "rotation": 0.0,
+          "zIndex": 0
+        }
+      },
+      {
+        "type": "gameobjects.components.SpriteRenderer",
+        "properties": {
+          "color": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0,
+            "w": 1.0
+          },
+          "sprite": {
+            "width": 16,
+            "height": 16,
+            "texture": {
+              "filePath": "assets/images/spritesheets/decorationsAndBlocks.png",
+              "width": 112,
+              "height": 192
+            },
+            "textureCoordinates": [
+              {
+                "x": 0.14285715,
+                "y": 0.41666666
+              },
+              {
+                "x": 0.14285715,
+                "y": 0.33333334
+              },
+              {
+                "x": 0.0,
+                "y": 0.33333334
+              },
+              {
+                "x": 0.0,
+                "y": 0.41666666
+              }
+            ]
+          }
+        }
+      }
+    ],
+    "dead": false,
+    "doSerialization": true
+  },
+  {
+    "uid": 1026,
+    "name": "Sprite_Object_Gen",
+    "componentList": [
+      {
+        "type": "gameobjects.components.Transform",
+        "properties": {
+          "position": {
+            "x": 2.125,
+            "y": 0.625
+          },
+          "scale": {
+            "x": 0.25,
+            "y": 0.25
+          },
+          "rotation": 0.0,
+          "zIndex": 0
+        }
+      },
+      {
+        "type": "gameobjects.components.SpriteRenderer",
+        "properties": {
+          "color": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0,
+            "w": 1.0
+          },
+          "sprite": {
+            "width": 16,
+            "height": 16,
+            "texture": {
+              "filePath": "assets/images/spritesheets/decorationsAndBlocks.png",
+              "width": 112,
+              "height": 192
+            },
+            "textureCoordinates": [
+              {
+                "x": 0.14285715,
+                "y": 0.41666666
+              },
+              {
+                "x": 0.14285715,
+                "y": 0.33333334
+              },
+              {
+                "x": 0.0,
+                "y": 0.33333334
+              },
+              {
+                "x": 0.0,
+                "y": 0.41666666
+              }
+            ]
+          }
+        }
+      }
+    ],
+    "dead": false,
+    "doSerialization": true
+  },
+  {
+    "uid": 1028,
+    "name": "Sprite_Object_Gen",
+    "componentList": [
+      {
+        "type": "gameobjects.components.Transform",
+        "properties": {
+          "position": {
+            "x": 2.375,
+            "y": 0.625
+          },
+          "scale": {
+            "x": 0.25,
+            "y": 0.25
+          },
+          "rotation": 0.0,
+          "zIndex": 0
+        }
+      },
+      {
+        "type": "gameobjects.components.SpriteRenderer",
+        "properties": {
+          "color": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0,
+            "w": 1.0
+          },
+          "sprite": {
+            "width": 16,
+            "height": 16,
+            "texture": {
+              "filePath": "assets/images/spritesheets/decorationsAndBlocks.png",
+              "width": 112,
+              "height": 192
+            },
+            "textureCoordinates": [
+              {
+                "x": 0.14285715,
+                "y": 0.41666666
+              },
+              {
+                "x": 0.14285715,
+                "y": 0.33333334
+              },
+              {
+                "x": 0.0,
+                "y": 0.33333334
+              },
+              {
+                "x": 0.0,
+                "y": 0.41666666
+              }
+            ]
+          }
+        }
+      }
+    ],
+    "dead": false,
+    "doSerialization": true
+  },
+  {
+    "uid": 1030,
+    "name": "Sprite_Object_Gen",
+    "componentList": [
+      {
+        "type": "gameobjects.components.Transform",
+        "properties": {
+          "position": {
+            "x": 2.625,
+            "y": 0.625
+          },
+          "scale": {
+            "x": 0.25,
+            "y": 0.25
+          },
+          "rotation": 0.0,
+          "zIndex": 0
+        }
+      },
+      {
+        "type": "gameobjects.components.SpriteRenderer",
+        "properties": {
+          "color": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0,
+            "w": 1.0
+          },
+          "sprite": {
+            "width": 16,
+            "height": 16,
+            "texture": {
+              "filePath": "assets/images/spritesheets/decorationsAndBlocks.png",
+              "width": 112,
+              "height": 192
+            },
+            "textureCoordinates": [
+              {
+                "x": 0.14285715,
+                "y": 0.41666666
+              },
+              {
+                "x": 0.14285715,
+                "y": 0.33333334
+              },
+              {
+                "x": 0.0,
+                "y": 0.33333334
+              },
+              {
+                "x": 0.0,
+                "y": 0.41666666
+              }
+            ]
+          }
+        }
+      }
+    ],
+    "dead": false,
+    "doSerialization": true
+  },
+  {
+    "uid": 1032,
+    "name": "Sprite_Object_Gen",
+    "componentList": [
+      {
+        "type": "gameobjects.components.Transform",
+        "properties": {
+          "position": {
+            "x": 2.125,
+            "y": 0.375
+          },
+          "scale": {
+            "x": 0.25,
+            "y": 0.25
+          },
+          "rotation": 0.0,
+          "zIndex": 0
+        }
+      },
+      {
+        "type": "gameobjects.components.SpriteRenderer",
+        "properties": {
+          "color": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0,
+            "w": 1.0
+          },
+          "sprite": {
+            "width": 16,
+            "height": 16,
+            "texture": {
+              "filePath": "assets/images/spritesheets/decorationsAndBlocks.png",
+              "width": 112,
+              "height": 192
+            },
+            "textureCoordinates": [
+              {
+                "x": 0.14285715,
+                "y": 0.41666666
+              },
+              {
+                "x": 0.14285715,
+                "y": 0.33333334
+              },
+              {
+                "x": 0.0,
+                "y": 0.33333334
+              },
+              {
+                "x": 0.0,
+                "y": 0.41666666
+              }
+            ]
+          }
+        }
+      }
+    ],
+    "dead": false,
+    "doSerialization": true
+  },
+  {
+    "uid": 1034,
+    "name": "Sprite_Object_Gen",
+    "componentList": [
+      {
+        "type": "gameobjects.components.Transform",
+        "properties": {
+          "position": {
+            "x": 2.375,
+            "y": 0.375
+          },
+          "scale": {
+            "x": 0.25,
+            "y": 0.25
+          },
+          "rotation": 0.0,
+          "zIndex": 0
+        }
+      },
+      {
+        "type": "gameobjects.components.SpriteRenderer",
+        "properties": {
+          "color": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0,
+            "w": 1.0
+          },
+          "sprite": {
+            "width": 16,
+            "height": 16,
+            "texture": {
+              "filePath": "assets/images/spritesheets/decorationsAndBlocks.png",
+              "width": 112,
+              "height": 192
+            },
+            "textureCoordinates": [
+              {
+                "x": 0.14285715,
+                "y": 0.41666666
+              },
+              {
+                "x": 0.14285715,
+                "y": 0.33333334
+              },
+              {
+                "x": 0.0,
+                "y": 0.33333334
+              },
+              {
+                "x": 0.0,
+                "y": 0.41666666
+              }
+            ]
+          }
+        }
+      }
+    ],
+    "dead": false,
+    "doSerialization": true
+  },
+  {
+    "uid": 1036,
+    "name": "Sprite_Object_Gen",
+    "componentList": [
+      {
+        "type": "gameobjects.components.Transform",
+        "properties": {
+          "position": {
+            "x": 2.625,
+            "y": 0.375
+          },
+          "scale": {
+            "x": 0.25,
+            "y": 0.25
+          },
+          "rotation": 0.0,
+          "zIndex": 0
+        }
+      },
+      {
+        "type": "gameobjects.components.SpriteRenderer",
+        "properties": {
+          "color": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0,
+            "w": 1.0
+          },
+          "sprite": {
+            "width": 16,
+            "height": 16,
+            "texture": {
+              "filePath": "assets/images/spritesheets/decorationsAndBlocks.png",
+              "width": 112,
+              "height": 192
+            },
+            "textureCoordinates": [
+              {
+                "x": 0.14285715,
+                "y": 0.41666666
+              },
+              {
+                "x": 0.14285715,
+                "y": 0.33333334
+              },
+              {
+                "x": 0.0,
+                "y": 0.33333334
+              },
+              {
+                "x": 0.0,
+                "y": 0.41666666
+              }
+            ]
+          }
+        }
+      }
+    ],
+    "dead": false,
+    "doSerialization": true
+  },
+  {
+    "uid": 1038,
+    "name": "Sprite_Object_Gen",
+    "componentList": [
+      {
+        "type": "gameobjects.components.Transform",
+        "properties": {
+          "position": {
+            "x": 2.125,
+            "y": 1.625
+          },
+          "scale": {
+            "x": 0.25,
+            "y": 0.25
+          },
+          "rotation": 0.0,
+          "zIndex": 0
+        }
+      },
+      {
+        "type": "gameobjects.components.SpriteRenderer",
+        "properties": {
+          "color": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0,
+            "w": 1.0
+          },
+          "sprite": {
+            "width": 16,
+            "height": 16,
+            "texture": {
+              "filePath": "assets/images/spritesheets/decorationsAndBlocks.png",
+              "width": 112,
+              "height": 192
+            },
+            "textureCoordinates": [
+              {
+                "x": 0.14285715,
+                "y": 0.41666666
+              },
+              {
+                "x": 0.14285715,
+                "y": 0.33333334
+              },
+              {
+                "x": 0.0,
+                "y": 0.33333334
+              },
+              {
+                "x": 0.0,
+                "y": 0.41666666
+              }
+            ]
+          }
+        }
+      }
+    ],
+    "dead": false,
+    "doSerialization": true
+  }
+]

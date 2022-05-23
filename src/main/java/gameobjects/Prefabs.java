@@ -30,9 +30,6 @@ public class Prefabs {
      * The path of the spritesheet or of the texture to put in the menu.
      */
     public static void addPrefabImGui(IPrefabs prefabs, Sprite sprite) {
-        // Spritesheet sprites = AssetPool.getSpritesheet(spriteSheetPath);
-        // Sprite sprite = sprite;
-
         float spriteWidth = sprite.getWidth() * 2;
         float spriteHeight = sprite.getHeight() * 2;
 

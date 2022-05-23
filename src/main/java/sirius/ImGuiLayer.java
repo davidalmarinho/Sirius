@@ -181,10 +181,10 @@ public class ImGuiLayer {
         setupDockSpace();
         ImGui.showDemoWindow();
         currentScene.imgui();
-        gameViewWindow.imgui();
         propertiesWindow.imgui();
         sceneHierarchy.imgui();
         spriteAnimationWindow.imgui();
+        gameViewWindow.imgui();
 
         // We have to end ImGui before we render ImGui
         endFrame();

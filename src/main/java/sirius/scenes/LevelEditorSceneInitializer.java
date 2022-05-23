@@ -3,7 +3,6 @@ package sirius.scenes;
 import gameobjects.ICustomPrefabs;
 import gameobjects.Prefabs;
 import imgui.ImGui;
-import imgui.ImVec2;
 import gameobjects.GameObject;
 import gameobjects.components.*;
 import sirius.SiriusTheFox;
@@ -11,10 +10,10 @@ import sirius.Sound;
 import sirius.animations.StateMachine;
 import sirius.editor.*;
 import sirius.editor.components.KeyControls;
+import sirius.editor.imgui.JImGui;
 import sirius.rendering.spritesheet.Images;
 import sirius.rendering.spritesheet.Spritesheet;
 import sirius.utils.AssetPool;
-import org.joml.Vector2f;
 
 import java.io.File;
 import java.util.Collection;
@@ -137,48 +136,8 @@ public class LevelEditorSceneInitializer implements ISceneInitializer {
 
         if (ImGui.beginTabBar("TabBar")) {
             if (ImGui.beginTabItem("Icons")) {
-                // Gets the window's positions
-                ImVec2 windowPos = new ImVec2();
-                ImGui.getWindowPos(windowPos);
-
-                // Gets the window's size
-                ImVec2 windowSize = new ImVec2();
-                ImGui.getWindowSize(windowSize);
-
-                // Gets item's spacing
-                ImVec2 itemSpacing = new ImVec2();
-                ImGui.getStyle().getItemSpacing(itemSpacing);
-
-                float windowX2 = windowPos.x + windowSize.x;
-                for (int i = 0; i < sprites.size(); i++) {
-                    Sprite sprite = sprites.getSprite(i);
-                    float spriteWidth = sprite.getWidth() * 2;
-                    float spriteHeight = sprite.getHeight() * 2;
-
-                    int id = sprite.getTextureID();
-                    Vector2f[] texCoords = sprite.getTextureCoordinates();
-
-                    // Each texture has the spritesheet id, so all textures have the same id, so there is needed to pushID()
-                    ImGui.pushID(i);
-
-                    if (ImGui.imageButton(id, spriteWidth, spriteHeight, texCoords[2].x, texCoords[0].y, texCoords[0].x, texCoords[2].y)) {
-                        GameObject object = Prefabs.generateSpriteObject(sprite, 0.25f, 0.25f);
-                        // Attach object to the mouse cursor
-                        levelEditorStuff.getComponent(MouseControls.class).pickupObject(object);
-                    }
-
-                    // After we don't want to worry about that we have changed textures' id, so let's replace it again
-                    ImGui.popID();
-
-                    ImVec2 lastButtonPos = new ImVec2();
-                    ImGui.getItemRectMax(lastButtonPos);
-
-                    float lastButtonX2 = lastButtonPos.x;
-                    float nextButtonX2 = lastButtonX2 + itemSpacing.x + spriteWidth;
-
-                    // Keep in the same line if we still have items and if the current item isn't bigger than the window itself
-                    if (i + 1 < sprites.size() && nextButtonX2 < windowX2)
-                        ImGui.sameLine();
+                if (JImGui.spritesLayout(sprites)) {
+                    levelEditorStuff.getComponent(MouseControls.class).pickupObject(JImGui.getSelectedGameObject());
                 }
                 ImGui.endTabItem();
             }

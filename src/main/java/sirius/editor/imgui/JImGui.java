@@ -199,30 +199,18 @@ public class JImGui {
         return pressed;
     }
 
-    /**
-     * Shows a layout with buttons where each button has a sprite and if you click in a button, it generates a
-     * game object using {@link gameobjects.Prefabs#generateSpriteObject(Sprite, float, float)} method.
-     * The game object is kept in {@link JImGui#selectedGameObject} until next frame.
-     *
-     * @param spritesheet Spritesheet where the sprites will be caught.
-     * @return true if we click in a button.
-     */
-    public static boolean spritesLayout(Spritesheet spritesheet) {
+    public static boolean spritesLayout(Spritesheet spritesheet, ImVec2 customWindowSize) {
         boolean pressed = false;
 
         // Gets the window's positions
         ImVec2 windowPos = new ImVec2();
         ImGui.getWindowPos(windowPos);
 
-        // Gets the window's size
-        ImVec2 windowSize = new ImVec2();
-        ImGui.getWindowSize(windowSize);
-
         // Gets item's spacing
         ImVec2 itemSpacing = new ImVec2();
         ImGui.getStyle().getItemSpacing(itemSpacing);
 
-        float windowX2 = windowPos.x + windowSize.x;
+        float windowX2 = windowPos.x + customWindowSize.x;
         for (int i = 0; i < spritesheet.size(); i++) {
             Sprite sprite = spritesheet.getSprite(i);
             float spriteWidth = sprite.getWidth() * 2;
@@ -254,6 +242,18 @@ public class JImGui {
         }
 
         return pressed;
+    }
+
+    /**
+     * Shows a layout with buttons where each button has a sprite and if you click in a button, it generates a
+     * game object using {@link gameobjects.Prefabs#generateSpriteObject(Sprite, float, float)} method.
+     * The game object is kept in {@link JImGui#selectedGameObject} until next frame.
+     *
+     * @param spritesheet Spritesheet where the sprites will be caught.
+     * @return true if we click in a button.
+     */
+    public static boolean spritesLayout(Spritesheet spritesheet) {
+        return spritesLayout(spritesheet, ImGui.getWindowSize());
     }
 
     /**
