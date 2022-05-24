@@ -7,6 +7,7 @@ import imgui.ImGui;
 import imgui.ImVec2;
 import imgui.flag.ImGuiCol;
 import imgui.flag.ImGuiStyleVar;
+import imgui.type.ImBoolean;
 import imgui.type.ImInt;
 import imgui.type.ImString;
 import org.joml.Vector2f;
@@ -181,6 +182,17 @@ public class JImGui {
         return value;
     }
 
+    public static boolean checkBox(String label, boolean value) {
+        ImGui.pushID(label);
+
+        ImBoolean imBool = new ImBoolean(value);
+        ImGui.checkbox(label, imBool);
+
+        ImGui.popID();
+
+        return imBool.get();
+    }
+
     /**
      * Checks if a key was pressed based on ascii table.
      * Range: [0, 127]
@@ -195,6 +207,31 @@ public class JImGui {
                 break;
             }
         }
+
+        return pressed;
+    }
+
+    /**
+     * Place an ImGui button with a customized image.
+     *
+     * @param sprite The image you want to draw in the button
+     * @param id An identifier. Probably the current index of the loop you are going throughout.
+     * @return true, if the button was pressed.
+     */
+    public static boolean imgButton(Sprite sprite, int id) {
+        boolean pressed;
+
+        ImGui.pushID(id);
+
+        int texId            = sprite.getTextureID();
+        Vector2f[] texCoords = sprite.getTextureCoordinates();
+        float spriteWidth    = sprite.getWidth() * 2;
+        float spriteHeight   = sprite.getHeight() * 2;
+
+        pressed = ImGui.imageButton(
+                texId, spriteWidth, spriteHeight, texCoords[2].x, texCoords[0].y, texCoords[0].x, texCoords[2].y);
+
+        ImGui.popID();
 
         return pressed;
     }

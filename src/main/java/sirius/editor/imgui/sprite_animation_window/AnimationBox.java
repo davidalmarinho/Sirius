@@ -9,6 +9,7 @@ import imgui.flag.ImGuiInputTextFlags;
 import imgui.flag.ImGuiMouseButton;
 import imgui.flag.ImGuiWindowFlags;
 import imgui.type.ImString;
+import sirius.animations.AnimationState;
 import sirius.animations.Frame;
 
 import java.util.ArrayList;
@@ -20,9 +21,12 @@ public class AnimationBox {
     private final int ID;
     private ImString trigger;
     public float x, y;
-    // TODO: 16/05/2022 Make this work
-    private List<Frame> frameList;
     private float width, height, lastWidth;
+
+    // TODO: 16/05/2022 Make this work
+    private AnimationState animationState;
+    private List<Frame> frameList;
+    public boolean doesLoop = false;
 
     private boolean mouseAboveAnimationBox;
     private boolean movingAnimationBox;
@@ -48,6 +52,7 @@ public class AnimationBox {
         this.width       = 128.0f;
         this.height      = 128.0f;
         this.lastWidth   = this.width;
+
         this.pointFields = new PointField[4];
         setPointFields();
     }
@@ -439,5 +444,29 @@ public class AnimationBox {
 
     public float getHeight() {
         return height;
+    }
+
+    public Frame getFrame(int index) {
+        return frameList.get(index);
+    }
+
+    public int getFrameListSize() {
+        return frameList.size();
+    }
+
+    public void addFrame(Frame frame) {
+        this.frameList.add(frame);
+    }
+
+    public void removeFrame(Frame frame) {
+        this.frameList.remove(frame);
+    }
+
+    public void removeFrame(int index) {
+        this.frameList.remove(index);
+    }
+
+    public void removeAllFrames() {
+        this.frameList.clear();
     }
 }
