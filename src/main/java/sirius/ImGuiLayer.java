@@ -183,7 +183,7 @@ public class ImGuiLayer {
         currentScene.imgui();
         propertiesWindow.imgui();
         sceneHierarchy.imgui();
-        spriteAnimationWindow.imgui();
+        spriteAnimationWindow.imgui(dt);
         gameViewWindow.imgui();
 
         // We have to end ImGui before we render ImGui

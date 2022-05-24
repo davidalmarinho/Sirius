@@ -13,7 +13,7 @@ public class SpriteAnimationWindow {
         this.stateMachineChild = new StateMachineChild();
     }
 
-    public void imgui() {
+    public void imgui(float dt) {
         if (ImGui.begin("Sprite Animation Window", new ImBoolean(true))) {
             ImGui.text("Mouse Left: drag to add lines, or drag inside the boxes to move them." +
                     "\nMouse Middle: drag to scroll," +
@@ -25,9 +25,9 @@ public class SpriteAnimationWindow {
             // config child's size has to be 240
             if (configChild.isShowConfigChild()) {
                 if (stateMachineChild.isShowStateMachineChild())
-                    configChild.imgui(new ImVec2(300, ImGui.getContentRegionAvailY()));
+                    configChild.imgui(new ImVec2(300, ImGui.getContentRegionAvailY()), dt);
                 else
-                    configChild.imgui(ImGui.getContentRegionAvail());
+                    configChild.imgui(ImGui.getContentRegionAvail(), dt);
             }
 
             if (stateMachineChild.isShowStateMachineChild())

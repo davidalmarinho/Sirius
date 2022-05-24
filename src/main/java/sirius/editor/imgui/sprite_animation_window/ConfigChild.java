@@ -1,6 +1,7 @@
 package sirius.editor.imgui.sprite_animation_window;
 
 import gameobjects.GameObject;
+import gameobjects.components.Sprite;
 import gameobjects.components.SpriteRenderer;
 import imgui.ImGui;
 import imgui.ImVec2;
@@ -9,23 +10,33 @@ import imgui.type.ImBoolean;
 import sirius.animations.Frame;
 import sirius.editor.imgui.JImGui;
 import sirius.utils.AssetPool;
+import sirius.utils.JMath;
 
 import javax.swing.*;
 
 public class ConfigChild {
-    String popupAddFrameContext = "add_frame_popup";
-    String popupFrameSettings = "frame_settings_popup";
     public ImBoolean showConfigChild;
+
     private String currentSpritesheet = "";
+    private final String POPUP_FRAME_SETTINGS = "frame_settings_popup";
+    private final String POPUP_ADD_FRAME_CONTEXT = "add_frame_popup";
+
     private boolean closePopup = false;
 
+    private boolean changeAllFrames = false;
+
+    // Store the index of the frame that we are editing
     private int currentFrameIndex = 0;
+
+    // Just have the objective to show a preview of the animation
+    private int curFrameAnimationIndex = 0;
+    private float animationTime;
 
     public ConfigChild() {
         this.showConfigChild = new ImBoolean(false);
     }
 
-    public void imgui(ImVec2 regionAvailable) {
+    public void imgui(ImVec2 regionAvailable, float dt) {
         // Initialize currentSpritesheet with the first spritesheet from the list
         if (currentSpritesheet.equals(""))
             currentSpritesheet = AssetPool.getSpritesheetsPaths()[0];
@@ -57,17 +68,19 @@ public class ConfigChild {
 
         // Represent graphically added frames
         for (int i = 0; i < activeBox.getFrameListSize(); i++) {
-            if (JImGui.imgButton(activeBox.getFrame(i).sprite, i)) {
+            Sprite sprite = activeBox.getFrame(i).sprite;
+
+            if (JImGui.imgButton(sprite, i)) {
                 // TODO: 23/05/2022 Popup with frame's settings
                 currentFrameIndex = i;
-                ImGui.openPopup(popupFrameSettings);
+                ImGui.openPopup(POPUP_FRAME_SETTINGS);
             }
 
             ImVec2 lastButtonPos = new ImVec2();
             ImGui.getItemRectMax(lastButtonPos);
 
             float lastButtonX = lastButtonPos.x;
-            float nextButtonX = lastButtonX + itemSpacing.x + activeBox.getFrame(i).sprite.getWidth() * 2;
+            float nextButtonX = lastButtonX + itemSpacing.x + sprite.getWidth() * 2;
 
             // Keep in the same line if we still have items and if the current item isn't bigger than the window itself
             if (i + 1 < activeBox.getFrameListSize() && nextButtonX < windowPosX + regionAvailable.x)
@@ -83,13 +96,12 @@ public class ConfigChild {
         }
 
         if (activeBox.doesLoop || activeBox.getFrameListSize() == 0) {
-            if (ImGui.button("Add Frame")) {
-                ImGui.openPopup(popupAddFrameContext);
-            }
+            if (ImGui.button("Add Frame"))
+                ImGui.openPopup(POPUP_ADD_FRAME_CONTEXT);
         }
 
         // Menu to select which spritesheet we want
-        if (ImGui.beginPopup(popupAddFrameContext, ImGuiWindowFlags.MenuBar)) {
+        if (ImGui.beginPopup(POPUP_ADD_FRAME_CONTEXT, ImGuiWindowFlags.MenuBar)) {
             if (ImGui.beginMenuBar()) {
                 if (ImGui.beginMenu("Select spritesheet")) {
                     String[] loadSprites = AssetPool.getSpritesheetsNames();
@@ -128,25 +140,60 @@ public class ConfigChild {
             ImGui.endPopup();
         }
 
-        if (ImGui.beginPopupModal("Frame Settings")) {
+        if (ImGui.beginPopupModal(POPUP_FRAME_SETTINGS)) {
             Frame curFrame = activeBox.getFrame(currentFrameIndex);
             curFrame.frameTime = JImGui.dragFloat("Frame Time: ", curFrame.frameTime);
 
-            if (ImGui.button("Remove Frame")) {
-                activeBox.removeFrame(curFrame);
-                ImGui.closeCurrentPopup();
+            // Delete a frame if we aren't changing all of them
+            if (!changeAllFrames) {
+                if (ImGui.button("Remove Frame")) {
+                    activeBox.removeFrame(curFrame);
+                    currentFrameIndex = 0;
+                    ImGui.closeCurrentPopup();
+                }
             }
 
             // Close modal popup
             if (ImGui.button("Close")) {
+                if (changeAllFrames) {
+                    for (int i = 0; i < activeBox.getFrameListSize(); i++) {
+                        if (!JMath.compare(activeBox.getFrame(i).frameTime, curFrame.frameTime))
+                            activeBox.getFrame(i).frameTime = curFrame.frameTime;
+                    }
+                    changeAllFrames = false;
+                }
                 ImGui.closeCurrentPopup();
             }
 
             ImGui.endPopup();
         }
 
-        // Add frames / sprites (if it doesn't loop just let put one frame)
+        // Show a preview of the animation
+        if (activeBox.getFrameListSize() > 0) {
+            ImGui.newLine();
+            animationTime += dt;
+            if (animationTime >= activeBox.getFrame(curFrameAnimationIndex).frameTime) {
+                animationTime = 0.0f;
+                curFrameAnimationIndex++;
+                if (curFrameAnimationIndex >= activeBox.getFrameListSize()) {
+                    curFrameAnimationIndex = 0;
+                }
+            }
 
+            Sprite sprite = activeBox.getFrame(curFrameAnimationIndex).sprite;
+            JImGui.image(sprite, sprite.getWidth() * 6, sprite.getHeight() * 6);
+        }
+
+        if (activeBox.getFrameListSize() > 1) {
+            ImGui.newLine();
+            if (ImGui.button("Edit all frames")) {
+                ImGui.openPopup(POPUP_FRAME_SETTINGS);
+                changeAllFrames = true;
+            }
+        }
+
+
+        // Add frames / sprites (if it doesn't loop just let put one frame)
 
         // TODO: 15/05/2022 Code needed for:
         // Just let edit sprite animation window's children if a game object has been selected

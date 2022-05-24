@@ -236,6 +236,24 @@ public class JImGui {
         return pressed;
     }
 
+    public static void image(Sprite sprite) {
+        int texId = sprite.getTextureID();
+
+        Vector2f[] texCoords = sprite.getTextureCoordinates();
+        float spriteWidth    = sprite.getWidth() * 2;
+        float spriteHeight   = sprite.getHeight() * 2;
+
+        ImGui.image(texId, spriteWidth, spriteHeight, texCoords[2].x, texCoords[0].y, texCoords[0].x, texCoords[2].y);
+    }
+    public static void image(Sprite sprite, float width, float height) {
+        int texId = sprite.getTextureID();
+
+        Vector2f[] texCoords = sprite.getTextureCoordinates();
+
+        ImGui.image(texId, width, height, texCoords[2].x, texCoords[0].y, texCoords[0].x, texCoords[2].y,
+                1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f);
+    }
+
     public static boolean spritesLayout(Spritesheet spritesheet, ImVec2 customWindowSize) {
         boolean pressed = false;
 
