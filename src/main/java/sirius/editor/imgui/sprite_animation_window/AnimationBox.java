@@ -446,8 +446,16 @@ public class AnimationBox {
         return height;
     }
 
+    public List<Frame> getFrameList() {
+        return frameList;
+    }
+
     public Frame getFrame(int index) {
         return frameList.get(index);
+    }
+
+    public void setFrame(int index, Frame newFrame) {
+        frameList.set(index, newFrame);
     }
 
     public int getFrameListSize() {

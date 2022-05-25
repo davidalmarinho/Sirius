@@ -12,6 +12,7 @@ import imgui.type.ImInt;
 import imgui.type.ImString;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
+import sirius.rendering.Color;
 import sirius.rendering.spritesheet.Spritesheet;
 
 public class JImGui {
@@ -94,6 +95,22 @@ public class JImGui {
         ImGui.dragFloat("##dragFloat", valArray, 0.1f);
 
         ImGui.columns(1);
+        ImGui.popID();
+
+        return valArray[0];
+    }
+
+    public static float dragFloatPopups(String label, float value) {
+        ImGui.pushID(label);
+
+        ImGui.setNextItemWidth(defaultColumnWidth);
+        ImGui.textUnformatted(label);
+
+        ImGui.sameLine();
+        ImGui.setNextItemWidth(defaultColumnWidth / 2);
+        float[] valArray = {value};
+        ImGui.dragFloat("##dragFloat", valArray, 0.1f);
+
         ImGui.popID();
 
         return valArray[0];
@@ -211,14 +228,24 @@ public class JImGui {
         return pressed;
     }
 
+    public static boolean imgButton(int id, Sprite sprite) {
+        return imgButton(id, sprite, new Color(0.0f, 0.0f, 0.0f, 0.0f));
+    }
+
     /**
      * Place an ImGui button with a customized image.
      *
      * @param sprite The image you want to draw in the button
      * @param id An identifier. Probably the current index of the loop you are going throughout.
+     * @param backgroundColor Background customized color for button
      * @return true, if the button was pressed.
      */
-    public static boolean imgButton(Sprite sprite, int id) {
+    public static boolean imgButton(int id, Sprite sprite, Color backgroundColor) {
+        float r = backgroundColor.getRed();
+        float g = backgroundColor.getGreen();
+        float b = backgroundColor.getBlue();
+        float a = backgroundColor.getOpacity();
+
         boolean pressed;
 
         ImGui.pushID(id);
@@ -229,7 +256,8 @@ public class JImGui {
         float spriteHeight   = sprite.getHeight() * 2;
 
         pressed = ImGui.imageButton(
-                texId, spriteWidth, spriteHeight, texCoords[2].x, texCoords[0].y, texCoords[0].x, texCoords[2].y);
+                texId, spriteWidth, spriteHeight, texCoords[2].x, texCoords[0].y, texCoords[0].x, texCoords[2].y, 0,
+                r, g, b, a);
 
         ImGui.popID();
 
