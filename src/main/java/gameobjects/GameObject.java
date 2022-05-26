@@ -1,13 +1,12 @@
 package gameobjects;
 
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import gameobjects.components.Component;
-import gameobjects.components.ComponentDeserializer;
 import gameobjects.components.SpriteRenderer;
 import gameobjects.components.Transform;
 import imgui.ImGui;
 import org.joml.Vector2f;
+import sirius.Encode;
 import sirius.utils.AssetPool;
 
 import java.util.ArrayList;
@@ -109,26 +108,18 @@ public class GameObject {
     }
 
     public GameObject copy() {
-        Gson gson = new GsonBuilder()
-                .setPrettyPrinting()
-                .registerTypeAdapter(Component.class, new ComponentDeserializer())
-                .registerTypeAdapter(GameObject.class, new GameObjectDeserializer())
-                .enableComplexMapKeySerialization()
-                .create();
+        GameObject copyObj = Encode.getGameObjectCopy(this);
+        copyObj.generateUid();
 
-        String objAsJson = gson.toJson(this);
-        GameObject obj = gson.fromJson(objAsJson, GameObject.class);
-        obj.generateUid();
-
-        for (Component c : obj.componentList) {
+        for (Component c : copyObj.componentList) {
             c.generateId();
         }
 
-        SpriteRenderer spriteRenderer = obj.getComponent(SpriteRenderer.class);
+        SpriteRenderer spriteRenderer = copyObj.getComponent(SpriteRenderer.class);
         if (spriteRenderer != null && spriteRenderer.getTexture() != null) {
             spriteRenderer.setTexture(AssetPool.getTexture(spriteRenderer.getTexture().getFilePath()));
         }
-        return obj;
+        return copyObj;
     }
 
     /**
