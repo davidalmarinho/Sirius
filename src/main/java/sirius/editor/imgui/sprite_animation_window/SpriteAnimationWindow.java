@@ -31,7 +31,7 @@ public class SpriteAnimationWindow {
             }
 
             if (stateMachineChild.isShowStateMachineChild())
-                stateMachineChild.imgui(ImGui.getContentRegionAvail());
+                stateMachineChild.imgui(ImGui.getContentRegionAvail(), dt);
 
         }
         ImGui.end();

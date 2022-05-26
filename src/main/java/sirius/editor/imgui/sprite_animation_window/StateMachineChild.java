@@ -14,6 +14,8 @@ import java.util.List;
 
 // State Machine Child will also be called Canvas in the comments
 public class StateMachineChild {
+    // public static float zoom = 1.0f;
+
     private boolean hovered;
     public ImBoolean showStateMachineChild;
 
@@ -105,7 +107,7 @@ public class StateMachineChild {
         }
     }
 
-    public void imgui(ImVec2 contentRegionAvailable) {
+    public void imgui(ImVec2 contentRegionAvailable, float dt) {
         activeAnimationBox = animationBoxList
                 .stream()
                 .filter(animationBox -> getAnimationBox(animationBox.getId()).isSelected())
@@ -130,6 +132,7 @@ public class StateMachineChild {
 
         // Draw border and background color
         ImGuiIO io = ImGui.getIO();
+        // zoom += io.getMouseWheel() * dt;
         ImDrawList drawList = ImGui.getWindowDrawList();
 
         // Check if the cursor is above of sprite animation window
@@ -177,12 +180,19 @@ public class StateMachineChild {
         // Draw grid
         drawList.pushClipRect(canvasP0.x, canvasP0.y, canvasP1.x, canvasP1.y, false);
         float GRID_STEP = 64.0f;
+
+        // for (float x = JMath.fmodf(scrolling.x, GRID_STEP); x < canvasSize.x; x += GRID_STEP * zoom) {
         for (float x = JMath.fmodf(scrolling.x, GRID_STEP); x < canvasSize.x; x += GRID_STEP) {
-            drawList.addLine(canvasP0.x + x, canvasP0.y, canvasP0.x + x, canvasP1.y,
+            drawList.addLine(
+                    canvasP0.x + x, canvasP0.y,
+                    canvasP0.x + x, canvasP1.y,
                     ImColor.intToColor(200, 200, 200, 40));
         }
+        // for (float y = JMath.fmodf(scrolling.y, GRID_STEP); y < canvasSize.y; y += GRID_STEP * zoom) {
         for (float y = JMath.fmodf(scrolling.y, GRID_STEP); y < canvasSize.y; y += GRID_STEP) {
-            drawList.addLine(canvasP0.x, canvasP0.y + y, canvasP1.x, canvasP0.y + y,
+            drawList.addLine(
+                    canvasP0.x, canvasP0.y + y,
+                    canvasP1.x, canvasP0.y + y,
                     ImColor.intToColor(200, 200, 200, 40));
         }
 

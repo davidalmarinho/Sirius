@@ -11,6 +11,7 @@ import imgui.flag.ImGuiWindowFlags;
 import imgui.type.ImString;
 import sirius.animations.AnimationState;
 import sirius.animations.Frame;
+import sirius.editor.imgui.JImGui;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -271,7 +272,14 @@ public class AnimationBox {
             this.width = Math.min(currentSize + BREAKER_WIDTH, maxSize + BREAKER_WIDTH);
 
         // ImDrawList drawList = ImGui.getWindowDrawList();
-        drawList.addRectFilled(origin.x + x - getWidth() / 2,
+        // drawList.addRectFilled(
+        //         origin.x + x - getWidth() / 2 * StateMachineChild.zoom,
+        //         origin.y + y - getHeight() / 2 * StateMachineChild.zoom,
+        //         origin.x + x + getWidth() / 2 * StateMachineChild.zoom,
+        //         origin.y + y + getHeight() / 2 * StateMachineChild.zoom,
+        //         ImColor.intToColor(112, 16, 20, 255), ROUNDING);
+        drawList.addRectFilled(
+                origin.x + x - getWidth() / 2,
                 origin.y + y - getHeight() / 2,
                 origin.x + x + getWidth() / 2,
                 origin.y + y + getHeight() / 2,
@@ -282,12 +290,14 @@ public class AnimationBox {
         ImGui.pushID("nodeTrigger: " + ID);
 
         // Changes the animation box input text box size
-        if (charsNumber < 10)
+        if (charsNumber < 10) {
             ImGui.setNextItemWidth(val * 10);
-        else
+        } else {
             ImGui.setNextItemWidth(Math.min(currentSize, maxSize));
+        }
 
         ImGui.inputText("", this.trigger, ImGuiInputTextFlags.AutoSelectAll);
+        // System.out.println("MinMax zoom: " + StateMachineChild.zoom); // 0.79
 
         // Select the box if the text input field was activated
         if (ImGui.isItemActivated())
@@ -319,6 +329,21 @@ public class AnimationBox {
         // Draw the outlines of the animation box
         ImDrawList drawList = ImGui.getWindowDrawList();
 
+        // if (!selected) {
+        //     drawList.addRect(
+        //             origin.x + x - getWidth() / 2 * StateMachineChild.zoom,
+        //             origin.y + y - getHeight() / 2 * StateMachineChild.zoom,
+        //             origin.x + x + getWidth() / 2 * StateMachineChild.zoom,
+        //             origin.y + y + getHeight() / 2 * StateMachineChild.zoom,
+        //             ImColor.intToColor(255, 255, 255, 255), ROUNDING, ImDrawFlags.RoundCornersAll, THICKNESS);
+        // } else {
+        //     drawList.addRect(
+        //             origin.x + x - getWidth() / 2 * StateMachineChild.zoom,
+        //             origin.y + y - getHeight() / 2 * StateMachineChild.zoom,
+        //             origin.x + x + getWidth() / 2 * StateMachineChild.zoom,
+        //             origin.y + y + getHeight() / 2 * StateMachineChild.zoom,
+        //             ImColor.intToColor(200, 200, 200, 255), ROUNDING, ImDrawFlags.RoundCornersAll, THICKNESS);
+        // }
         if (!selected) {
             drawList.addRect(
                     origin.x + x - getWidth() / 2,
