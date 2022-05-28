@@ -5,13 +5,12 @@ import imgui.ImDrawList;
 import imgui.ImGui;
 import imgui.ImVec2;
 import imgui.flag.ImDrawFlags;
-import imgui.flag.ImGuiInputTextFlags;
 import imgui.flag.ImGuiMouseButton;
 import imgui.flag.ImGuiWindowFlags;
 import imgui.type.ImString;
+import sirius.SiriusTheFox;
 import sirius.animations.AnimationState;
 import sirius.animations.Frame;
-import sirius.editor.imgui.JImGui;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,33 +19,33 @@ public class AnimationBox {
     public static int maxId = 0;
 
     private final int ID;
-    private ImString trigger;
+    private String trigger;
     public float x, y;
-    private float width, height, lastWidth;
+    private transient float width, height, lastWidth;
 
     // TODO: 16/05/2022 Make this work
     private AnimationState animationState;
     private List<Frame> frameList;
     public boolean doesLoop = false;
 
-    private boolean mouseAboveAnimationBox;
-    private boolean movingAnimationBox;
+    private transient boolean mouseAboveAnimationBox;
+    private transient boolean movingAnimationBox;
 
     private PointField[] pointFields;
-    private boolean updatePointFields;
-    private boolean mayCheckForUncheckedPoints;
-    private boolean checkPointsSameBox;
+    private transient boolean updatePointFields;
+    private transient boolean mayCheckForUncheckedPoints;
+    private transient boolean checkPointsSameBox;
 
-    private final float THICKNESS = 10.0f;
-    private final float ROUNDING  = 20.0f;
+    private transient final float THICKNESS = 10.0f;
+    private transient final float ROUNDING  = 20.0f;
 
-    private boolean selected;
+    private transient boolean selected;
 
     public AnimationBox(String trigger, float x, float y) {
         this.ID = maxId;
         maxId++;
         this.frameList = new ArrayList<>();
-        this.trigger   = new ImString(trigger, 32);
+        this.trigger   = trigger;
         this.x         = x;
         this.y         = y;
 
@@ -107,8 +106,10 @@ public class AnimationBox {
 
     private void delUnlinkedPoints() {
         if (mayCheckForUncheckedPoints) {
+            List<Point> pointList = SpriteAnimationWindow.getStateMachineChild().pointList;
+
             // We do this check to make sure that the point is unlinked
-            if (StateMachineChild.pointList.size() % 2 == 0) {
+            if (pointList.size() % 2 == 0) {
                 mayCheckForUncheckedPoints = false;
                 return;
             }
@@ -117,7 +118,7 @@ public class AnimationBox {
             for (PointField pointField : pointFields) {
                 if (pointField.hasUnLinkedPoint) {
                     // Remove the last points from the lists
-                    StateMachineChild.pointList.remove(StateMachineChild.pointList.size() - 1);
+                    pointList.remove(pointList.size() - 1);
                     pointField.removeLastPoint();
                     pointField.hasUnLinkedPoint = false;
                 }
@@ -166,7 +167,7 @@ public class AnimationBox {
         checkPointsSameBox = false;
 
         // Get the 2 last points added to rendering
-        List<Point> saPointList = StateMachineChild.pointList;
+        List<Point> saPointList = SpriteAnimationWindow.getStateMachineChild().pointList;
         Point[] last2Points = {saPointList.get(saPointList.size() - 1), saPointList.get(saPointList.size() - 2)};
 
         // If samePoint var reaches 2, we will have to delete the 2 lastPoints added, because
@@ -232,8 +233,10 @@ public class AnimationBox {
             // Load the new points positions to the drawing list in Sprite Animation Window
             for (PointField pointField : pointFields) {
                 for (Point p : pointField.getPointList()) {
-                    StateMachineChild.pointList.stream().filter(point -> p.getId() == point.getId())
-                            .findFirst().ifPresent(asP -> asP.position.set(new ImVec2(p.position)));
+                    SpriteAnimationWindow.getStateMachineChild().pointList.stream()
+                            .filter(point -> p.getId() == point.getId())
+                            .findFirst()
+                            .ifPresent(asP -> asP.position.set(new ImVec2(p.position)));
                 }
             }
 
@@ -296,7 +299,7 @@ public class AnimationBox {
             ImGui.setNextItemWidth(Math.min(currentSize, maxSize));
         }
 
-        ImGui.inputText("", this.trigger, ImGuiInputTextFlags.AutoSelectAll);
+        this.trigger = inputText(this.trigger);
         // System.out.println("MinMax zoom: " + StateMachineChild.zoom); // 0.79
 
         // Select the box if the text input field was activated
@@ -365,9 +368,10 @@ public class AnimationBox {
         // Create points to after join them and form a line, if the left mouse button isn't realised
         boolean mouseReleasedOrClicked =
                 ImGui.isMouseClicked(ImGuiMouseButton.Left) || ImGui.isMouseReleased(ImGuiMouseButton.Left);
+        List<Point> pointList = SpriteAnimationWindow.getStateMachineChild().pointList;
         for (PointField pointField : pointFields) {
             if (!movingAnimationBox) {
-                if (pointField.hasUnLinkedPoint && StateMachineChild.pointList.size() % 2 == 0)
+                if (pointField.hasUnLinkedPoint && pointList.size() % 2 == 0)
                     pointField.hasUnLinkedPoint = false;
 
                 // pointField.debug(origin);
@@ -379,16 +383,16 @@ public class AnimationBox {
                     if (mouseReleasedOrClicked) {
                         ImVec2 pointPos = new ImVec2(ImGui.getMousePosX() - origin.x, ImGui.getMousePosY() - origin.y);
                         Point newPoint = new Point(pointPos, 6.0f);
-                        StateMachineChild.pointList.add(new Point(newPoint));
+                        pointList.add(new Point(newPoint));
                         pointField.addPoint(newPoint);
 
                         // Mark in which point field a possible unlinked point is
-                        if (StateMachineChild.pointList.size() % 2 != 0) {
+                        if (pointList.size() % 2 != 0) {
                             pointField.hasUnLinkedPoint = true;
                             // Mark check to see if there are 2 points in the same animation box
                         } else {
                             checkPointsSameBox = true;
-                            StateMachineChild.lookMessyLines = true;
+                            SpriteAnimationWindow.getStateMachineChild().lookMessyLines = true;
                         }
                     }
                 }
@@ -421,13 +425,13 @@ public class AnimationBox {
                     // but it just make it works
                     if (point.position.x < this.x) {
                         point.position.x -= moveValue;
-                        StateMachineChild.pointList.stream()
+                        pointList.stream()
                                 .filter(saPoint -> point.getId() == saPoint.getId())
                                 .forEach(saPoint -> saPoint.position.x -= moveValue);
                     // Move right
                     } else {
                         point.position.x += moveValue;
-                        StateMachineChild.pointList.stream()
+                        pointList.stream()
                                 .filter(saPoint -> point.getId() == saPoint.getId())
                                 .forEach(saPoint -> saPoint.position.x += moveValue);
                     }
@@ -439,8 +443,18 @@ public class AnimationBox {
         delPointsSameBox();
     }
 
+    private String inputText(String text) {
+        ImString outString = new ImString(text, 32);
+
+        if (ImGui.inputText("", outString)) {
+            return outString.get();
+        }
+
+        return text;
+    }
+
     public String getTrigger() {
-        return trigger.get();
+        return trigger;
     }
 
     public boolean isSelected() {

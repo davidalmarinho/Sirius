@@ -1,13 +1,13 @@
-package sirius;
+package sirius.encode_tools;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.sun.istack.internal.NotNull;
 import gameobjects.GameObject;
-import gameobjects.GameObjectDeserializer;
 import gameobjects.components.Component;
-import gameobjects.components.ComponentDeserializer;
 import sirius.editor.NonPickable;
+import sirius.editor.imgui.sprite_animation_window.AnimationBox;
+import sirius.editor.imgui.sprite_animation_window.StateMachineChild;
 import sirius.levels.Level;
 import sirius.utils.AssetPool;
 
@@ -29,11 +29,20 @@ public class Encode {
      *         {@link GsonBuilder#enableComplexMapKeySerialization()}
      * </p>
      */
-    public static Gson newGson() {
+    public static Gson newGsonToSaveGameObjects() {
         return new GsonBuilder()
                 .setPrettyPrinting()
                 .registerTypeAdapter(Component.class, new ComponentDeserializer())
                 .registerTypeAdapter(GameObject.class, new GameObjectDeserializer())
+                .enableComplexMapKeySerialization()
+                .create();
+    }
+
+    public static Gson stateMachineChildGson() {
+        return new GsonBuilder()
+                .setPrettyPrinting()
+                .registerTypeAdapter(StateMachineChild.class, new StateMachineChildDeserializer())
+                .registerTypeAdapter(AnimationBox.class, new AnimationBoxDeserializer())
                 .enableComplexMapKeySerialization()
                 .create();
     }
@@ -44,10 +53,10 @@ public class Encode {
      * @param gameObjectList Game object list that needs to be saved in a file.
      */
     public static void saveGameObjectListInFile(@NotNull List<GameObject> gameObjectList) {
-        Gson gson = newGson();
+        Gson gson = newGsonToSaveGameObjects();
 
         try {
-            // Save gameObjectList in a txt file
+            // Save gameObjectList in a .json file
             FileWriter writer = new FileWriter(AssetPool.getLevel(Level.currentLevel).getPath());
             List<GameObject> objsToSerialize = new ArrayList<>();
             for (GameObject obj : gameObjectList) {
@@ -66,6 +75,19 @@ public class Encode {
         }
     }
 
+    public static void saveAnimation(@NotNull StateMachineChild stateMachineChild, @NotNull String filePath) {
+        Gson gson = stateMachineChildGson();
+
+        try {
+            // Save state machine child in a .json file
+            FileWriter writer = new FileWriter(filePath);
+            writer.write(gson.toJson(stateMachineChild));
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     /**
      * Get game object list from a file.
      *
@@ -73,7 +95,7 @@ public class Encode {
      * @return A game object list.
      */
     public static GameObject[] getGameObjectsFromFile(String filePath) {
-        Gson gson = newGson();
+        Gson gson = newGsonToSaveGameObjects();
         return gson.fromJson(filePath, GameObject[].class);
     }
 
@@ -84,7 +106,7 @@ public class Encode {
      * @return New game object.
      */
     public static GameObject getGameObjectCopy(@NotNull GameObject gameObject) {
-        Gson gson = newGson();
+        Gson gson = newGsonToSaveGameObjects();
 
         String objAsJson  = gson.toJson(gameObject);
 

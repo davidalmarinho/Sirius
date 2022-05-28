@@ -148,6 +148,11 @@ public class ConfigChild {
         if (activeBox.getFrameListSize() > 0) {
             ImGui.newLine();
             animationTime += dt;
+
+            // Bug fix
+            if (activeBox.getFrame(curFrameAnimationIndex) == null)
+                resetAnimationPreview();
+
             if (animationTime >= activeBox.getFrame(curFrameAnimationIndex).frameTime) {
                 animationTime = 0.0f;
                 curFrameAnimationIndex++;
@@ -157,6 +162,8 @@ public class ConfigChild {
             }
 
             Sprite sprite = activeBox.getFrame(curFrameAnimationIndex).sprite;
+
+            // TODO: 28/05/2022 Make button to change background's color
             JImGui.image(sprite, sprite.getWidth() * 6, sprite.getHeight() * 6);
         }
 
@@ -242,6 +249,7 @@ public class ConfigChild {
 
         // Don't have active box to show its configs
         if (activeBox == null) {
+            resetAnimationPreview();
             ImGui.endChild();
             ImGui.sameLine();
             return;

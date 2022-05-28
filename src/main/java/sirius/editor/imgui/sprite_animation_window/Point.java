@@ -6,10 +6,10 @@ import imgui.ImGui;
 import imgui.ImVec2;
 
 public class Point {
-    private static int maxId = 0;
-    private int id;
+    private transient static int maxId = 0;
+    private transient int id;
     public ImVec2 position;
-    private float radius;
+    private transient float radius;
 
     public Point(ImVec2 position, float radius) {
         this.id       = maxId;

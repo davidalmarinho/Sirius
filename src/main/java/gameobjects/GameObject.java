@@ -1,12 +1,11 @@
 package gameobjects;
 
-import com.google.gson.Gson;
 import gameobjects.components.Component;
 import gameobjects.components.SpriteRenderer;
 import gameobjects.components.Transform;
 import imgui.ImGui;
 import org.joml.Vector2f;
-import sirius.Encode;
+import sirius.encode_tools.Encode;
 import sirius.utils.AssetPool;
 
 import java.util.ArrayList;

@@ -253,6 +253,10 @@ public class ImGuiLayer {
         return propertiesWindow;
     }
 
+    public SpriteAnimationWindow getSpriteAnimationWindow() {
+        return spriteAnimationWindow;
+    }
+
     public GameViewWindow getGameViewWindow() {
         return gameViewWindow;
     }

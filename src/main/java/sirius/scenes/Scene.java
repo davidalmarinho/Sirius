@@ -1,16 +1,13 @@
 package sirius.scenes;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import gameobjects.components.Transform;
 import gameobjects.GameObject;
-import gameobjects.GameObjectDeserializer;
 import gameobjects.components.Component;
-import gameobjects.components.ComponentDeserializer;
 import observers.EventSystem;
 import observers.events.Event;
 import observers.events.Events;
-import sirius.Encode;
+import sirius.editor.imgui.sprite_animation_window.SpriteAnimationWindow;
+import sirius.encode_tools.Encode;
 import sirius.SiriusTheFox;
 import sirius.editor.MouseControls;
 import sirius.editor.PropertiesWindow;
@@ -21,6 +18,7 @@ import sirius.rendering.Renderer;
 import org.joml.Vector2f;
 import physics2d.Physics2d;
 import sirius.utils.AssetPool;
+import sirius.utils.Settings;
 
 import java.io.File;
 import java.io.IOException;
@@ -50,6 +48,7 @@ public class Scene {
         running = false;
 
         loadLevels();
+        loadAnimations();
     }
 
     public void init() {
@@ -223,24 +222,24 @@ public class Scene {
         }
     }
 
-    public void loadLevels() {
-        File folder = new File("assets/levels");
-        File[] listOfLevels = folder.listFiles();
-        assert listOfLevels != null;
+    private void loadLevels() {
+        File folder = new File(Settings.Files.LEVELS_FOLDER);
+        File[] levels = folder.listFiles();
+        assert levels != null;
 
         // Array to store what levels were loaded
-        int[] loadedLevels = new int[listOfLevels.length];
+        int[] loadedLevels = new int[levels.length];
 
         // Load levels to the asset pool
-        for (int i = 0; i < listOfLevels.length; i++) {
+        for (int i = 0; i < levels.length; i++) {
             // Check if the saved file is valid
-            if (!listOfLevels[i].getName().contains("level") || !listOfLevels[i].getName().contains(".json")) {
-                System.err.println("Warning: '" + listOfLevels[i].getName()
+            if (!levels[i].getName().contains("level") || !levels[i].getName().contains(".json")) {
+                System.err.println("Warning: '" + levels[i].getName()
                         + "' can't be recognized as a level file.");
                 continue;
             }
 
-            String[] navigator = listOfLevels[i].getName().split("level");
+            String[] navigator = levels[i].getName().split("level");
             String[] navigator1 = navigator[1].split(".json");
             int curLvl = Integer.parseInt(navigator1[0]);
             loadedLevels[i] = curLvl;
@@ -250,14 +249,14 @@ public class Scene {
 
         for (int i = 0; i < loadedLevels.length; i++) {
             int curLvl = loadedLevels[i];
-            for (int j = 0; j < listOfLevels.length; j++) {
-                String lvlName = listOfLevels[j].getName();
+            for (int j = 0; j < levels.length; j++) {
+                String lvlName = levels[j].getName();
                 String[] navigator = lvlName.split("level");
                 String[] navigator1 = navigator[1].split(".json");
                 int levelFile = Integer.parseInt(navigator1[0]);
 
                 if (curLvl == levelFile) {
-                    AssetPool.addLevel(new Level(lvlName, listOfLevels[j].getPath(), curLvl));
+                    AssetPool.addLevel(new Level(lvlName, levels[j].getPath(), curLvl));
                     break;
                 }
             }
@@ -277,12 +276,20 @@ public class Scene {
         Level.maxLevel = loadedLevels[loadedLevels.length - 1];
     }
 
+    private void loadAnimations() {
+        File folder = new File(Settings.Files.ANIMATIONS_FOLDER);
+        File[] animationFiles = folder.listFiles();
+        assert animationFiles != null;
+
+        for (File file : animationFiles)
+            AssetPool.addAnimationPath(file.getAbsolutePath());
+    }
+
     public void save() {
         // ===============================================================================
         // Bug fix:
         // Modifies the selected active game objects if they haven't been modified before
         PropertiesWindow propertiesWindow = SiriusTheFox.getImGuiLayer().getPropertiesWindow();
-
         if (sceneInitializer instanceof LevelEditorSceneInitializer) {
             LevelEditorSceneInitializer levelEditor = (LevelEditorSceneInitializer) sceneInitializer;
             MouseControls mouseControls = levelEditor.getLevelEditorStuff().getComponent(MouseControls.class);
@@ -296,8 +303,17 @@ public class Scene {
             gameObjectList.addAll(pendingGameObjectList);
             pendingGameObjectList.clear();
         }
+        // ===============================================================================
 
+        // Save game objects
         Encode.saveGameObjectListInFile(gameObjectList);
+
+        // Save animation --animations' auto save needs that active game list be different from one. So, we need to
+        // save this one by this way.
+        if (propertiesWindow.getActiveGameObjectList().size() == 1) {
+            Encode.saveAnimation(SpriteAnimationWindow.getStateMachineChild(),
+                    Settings.Files.ANIMATIONS_FOLDER + propertiesWindow.getActiveGameObject().name + ".json");
+        }
     }
 
     public void load() {

@@ -15,36 +15,39 @@ import java.util.List;
 // State Machine Child will also be called Canvas in the comments
 public class StateMachineChild {
     // public static float zoom = 1.0f;
+    public List<Point> pointList;
 
-    private boolean hovered;
-    public ImBoolean showStateMachineChild;
-
-    public AnimationBox activeAnimationBox;
-    public static List<Point> pointList;
-    public static boolean lookMessyLines;
     private List<AnimationBox> animationBoxList;
-    private List<Wire> wireList;
-    private Wire wire;
 
-    private ImVec2 scrolling;
+    public transient ImBoolean showStateMachineChild;
 
-    private boolean addingLine = false;
-    private float thickness = 2.0f;
+    public transient AnimationBox activeAnimationBox;
 
-    private boolean mayOpenPopupWindow = false;
+    public transient boolean lookMessyLines;
 
-    static {
-        pointList = new ArrayList<>();
-    }
+    private transient boolean hovered = false;
+    private transient boolean addingLine = false;
+    private transient boolean mayOpenPopupWindow = false;
+
+    private transient ImVec2 scrolling;
+    private transient float thickness = 2.0f;
+
+    private transient List<Wire> wireList;
+    private transient Wire wire;
 
     public StateMachineChild() {
         this.showStateMachineChild = new ImBoolean(true);
+        this.pointList = new ArrayList<>();
 
         this.wire = new Wire();
         this.animationBoxList = new ArrayList<>();
         this.wireList = new ArrayList<>();
         this.scrolling = new ImVec2();
-        animationBoxList.add(new AnimationBox("I'm a box", 300, 300));
+    }
+
+    public StateMachineChild(List<Point> pointList, List<AnimationBox> animationBoxList) {
+        this.pointList = pointList;
+        this.animationBoxList = animationBoxList;
     }
 
     /**
@@ -106,6 +109,22 @@ public class StateMachineChild {
                     ImColor.intToColor(247, 179, 43, 255));
         }
     }
+
+    // TODO: 27/05/2022 Finish this
+    /*private void doJoke() {
+        String jokeName = "I'm a box";
+        for (int i = 0; i < animationBoxList.size(); i++) {
+            if (animationBoxList.stream().anyMatch(animationBox -> animationBox.getTrigger().equals("I'm a box!"))) {
+                jokeName = "I'm a box too!";
+                break;
+            } else if (animationBoxList.stream().anyMatch(animationBox -> animationBox.getTrigger().equals("I'm a box too!"))) {
+
+            }
+        }
+
+        animationBoxList.add(new AnimationBox(jokeName, mousePosInCanvas.x,
+                mousePosInCanvas.y));
+    }*/
 
     public void imgui(ImVec2 contentRegionAvailable, float dt) {
         activeAnimationBox = animationBoxList
@@ -239,8 +258,7 @@ public class StateMachineChild {
             if (ImGui.beginPopupContextWindow("context")) {
                 addingLine = false;
                 if (ImGui.menuItem("Add Animation Box", "")) {
-                    animationBoxList.add(new AnimationBox("haha", mousePosInCanvas.x,
-                            mousePosInCanvas.y));
+                    animationBoxList.add(new AnimationBox("I'm a box!", mousePosInCanvas));
                 }
                 // if (ImGui.menuItem("Remove one", "", false, pointList.size() > 0)) {
                 // pointList.remove(pointList.size() - 1);
