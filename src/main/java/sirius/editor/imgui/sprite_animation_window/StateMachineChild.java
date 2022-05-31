@@ -5,7 +5,6 @@ import imgui.flag.ImGuiCol;
 import imgui.flag.ImGuiMouseButton;
 import imgui.flag.ImGuiStyleVar;
 import imgui.flag.ImGuiWindowFlags;
-import imgui.type.ImBoolean;
 import org.joml.Vector2f;
 import sirius.utils.JMath;
 
@@ -19,7 +18,7 @@ public class StateMachineChild {
 
     private List<AnimationBox> animationBoxList;
 
-    public transient ImBoolean showStateMachineChild;
+    public transient boolean showStateMachineChild;
 
     public transient AnimationBox activeAnimationBox;
 
@@ -36,16 +35,16 @@ public class StateMachineChild {
     private transient Wire wire;
 
     public StateMachineChild() {
-        this.showStateMachineChild = new ImBoolean(true);
-        this.pointList = new ArrayList<>();
-
-        this.wire = new Wire();
-        this.animationBoxList = new ArrayList<>();
-        this.wireList = new ArrayList<>();
-        this.scrolling = new ImVec2();
+        this(new ArrayList<>(), new ArrayList<>());
     }
 
     public StateMachineChild(List<Point> pointList, List<AnimationBox> animationBoxList) {
+        this.showStateMachineChild = true;
+
+        this.wire = new Wire();
+        this.wireList = new ArrayList<>();
+        this.scrolling = new ImVec2();
+
         this.pointList = pointList;
         this.animationBoxList = animationBoxList;
     }
@@ -281,9 +280,5 @@ public class StateMachineChild {
 
     public AnimationBox getActiveBox() {
         return activeAnimationBox;
-    }
-
-    public boolean isShowStateMachineChild() {
-        return showStateMachineChild.get();
     }
 }

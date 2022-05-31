@@ -4,12 +4,18 @@ import gameobjects.GameObject;
 import imgui.*;
 import imgui.type.ImBoolean;
 import sirius.SiriusTheFox;
+import sirius.animations.AnimationState;
+import sirius.animations.Frame;
+import sirius.animations.StateMachine;
 import sirius.editor.PropertiesWindow;
+import sirius.editor.imgui.JImGui;
 import sirius.encode_tools.Encode;
+import sirius.utils.JMath;
 import sirius.utils.Settings;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
 public class SpriteAnimationWindow {
     private static SpriteAnimationWindow instance;
@@ -54,15 +60,23 @@ public class SpriteAnimationWindow {
                 try {
                     File file = new File(Settings.Files.ANIMATIONS_FOLDER
                             + propertiesWindow.getActiveGameObject().name + ".json");
-                    if (!file.createNewFile())
-                        System.err.println("Error: Couldn't create '" + file.getAbsolutePath() + "' file.");
-                    else
-                        System.out.println("File created successfully!");
+
+                    // Check if the file was already created
+                    if (!file.createNewFile()) {
+                        System.out.println(Settings.Files.ANIMATIONS_FOLDER
+                                + propertiesWindow.getActiveGameObject().name + ".json");
+                        StateMachineChild animations = Encode.getAnimation(Settings.Files.ANIMATIONS_FOLDER
+                                + propertiesWindow.getActiveGameObject().name + ".json");
+                        stateMachineChild = new StateMachineChild(animations.pointList, animations.getAnimationBoxList());
+                    }
 
                     lastActiveGameObjectName = propertiesWindow.getActiveGameObject().name;
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+
+
+
                 // AssetPool.addAnimationPath(propertiesWindow.getActiveGameObject().name);
                 selectedGameObject = true;
             }
@@ -71,18 +85,18 @@ public class SpriteAnimationWindow {
                     "\nMouse Middle: drag to scroll," +
                     "\nMouse Right: click for context menu.");
             ImGui.checkbox("Show config: ", configChild.showConfigChild);
-            ImGui.checkbox("Show state machine: ", stateMachineChild.showStateMachineChild);
+            stateMachineChild.showStateMachineChild = JImGui.checkBox("Show state machine: ", stateMachineChild.showStateMachineChild);
 
             // Put config child in left side of the sprite animation window and if the state machine child is active,
             // config child's size has to be 240
             if (configChild.isShowConfigChild()) {
-                if (stateMachineChild.isShowStateMachineChild())
+                if (stateMachineChild.showStateMachineChild)
                     configChild.imgui(new ImVec2(300, ImGui.getContentRegionAvailY()), dt);
                 else
                     configChild.imgui(ImGui.getContentRegionAvail(), dt);
             }
 
-            if (stateMachineChild.isShowStateMachineChild())
+            if (stateMachineChild.showStateMachineChild)
                 stateMachineChild.imgui(ImGui.getContentRegionAvail(), dt);
 
         }

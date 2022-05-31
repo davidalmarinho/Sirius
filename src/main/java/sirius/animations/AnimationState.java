@@ -29,6 +29,10 @@ public class AnimationState {
         animationFrameList.add(new Frame(sprite, frameTime));
     }
 
+    public void addFrame(Frame frame) {
+        animationFrameList.add(new Frame(frame.sprite, frame.frameTime));
+    }
+
     public boolean isDoesLoop() {
         return doesLoop;
     }

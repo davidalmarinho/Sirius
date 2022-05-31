@@ -11,9 +11,12 @@ import sirius.editor.imgui.sprite_animation_window.StateMachineChild;
 import sirius.levels.Level;
 import sirius.utils.AssetPool;
 
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.reflect.Type;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,7 +32,7 @@ public class Encode {
      *         {@link GsonBuilder#enableComplexMapKeySerialization()}
      * </p>
      */
-    public static Gson newGsonToSaveGameObjects() {
+    public static Gson gameObjectsGson() {
         return new GsonBuilder()
                 .setPrettyPrinting()
                 .registerTypeAdapter(Component.class, new ComponentDeserializer())
@@ -53,7 +56,7 @@ public class Encode {
      * @param gameObjectList Game object list that needs to be saved in a file.
      */
     public static void saveGameObjectListInFile(@NotNull List<GameObject> gameObjectList) {
-        Gson gson = newGsonToSaveGameObjects();
+        Gson gson = gameObjectsGson();
 
         try {
             // Save gameObjectList in a .json file
@@ -88,14 +91,30 @@ public class Encode {
         }
     }
 
+
+    public static StateMachineChild getAnimation(@NotNull String filePath) {
+        Gson gson = stateMachineChildGson();
+        File file = new File(filePath);
+        String inFile = "";
+        if (file.exists()) {
+            try {
+                inFile = new String(Files.readAllBytes(Paths.get(file.getPath())));
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+        return gson.fromJson(inFile, StateMachineChild.class);
+    }
     /**
+     * // TODO: 31/05/2022  correct comment
      * Get game object list from a file.
      *
      * @param filePath Path to the saved file.
      * @return A game object list.
      */
     public static GameObject[] getGameObjectsFromFile(String filePath) {
-        Gson gson = newGsonToSaveGameObjects();
+        Gson gson = gameObjectsGson();
         return gson.fromJson(filePath, GameObject[].class);
     }
 
@@ -106,7 +125,7 @@ public class Encode {
      * @return New game object.
      */
     public static GameObject getGameObjectCopy(@NotNull GameObject gameObject) {
-        Gson gson = newGsonToSaveGameObjects();
+        Gson gson = gameObjectsGson();
 
         String objAsJson  = gson.toJson(gameObject);
 
