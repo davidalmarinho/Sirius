@@ -127,66 +127,66 @@ public class CustomPrefabs implements ICustomPrefabs {
         stateMachine.addState(fireJump);
 
         stateMachine.setDefaultState(idle.title);
-        stateMachine.addState(run.title, switchDirection.title, "switchDirection");
-        stateMachine.addState(run.title, idle.title, "stopRunning");
-        stateMachine.addState(run.title, jump.title, "jump");
-        stateMachine.addState(switchDirection.title, idle.title, "stopRunning");
-        stateMachine.addState(switchDirection.title, run.title, "startRunning");
-        stateMachine.addState(switchDirection.title, jump.title, "jump");
-        stateMachine.addState(idle.title, run.title, "startRunning");
-        stateMachine.addState(idle.title, jump.title, "jump");
-        stateMachine.addState(jump.title, idle.title, "stopJumping");
+        stateMachine.addStateTrigger(run.title, switchDirection.title, "switchDirection");
+        stateMachine.addStateTrigger(run.title, idle.title, "stopRunning");
+        stateMachine.addStateTrigger(run.title, jump.title, "jump");
+        stateMachine.addStateTrigger(switchDirection.title, idle.title, "stopRunning");
+        stateMachine.addStateTrigger(switchDirection.title, run.title, "startRunning");
+        stateMachine.addStateTrigger(switchDirection.title, jump.title, "jump");
+        stateMachine.addStateTrigger(idle.title, run.title, "startRunning");
+        stateMachine.addStateTrigger(idle.title, jump.title, "jump");
+        stateMachine.addStateTrigger(jump.title, idle.title, "stopJumping");
 
-        stateMachine.addState(bigRun.title, bigSwitchDirection.title, "switchDirection");
-        stateMachine.addState(bigRun.title, bigIdle.title, "stopRunning");
-        stateMachine.addState(bigRun.title, bigJump.title, "jump");
-        stateMachine.addState(bigSwitchDirection.title, bigIdle.title, "stopRunning");
-        stateMachine.addState(bigSwitchDirection.title, bigRun.title, "startRunning");
-        stateMachine.addState(bigSwitchDirection.title, bigJump.title, "jump");
-        stateMachine.addState(bigIdle.title, bigRun.title, "startRunning");
-        stateMachine.addState(bigIdle.title, bigJump.title, "jump");
-        stateMachine.addState(bigJump.title, bigIdle.title, "stopJumping");
+        stateMachine.addStateTrigger(bigRun.title, bigSwitchDirection.title, "switchDirection");
+        stateMachine.addStateTrigger(bigRun.title, bigIdle.title, "stopRunning");
+        stateMachine.addStateTrigger(bigRun.title, bigJump.title, "jump");
+        stateMachine.addStateTrigger(bigSwitchDirection.title, bigIdle.title, "stopRunning");
+        stateMachine.addStateTrigger(bigSwitchDirection.title, bigRun.title, "startRunning");
+        stateMachine.addStateTrigger(bigSwitchDirection.title, bigJump.title, "jump");
+        stateMachine.addStateTrigger(bigIdle.title, bigRun.title, "startRunning");
+        stateMachine.addStateTrigger(bigIdle.title, bigJump.title, "jump");
+        stateMachine.addStateTrigger(bigJump.title, bigIdle.title, "stopJumping");
 
-        stateMachine.addState(fireRun.title, fireSwitchDirection.title, "switchDirection");
-        stateMachine.addState(fireRun.title, fireIdle.title, "stopRunning");
-        stateMachine.addState(fireRun.title, fireJump.title, "jump");
-        stateMachine.addState(fireSwitchDirection.title, fireIdle.title, "stopRunning");
-        stateMachine.addState(fireSwitchDirection.title, fireRun.title, "startRunning");
-        stateMachine.addState(fireSwitchDirection.title, fireJump.title, "jump");
-        stateMachine.addState(fireIdle.title, fireRun.title, "startRunning");
-        stateMachine.addState(fireIdle.title, fireJump.title, "jump");
-        stateMachine.addState(fireJump.title, fireIdle.title, "stopJumping");
+        stateMachine.addStateTrigger(fireRun.title, fireSwitchDirection.title, "switchDirection");
+        stateMachine.addStateTrigger(fireRun.title, fireIdle.title, "stopRunning");
+        stateMachine.addStateTrigger(fireRun.title, fireJump.title, "jump");
+        stateMachine.addStateTrigger(fireSwitchDirection.title, fireIdle.title, "stopRunning");
+        stateMachine.addStateTrigger(fireSwitchDirection.title, fireRun.title, "startRunning");
+        stateMachine.addStateTrigger(fireSwitchDirection.title, fireJump.title, "jump");
+        stateMachine.addStateTrigger(fireIdle.title, fireRun.title, "startRunning");
+        stateMachine.addStateTrigger(fireIdle.title, fireJump.title, "jump");
+        stateMachine.addStateTrigger(fireJump.title, fireIdle.title, "stopJumping");
 
-        stateMachine.addState(run.title, bigRun.title, "powerup");
-        stateMachine.addState(idle.title, bigIdle.title, "powerup");
-        stateMachine.addState(switchDirection.title, bigSwitchDirection.title, "powerup");
-        stateMachine.addState(jump.title, bigJump.title, "powerup");
-        stateMachine.addState(bigRun.title, fireRun.title, "powerup");
-        stateMachine.addState(bigIdle.title, fireIdle.title, "powerup");
-        stateMachine.addState(bigSwitchDirection.title, fireSwitchDirection.title, "powerup");
-        stateMachine.addState(bigJump.title, fireJump.title, "powerup");
+        stateMachine.addStateTrigger(run.title, bigRun.title, "powerup");
+        stateMachine.addStateTrigger(idle.title, bigIdle.title, "powerup");
+        stateMachine.addStateTrigger(switchDirection.title, bigSwitchDirection.title, "powerup");
+        stateMachine.addStateTrigger(jump.title, bigJump.title, "powerup");
+        stateMachine.addStateTrigger(bigRun.title, fireRun.title, "powerup");
+        stateMachine.addStateTrigger(bigIdle.title, fireIdle.title, "powerup");
+        stateMachine.addStateTrigger(bigSwitchDirection.title, fireSwitchDirection.title, "powerup");
+        stateMachine.addStateTrigger(bigJump.title, fireJump.title, "powerup");
 
-        stateMachine.addState(bigRun.title, run.title, "damage");
-        stateMachine.addState(bigIdle.title, idle.title, "damage");
-        stateMachine.addState(bigSwitchDirection.title, switchDirection.title, "damage");
-        stateMachine.addState(bigJump.title, jump.title, "damage");
-        stateMachine.addState(fireRun.title, bigRun.title, "damage");
-        stateMachine.addState(fireIdle.title, bigIdle.title, "damage");
-        stateMachine.addState(fireSwitchDirection.title, bigSwitchDirection.title, "damage");
-        stateMachine.addState(fireJump.title, bigJump.title, "damage");
+        stateMachine.addStateTrigger(bigRun.title, run.title, "damage");
+        stateMachine.addStateTrigger(bigIdle.title, idle.title, "damage");
+        stateMachine.addStateTrigger(bigSwitchDirection.title, switchDirection.title, "damage");
+        stateMachine.addStateTrigger(bigJump.title, jump.title, "damage");
+        stateMachine.addStateTrigger(fireRun.title, bigRun.title, "damage");
+        stateMachine.addStateTrigger(fireIdle.title, bigIdle.title, "damage");
+        stateMachine.addStateTrigger(fireSwitchDirection.title, bigSwitchDirection.title, "damage");
+        stateMachine.addStateTrigger(fireJump.title, bigJump.title, "damage");
 
-        stateMachine.addState(run.title, die.title, "die");
-        stateMachine.addState(switchDirection.title, die.title, "die");
-        stateMachine.addState(idle.title, die.title, "die");
-        stateMachine.addState(jump.title, die.title, "die");
-        stateMachine.addState(bigRun.title, run.title, "die");
-        stateMachine.addState(bigSwitchDirection.title, switchDirection.title, "die");
-        stateMachine.addState(bigIdle.title, idle.title, "die");
-        stateMachine.addState(bigJump.title, jump.title, "die");
-        stateMachine.addState(fireRun.title, bigRun.title, "die");
-        stateMachine.addState(fireSwitchDirection.title, bigSwitchDirection.title, "die");
-        stateMachine.addState(fireIdle.title, bigIdle.title, "die");
-        stateMachine.addState(fireJump.title, bigJump.title, "die");
+        stateMachine.addStateTrigger(run.title, die.title, "die");
+        stateMachine.addStateTrigger(switchDirection.title, die.title, "die");
+        stateMachine.addStateTrigger(idle.title, die.title, "die");
+        stateMachine.addStateTrigger(jump.title, die.title, "die");
+        stateMachine.addStateTrigger(bigRun.title, run.title, "die");
+        stateMachine.addStateTrigger(bigSwitchDirection.title, switchDirection.title, "die");
+        stateMachine.addStateTrigger(bigIdle.title, idle.title, "die");
+        stateMachine.addStateTrigger(bigJump.title, jump.title, "die");
+        stateMachine.addStateTrigger(fireRun.title, bigRun.title, "die");
+        stateMachine.addStateTrigger(fireSwitchDirection.title, bigSwitchDirection.title, "die");
+        stateMachine.addStateTrigger(fireIdle.title, bigIdle.title, "die");
+        stateMachine.addStateTrigger(fireJump.title, bigJump.title, "die");
         mario.addComponent(stateMachine);
 
         PillboxCollider pb = new PillboxCollider();
@@ -228,7 +228,7 @@ public class CustomPrefabs implements ICustomPrefabs {
         stateMachine.addState(flicker);
         stateMachine.addState(inactive);
         stateMachine.setDefaultState(flicker.title);
-        stateMachine.addState(flicker.title, inactive.title, "setInactive");
+        stateMachine.addStateTrigger(flicker.title, inactive.title, "setInactive");
         questionBlock.addComponent(stateMachine);
         questionBlock.addComponent(new QuestionBlock());
 
@@ -327,7 +327,7 @@ public class CustomPrefabs implements ICustomPrefabs {
         stateMachine.addState(walk);
         stateMachine.addState(squashed);
         stateMachine.setDefaultState(walk.title);
-        stateMachine.addState(walk.title, squashed.title, "squashMe");
+        stateMachine.addStateTrigger(walk.title, squashed.title, "squashMe");
         goomba.addComponent(stateMachine);
 
         RigidBody2d rigidBody2d = new RigidBody2d();
@@ -413,7 +413,7 @@ public class CustomPrefabs implements ICustomPrefabs {
         stateMachine.addState(walk);
         stateMachine.addState(turtleShell);
         stateMachine.setDefaultState(walk.title);
-        stateMachine.addState(walk.title, turtleShell.title, "squashMe");
+        stateMachine.addStateTrigger(walk.title, turtleShell.title, "squashMe");
         turtle.addComponent(stateMachine);
 
         RigidBody2d rigidBody2d = new RigidBody2d();

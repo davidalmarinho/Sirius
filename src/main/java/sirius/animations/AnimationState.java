@@ -22,11 +22,15 @@ public class AnimationState {
     }
 
     static {
-        defaultSprite = Sprite.Builder.newInstance().build();
+        defaultSprite = new Sprite();
     }
 
     public void addFrame(Sprite sprite, float frameTime) {
         animationFrameList.add(new Frame(sprite, frameTime));
+    }
+
+    public void addFrame(Frame frame) {
+        animationFrameList.add(frame);
     }
 
     public boolean isDoesLoop() {

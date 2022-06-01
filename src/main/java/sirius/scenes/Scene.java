@@ -1,18 +1,15 @@
 package sirius.scenes;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import gameobjects.components.Transform;
 import gameobjects.GameObject;
-import gameobjects.GameObjectDeserializer;
 import gameobjects.components.Component;
-import gameobjects.components.ComponentDeserializer;
 import observers.EventSystem;
 import observers.events.Event;
 import observers.events.Events;
+import sirius.editor.imgui.sprite_animation_window.SpriteAnimationWindow;
+import sirius.encode_tools.Encode;
 import sirius.SiriusTheFox;
 import sirius.editor.MouseControls;
-import sirius.editor.NonPickable;
 import sirius.editor.PropertiesWindow;
 import sirius.input.KeyListener;
 import sirius.levels.Level;
@@ -21,12 +18,9 @@ import sirius.rendering.Renderer;
 import org.joml.Vector2f;
 import physics2d.Physics2d;
 import sirius.utils.AssetPool;
+import sirius.utils.Settings;
 
 import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.*;
 
 import static org.lwjgl.glfw.GLFW.*;
@@ -224,24 +218,24 @@ public class Scene {
         }
     }
 
-    public void loadLevels() {
-        File folder = new File("assets/levels");
-        File[] listOfLevels = folder.listFiles();
-        assert listOfLevels != null;
+    private void loadLevels() {
+        File folder = new File(Settings.Files.LEVELS_FOLDER);
+        File[] levels = folder.listFiles();
+        assert levels != null;
 
         // Array to store what levels were loaded
-        int[] loadedLevels = new int[listOfLevels.length];
+        int[] loadedLevels = new int[levels.length];
 
         // Load levels to the asset pool
-        for (int i = 0; i < listOfLevels.length; i++) {
+        for (int i = 0; i < levels.length; i++) {
             // Check if the saved file is valid
-            if (!listOfLevels[i].getName().contains("level") || !listOfLevels[i].getName().contains(".json")) {
-                System.err.println("Warning: '" + listOfLevels[i].getName()
+            if (!levels[i].getName().contains("level") || !levels[i].getName().contains(".json")) {
+                System.err.println("Warning: '" + levels[i].getName()
                         + "' can't be recognized as a level file.");
                 continue;
             }
 
-            String[] navigator = listOfLevels[i].getName().split("level");
+            String[] navigator = levels[i].getName().split("level");
             String[] navigator1 = navigator[1].split(".json");
             int curLvl = Integer.parseInt(navigator1[0]);
             loadedLevels[i] = curLvl;
@@ -251,14 +245,14 @@ public class Scene {
 
         for (int i = 0; i < loadedLevels.length; i++) {
             int curLvl = loadedLevels[i];
-            for (int j = 0; j < listOfLevels.length; j++) {
-                String lvlName = listOfLevels[j].getName();
+            for (int j = 0; j < levels.length; j++) {
+                String lvlName = levels[j].getName();
                 String[] navigator = lvlName.split("level");
                 String[] navigator1 = navigator[1].split(".json");
                 int levelFile = Integer.parseInt(navigator1[0]);
 
                 if (curLvl == levelFile) {
-                    AssetPool.addLevel(new Level(lvlName, listOfLevels[j].getPath(), curLvl));
+                    AssetPool.addLevel(new Level(lvlName, levels[j].getPath(), curLvl));
                     break;
                 }
             }
@@ -283,7 +277,6 @@ public class Scene {
         // Bug fix:
         // Modifies the selected active game objects if they haven't been modified before
         PropertiesWindow propertiesWindow = SiriusTheFox.getImGuiLayer().getPropertiesWindow();
-
         if (sceneInitializer instanceof LevelEditorSceneInitializer) {
             LevelEditorSceneInitializer levelEditor = (LevelEditorSceneInitializer) sceneInitializer;
             MouseControls mouseControls = levelEditor.getLevelEditorStuff().getComponent(MouseControls.class);
@@ -299,57 +292,27 @@ public class Scene {
         }
         // ===============================================================================
 
-        Gson gson = new GsonBuilder()
-                .setPrettyPrinting()
-                .registerTypeAdapter(Component.class, new ComponentDeserializer())
-                .registerTypeAdapter(GameObject.class, new GameObjectDeserializer())
-                .enableComplexMapKeySerialization()
-                .create();
+        // Save game objects
+        Encode.saveGameObjectListInFile(gameObjectList);
+        // TODO: 01/06/2022 Not pulling the animations to a desired game object.
 
-        try {
-            // Save gameObjectList in a txt file
-            FileWriter writer = new FileWriter(AssetPool.getLevel(Level.currentLevel).getPath());
-            List<GameObject> objsToSerialize = new ArrayList<>();
-            for (GameObject obj : gameObjectList) {
-
-                // Bug fix --Don't save game objects that are attached to the cursor
-                if (obj.hasComponent(NonPickable.class)) continue;
-
-                if (obj.isDoSerialization()) {
-                    objsToSerialize.add(obj);
-                }
-            }
-            writer.write(gson.toJson(objsToSerialize));
-            // writer.flush();
-            writer.close();
-        } catch (IOException e) {
-            e.printStackTrace();
+        // Save animation --animations' auto save needs that active game list be different from one. So, we need to
+        // save this one by this way.
+        if (propertiesWindow.getActiveGameObjectList().size() == 1) {
+            Encode.saveAnimation(SpriteAnimationWindow.getStateMachineChild(),
+                    Settings.Files.ANIMATIONS_FOLDER + propertiesWindow.getActiveGameObject().name + ".json");
         }
     }
 
     public void load() {
-        Gson gson = new GsonBuilder()
-                .setPrettyPrinting()
-                .registerTypeAdapter(Component.class, new ComponentDeserializer())
-                .registerTypeAdapter(GameObject.class, new GameObjectDeserializer())
-                .enableComplexMapKeySerialization()
-                .create();
-        String inFile = "";
-        try {
-            Level level = AssetPool.getLevel(Level.currentLevel);
-            File file = new File(level.getPath());
-            if (file.exists()) {
-                inFile = new String(Files.readAllBytes(Paths.get(file.getPath())));
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        Level level = AssetPool.getLevel(Level.currentLevel);
+        String inFile = Encode.readFile(level.getPath());
 
         // Means that the saving txt file isn't empty
         if (!inFile.equals("")) {
             int maxGoId = -1;
             int maxCompId = -1;
-            GameObject[] objs = gson.fromJson(inFile, GameObject[].class);
+            GameObject[] objs = Encode.getGameObjectsFromFile(level.getPath());
             for (int i = 0; i < objs.length; i++) {
                 addGameObject(objs[i]);
 

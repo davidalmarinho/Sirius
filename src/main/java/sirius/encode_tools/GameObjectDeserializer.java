@@ -1,6 +1,7 @@
-package gameobjects;
+package sirius.encode_tools;
 
 import com.google.gson.*;
+import gameobjects.GameObject;
 import gameobjects.components.Component;
 
 import java.lang.reflect.Type;

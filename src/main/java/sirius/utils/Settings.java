@@ -4,5 +4,10 @@ public class Settings {
     public static float GRID_WIDTH  = 0.25f;
     public static float GRID_HEIGHT = 0.25f;
 
-    public static String iniFilesForNodes = "assets/animations/iniNodesFiles/";
+    public static final float DEFAULT_FRAME_TIME = 0.25f;
+
+    public static class Files {
+        public static final String ANIMATIONS_FOLDER = "assets/animations/";
+        public static final String LEVELS_FOLDER = "assets/levels";
+    }
 }

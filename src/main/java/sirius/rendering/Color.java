@@ -56,6 +56,22 @@ public class Color {
         return opacity + red + green + blue;
     }*/
 
+    public float getRed() {
+        return this.color.x;
+    }
+
+    public float getGreen() {
+        return this.color.y;
+    }
+
+    public float getBlue() {
+        return this.color.z;
+    }
+
+    public float getOpacity() {
+        return this.color.w;
+    }
+
     public void setColor(float r, float g, float b, float a) {
         this.color.set(r, g, b, a);
     }

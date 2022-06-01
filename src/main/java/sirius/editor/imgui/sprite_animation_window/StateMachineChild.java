@@ -5,7 +5,6 @@ import imgui.flag.ImGuiCol;
 import imgui.flag.ImGuiMouseButton;
 import imgui.flag.ImGuiStyleVar;
 import imgui.flag.ImGuiWindowFlags;
-import imgui.type.ImBoolean;
 import org.joml.Vector2f;
 import sirius.utils.JMath;
 
@@ -14,35 +13,62 @@ import java.util.List;
 
 // State Machine Child will also be called Canvas in the comments
 public class StateMachineChild {
-    private boolean hovered;
-    public ImBoolean showStateMachineChild;
+    // public static float zoom = 1.0f;
+    public List<Point> pointList;
 
-    public AnimationBox activeAnimationBox;
-    public static List<Point> pointList;
-    public static boolean lookMessyLines;
     private List<AnimationBox> animationBoxList;
-    private List<Wire> wireList;
-    private Wire wire;
 
-    private ImVec2 scrolling;
+    public transient boolean showStateMachineChild;
 
-    private boolean addingLine = false;
-    private float thickness = 2.0f;
+    public transient AnimationBox activeAnimationBox;
 
-    private boolean mayOpenPopupWindow = false;
+    public transient boolean lookMessyLines;
 
-    static {
-        pointList = new ArrayList<>();
-    }
+    private transient boolean hovered = false;
+    private transient boolean addingLine = false;
+    private transient boolean mayOpenPopupWindow = false;
+
+    private transient ImVec2 scrolling;
+    private transient float thickness = 2.0f;
+
+    private transient List<Wire> wireList;
+    private transient Wire wire;
 
     public StateMachineChild() {
-        this.showStateMachineChild = new ImBoolean(true);
+        this(new ArrayList<>(), new ArrayList<>());
+    }
+
+    public StateMachineChild(List<Point> pointList, List<AnimationBox> animationBoxList) {
+        this.showStateMachineChild = true;
 
         this.wire = new Wire();
-        this.animationBoxList = new ArrayList<>();
         this.wireList = new ArrayList<>();
         this.scrolling = new ImVec2();
-        animationBoxList.add(new AnimationBox("I'm a box", 300, 300));
+
+        this.pointList = new ArrayList<>(pointList);
+
+        this.animationBoxList = new ArrayList<>();
+        for (AnimationBox animationBox : animationBoxList) {
+            this.animationBoxList.add(new AnimationBox(animationBox));
+        }
+
+        int greatestId = 0;
+        for (Point p : pointList) {
+            if (p.getId() > greatestId) {
+                greatestId = p.getId();
+            }
+        }
+
+        Point.maxId = greatestId + 1;
+
+        greatestId = 1;
+        for (AnimationBox animationBox : animationBoxList) {
+            if (animationBox.getId() > greatestId) {
+                greatestId = animationBox.getId();
+            }
+        }
+
+        AnimationBox.maxId = greatestId + 1;
     }
 
     /**
@@ -105,7 +131,23 @@ public class StateMachineChild {
         }
     }
 
-    public void imgui(ImVec2 contentRegionAvailable) {
+    // TODO: 27/05/2022 Finish this
+    /*private void doJoke() {
+        String jokeName = "I'm a box";
+        for (int i = 0; i < animationBoxList.size(); i++) {
+            if (animationBoxList.stream().anyMatch(animationBox -> animationBox.getTrigger().equals("I'm a box!"))) {
+                jokeName = "I'm a box too!";
+                break;
+            } else if (animationBoxList.stream().anyMatch(animationBox -> animationBox.getTrigger().equals("I'm a box too!"))) {
+
+            }
+        }
+
+        animationBoxList.add(new AnimationBox(jokeName, mousePosInCanvas.x,
+                mousePosInCanvas.y));
+    }*/
+
+    public void imgui(ImVec2 contentRegionAvailable, float dt) {
         activeAnimationBox = animationBoxList
                 .stream()
                 .filter(animationBox -> getAnimationBox(animationBox.getId()).isSelected())
@@ -130,6 +172,7 @@ public class StateMachineChild {
 
         // Draw border and background color
         ImGuiIO io = ImGui.getIO();
+        // zoom += io.getMouseWheel() * dt;
         ImDrawList drawList = ImGui.getWindowDrawList();
 
         // Check if the cursor is above of sprite animation window
@@ -177,12 +220,19 @@ public class StateMachineChild {
         // Draw grid
         drawList.pushClipRect(canvasP0.x, canvasP0.y, canvasP1.x, canvasP1.y, false);
         float GRID_STEP = 64.0f;
+
+        // for (float x = JMath.fmodf(scrolling.x, GRID_STEP); x < canvasSize.x; x += GRID_STEP * zoom) {
         for (float x = JMath.fmodf(scrolling.x, GRID_STEP); x < canvasSize.x; x += GRID_STEP) {
-            drawList.addLine(canvasP0.x + x, canvasP0.y, canvasP0.x + x, canvasP1.y,
+            drawList.addLine(
+                    canvasP0.x + x, canvasP0.y,
+                    canvasP0.x + x, canvasP1.y,
                     ImColor.intToColor(200, 200, 200, 40));
         }
+        // for (float y = JMath.fmodf(scrolling.y, GRID_STEP); y < canvasSize.y; y += GRID_STEP * zoom) {
         for (float y = JMath.fmodf(scrolling.y, GRID_STEP); y < canvasSize.y; y += GRID_STEP) {
-            drawList.addLine(canvasP0.x, canvasP0.y + y, canvasP1.x, canvasP0.y + y,
+            drawList.addLine(
+                    canvasP0.x, canvasP0.y + y,
+                    canvasP1.x, canvasP0.y + y,
                     ImColor.intToColor(200, 200, 200, 40));
         }
 
@@ -229,8 +279,7 @@ public class StateMachineChild {
             if (ImGui.beginPopupContextWindow("context")) {
                 addingLine = false;
                 if (ImGui.menuItem("Add Animation Box", "")) {
-                    animationBoxList.add(new AnimationBox("haha", mousePosInCanvas.x,
-                            mousePosInCanvas.y));
+                    animationBoxList.add(new AnimationBox("I'm a box!", mousePosInCanvas));
                 }
                 // if (ImGui.menuItem("Remove one", "", false, pointList.size() > 0)) {
                 // pointList.remove(pointList.size() - 1);
@@ -253,9 +302,5 @@ public class StateMachineChild {
 
     public AnimationBox getActiveBox() {
         return activeAnimationBox;
-    }
-
-    public boolean isShowStateMachineChild() {
-        return showStateMachineChild.get();
     }
 }

@@ -17,7 +17,7 @@ public class PointField {
 
     // Mark the point field that has an un-linked point --if it has one, we will remove it when we release the
     // mouse left button.
-    public boolean hasUnLinkedPoint = false;
+    public transient boolean hasUnLinkedPoint = false;
 
     public PointField(String name, float x, float y, float width, float height) {
         this.name = name;

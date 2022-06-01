@@ -12,7 +12,7 @@ import static org.lwjgl.opengl.GL11.*;
 public class Texture {
     private String filePath;
     private transient int textureID;
-    private int width, height;
+    private transient int width, height;
 
     private Texture() {
         this.filePath = "";

@@ -38,10 +38,7 @@ public class Spritesheet {
                     new Vector2f(leftBottom.x, leftBottom.y),
                     new Vector2f(leftBottom.x, rightTop.y)
             };
-            Sprite sprite = Sprite.Builder.newInstance()
-                    .setTexture(parentTex)
-                    .setSize(spriteWidth, spriteHeight)
-                    .setTextureCoordinates(texCoords).build();
+            Sprite sprite = new Sprite(spriteWidth, spriteHeight, parentTex, texCoords);
             this.spriteList.add(sprite);
 
             // Catch next sprite

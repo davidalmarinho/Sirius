@@ -7,7 +7,6 @@ import sirius.rendering.Shader;
 import sirius.rendering.spritesheet.Texture;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.*;
 
 public class AssetPool {
