@@ -10,11 +10,11 @@ import sirius.animations.StateMachine;
 import sirius.editor.PropertiesWindow;
 import sirius.editor.imgui.JImGui;
 import sirius.encode_tools.Encode;
-import sirius.utils.JMath;
 import sirius.utils.Settings;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class SpriteAnimationWindow {
@@ -41,10 +41,10 @@ public class SpriteAnimationWindow {
             if (!lastActiveGameObjectName.equals("")) {
                 Encode.saveAnimation(stateMachineChild, Settings.Files.ANIMATIONS_FOLDER
                         + lastActiveGameObjectName + ".json");
+                pullAnimation(lastActiveGameObjectName);
                 stateMachineChild = new StateMachineChild();
                 lastActiveGameObjectName = "";
                 selectedGameObject = false;
-                System.out.println("Saved!!!");
             }
         }
 
@@ -63,19 +63,18 @@ public class SpriteAnimationWindow {
 
                     // Check if the file was already created
                     if (!file.createNewFile()) {
-                        System.out.println(Settings.Files.ANIMATIONS_FOLDER
-                                + propertiesWindow.getActiveGameObject().name + ".json");
                         StateMachineChild animations = Encode.getAnimation(Settings.Files.ANIMATIONS_FOLDER
                                 + propertiesWindow.getActiveGameObject().name + ".json");
-                        stateMachineChild = new StateMachineChild(animations.pointList, animations.getAnimationBoxList());
+                        if (animations == null)
+                            stateMachineChild = new StateMachineChild();
+                        else
+                            stateMachineChild = new StateMachineChild(animations.pointList, animations.getAnimationBoxList());
                     }
 
                     lastActiveGameObjectName = propertiesWindow.getActiveGameObject().name;
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-
-
 
                 // AssetPool.addAnimationPath(propertiesWindow.getActiveGameObject().name);
                 selectedGameObject = true;
@@ -101,6 +100,51 @@ public class SpriteAnimationWindow {
 
         }
         ImGui.end();
+    }
+
+    public static void pullAnimation(String gameObjectName) {
+        // TODO: 01/06/2022 End this and make this more smart
+        List<GameObject> gameObjectList = SiriusTheFox.getCurrentScene().getGameObjectList();
+        StateMachineChild animations = Encode.getAnimation(Settings.Files.ANIMATIONS_FOLDER + gameObjectName + ".json");
+        List<AnimationBox> animationBoxList = animations.getAnimationBoxList();
+        List<Point> pList = new ArrayList<>(animations.pointList);
+
+        for (GameObject gameObject : gameObjectList) {
+            if (gameObject.name.equals(gameObjectName)) {
+                gameObject.removeComponent(StateMachine.class);
+                StateMachine stateMachine = new StateMachine();
+
+                // Prevent IndexOutOfBoundsException
+                if (animationBoxList.isEmpty()) return;
+
+                for (int i = 0; i < animationBoxList.size(); i++) {
+                    AnimationBox curAnimationBox = animationBoxList.get(i);
+
+                    AnimationState animationState = new AnimationState();
+                    animationState.title = curAnimationBox.getTrigger();
+                    for (Frame frame : curAnimationBox.getFrameList()) {
+                        animationState.addFrame(new Frame(frame));
+                    }
+                    animationState.setLoop(curAnimationBox.doesLoop);
+                    stateMachine.addState(animationState);
+                }
+
+                for (int i = 0; i < pList.size(); i++) {
+                    if (i + 1 > pList.size() - 1) {
+                        break;
+                    }
+
+                    Point curP  = pList.get(i);
+                    Point nextP = pList.get(i + 1);
+
+                    stateMachine.addStateTrigger(curP.getOrigin(), nextP.getOrigin(), nextP.getOrigin());
+                }
+
+                stateMachine.setDefaultState(animationBoxList.get(0).getTrigger());
+                gameObject.addComponent(stateMachine);
+                gameObject.getComponent(StateMachine.class).refreshTextures();
+            }
+        }
     }
 
     public static SpriteAnimationWindow get() {

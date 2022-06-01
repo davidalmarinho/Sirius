@@ -21,9 +21,6 @@ import sirius.utils.AssetPool;
 import sirius.utils.Settings;
 
 import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.*;
 
 import static org.lwjgl.glfw.GLFW.*;
@@ -48,7 +45,6 @@ public class Scene {
         running = false;
 
         loadLevels();
-        loadAnimations();
     }
 
     public void init() {
@@ -276,15 +272,6 @@ public class Scene {
         Level.maxLevel = loadedLevels[loadedLevels.length - 1];
     }
 
-    private void loadAnimations() {
-        File folder = new File(Settings.Files.ANIMATIONS_FOLDER);
-        File[] animationFiles = folder.listFiles();
-        assert animationFiles != null;
-
-        for (File file : animationFiles)
-            AssetPool.addAnimationPath(file.getAbsolutePath());
-    }
-
     public void save() {
         // ===============================================================================
         // Bug fix:
@@ -307,6 +294,7 @@ public class Scene {
 
         // Save game objects
         Encode.saveGameObjectListInFile(gameObjectList);
+        // TODO: 01/06/2022 Not pulling the animations to a desired game object.
 
         // Save animation --animations' auto save needs that active game list be different from one. So, we need to
         // save this one by this way.
@@ -317,22 +305,14 @@ public class Scene {
     }
 
     public void load() {
-        String inFile = "";
-        try {
-            Level level = AssetPool.getLevel(Level.currentLevel);
-            File file = new File(level.getPath());
-            if (file.exists()) {
-                inFile = new String(Files.readAllBytes(Paths.get(file.getPath())));
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        Level level = AssetPool.getLevel(Level.currentLevel);
+        String inFile = Encode.readFile(level.getPath());
 
         // Means that the saving txt file isn't empty
         if (!inFile.equals("")) {
             int maxGoId = -1;
             int maxCompId = -1;
-            GameObject[] objs = Encode.getGameObjectsFromFile(inFile);
+            GameObject[] objs = Encode.getGameObjectsFromFile(level.getPath());
             for (int i = 0; i < objs.length; i++) {
                 addGameObject(objs[i]);
 

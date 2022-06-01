@@ -45,8 +45,30 @@ public class StateMachineChild {
         this.wireList = new ArrayList<>();
         this.scrolling = new ImVec2();
 
-        this.pointList = pointList;
-        this.animationBoxList = animationBoxList;
+        this.pointList = new ArrayList<>(pointList);
+
+        this.animationBoxList = new ArrayList<>();
+        for (AnimationBox animationBox : animationBoxList) {
+            this.animationBoxList.add(new AnimationBox(animationBox));
+        }
+
+        int greatestId = 0;
+        for (Point p : pointList) {
+            if (p.getId() > greatestId) {
+                greatestId = p.getId();
+            }
+        }
+
+        Point.maxId = greatestId + 1;
+
+        greatestId = 1;
+        for (AnimationBox animationBox : animationBoxList) {
+            if (animationBox.getId() > greatestId) {
+                greatestId = animationBox.getId();
+            }
+        }
+
+        AnimationBox.maxId = greatestId + 1;
     }
 
     /**

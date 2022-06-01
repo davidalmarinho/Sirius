@@ -6,7 +6,6 @@ import com.sun.istack.internal.NotNull;
 import gameobjects.GameObject;
 import gameobjects.components.Component;
 import sirius.editor.NonPickable;
-import sirius.editor.imgui.sprite_animation_window.AnimationBox;
 import sirius.editor.imgui.sprite_animation_window.StateMachineChild;
 import sirius.levels.Level;
 import sirius.utils.AssetPool;
@@ -23,8 +22,8 @@ import java.util.List;
 public class Encode {
 
     /**
-     * Creates a Gson object with pretended characteristics.
-     * @return A Gson object with:
+     * Creates a {@link Gson} object with pretended characteristics.
+     * @return A {@link Gson} object with:
      * <p>
      *         {@link GsonBuilder#setPrettyPrinting()}
      *         {@link GsonBuilder#registerTypeAdapter(Type component, Object componentDeserializer)}
@@ -45,15 +44,14 @@ public class Encode {
         return new GsonBuilder()
                 .setPrettyPrinting()
                 .registerTypeAdapter(StateMachineChild.class, new StateMachineChildDeserializer())
-                .registerTypeAdapter(AnimationBox.class, new AnimationBoxDeserializer())
                 .enableComplexMapKeySerialization()
                 .create();
     }
 
     /**
-     * Saves a game object list into a file.
+     * Saves a {@link GameObject} list into a file.
      *
-     * @param gameObjectList Game object list that needs to be saved in a file.
+     * @param gameObjectList {@link GameObject} list that needs to be saved in a file.
      */
     public static void saveGameObjectListInFile(@NotNull List<GameObject> gameObjectList) {
         Gson gson = gameObjectsGson();
@@ -78,6 +76,12 @@ public class Encode {
         }
     }
 
+    /**
+     * Saves a {@link StateMachineChild} object into a file.
+     *
+     * @param stateMachineChild Object needed to be saved in the file.
+     * @param filePath Path to the saved file.
+     */
     public static void saveAnimation(@NotNull StateMachineChild stateMachineChild, @NotNull String filePath) {
         Gson gson = stateMachineChildGson();
 
@@ -91,9 +95,35 @@ public class Encode {
         }
     }
 
-
+    /**
+     * Get a game object's animation from a file.
+     *
+     * @param filePath Path to the saved file.
+     * @return A {@link StateMachineChild} object.
+     */
     public static StateMachineChild getAnimation(@NotNull String filePath) {
         Gson gson = stateMachineChildGson();
+        return gson.fromJson(readFile(filePath), StateMachineChild.class);
+    }
+
+    /**
+     * Get game object list from a file.
+     *
+     * @param filePath Path to the saved file.
+     * @return A {@link GameObject} list.
+     */
+    public static GameObject[] getGameObjectsFromFile(String filePath) {
+        Gson gson = gameObjectsGson();
+        return gson.fromJson(readFile(filePath), GameObject[].class);
+    }
+
+    /**
+     * Reads a file.
+     *
+     * @param filePath Path to the saved file.
+     * @return All the content of the file in a String.
+     */
+    public static String readFile(@NotNull String filePath) {
         File file = new File(filePath);
         String inFile = "";
         if (file.exists()) {
@@ -104,25 +134,14 @@ public class Encode {
             }
         }
 
-        return gson.fromJson(inFile, StateMachineChild.class);
-    }
-    /**
-     * // TODO: 31/05/2022  correct comment
-     * Get game object list from a file.
-     *
-     * @param filePath Path to the saved file.
-     * @return A game object list.
-     */
-    public static GameObject[] getGameObjectsFromFile(String filePath) {
-        Gson gson = gameObjectsGson();
-        return gson.fromJson(filePath, GameObject[].class);
+        return inFile;
     }
 
     /**
      * Gets a copy of a game object.
      *
-     * @param gameObject Game object that needs a copy.
-     * @return New game object.
+     * @param gameObject {@link GameObject} that needs a copy.
+     * @return New {@link GameObject}.
      */
     public static GameObject getGameObjectCopy(@NotNull GameObject gameObject) {
         Gson gson = gameObjectsGson();

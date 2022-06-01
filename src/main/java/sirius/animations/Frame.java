@@ -10,4 +10,9 @@ public class Frame {
         this.sprite = sprite;
         this.frameTime = time;
     }
+
+    public Frame(Frame newFrame) {
+        this.frameTime = newFrame.frameTime;
+        this.sprite    = new Sprite(newFrame.sprite);
+    }
 }

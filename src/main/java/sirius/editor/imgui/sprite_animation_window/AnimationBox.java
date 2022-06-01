@@ -8,8 +8,6 @@ import imgui.flag.ImDrawFlags;
 import imgui.flag.ImGuiMouseButton;
 import imgui.flag.ImGuiWindowFlags;
 import imgui.type.ImString;
-import sirius.SiriusTheFox;
-import sirius.animations.AnimationState;
 import sirius.animations.Frame;
 
 import java.util.ArrayList;
@@ -21,10 +19,9 @@ public class AnimationBox {
     private final int ID;
     private String trigger;
     public float x, y;
-    private transient float width, height, lastWidth;
+    private float width;
+    private transient float height, lastWidth;
 
-    // TODO: 16/05/2022 Make this work
-    private AnimationState animationState;
     private List<Frame> frameList;
     public boolean doesLoop = false;
 
@@ -41,15 +38,14 @@ public class AnimationBox {
 
     private transient boolean selected;
 
-    public AnimationBox(String trigger, float x, float y) {
-        this.ID = maxId;
-        maxId++;
+    public AnimationBox(int id, String trigger, float x, float y, float width) {
+        this.ID = id;
         this.frameList = new ArrayList<>();
         this.trigger   = trigger;
         this.x         = x;
         this.y         = y;
 
-        this.width       = 128.0f;
+        this.width       = width;
         this.height      = 128.0f;
         this.lastWidth   = this.width;
 
@@ -57,8 +53,23 @@ public class AnimationBox {
         setPointFields();
     }
 
+    public AnimationBox(String trigger, float x, float y) {
+        this(maxId, trigger, x, y, 128.0f);
+        maxId++;
+    }
+
     public AnimationBox(String trigger, ImVec2 position) {
         this(trigger, position.x, position.y);
+        maxId++;
+    }
+
+    public AnimationBox(AnimationBox newAnimationBox) {
+        this(newAnimationBox.ID, newAnimationBox.trigger, newAnimationBox.x, newAnimationBox.y, newAnimationBox.width);
+        for (Frame frame : newAnimationBox.getFrameList()) {
+            frameList.add(new Frame(frame));
+        }
+        this.doesLoop = newAnimationBox.doesLoop;
+        this.pointFields = newAnimationBox.pointFields;
     }
 
     private void setPointFields() {
@@ -382,7 +393,7 @@ public class AnimationBox {
                     // Establish a union between 2 point --draw a line between 2 points
                     if (mouseReleasedOrClicked) {
                         ImVec2 pointPos = new ImVec2(ImGui.getMousePosX() - origin.x, ImGui.getMousePosY() - origin.y);
-                        Point newPoint = new Point(pointPos, 6.0f);
+                        Point newPoint = new Point(trigger, pointPos, 6.0f);
                         pointList.add(new Point(newPoint));
                         pointField.addPoint(newPoint);
 
@@ -406,6 +417,7 @@ public class AnimationBox {
 
         // When we shrink or enlarge the animation box, we should update the point fields' interactions rectangles
         float dtWidth = 0.0f;
+
         if (lastWidth != width) {
             dtWidth   = width - lastWidth;
             lastWidth = width;
@@ -421,8 +433,8 @@ public class AnimationBox {
             for (PointField pointField : pointFields) {
                 for (Point point : pointField.getPointList()) {
                     // Move left
-                    float moveValue = dtWidth / 4; // honestly, I don't know why I divide by 4, it was a guess,
-                    // but it just make it works
+                    float moveValue = dtWidth / 2;
+
                     if (point.position.x < this.x) {
                         point.position.x -= moveValue;
                         pointList.stream()
@@ -513,7 +525,7 @@ public class AnimationBox {
         this.frameList.remove(index);
     }
 
-    public void removeAllFrames() {
+    public void clearFrameList() {
         this.frameList.clear();
     }
 }

@@ -165,6 +165,8 @@ public class ConfigChild {
 
             // TODO: 28/05/2022 Make button to change background's color
             JImGui.image(sprite, sprite.getWidth() * 6, sprite.getHeight() * 6);
+        } else {
+            curFrameAnimationIndex = 0;
         }
 
         if (activeBox.getFrameListSize() > 1) {
@@ -284,10 +286,9 @@ public class ConfigChild {
         // SOLVED -> If it has to loop
         // SOLVED -> Add frames / sprites (if it doesn't loop just let put one frame)
         // SOLVED -> Set its active time
-
-        // Code to automatically add the states to the state machine, based on the points connection
-        // Save all to one or more json files (depends on the organization)
-        // Add state machine component to the current selected game object
+        // SOLVED -> Code to automatically add the states to the state machine, based on the points connection
+        // SOLVED -> Save all to one or more json files (depends on the organization)
+        // SOLVED -> Add state machine component to the current selected game object
 
         // Terminate child
         ImGui.endChild();

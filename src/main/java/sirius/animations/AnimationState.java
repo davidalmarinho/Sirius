@@ -22,7 +22,7 @@ public class AnimationState {
     }
 
     static {
-        defaultSprite = Sprite.Builder.newInstance().build();
+        defaultSprite = new Sprite();
     }
 
     public void addFrame(Sprite sprite, float frameTime) {
@@ -30,7 +30,7 @@ public class AnimationState {
     }
 
     public void addFrame(Frame frame) {
-        animationFrameList.add(new Frame(frame.sprite, frame.frameTime));
+        animationFrameList.add(frame);
     }
 
     public boolean isDoesLoop() {

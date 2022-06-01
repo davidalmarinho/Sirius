@@ -8,7 +8,7 @@ import org.joml.Vector4f;
 
 public class SpriteRenderer extends Component {
     private Vector4f color = new Vector4f(1, 1, 1, 1);
-    private Sprite sprite = Sprite.Builder.newInstance().build();
+    private Sprite sprite = new Sprite();
 
     private transient Transform lastTransform;
 
@@ -103,7 +103,7 @@ public class SpriteRenderer extends Component {
 
     public static class Builder {
         private Vector4f color = new Vector4f(1, 1, 1, 1);
-        private Sprite sprite = Sprite.Builder.newInstance().build();
+        private Sprite sprite = new Sprite();
 
         private Builder() {
 

@@ -13,7 +13,6 @@ public class AssetPool {
     private static Map<String, Shader> shaders = new HashMap<>();
     private static Map<String, Texture> textures = new HashMap<>();
     private static List<Level> levelList = new ArrayList<>();
-    private static List<String> animationPathList = new ArrayList<>();
     private static Map<String, Spritesheet> spritesheets = new HashMap<>();
     private static Map<String, Sound> stringSoundHashMap = new HashMap<>();
 
@@ -98,14 +97,6 @@ public class AssetPool {
 
     public static List<Level> getLevelList() {
         return levelList;
-    }
-
-    public static void addAnimationPath(String path) {
-        if (animationPathList.stream().noneMatch(path::equals)) {
-            animationPathList.add(path);
-        }
-
-        System.err.println("Error: The animation file '" + path + "' already exists.");
     }
 
     /**
