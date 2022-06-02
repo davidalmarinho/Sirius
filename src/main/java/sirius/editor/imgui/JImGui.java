@@ -1,5 +1,6 @@
 package sirius.editor.imgui;
 
+import com.sun.istack.internal.NotNull;
 import gameobjects.GameObject;
 import gameobjects.Prefabs;
 import gameobjects.components.Sprite;
@@ -156,14 +157,19 @@ public class JImGui {
     }
 
     public static String inputText(String label, String text) {
+        return inputText(label, text, defaultColumnWidth, 256);
+    }
+
+    public static String inputText(String label, String text, float columnWidth, int maxTextLength) {
         ImGui.pushID(label);
 
         ImGui.columns(2);
         ImGui.setColumnWidth(0, defaultColumnWidth);
         ImGui.text(label);
         ImGui.nextColumn();
+        ImGui.setColumnWidth(1, columnWidth);
 
-        ImString outString = new ImString(text, 256);
+        ImString outString = new ImString(text, maxTextLength);
         if (ImGui.inputText("##" + label, outString)) {
             ImGui.columns(1);
             ImGui.popID();
@@ -345,5 +351,34 @@ public class JImGui {
     public static GameObject getSelectedGameObject() {
         // TODO: 18/05/2022 This should be a copy
         return selectedGameObject;
+    }
+
+    public static int listBox(String label, int currentItem, @NotNull String[] items, int heightItems) {
+        ImInt imInt = new ImInt(currentItem);
+        ImGui.listBox("##" + label, imInt, items, heightItems);
+
+        return imInt.get();
+    }
+
+    /**
+     * Uses {@link ImGui#beginListBox(String)} API.
+     */
+    public static int doListBox(String label, int currentItem, @NotNull String[] items) {
+        if (ImGui.beginListBox("##" + label)) {
+            for (int i = 0; i < items.length; i++) {
+
+                boolean is_selected = (currentItem == i);
+                if (ImGui.selectable(items[i], is_selected)) {
+                    System.out.println(currentItem);
+                    currentItem = i;
+                }
+
+                // Set the initial focus when opening the combo (scrolling + keyboard navigation focus)
+                if (is_selected)
+                    ImGui.setItemDefaultFocus();
+            }
+            ImGui.endListBox();
+        }
+        return currentItem;
     }
 }

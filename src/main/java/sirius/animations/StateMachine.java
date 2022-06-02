@@ -3,12 +3,19 @@ package sirius.animations;
 import gameobjects.components.Component;
 import gameobjects.components.SpriteRenderer;
 import imgui.ImGui;
-import imgui.type.ImBoolean;
-import imgui.type.ImString;
+import imgui.flag.ImGuiMouseButton;
+import imgui.flag.ImGuiTreeNodeFlags;
+import sirius.editor.imgui.sprite_animation_window.AnimationBox;
+import sirius.editor.imgui.sprite_animation_window.Point;
+import sirius.editor.imgui.sprite_animation_window.Animator;
+import sirius.encode_tools.Encode;
+import sirius.utils.AssetPool;
 
 import java.util.*;
 
 public class StateMachine extends Component {
+    private transient String animationBlueprintFilepath;
+    private transient int currentItem = -1;
     public HashMap<StateTrigger, String> stateTransfers;
     private List<AnimationState> animationStateList;
     private transient AnimationState currentState;
@@ -112,25 +119,66 @@ public class StateMachine extends Component {
 
     @Override
     public void imgui() {
-        int index = 0;
-        for (AnimationState animationState : animationStateList) {
-            ImString title = new ImString(animationState.title);
-            ImGui.inputText("State: ", title);
-            animationState.title = title.get();
+        if (ImGui.treeNodeEx("##", ImGuiTreeNodeFlags.Leaf)) {
+            // List available blueprints animations
+            ImGui.textUnformatted("Select animation: ");
+            ImGui.newLine();
+            String[] items = AssetPool.getAnimationsPaths();
+            for (int n = 0; n < 5; n++) {
+                if (ImGui.selectable(items[n], currentItem == n))
+                    currentItem = n;
+            }
+            ImGui.treePop();
 
-            // Checkbox for doesLoop boolean
-            ImBoolean doesLoop = new ImBoolean(animationState.isDoesLoop());
-            ImGui.checkbox("Does Loop", doesLoop);
-            animationState.setLoop(doesLoop.get());
+            // Select a blueprint animation and pull it to the game object
+            if (ImGui.isMouseReleased(ImGuiMouseButton.Left) && currentItem >= 0) {
+                animationBlueprintFilepath = items[currentItem];
+                Animator bufferAnimationBlueprint = Encode.getAnimation(items[currentItem]);
 
-            for (Frame frame : animationState.animationFrameList) {
-                float[] tmp = new float[1];
-                tmp[0] = frame.frameTime;
-                ImGui.dragFloat("Frame (" + index + ") Time: ", tmp, 0.01f);
-                frame.frameTime = tmp[0];
-                index++;
+                resetStateMachine();
+
+                List<AnimationBox> animationBoxList = bufferAnimationBlueprint.getAnimationBoxList();
+                List<Point> pList = new ArrayList<>(bufferAnimationBlueprint.pointList);
+
+                if (!animationBoxList.isEmpty()) {
+                    for (int i = 0; i < animationBoxList.size(); i++) {
+                        AnimationBox curAnimationBox = animationBoxList.get(i);
+
+                        AnimationState animationState = new AnimationState();
+                        animationState.title = curAnimationBox.getTrigger();
+                        for (Frame frame : curAnimationBox.getFrameList()) {
+                            animationState.addFrame(new Frame(frame));
+                        }
+                        animationState.setLoop(curAnimationBox.doesLoop);
+                        addState(animationState);
+                    }
+
+                    for (int i = 0; i < pList.size(); i++) {
+                        if (i + 1 > pList.size() - 1) {
+                            break;
+                        }
+
+                        Point curP = pList.get(i);
+                        Point nextP = pList.get(i + 1);
+
+                        addStateTrigger(curP.getOrigin(), nextP.getOrigin(), nextP.getOrigin());
+                    }
+
+                    setDefaultState(animationBoxList.get(0).getTrigger());
+                    gameObject.getComponent(StateMachine.class).refreshTextures();
+                }
+
+                // Reset current item
+                currentItem = -1;
             }
         }
+    }
+
+    private void resetStateMachine() {
+        this.stateTransfers     = new HashMap<>();
+        this.animationStateList = new ArrayList<>();
+        this.currentState       = null;
+        this.defaultStateTitle  = "";
     }
 
     private static class StateTrigger {

@@ -1,150 +1,122 @@
 package sirius.editor.imgui.sprite_animation_window;
 
-import gameobjects.GameObject;
 import imgui.*;
+import imgui.flag.ImGuiMouseButton;
+import imgui.flag.ImGuiWindowFlags;
 import imgui.type.ImBoolean;
-import sirius.SiriusTheFox;
-import sirius.animations.AnimationState;
-import sirius.animations.Frame;
-import sirius.animations.StateMachine;
-import sirius.editor.PropertiesWindow;
 import sirius.editor.imgui.JImGui;
 import sirius.encode_tools.Encode;
+import sirius.utils.AssetPool;
 import sirius.utils.Settings;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 public class SpriteAnimationWindow {
     private static SpriteAnimationWindow instance;
 
     private ConfigChild configChild;
-    private StateMachineChild stateMachineChild;
+    private Animator animator;
 
-    private String lastActiveGameObjectName = "";
-    private boolean selectedGameObject = false;
+    private final String NEW_ANIMATION_CONTEXT = "New Animation";
+    private final String LOAD_CONTEXT = "Load Animation";
+    private String bufferFileName = "";
+    private String currentAnimationPath = "";
+    private int currentItem = 0;
 
     private SpriteAnimationWindow() {
         this.configChild = new ConfigChild();
-        this.stateMachineChild = new StateMachineChild();
     }
 
     public void imgui(float dt) {
-        PropertiesWindow propertiesWindow = SiriusTheFox.getImGuiLayer().getPropertiesWindow();
-
-        // Save animation boxes in file
-        GameObject activeGameObject = propertiesWindow.getActiveGameObject();
-        if (propertiesWindow.getActiveGameObjectList().size() != 1
-                || (activeGameObject != null && !lastActiveGameObjectName.equals(activeGameObject.name))) {
-            if (!lastActiveGameObjectName.equals("")) {
-                Encode.saveAnimation(stateMachineChild, Settings.Files.ANIMATIONS_FOLDER
-                        + lastActiveGameObjectName + ".json");
-                pullAnimation(lastActiveGameObjectName);
-                stateMachineChild = new StateMachineChild();
-                lastActiveGameObjectName = "";
-                selectedGameObject = false;
-            }
-        }
-
         if (ImGui.begin("Sprite Animation Window", new ImBoolean(true))) {
-            if (propertiesWindow.getActiveGameObjectList().size() != 1) {
-                ImGui.text("Select a game object to start animating him!");
-                ImGui.end();
-                return;
+            if (ImGui.button("Create")) {
+                ImGui.openPopup(NEW_ANIMATION_CONTEXT);
             }
 
-            // Create animation file to store the animation boxes
-            if (!selectedGameObject) {
-                try {
-                    File file = new File(Settings.Files.ANIMATIONS_FOLDER
-                            + propertiesWindow.getActiveGameObject().name + ".json");
+            ImGui.sameLine();
 
-                    // Check if the file was already created
-                    if (!file.createNewFile()) {
-                        StateMachineChild animations = Encode.getAnimation(Settings.Files.ANIMATIONS_FOLDER
-                                + propertiesWindow.getActiveGameObject().name + ".json");
-                        if (animations == null)
-                            stateMachineChild = new StateMachineChild();
-                        else
-                            stateMachineChild = new StateMachineChild(animations.pointList, animations.getAnimationBoxList());
+            if (ImGui.button("Load")) {
+                ImGui.openPopup(LOAD_CONTEXT);
+            }
+
+            if (ImGui.button("Save")) {
+                Encode.saveAnimation(animator, currentAnimationPath);
+                AssetPool.updateAnimation(currentAnimationPath, animator);
+            }
+
+            if (ImGui.beginPopupModal(NEW_ANIMATION_CONTEXT, ImGuiWindowFlags.AlwaysUseWindowPadding)) {
+                bufferFileName = JImGui.inputText("File Name: ", bufferFileName, 600, 32);
+
+                if (ImGui.button("New Animation")) {
+                    currentAnimationPath = Settings.Files.ANIMATIONS_FOLDER + bufferFileName + ".json";
+                    File file = new File(currentAnimationPath);
+                    try {
+                        if (!bufferFileName.isEmpty() || file.createNewFile()) {
+                            this.animator = new Animator();
+                        } else {
+                            System.err.println("Error: Couldn't create '" + bufferFileName + "' animation.");
+                        }
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
                     }
-
-                    lastActiveGameObjectName = propertiesWindow.getActiveGameObject().name;
-                } catch (IOException e) {
-                    e.printStackTrace();
+                    ImGui.closeCurrentPopup();
                 }
 
-                // AssetPool.addAnimationPath(propertiesWindow.getActiveGameObject().name);
-                selectedGameObject = true;
+                if (ImGui.button("Close")) {
+                    ImGui.closeCurrentPopup();
+                }
+
+                ImGui.endPopup();
+            }
+
+            if (ImGui.beginPopupModal(LOAD_CONTEXT, ImGuiWindowFlags.AlwaysUseWindowPadding)) {
+                String[] items = AssetPool.getAnimationsPaths();
+
+                // currentItem = JImGui.listBox("", currentItem, items, 5);
+                currentItem = JImGui.doListBox("", currentItem, items);
+
+                if (ImGui.isMouseClicked(ImGuiMouseButton.Left) && ImGui.isItemActive()) {
+                    currentAnimationPath = items[currentItem];
+                    this.animator = new Animator(Encode.getAnimation(items[currentItem]));
+                    ImGui.closeCurrentPopup();
+                }
+
+                ImGui.newLine();
+
+                if (ImGui.button("Close")) {
+                    ImGui.closeCurrentPopup();
+                }
+
+                ImGui.endPopup();
+            }
+
+            if (animator == null) {
+                ImGui.end();
+                return;
             }
 
             ImGui.text("Mouse Left: drag to add lines, or drag inside the boxes to move them." +
                     "\nMouse Middle: drag to scroll," +
                     "\nMouse Right: click for context menu.");
             ImGui.checkbox("Show config: ", configChild.showConfigChild);
-            stateMachineChild.showStateMachineChild = JImGui.checkBox("Show state machine: ", stateMachineChild.showStateMachineChild);
+            animator.showAnimator = JImGui.checkBox("Show animator: ",
+                    animator.showAnimator);
 
-            // Put config child in left side of the sprite animation window and if the state machine child is active,
+            // Put config child in left side of the sprite animation window and if the animator is active,
             // config child's size has to be 240
             if (configChild.isShowConfigChild()) {
-                if (stateMachineChild.showStateMachineChild)
+                if (animator.showAnimator)
                     configChild.imgui(new ImVec2(300, ImGui.getContentRegionAvailY()), dt);
                 else
                     configChild.imgui(ImGui.getContentRegionAvail(), dt);
             }
 
-            if (stateMachineChild.showStateMachineChild)
-                stateMachineChild.imgui(ImGui.getContentRegionAvail(), dt);
+            if (animator.showAnimator)
+                animator.imgui(ImGui.getContentRegionAvail(), dt);
 
         }
         ImGui.end();
-    }
-
-    public static void pullAnimation(String gameObjectName) {
-        // TODO: 01/06/2022 End this and make this more smart
-        List<GameObject> gameObjectList = SiriusTheFox.getCurrentScene().getGameObjectList();
-        StateMachineChild animations = Encode.getAnimation(Settings.Files.ANIMATIONS_FOLDER + gameObjectName + ".json");
-        List<AnimationBox> animationBoxList = animations.getAnimationBoxList();
-        List<Point> pList = new ArrayList<>(animations.pointList);
-
-        for (GameObject gameObject : gameObjectList) {
-            if (gameObject.name.equals(gameObjectName)) {
-                gameObject.removeComponent(StateMachine.class);
-                StateMachine stateMachine = new StateMachine();
-
-                // Prevent IndexOutOfBoundsException
-                if (animationBoxList.isEmpty()) return;
-
-                for (int i = 0; i < animationBoxList.size(); i++) {
-                    AnimationBox curAnimationBox = animationBoxList.get(i);
-
-                    AnimationState animationState = new AnimationState();
-                    animationState.title = curAnimationBox.getTrigger();
-                    for (Frame frame : curAnimationBox.getFrameList()) {
-                        animationState.addFrame(new Frame(frame));
-                    }
-                    animationState.setLoop(curAnimationBox.doesLoop);
-                    stateMachine.addState(animationState);
-                }
-
-                for (int i = 0; i < pList.size(); i++) {
-                    if (i + 1 > pList.size() - 1) {
-                        break;
-                    }
-
-                    Point curP  = pList.get(i);
-                    Point nextP = pList.get(i + 1);
-
-                    stateMachine.addStateTrigger(curP.getOrigin(), nextP.getOrigin(), nextP.getOrigin());
-                }
-
-                stateMachine.setDefaultState(animationBoxList.get(0).getTrigger());
-                gameObject.addComponent(stateMachine);
-                gameObject.getComponent(StateMachine.class).refreshTextures();
-            }
-        }
     }
 
     public static SpriteAnimationWindow get() {
@@ -153,7 +125,7 @@ public class SpriteAnimationWindow {
         return instance;
     }
 
-    public static StateMachineChild getStateMachineChild() {
-        return get().stateMachineChild;
+    public static Animator getAnimator() {
+        return get().animator;
     }
 }

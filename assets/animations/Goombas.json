@@ -1,0 +1,248 @@
+{
+  "pointList": [
+    {
+      "origin": "walk",
+      "ID": 1,
+      "position": {
+        "x": 422.0,
+        "y": 154.0
+      },
+      "radius": 6.0
+    },
+    {
+      "origin": "squashMe",
+      "ID": 2,
+      "position": {
+        "x": 693.0,
+        "y": 158.0
+      },
+      "radius": 6.0
+    }
+  ],
+  "animationBoxList": [
+    {
+      "ID": 2,
+      "trigger": "walk",
+      "x": 338.0,
+      "y": 163.0,
+      "width": 166.0,
+      "frameList": [
+        {
+          "sprite": {
+            "width": 16,
+            "height": 16,
+            "texture": {
+              "filePath": "assets/images/spritesheets/spritesheet.png"
+            },
+            "textureCoordinates": [
+              {
+                "x": 0.071428575,
+                "y": 0.5
+              },
+              {
+                "x": 0.071428575,
+                "y": 0.0
+              },
+              {
+                "x": 0.0,
+                "y": 0.0
+              },
+              {
+                "x": 0.0,
+                "y": 0.5
+              }
+            ]
+          },
+          "frameTime": 0.25
+        },
+        {
+          "sprite": {
+            "width": 16,
+            "height": 16,
+            "texture": {
+              "filePath": "assets/images/spritesheets/spritesheet.png"
+            },
+            "textureCoordinates": [
+              {
+                "x": 0.14285715,
+                "y": 0.5
+              },
+              {
+                "x": 0.14285715,
+                "y": 0.0
+              },
+              {
+                "x": 0.071428575,
+                "y": 0.0
+              },
+              {
+                "x": 0.071428575,
+                "y": 0.5
+              }
+            ]
+          },
+          "frameTime": 0.25
+        }
+      ],
+      "doesLoop": true,
+      "pointFields": [
+        {
+          "name": "up",
+          "position": {
+            "x": 338.0,
+            "y": 99.0
+          },
+          "size": {
+            "x": 126.0,
+            "y": 10.0
+          },
+          "pointList": []
+        },
+        {
+          "name": "right",
+          "position": {
+            "x": 421.0,
+            "y": 163.0
+          },
+          "size": {
+            "x": 10.0,
+            "y": 88.0
+          },
+          "pointList": [
+            {
+              "origin": "walk",
+              "ID": 1,
+              "position": {
+                "x": 422.0,
+                "y": 154.0
+              },
+              "radius": 6.0
+            }
+          ]
+        },
+        {
+          "name": "down",
+          "position": {
+            "x": 338.0,
+            "y": 227.0
+          },
+          "size": {
+            "x": 126.0,
+            "y": 10.0
+          },
+          "pointList": []
+        },
+        {
+          "name": "left",
+          "position": {
+            "x": 255.0,
+            "y": 163.0
+          },
+          "size": {
+            "x": 10.0,
+            "y": 88.0
+          },
+          "pointList": []
+        }
+      ]
+    },
+    {
+      "ID": 4,
+      "trigger": "squashMe",
+      "x": 778.0,
+      "y": 155.0,
+      "width": 166.0,
+      "frameList": [
+        {
+          "sprite": {
+            "width": 16,
+            "height": 16,
+            "texture": {
+              "filePath": "assets/images/spritesheets/spritesheet.png"
+            },
+            "textureCoordinates": [
+              {
+                "x": 0.21428572,
+                "y": 0.5
+              },
+              {
+                "x": 0.21428572,
+                "y": 0.0
+              },
+              {
+                "x": 0.14285715,
+                "y": 0.0
+              },
+              {
+                "x": 0.14285715,
+                "y": 0.5
+              }
+            ]
+          },
+          "frameTime": 0.25
+        }
+      ],
+      "doesLoop": false,
+      "pointFields": [
+        {
+          "name": "up",
+          "position": {
+            "x": 778.0,
+            "y": 91.0
+          },
+          "size": {
+            "x": 126.0,
+            "y": 10.0
+          },
+          "pointList": []
+        },
+        {
+          "name": "right",
+          "position": {
+            "x": 861.0,
+            "y": 155.0
+          },
+          "size": {
+            "x": 10.0,
+            "y": 88.0
+          },
+          "pointList": []
+        },
+        {
+          "name": "down",
+          "position": {
+            "x": 778.0,
+            "y": 219.0
+          },
+          "size": {
+            "x": 126.0,
+            "y": 10.0
+          },
+          "pointList": []
+        },
+        {
+          "name": "left",
+          "position": {
+            "x": 695.0,
+            "y": 155.0
+          },
+          "size": {
+            "x": 10.0,
+            "y": 88.0
+          },
+          "pointList": [
+            {
+              "origin": "squashMe",
+              "ID": 2,
+              "position": {
+                "x": 693.0,
+                "y": 158.0
+              },
+              "radius": 6.0
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -11,14 +11,14 @@ import sirius.utils.JMath;
 import java.util.ArrayList;
 import java.util.List;
 
-// State Machine Child will also be called Canvas in the comments
-public class StateMachineChild {
+// Animator will also be called Canvas in the comments
+public class Animator {
     // public static float zoom = 1.0f;
     public List<Point> pointList;
 
     private List<AnimationBox> animationBoxList;
 
-    public transient boolean showStateMachineChild;
+    public transient boolean showAnimator;
 
     public transient AnimationBox activeAnimationBox;
 
@@ -34,12 +34,46 @@ public class StateMachineChild {
     private transient List<Wire> wireList;
     private transient Wire wire;
 
-    public StateMachineChild() {
+    public Animator() {
         this(new ArrayList<>(), new ArrayList<>());
     }
 
-    public StateMachineChild(List<Point> pointList, List<AnimationBox> animationBoxList) {
-        this.showStateMachineChild = true;
+    public Animator(Animator animationCopy) {
+        this.showAnimator = true;
+
+        this.wire = new Wire();
+        this.wireList = new ArrayList<>();
+        this.scrolling = new ImVec2();
+
+        this.pointList = new ArrayList<>(animationCopy.pointList);
+
+        this.animationBoxList = new ArrayList<>();
+        for (AnimationBox animationBox : animationCopy.animationBoxList) {
+            this.animationBoxList.add(new AnimationBox(animationBox));
+        }
+
+        int greatestId = 0;
+        for (Point p : animationCopy.pointList) {
+            if (p.getId() > greatestId) {
+                greatestId = p.getId();
+            }
+        }
+
+        Point.maxId = greatestId + 1;
+
+        greatestId = 1;
+        for (AnimationBox animationBox : animationBoxList) {
+            if (animationBox.getId() > greatestId) {
+                greatestId = animationBox.getId();
+            }
+        }
+
+        AnimationBox.maxId = greatestId + 1;
+    }
+
+    // TODO: 02/06/2022 delete this 
+    public Animator(List<Point> pointList, List<AnimationBox> animationBoxList) {
+        this.showAnimator = true;
 
         this.wire = new Wire();
         this.wireList = new ArrayList<>();
