@@ -14,9 +14,7 @@ import java.util.List;
 // Animator will also be called Canvas in the comments
 public class Animator {
     // public static float zoom = 1.0f;
-    public List<Point> pointList;
-
-    private List<AnimationBox> animationBoxList;
+    public AnimationBlueprint animationBlueprint;
 
     public transient boolean showAnimator;
 
@@ -35,25 +33,26 @@ public class Animator {
     private transient Wire wire;
 
     public Animator() {
-        this(new ArrayList<>(), new ArrayList<>());
-    }
-
-    public Animator(Animator animationCopy) {
         this.showAnimator = true;
 
         this.wire = new Wire();
         this.wireList = new ArrayList<>();
         this.scrolling = new ImVec2();
 
-        this.pointList = new ArrayList<>(animationCopy.pointList);
+        this.animationBlueprint = new AnimationBlueprint();
+    }
 
-        this.animationBoxList = new ArrayList<>();
-        for (AnimationBox animationBox : animationCopy.animationBoxList) {
-            this.animationBoxList.add(new AnimationBox(animationBox));
-        }
+    public Animator(AnimationBlueprint animationBlueprint) {
+        this.showAnimator = true;
+
+        this.wire = new Wire();
+        this.wireList = new ArrayList<>();
+        this.scrolling = new ImVec2();
+
+        this.animationBlueprint = new AnimationBlueprint(animationBlueprint.pointList, animationBlueprint.animationBoxList);
 
         int greatestId = 0;
-        for (Point p : animationCopy.pointList) {
+        for (Point p : animationBlueprint.pointList) {
             if (p.getId() > greatestId) {
                 greatestId = p.getId();
             }
@@ -62,41 +61,7 @@ public class Animator {
         Point.maxId = greatestId + 1;
 
         greatestId = 1;
-        for (AnimationBox animationBox : animationBoxList) {
-            if (animationBox.getId() > greatestId) {
-                greatestId = animationBox.getId();
-            }
-        }
-
-        AnimationBox.maxId = greatestId + 1;
-    }
-
-    // TODO: 02/06/2022 delete this 
-    public Animator(List<Point> pointList, List<AnimationBox> animationBoxList) {
-        this.showAnimator = true;
-
-        this.wire = new Wire();
-        this.wireList = new ArrayList<>();
-        this.scrolling = new ImVec2();
-
-        this.pointList = new ArrayList<>(pointList);
-
-        this.animationBoxList = new ArrayList<>();
-        for (AnimationBox animationBox : animationBoxList) {
-            this.animationBoxList.add(new AnimationBox(animationBox));
-        }
-
-        int greatestId = 0;
-        for (Point p : pointList) {
-            if (p.getId() > greatestId) {
-                greatestId = p.getId();
-            }
-        }
-
-        Point.maxId = greatestId + 1;
-
-        greatestId = 1;
-        for (AnimationBox animationBox : animationBoxList) {
+        for (AnimationBox animationBox : animationBlueprint.animationBoxList) {
             if (animationBox.getId() > greatestId) {
                 greatestId = animationBox.getId();
             }
@@ -112,13 +77,14 @@ public class Animator {
      * @return The animation box with desired id.
      */
     public AnimationBox getAnimationBox(int id) {
-        return animationBoxList.stream()
+        return this.animationBlueprint.animationBoxList.stream()
                 .filter(animationBox -> animationBox.getId() == id)
                 .findFirst()
                 .orElse(null);
     }
 
     private void drawArrows(ImDrawList imDrawList, ImVec2 origin) {
+        List<Point> pointList = animationBlueprint.pointList;
         for (int i = 1; i < pointList.size(); i += 2) {
             if (pointList.size() < 1) break;
             if (i - 1 < 0) continue;
@@ -182,7 +148,7 @@ public class Animator {
     }*/
 
     public void imgui(ImVec2 contentRegionAvailable, float dt) {
-        activeAnimationBox = animationBoxList
+        activeAnimationBox = this.animationBlueprint.animationBoxList
                 .stream()
                 .filter(animationBox -> getAnimationBox(animationBox.getId()).isSelected())
                 .findFirst()
@@ -270,6 +236,9 @@ public class Animator {
                     ImColor.intToColor(200, 200, 200, 40));
         }
 
+        List<AnimationBox> animationBoxList = animationBlueprint.animationBoxList;
+        List<Point> pointList = animationBlueprint.pointList;
+
         // Draw animation boxes in SpriteWindowAnimation's canvas
         for (int i = 0; i < animationBoxList.size(); i++) {
             animationBoxList.get(i).imgui(origin, scrolling);
@@ -331,7 +300,7 @@ public class Animator {
     }
 
     public List<AnimationBox> getAnimationBoxList() {
-        return animationBoxList;
+        return animationBlueprint.animationBoxList;
     }
 
     public AnimationBox getActiveBox() {

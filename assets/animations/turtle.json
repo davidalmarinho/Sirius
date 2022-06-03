@@ -2,45 +2,45 @@
   "pointList": [
     {
       "origin": "walk",
-      "ID": 1,
+      "ID": 0,
       "position": {
-        "x": 422.0,
-        "y": 154.0
+        "x": 207.0,
+        "y": 114.0
       },
       "radius": 6.0
     },
     {
       "origin": "squashMe",
-      "ID": 2,
+      "ID": 1,
       "position": {
-        "x": 693.0,
-        "y": 158.0
+        "x": 319.0,
+        "y": 108.0
       },
       "radius": 6.0
     }
   ],
   "animationBoxList": [
     {
-      "ID": 2,
+      "ID": 0,
       "trigger": "walk",
-      "x": 338.0,
-      "y": 163.0,
+      "x": 122.0,
+      "y": 124.0,
       "width": 166.0,
       "frameList": [
         {
           "sprite": {
             "width": 16,
-            "height": 16,
+            "height": 24,
             "texture": {
-              "filePath": "assets/images/spritesheets/spritesheet.png"
+              "filePath": "assets/images/spritesheets/turtle.png"
             },
             "textureCoordinates": [
               {
-                "x": 0.071428575,
-                "y": 0.5
+                "x": 0.25,
+                "y": 1.0
               },
               {
-                "x": 0.071428575,
+                "x": 0.25,
                 "y": 0.0
               },
               {
@@ -49,7 +49,7 @@
               },
               {
                 "x": 0.0,
-                "y": 0.5
+                "y": 1.0
               }
             ]
           },
@@ -58,26 +58,26 @@
         {
           "sprite": {
             "width": 16,
-            "height": 16,
+            "height": 24,
             "texture": {
-              "filePath": "assets/images/spritesheets/spritesheet.png"
+              "filePath": "assets/images/spritesheets/turtle.png"
             },
             "textureCoordinates": [
               {
-                "x": 0.14285715,
-                "y": 0.5
+                "x": 0.5,
+                "y": 1.0
               },
               {
-                "x": 0.14285715,
+                "x": 0.5,
                 "y": 0.0
               },
               {
-                "x": 0.071428575,
+                "x": 0.25,
                 "y": 0.0
               },
               {
-                "x": 0.071428575,
-                "y": 0.5
+                "x": 0.25,
+                "y": 1.0
               }
             ]
           },
@@ -89,8 +89,8 @@
         {
           "name": "up",
           "position": {
-            "x": 338.0,
-            "y": 99.0
+            "x": 122.0,
+            "y": 60.0
           },
           "size": {
             "x": 126.0,
@@ -101,8 +101,8 @@
         {
           "name": "right",
           "position": {
-            "x": 421.0,
-            "y": 163.0
+            "x": 205.0,
+            "y": 124.0
           },
           "size": {
             "x": 10.0,
@@ -111,10 +111,10 @@
           "pointList": [
             {
               "origin": "walk",
-              "ID": 1,
+              "ID": 0,
               "position": {
-                "x": 422.0,
-                "y": 154.0
+                "x": 207.0,
+                "y": 114.0
               },
               "radius": 6.0
             }
@@ -123,8 +123,8 @@
         {
           "name": "down",
           "position": {
-            "x": 338.0,
-            "y": 227.0
+            "x": 122.0,
+            "y": 188.0
           },
           "size": {
             "x": 126.0,
@@ -135,8 +135,8 @@
         {
           "name": "left",
           "position": {
-            "x": 255.0,
-            "y": 163.0
+            "x": 39.0,
+            "y": 124.0
           },
           "size": {
             "x": 10.0,
@@ -147,35 +147,35 @@
       ]
     },
     {
-      "ID": 4,
+      "ID": 2,
       "trigger": "squashMe",
-      "x": 778.0,
-      "y": 155.0,
+      "x": 405.0,
+      "y": 108.0,
       "width": 166.0,
       "frameList": [
         {
           "sprite": {
             "width": 16,
-            "height": 16,
+            "height": 24,
             "texture": {
-              "filePath": "assets/images/spritesheets/spritesheet.png"
+              "filePath": "assets/images/spritesheets/turtle.png"
             },
             "textureCoordinates": [
               {
-                "x": 0.21428572,
-                "y": 0.5
+                "x": 0.75,
+                "y": 1.0
               },
               {
-                "x": 0.21428572,
+                "x": 0.75,
                 "y": 0.0
               },
               {
-                "x": 0.14285715,
+                "x": 0.5,
                 "y": 0.0
               },
               {
-                "x": 0.14285715,
-                "y": 0.5
+                "x": 0.5,
+                "y": 1.0
               }
             ]
           },
@@ -187,8 +187,8 @@
         {
           "name": "up",
           "position": {
-            "x": 778.0,
-            "y": 91.0
+            "x": 405.0,
+            "y": 44.0
           },
           "size": {
             "x": 126.0,
@@ -199,8 +199,8 @@
         {
           "name": "right",
           "position": {
-            "x": 861.0,
-            "y": 155.0
+            "x": 488.0,
+            "y": 108.0
           },
           "size": {
             "x": 10.0,
@@ -211,8 +211,8 @@
         {
           "name": "down",
           "position": {
-            "x": 778.0,
-            "y": 219.0
+            "x": 405.0,
+            "y": 172.0
           },
           "size": {
             "x": 126.0,
@@ -223,8 +223,8 @@
         {
           "name": "left",
           "position": {
-            "x": 695.0,
-            "y": 155.0
+            "x": 322.0,
+            "y": 108.0
           },
           "size": {
             "x": 10.0,
@@ -233,10 +233,10 @@
           "pointList": [
             {
               "origin": "squashMe",
-              "ID": 2,
+              "ID": 1,
               "position": {
-                "x": 693.0,
-                "y": 158.0
+                "x": 319.0,
+                "y": 108.0
               },
               "radius": 6.0
             }

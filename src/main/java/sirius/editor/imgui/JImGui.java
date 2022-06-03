@@ -8,6 +8,7 @@ import imgui.ImGui;
 import imgui.ImVec2;
 import imgui.flag.ImGuiCol;
 import imgui.flag.ImGuiStyleVar;
+import imgui.flag.ImGuiTreeNodeFlags;
 import imgui.type.ImBoolean;
 import imgui.type.ImInt;
 import imgui.type.ImString;
@@ -15,6 +16,7 @@ import org.joml.Vector2f;
 import org.joml.Vector4f;
 import sirius.rendering.Color;
 import sirius.rendering.spritesheet.Spritesheet;
+import sirius.utils.AssetPool;
 
 public class JImGui {
     // Keeps the game object selected on the sprites layout
@@ -379,6 +381,21 @@ public class JImGui {
             }
             ImGui.endListBox();
         }
+        return currentItem;
+    }
+
+    public static int list(String label, int currentItem, String[] items) {
+        // ImGui.pushID(label);
+        if (ImGui.treeNodeEx("##" + label, ImGuiTreeNodeFlags.Leaf)) {
+
+            for (int i = 0; i < items.length; i++) {
+                if (ImGui.selectable(items[i], currentItem == i))
+                    currentItem = i;
+            }
+            ImGui.treePop();
+        }
+        // ImGui.popID();
+
         return currentItem;
     }
 }

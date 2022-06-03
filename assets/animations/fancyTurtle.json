@@ -2,54 +2,54 @@
   "pointList": [
     {
       "origin": "walk",
-      "ID": 1,
+      "ID": 0,
       "position": {
-        "x": 347.0,
-        "y": 70.0
+        "x": 181.0,
+        "y": 56.0
       },
       "radius": 6.0
     },
     {
       "origin": "squashMe",
-      "ID": 2,
+      "ID": 1,
       "position": {
-        "x": 584.0,
-        "y": 58.0
+        "x": 338.0,
+        "y": 50.0
       },
       "radius": 6.0
     }
   ],
   "animationBoxList": [
     {
-      "ID": 2,
+      "ID": 0,
       "trigger": "walk",
-      "x": 264.0,
-      "y": 75.0,
+      "x": 94.0,
+      "y": 73.0,
       "width": 166.0,
       "frameList": [
         {
           "sprite": {
             "width": 16,
-            "height": 16,
+            "height": 24,
             "texture": {
-              "filePath": "assets/images/spritesheets/spritesheet.png"
+              "filePath": "assets/images/spritesheets/turtle.png"
             },
             "textureCoordinates": [
               {
-                "x": 0.2857143,
-                "y": 0.5
+                "x": 0.25,
+                "y": 1.0
               },
               {
-                "x": 0.2857143,
+                "x": 0.25,
                 "y": 0.0
               },
               {
-                "x": 0.21428572,
+                "x": 0.0,
                 "y": 0.0
               },
               {
-                "x": 0.21428572,
-                "y": 0.5
+                "x": 0.0,
+                "y": 1.0
               }
             ]
           },
@@ -58,26 +58,26 @@
         {
           "sprite": {
             "width": 16,
-            "height": 16,
+            "height": 24,
             "texture": {
-              "filePath": "assets/images/spritesheets/spritesheet.png"
+              "filePath": "assets/images/spritesheets/turtle.png"
             },
             "textureCoordinates": [
               {
-                "x": 0.71428573,
-                "y": 0.5
+                "x": 0.5,
+                "y": 1.0
               },
               {
-                "x": 0.71428573,
+                "x": 0.5,
                 "y": 0.0
               },
               {
-                "x": 0.64285713,
+                "x": 0.25,
                 "y": 0.0
               },
               {
-                "x": 0.64285713,
-                "y": 0.5
+                "x": 0.25,
+                "y": 1.0
               }
             ]
           },
@@ -89,8 +89,8 @@
         {
           "name": "up",
           "position": {
-            "x": 264.0,
-            "y": 11.0
+            "x": 94.0,
+            "y": 9.0
           },
           "size": {
             "x": 126.0,
@@ -101,8 +101,8 @@
         {
           "name": "right",
           "position": {
-            "x": 347.0,
-            "y": 75.0
+            "x": 177.0,
+            "y": 73.0
           },
           "size": {
             "x": 10.0,
@@ -111,10 +111,10 @@
           "pointList": [
             {
               "origin": "walk",
-              "ID": 1,
+              "ID": 0,
               "position": {
-                "x": 347.0,
-                "y": 70.0
+                "x": 181.0,
+                "y": 56.0
               },
               "radius": 6.0
             }
@@ -123,8 +123,8 @@
         {
           "name": "down",
           "position": {
-            "x": 264.0,
-            "y": 139.0
+            "x": 94.0,
+            "y": 137.0
           },
           "size": {
             "x": 126.0,
@@ -135,8 +135,8 @@
         {
           "name": "left",
           "position": {
-            "x": 181.0,
-            "y": 75.0
+            "x": 11.0,
+            "y": 73.0
           },
           "size": {
             "x": 10.0,
@@ -147,35 +147,35 @@
       ]
     },
     {
-      "ID": 4,
+      "ID": 2,
       "trigger": "squashMe",
-      "x": 670.0,
-      "y": 68.0,
+      "x": 425.0,
+      "y": 67.0,
       "width": 166.0,
       "frameList": [
         {
           "sprite": {
             "width": 16,
-            "height": 16,
+            "height": 32,
             "texture": {
-              "filePath": "assets/images/spritesheets/spritesheet.png"
+              "filePath": "assets/images/spritesheets/bigSpritesheet.png"
             },
             "textureCoordinates": [
               {
-                "x": 0.85714287,
+                "x": 0.33333334,
+                "y": 1.0
+              },
+              {
+                "x": 0.33333334,
                 "y": 0.5
               },
               {
-                "x": 0.85714287,
-                "y": 0.0
-              },
-              {
-                "x": 0.78571427,
-                "y": 0.0
-              },
-              {
-                "x": 0.78571427,
+                "x": 0.2857143,
                 "y": 0.5
+              },
+              {
+                "x": 0.2857143,
+                "y": 1.0
               }
             ]
           },
@@ -187,8 +187,8 @@
         {
           "name": "up",
           "position": {
-            "x": 670.0,
-            "y": 4.0
+            "x": 425.0,
+            "y": 3.0
           },
           "size": {
             "x": 126.0,
@@ -199,8 +199,8 @@
         {
           "name": "right",
           "position": {
-            "x": 753.0,
-            "y": 68.0
+            "x": 508.0,
+            "y": 67.0
           },
           "size": {
             "x": 10.0,
@@ -211,8 +211,8 @@
         {
           "name": "down",
           "position": {
-            "x": 670.0,
-            "y": 132.0
+            "x": 425.0,
+            "y": 131.0
           },
           "size": {
             "x": 126.0,
@@ -223,8 +223,8 @@
         {
           "name": "left",
           "position": {
-            "x": 587.0,
-            "y": 68.0
+            "x": 342.0,
+            "y": 67.0
           },
           "size": {
             "x": 10.0,
@@ -233,10 +233,10 @@
           "pointList": [
             {
               "origin": "squashMe",
-              "ID": 2,
+              "ID": 1,
               "position": {
-                "x": 584.0,
-                "y": 58.0
+                "x": 338.0,
+                "y": 50.0
               },
               "radius": 6.0
             }

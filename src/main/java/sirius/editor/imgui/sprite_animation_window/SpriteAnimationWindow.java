@@ -22,7 +22,7 @@ public class SpriteAnimationWindow {
     private final String LOAD_CONTEXT = "Load Animation";
     private String bufferFileName = "";
     private String currentAnimationPath = "";
-    private int currentItem = 0;
+    private int currentItem = -1;
 
     private SpriteAnimationWindow() {
         this.configChild = new ConfigChild();
@@ -41,8 +41,8 @@ public class SpriteAnimationWindow {
             }
 
             if (ImGui.button("Save")) {
-                Encode.saveAnimation(animator, currentAnimationPath);
-                AssetPool.updateAnimation(currentAnimationPath, animator);
+                Encode.saveAnimation(animator.animationBlueprint, currentAnimationPath);
+                AssetPool.updateAnimation(currentAnimationPath, animator.animationBlueprint);
             }
 
             if (ImGui.beginPopupModal(NEW_ANIMATION_CONTEXT, ImGuiWindowFlags.AlwaysUseWindowPadding)) {
@@ -70,15 +70,18 @@ public class SpriteAnimationWindow {
                 ImGui.endPopup();
             }
 
-            if (ImGui.beginPopupModal(LOAD_CONTEXT, ImGuiWindowFlags.AlwaysUseWindowPadding)) {
+            if (ImGui.beginPopupModal(LOAD_CONTEXT, ImGuiWindowFlags.AlwaysUseWindowPadding | ImGuiWindowFlags.AlwaysAutoResize)) {
                 String[] items = AssetPool.getAnimationsPaths();
 
-                // currentItem = JImGui.listBox("", currentItem, items, 5);
-                currentItem = JImGui.doListBox("", currentItem, items);
+                currentItem = JImGui.list("", currentItem, items);
 
-                if (ImGui.isMouseClicked(ImGuiMouseButton.Left) && ImGui.isItemActive()) {
+                if (ImGui.isMouseReleased(ImGuiMouseButton.Left) && currentItem >= 0) {
                     currentAnimationPath = items[currentItem];
                     this.animator = new Animator(Encode.getAnimation(items[currentItem]));
+
+                    // Reset current item
+                    currentItem = -1;
+
                     ImGui.closeCurrentPopup();
                 }
 

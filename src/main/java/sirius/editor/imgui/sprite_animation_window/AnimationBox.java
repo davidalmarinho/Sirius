@@ -118,7 +118,7 @@ public class AnimationBox {
 
     private void delUnlinkedPoints() {
         if (mayCheckForUncheckedPoints) {
-            List<Point> pointList = SpriteAnimationWindow.getAnimator().pointList;
+            List<Point> pointList = SpriteAnimationWindow.getAnimator().animationBlueprint.pointList;
 
             // We do this check to make sure that the point is unlinked
             if (pointList.size() % 2 == 0) {
@@ -179,7 +179,7 @@ public class AnimationBox {
         checkPointsSameBox = false;
 
         // Get the 2 last points added to rendering
-        List<Point> saPointList = SpriteAnimationWindow.getAnimator().pointList;
+        List<Point> saPointList = SpriteAnimationWindow.getAnimator().animationBlueprint.pointList;
         Point[] last2Points = {saPointList.get(saPointList.size() - 1), saPointList.get(saPointList.size() - 2)};
 
         // If samePoint var reaches 2, we will have to delete the 2 lastPoints added, because
@@ -245,7 +245,7 @@ public class AnimationBox {
             // Load the new points positions to the drawing list in Sprite Animation Window
             for (PointField pointField : pointFields) {
                 for (Point p : pointField.getPointList()) {
-                    SpriteAnimationWindow.getAnimator().pointList.stream()
+                    SpriteAnimationWindow.getAnimator().animationBlueprint.pointList.stream()
                             .filter(point -> p.getId() == point.getId())
                             .findFirst()
                             .ifPresent(asP -> asP.position.set(new ImVec2(p.position)));
@@ -380,7 +380,7 @@ public class AnimationBox {
         // Create points to after join them and form a line, if the left mouse button isn't realised
         boolean mouseReleasedOrClicked =
                 ImGui.isMouseClicked(ImGuiMouseButton.Left) || ImGui.isMouseReleased(ImGuiMouseButton.Left);
-        List<Point> pointList = SpriteAnimationWindow.getAnimator().pointList;
+        List<Point> pointList = SpriteAnimationWindow.getAnimator().animationBlueprint.pointList;
         for (PointField pointField : pointFields) {
             if (!movingAnimationBox) {
                 if (pointField.hasUnLinkedPoint && pointList.size() % 2 == 0)
