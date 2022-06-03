@@ -171,7 +171,6 @@ public class AssetPool {
 
         int i = 0;
         for (String key : spritesheets.keySet()) {
-            // TODO: 18/05/2022 Get the path that doesn't depends on the OS
             spritesheetsPaths[i] = key;
             i++;
         }
