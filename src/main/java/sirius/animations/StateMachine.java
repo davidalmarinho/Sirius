@@ -4,12 +4,8 @@ import gameobjects.components.Component;
 import gameobjects.components.SpriteRenderer;
 import imgui.ImGui;
 import imgui.flag.ImGuiMouseButton;
-import imgui.flag.ImGuiTreeNodeFlags;
 import sirius.editor.imgui.JImGui;
-import sirius.editor.imgui.sprite_animation_window.AnimationBlueprint;
-import sirius.editor.imgui.sprite_animation_window.AnimationBox;
-import sirius.editor.imgui.sprite_animation_window.Point;
-import sirius.editor.imgui.sprite_animation_window.Animator;
+import sirius.editor.imgui.sprite_animation_window.*;
 import sirius.encode_tools.Encode;
 import sirius.utils.AssetPool;
 
@@ -138,7 +134,7 @@ public class StateMachine extends Component {
             resetStateMachine();
 
             List<AnimationBox> animationBoxList = bufferAnimationBlueprint.animationBoxList;
-            List<Point> pList = new ArrayList<>(bufferAnimationBlueprint.pointList);
+            List<Wire> wireList = new ArrayList<>(bufferAnimationBlueprint.wireList);
 
             if (!animationBoxList.isEmpty()) {
                 for (int i = 0; i < animationBoxList.size(); i++) {
@@ -153,15 +149,11 @@ public class StateMachine extends Component {
                     addState(animationState);
                 }
 
-                for (int i = 0; i < pList.size(); i++) {
-                    if (i + 1 > pList.size() - 1) {
-                        break;
-                    }
-
-                    Point curP = pList.get(i);
-                    Point nextP = pList.get(i + 1);
-
-                    addStateTrigger(curP.getOrigin(), nextP.getOrigin(), nextP.getOrigin());
+                for (Wire wire : wireList) {
+                    addStateTrigger(
+                            wire.getStartPoint().getOrigin(),
+                            wire.getEndPoint().getOrigin(),
+                            wire.getEndPoint().getOrigin());
                 }
 
                 setDefaultState(animationBoxList.get(0).getTrigger());

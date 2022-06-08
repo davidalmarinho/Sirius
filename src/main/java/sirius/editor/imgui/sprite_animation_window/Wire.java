@@ -1,41 +1,62 @@
 package sirius.editor.imgui.sprite_animation_window;
 
-import imgui.ImVec2;
-
 public class Wire {
-    private float startX, startY;
-    private float endX, endY;
+    private Point from;
+    private Point to;
 
-    public Wire(ImVec2 start, ImVec2 end) {
-        this.startX = start.x;
-        this.startY = start.y;
-        this.endX   = end.x;
-        this.endY   = end.y;
+    public Wire(Point from, Point to) {
+        this.from = from;
+        this.to   = to;
     }
 
     public Wire() {
-        this(new ImVec2(), new ImVec2());
+        this(new Point(), new Point());
     }
 
-    public Wire(Wire wire) {
-        this(wire.getStart(), wire.getEnd());
+    public Wire(Wire newWire) {
+        this.from = new Point(newWire.getStartPoint());
+        this.to   = new Point(newWire.getEndPoint());
     }
 
-    public ImVec2 getStart() {
-        return new ImVec2(startX, startY);
+    public float getStartX() {
+        return from.position.x;
+    }
+
+    public float getStartY() {
+        return from.position.y;
     }
 
     public void setStart(float startX, float startY) {
-        this.startX = startX;
-        this.startY = startY;
+        this.from.position.x = startX;
+        this.from.position.y = startY;
     }
 
-    public ImVec2 getEnd() {
-        return new ImVec2(endX, endY);
+    public float getEndX() {
+        return to.position.x;
+    }
+
+    public float getEndY() {
+        return to.position.y;
     }
 
     public void setEnd(float endX, float endY) {
-        this.endX = endX;
-        this.endY = endY;
+        this.to.position.x = endX;
+        this.to.position.y = endY;
+    }
+
+    public Point getStartPoint() {
+        return this.from;
+    }
+
+    public void setStartPoint(Point newPoint) {
+        this.from = newPoint;
+    }
+
+    public Point getEndPoint() {
+        return this.to;
+    }
+
+    public void setEndPoint(Point newPoint) {
+        this.to = newPoint;
     }
 }

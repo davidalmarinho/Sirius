@@ -6,9 +6,12 @@ import imgui.ImGui;
 import imgui.ImVec2;
 
 public class Point {
-    private String origin;
     public static int maxId = 0;
-    private final int ID;
+
+    // Keeps the trigger of the animation box that it belongs
+    private String origin;
+
+    private int ID;
     public ImVec2 position;
     private float radius;
 
@@ -25,6 +28,10 @@ public class Point {
         this.ID       = newPoint.ID;
         this.position = new ImVec2(newPoint.position);
         this.radius   = newPoint.radius;
+    }
+
+    public Point() {
+        this.position = new ImVec2();
     }
 
     public Point(String origin) {
@@ -51,6 +58,10 @@ public class Point {
 
     public String getOrigin() {
         return origin;
+    }
+
+    public void setOrigin(String origin) {
+        this.origin = origin;
     }
 
     public void setRadius(float radius) {

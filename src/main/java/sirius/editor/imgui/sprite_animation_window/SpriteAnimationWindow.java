@@ -49,18 +49,24 @@ public class SpriteAnimationWindow {
                 bufferFileName = JImGui.inputText("File Name: ", bufferFileName, 600, 32);
 
                 if (ImGui.button("New Animation")) {
-                    currentAnimationPath = Settings.Files.ANIMATIONS_FOLDER + bufferFileName + ".json";
-                    File file = new File(currentAnimationPath);
-                    try {
-                        if (!bufferFileName.isEmpty() || file.createNewFile()) {
-                            this.animator = new Animator();
-                        } else {
-                            System.err.println("Error: Couldn't create '" + bufferFileName + "' animation.");
+                    if (bufferFileName.isEmpty()) {
+                        System.err.println("Error: File might have a name.");
+                    } else {
+                        currentAnimationPath = Settings.Files.ANIMATIONS_FOLDER + bufferFileName + ".json";
+                        bufferFileName = "";
+                        File file = new File(currentAnimationPath);
+                        try {
+                            if (file.createNewFile()) {
+                                this.animator = new Animator();
+                            } else {
+                                System.err.println("Error: Couldn't create '" + bufferFileName + "' animation.");
+                            }
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
                         }
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
+
+                        ImGui.closeCurrentPopup();
                     }
-                    ImGui.closeCurrentPopup();
                 }
 
                 if (ImGui.button("Close")) {
@@ -72,6 +78,10 @@ public class SpriteAnimationWindow {
 
             if (ImGui.beginPopupModal(LOAD_CONTEXT, ImGuiWindowFlags.AlwaysUseWindowPadding | ImGuiWindowFlags.AlwaysAutoResize)) {
                 String[] items = AssetPool.getAnimationsPaths();
+
+                // Close instantly the load menu popup if there aren't any animations files
+                if (items.length == 0)
+                    ImGui.closeCurrentPopup();
 
                 currentItem = JImGui.list("", currentItem, items);
 

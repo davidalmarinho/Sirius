@@ -4,20 +4,31 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AnimationBlueprint {
-    public List<Point> pointList;
+    public List<Wire> wireList;
     public List<AnimationBox> animationBoxList;
 
     public AnimationBlueprint() {
         this.animationBoxList = new ArrayList<>();
-        this.pointList        = new ArrayList<>();
+        this.wireList         = new ArrayList<>();
     }
 
-    public AnimationBlueprint(List<Point> pointList, List<AnimationBox> animationBoxList) {
-        this.pointList = new ArrayList<>(pointList);
+    public AnimationBlueprint(List<Wire> wireList, List<AnimationBox> animationBoxList) {
+        this.wireList = new ArrayList<>();
+        for (Wire wire : wireList) {
+            this.wireList.add(new Wire(wire));
+        }
 
         this.animationBoxList = new ArrayList<>();
         for (AnimationBox animationBox : animationBoxList) {
             this.animationBoxList.add(new AnimationBox(animationBox));
         }
+    }
+
+    public Wire getLastWire() {
+        return wireList.get(wireList.size() - 1);
+    }
+
+    public void removeLastWire() {
+        wireList.remove(wireList.size() - 1);
     }
 }

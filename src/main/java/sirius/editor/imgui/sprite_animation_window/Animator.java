@@ -8,7 +8,7 @@ import imgui.flag.ImGuiWindowFlags;
 import org.joml.Vector2f;
 import sirius.utils.JMath;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 // Animator will also be called Canvas in the comments
@@ -20,7 +20,6 @@ public class Animator {
 
     public transient AnimationBox activeAnimationBox;
 
-    public transient boolean lookMessyLines;
 
     private transient boolean hovered = false;
     private transient boolean addingLine = false;
@@ -28,15 +27,14 @@ public class Animator {
 
     private transient ImVec2 scrolling;
     private transient float thickness = 2.0f;
-
-    private transient List<Wire> wireList;
-    private transient Wire wire;
+    private transient Wire fakeWire;
+    private transient boolean mayDrawFakeWire;
+    private transient Wire bufferWire;
 
     public Animator() {
         this.showAnimator = true;
 
-        this.wire = new Wire();
-        this.wireList = new ArrayList<>();
+        this.fakeWire = new Wire();
         this.scrolling = new ImVec2();
 
         this.animationBlueprint = new AnimationBlueprint();
@@ -45,22 +43,30 @@ public class Animator {
     public Animator(AnimationBlueprint animationBlueprint) {
         this.showAnimator = true;
 
-        this.wire = new Wire();
-        this.wireList = new ArrayList<>();
+        this.fakeWire = new Wire();
         this.scrolling = new ImVec2();
 
-        this.animationBlueprint = new AnimationBlueprint(animationBlueprint.pointList, animationBlueprint.animationBoxList);
+        if (animationBlueprint != null) {
+            this.animationBlueprint = new AnimationBlueprint(animationBlueprint.wireList, animationBlueprint.animationBoxList);
+        } else {
+            animationBlueprint = new AnimationBlueprint();
+            this.animationBlueprint = new AnimationBlueprint();
+        }
 
+        // IDS points
         int greatestId = 0;
-        for (Point p : animationBlueprint.pointList) {
-            if (p.getId() > greatestId) {
-                greatestId = p.getId();
-            }
+        for (Wire wire : animationBlueprint.wireList) {
+            if (wire.getStartPoint().getId() > greatestId)
+                greatestId = wire.getStartPoint().getId();
+
+            if (wire.getEndPoint().getId() > greatestId)
+                greatestId = wire.getEndPoint().getId();
         }
 
         Point.maxId = greatestId + 1;
 
-        greatestId = 1;
+        // IDs boxes
+        greatestId = 0;
         for (AnimationBox animationBox : animationBlueprint.animationBoxList) {
             if (animationBox.getId() > greatestId) {
                 greatestId = animationBox.getId();
@@ -83,19 +89,62 @@ public class Animator {
                 .orElse(null);
     }
 
+    /**
+     * Removes an animation box based on its id.
+     *
+     * @param //id Animation box's id.
+     */
+    /*public void removeAnimationBox(int id) {
+        List<AnimationBox> animationBoxList = this.animationBlueprint.animationBoxList;
+        for (int i = animationBoxList.size() - 1; i >= 0; i--) {
+            AnimationBox curAnimationBox = animationBoxList.get(i);
+
+            if (curAnimationBox.getId() == id) {
+                animationBoxList.remove(curAnimationBox);
+
+                List<Point> pointList = new ArrayList<>();
+                Arrays.stream(curAnimationBox.getPointFields()).forEach(
+                        pointField -> pointList.addAll(pointField.getPointList())
+                );
+
+                for (int pIndex = pointList.size() - 1; pIndex >= 0; pIndex--) {
+                    for (int abPIndex = animationBlueprint.pointList.size() -1; abPIndex >= 0; abPIndex--) {
+                        if (this.animationBlueprint.pointList.get(abPIndex).getId() == pointList.get(pIndex).getId()) {
+                            this.animationBlueprint.pointList.remove(abPIndex);
+
+                            for (int aniBoxIndex = animationBoxList.size() - 1; aniBoxIndex >= 0; aniBoxIndex--) {
+                                AnimationBox otherAniBoxCheck = animationBoxList.get(aniBoxIndex);
+
+                                // TODO: 07/06/2022 broken
+                                for (PointField pointField : otherAniBoxCheck.getPointFields()) {
+                                    for (int p2I = pointField.getPointList().size() - 1; p2I >= 0; p2I--) {
+                                        if (pointField.getPointList().get(p2I) == pointList.get(pIndex)) {
+                                            System.out.println("h");
+                                            pointField.getPointList().remove(pointField.getPointList().get(p2I));
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
+                break;
+            }
+        }
+    }*/
+
     private void drawArrows(ImDrawList imDrawList, ImVec2 origin) {
-        List<Point> pointList = animationBlueprint.pointList;
-        for (int i = 1; i < pointList.size(); i += 2) {
-            if (pointList.size() < 1) break;
-            if (i - 1 < 0) continue;
+        List<Wire> wireList = animationBlueprint.wireList;
+        for (Wire wire : wireList) {
 
             // Get the middle point of the line
-            Point pTo = pointList.get(i);
-            Point pFrom = pointList.get(i - 1);
+            ImVec2 pFrom = new ImVec2(wire.getStartX(), wire.getStartY());
+            ImVec2 pTo   = new ImVec2(wire.getEndX(), wire.getEndY());
 
             // middlePoint = (xA + xB) / 2; (yA + yB) / 2
-            float middleX = (pTo.position.x + pFrom.position.x) / 2;
-            float middleY = (pTo.position.y + pFrom.position.y) / 2;
+            float middleX = (pTo.x + pFrom.x) / 2;
+            float middleY = (pTo.y + pFrom.y) / 2;
 
             Vector2f middleP = new Vector2f(middleX, middleY);
 
@@ -104,14 +153,14 @@ public class Animator {
 
             // m --decline of the straight (y = mx + b)
             // m = (y2 - y1) / (x2 - x1)
-            float m = (pFrom.position.y - pTo.position.y) / (pFrom.position.x - pTo.position.x);
+            float m = (pFrom.y - pTo.y) / (pFrom.x - pTo.x);
 
             // m = tan(alpha) <=> alpha = tan-1(m)
             float angle = (float) Math.toDegrees(Math.atan(m));
 
             // Trade some coordinates between v1 and v3 --to draw the triangle as we want, always
             // pointing from pFrom to pTo
-            if (pTo.position.x > pFrom.position.x) {
+            if (pTo.x > pFrom.x) {
                 v1.set(middleX - 10, middleY - 10);
                 v3.set(middleX - 10, middleY + 10);
             } else {
@@ -128,6 +177,61 @@ public class Animator {
                     middleP.x + origin.x, middleP.y + origin.y,
                     v3.x + origin.x, v3.y + origin.y,
                     ImColor.intToColor(247, 179, 43, 255));
+        }
+    }
+
+    private void createAndJoinPoints(ImVec2 origin) {
+        ImDrawList drawList = ImGui.getWindowDrawList();
+
+        // Create points to after join them and form a line, if the left mouse button isn't realised
+        boolean clicked = ImGui.isMouseClicked(ImGuiMouseButton.Left);
+        boolean released = ImGui.isMouseReleased(ImGuiMouseButton.Left);
+
+        for (AnimationBox animationBox : getAnimationBoxList()) {
+            if (animationBox.isMovingAnimationBox()) continue;
+
+            for (PointField pointField : animationBox.getPointFields()) {
+                if (pointField.isMouseAbove(origin) && !animationBox.isMouseAboveAnimationBox()) {
+                    drawList.addCircleFilled(ImGui.getMousePosX(), ImGui.getMousePosY(),
+                            6.0f, ImColor.intToColor(247, 179, 43, 150));
+
+                    // Establish a union between 2 point --draw a line between 2 points
+                    ImVec2 pointPos = new ImVec2(ImGui.getMousePosX() - origin.x, ImGui.getMousePosY() - origin.y);
+
+                    if (clicked) {
+                        Point newPoint = new Point(animationBox.getTrigger(), pointPos, 6.0f);
+                        this.bufferWire = new Wire();
+                        this.bufferWire.setStartPoint(new Point(newPoint));
+                        pointField.addPoint(newPoint);
+
+                        // Mark in which point field a possible unlinked point is
+                        pointField.hasUnLinkedPoint = true;
+
+                        // Give permission to draw the fake wire
+                        this.mayDrawFakeWire = true;
+                    }
+
+                    if (released) {
+                        Point newPoint = new Point(animationBox.getTrigger(), pointPos, 6.0f);
+                        this.bufferWire.setEndPoint(new Point(newPoint));
+                        pointField.addPoint(newPoint);
+
+                        this.animationBlueprint.wireList.add(this.bufferWire);
+                        this.bufferWire = null;
+
+                        // Point fields are linked!
+                        animationBlueprint.animationBoxList.forEach(animationBox1 ->
+                                Arrays.stream(animationBox1.getPointFields()).forEach(pointField1 -> {
+                                    if (pointField1.hasUnLinkedPoint) {
+                                        pointField1.hasUnLinkedPoint = false;
+                                    }
+                                }));
+
+                        // Mark check to see if there are 2 points in the same animation box
+                        animationBox.checkPointsSameBox = true;
+                    }
+                }
+            }
         }
     }
 
@@ -184,21 +288,23 @@ public class Animator {
         // Mouse's position on canvas
         ImVec2 mousePosInCanvas = new ImVec2(io.getMousePos().x - origin.x, io.getMousePos().y - origin.y);
 
+        createAndJoinPoints(origin);
+
         // Add first and second point
-        if (hovered && !addingLine && ImGui.isMouseClicked(ImGuiMouseButton.Left)) {
-            ImVec2 startPos = new ImVec2(mousePosInCanvas.x + canvasP0.x, mousePosInCanvas.y + canvasP0.y);
-            wireList.add(new Wire(startPos, startPos));
-            wire.setStart(startPos.x, startPos.y);
-            wire.setEnd(startPos.x, startPos.y);
+        if (!addingLine && mayDrawFakeWire) {
+            ImVec2 startPos = new ImVec2(mousePosInCanvas.x, mousePosInCanvas.y);
+            fakeWire.setStart(startPos.x + canvasP0.x, startPos.y + canvasP0.y);
+            fakeWire.setEnd(startPos.x + canvasP0.x, startPos.y + canvasP0.y);
+
             addingLine = true;
         }
         if (addingLine) {
-            final int SIZE_WIRE_LIST = wireList.size();
-            wire.setEnd(mousePosInCanvas.x + canvasP0.x, mousePosInCanvas.y + canvasP0.y);
-            wireList.get(SIZE_WIRE_LIST - 1).setEnd(mousePosInCanvas.x + canvasP0.x, mousePosInCanvas.y + canvasP0.y);
+            fakeWire.setEnd(mousePosInCanvas.x + canvasP0.x, mousePosInCanvas.y + canvasP0.y);
 
-            if (!ImGui.isMouseDown(ImGuiMouseButton.Left))
+            if (!ImGui.isMouseDown(ImGuiMouseButton.Left)) {
+                mayDrawFakeWire = false;
                 addingLine = false;
+            }
         }
 
         // Pan (we use a zero mouse threshold when there's no context menu)
@@ -236,44 +342,41 @@ public class Animator {
                     ImColor.intToColor(200, 200, 200, 40));
         }
 
-        List<AnimationBox> animationBoxList = animationBlueprint.animationBoxList;
-        List<Point> pointList = animationBlueprint.pointList;
-
         // Draw animation boxes in SpriteWindowAnimation's canvas
-        for (int i = 0; i < animationBoxList.size(); i++) {
-            animationBoxList.get(i).imgui(origin, scrolling);
+        for (int i = 0; i < animationBlueprint.animationBoxList.size(); i++) {
+            animationBlueprint.animationBoxList.get(i).imgui(origin, scrolling);
         }
 
         // Draw linked lines
-        for (int i = 0; i < pointList.size(); i += 2) {
-            if (pointList.size() <= 1) break;
-
-            // Prevents from IndexOutOfBoundsException
-            if (pointList.size() % 2 != 0 && i == pointList.size() - 1)
-                continue;
-
+        for (Wire wire : animationBlueprint.wireList) {
             drawList.addLine(
-                    pointList.get(i).position.x + origin.x,
-                    pointList.get(i).position.y + origin.y,
-                    pointList.get(i + 1).position.x + origin.x,
-                    pointList.get(i + 1).position.y + origin.y,
+                    wire.getStartX() + origin.x,
+                    wire.getStartY() + origin.y,
+                    wire.getEndX() + origin.x,
+                    wire.getEndY() + origin.y,
                     ImColor.intToColor(255, 255, 0, 255), thickness);
         }
 
         // Draw a line when a point is looking for linking
-        if (pointList.size() % 2 != 0) {
-            drawList.addLine(wire.getStart().x + scrolling.x, wire.getStart().y + scrolling.y,
-                    wire.getEnd().x + scrolling.x, wire.getEnd().y + scrolling.y,
-                    ImColor.intToColor(255, 255, 0, 255), thickness);
+        drawList.addLine(
+                fakeWire.getStartX() + scrolling.x,
+                fakeWire.getStartY() + scrolling.y,
+                fakeWire.getEndX() + scrolling.x,
+                fakeWire.getEndY() + scrolling.y,
+                ImColor.intToColor(255, 255, 0, 255), thickness);
 
-            // Stop drawing the line
-            if (ImGui.isMouseReleased(ImGuiMouseButton.Left)) {
-                wire.setStart(0, 0);
-                wire.setEnd(0, 0);
-            }
+        // Stop drawing the line
+        if (ImGui.isMouseReleased(ImGuiMouseButton.Left)) {
+            fakeWire.setStart(0, 0);
+            fakeWire.setEnd(0, 0);
         }
 
         drawArrows(drawList, origin);
+
+        // Draw the points
+        animationBlueprint.animationBoxList
+                .forEach(animationBox -> Arrays.stream(animationBox.getPointFields())
+                        .forEach(pointField -> pointField.getPointList().forEach(point -> point.imgui(origin))));
 
         drawList.popClipRect();
 
@@ -282,12 +385,8 @@ public class Animator {
             if (ImGui.beginPopupContextWindow("context")) {
                 addingLine = false;
                 if (ImGui.menuItem("Add Animation Box", "")) {
-                    animationBoxList.add(new AnimationBox("I'm a box!", mousePosInCanvas));
+                    animationBlueprint.animationBoxList.add(new AnimationBox("I'm a box!", mousePosInCanvas));
                 }
-                // if (ImGui.menuItem("Remove one", "", false, pointList.size() > 0)) {
-                // pointList.remove(pointList.size() - 1);
-                // pointList.remove(pointList.size() - 1);
-                // }
                 ImGui.endPopup();
             }
         }
