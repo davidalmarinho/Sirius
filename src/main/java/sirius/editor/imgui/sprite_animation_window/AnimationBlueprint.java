@@ -25,10 +25,18 @@ public class AnimationBlueprint {
     }
 
     public Wire getLastWire() {
+        if (wireList.size() - 1 < 0) {
+            return null;
+        }
+
         return wireList.get(wireList.size() - 1);
     }
 
     public void removeLastWire() {
         wireList.remove(wireList.size() - 1);
+    }
+
+    public void removeWire(int index) {
+        wireList.remove(index);
     }
 }

@@ -8,6 +8,7 @@ import imgui.flag.ImGuiWindowFlags;
 import org.joml.Vector2f;
 import sirius.utils.JMath;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -90,49 +91,62 @@ public class Animator {
     }
 
     /**
+     * Unselects all selected animation boxes.
+     */
+    public void unselectAllBoxes() {
+        for (AnimationBox animationBox : getAnimationBoxList()) {
+            if (animationBox.isSelected())
+                animationBox.setSelected(false);
+        }
+    }
+
+    /**
      * Removes an animation box based on its id.
      *
-     * @param //id Animation box's id.
+     * @param id Animation box's id.
      */
-    /*public void removeAnimationBox(int id) {
+    public void delAnimationBox(int id) {
+        unselectAllBoxes();
+
         List<AnimationBox> animationBoxList = this.animationBlueprint.animationBoxList;
+        AnimationBox queueBoxToRemove = null;
         for (int i = animationBoxList.size() - 1; i >= 0; i--) {
             AnimationBox curAnimationBox = animationBoxList.get(i);
 
-            if (curAnimationBox.getId() == id) {
-                animationBoxList.remove(curAnimationBox);
+            List<Point> pointList = new ArrayList<>();
+            Arrays.stream(curAnimationBox.getPointFields()).forEach(
+                    pointField -> pointList.addAll(pointField.getPointList())
+            );
 
-                List<Point> pointList = new ArrayList<>();
-                Arrays.stream(curAnimationBox.getPointFields()).forEach(
-                        pointField -> pointList.addAll(pointField.getPointList())
-                );
+            for (int pIndex = pointList.size() - 1; pIndex >= 0; pIndex--) {
+                for (int currentWire = animationBlueprint.wireList.size() -1; currentWire >= 0; currentWire--) {
+                    Wire wire = this.animationBlueprint.wireList.get(currentWire);
+                    if (wire.getStartPoint().getId() == pointList.get(pIndex).getId()
+                            || wire.getEndPoint().getId() == pointList.get(pIndex).getId()) {
+                        this.animationBlueprint.removeWire(currentWire);
 
-                for (int pIndex = pointList.size() - 1; pIndex >= 0; pIndex--) {
-                    for (int abPIndex = animationBlueprint.pointList.size() -1; abPIndex >= 0; abPIndex--) {
-                        if (this.animationBlueprint.pointList.get(abPIndex).getId() == pointList.get(pIndex).getId()) {
-                            this.animationBlueprint.pointList.remove(abPIndex);
+                        for (int aniBoxIndex = animationBoxList.size() - 1; aniBoxIndex >= 0; aniBoxIndex--) {
 
-                            for (int aniBoxIndex = animationBoxList.size() - 1; aniBoxIndex >= 0; aniBoxIndex--) {
-                                AnimationBox otherAniBoxCheck = animationBoxList.get(aniBoxIndex);
-
-                                // TODO: 07/06/2022 broken
-                                for (PointField pointField : otherAniBoxCheck.getPointFields()) {
-                                    for (int p2I = pointField.getPointList().size() - 1; p2I >= 0; p2I--) {
-                                        if (pointField.getPointList().get(p2I) == pointList.get(pIndex)) {
-                                            System.out.println("h");
-                                            pointField.getPointList().remove(pointField.getPointList().get(p2I));
-                                        }
+                            AnimationBox otherAniBoxCheck = animationBoxList.get(aniBoxIndex);
+                            for (PointField pointField : otherAniBoxCheck.getPointFields()) {
+                                for (int p2I = pointField.getPointList().size() - 1; p2I >= 0; p2I--) {
+                                    if (pointField.getPointList().get(p2I) == pointList.get(pIndex)) {
+                                        pointField.getPointList().remove(pointField.getPointList().get(p2I));
                                     }
                                 }
                             }
                         }
                     }
                 }
+            }
 
-                break;
+            if (curAnimationBox.getId() == id) {
+                queueBoxToRemove = curAnimationBox;
             }
         }
-    }*/
+
+        animationBoxList.remove(queueBoxToRemove);
+    }
 
     private void drawArrows(ImDrawList imDrawList, ImVec2 origin) {
         List<Wire> wireList = animationBlueprint.wireList;
@@ -211,7 +225,7 @@ public class Animator {
                         this.mayDrawFakeWire = true;
                     }
 
-                    if (released) {
+                    if (released && bufferWire != null) {
                         Point newPoint = new Point(animationBox.getTrigger(), pointPos, 6.0f);
                         this.bufferWire.setEndPoint(new Point(newPoint));
                         pointField.addPoint(newPoint);
@@ -251,7 +265,7 @@ public class Animator {
                 mousePosInCanvas.y));
     }*/
 
-    public void imgui(ImVec2 contentRegionAvailable, float dt) {
+    public void imgui(ImVec2 contentRegionAvailable) {
         activeAnimationBox = this.animationBlueprint.animationBoxList
                 .stream()
                 .filter(animationBox -> getAnimationBox(animationBox.getId()).isSelected())
@@ -340,6 +354,11 @@ public class Animator {
                     canvasP0.x, canvasP0.y + y,
                     canvasP1.x, canvasP0.y + y,
                     ImColor.intToColor(200, 200, 200, 40));
+        }
+
+        // Set which animation box the animation should start
+        if (getAnimationBoxList().size() == 1) {
+            getAnimationBoxList().get(0).setFlag(true);
         }
 
         // Draw animation boxes in SpriteWindowAnimation's canvas

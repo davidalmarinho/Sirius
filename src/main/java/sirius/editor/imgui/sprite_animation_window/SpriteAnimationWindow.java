@@ -126,7 +126,7 @@ public class SpriteAnimationWindow {
             }
 
             if (animator.showAnimator)
-                animator.imgui(ImGui.getContentRegionAvail(), dt);
+                animator.imgui(ImGui.getContentRegionAvail());
 
         }
         ImGui.end();

@@ -137,6 +137,7 @@ public class StateMachine extends Component {
             List<Wire> wireList = new ArrayList<>(bufferAnimationBlueprint.wireList);
 
             if (!animationBoxList.isEmpty()) {
+
                 for (int i = 0; i < animationBoxList.size(); i++) {
                     AnimationBox curAnimationBox = animationBoxList.get(i);
 
@@ -156,7 +157,10 @@ public class StateMachine extends Component {
                             wire.getEndPoint().getOrigin());
                 }
 
-                setDefaultState(animationBoxList.get(0).getTrigger());
+                for (int i = 0; i < animationBoxList.size(); i++) {
+                    if (animationBoxList.get(i).isFlag())
+                        setDefaultState(animationBoxList.get(i).getTrigger());
+                }
                 gameObject.getComponent(StateMachine.class).refreshTextures();
             }
 

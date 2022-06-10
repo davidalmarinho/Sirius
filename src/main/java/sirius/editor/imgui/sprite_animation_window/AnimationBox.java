@@ -26,6 +26,7 @@ public class AnimationBox {
 
     private List<Frame> frameList;
     public boolean doesLoop = false;
+    private boolean flag;
 
     private transient boolean mouseAboveAnimationBox;
     private transient boolean movingAnimationBox;
@@ -177,6 +178,8 @@ public class AnimationBox {
         // Get the 2 last points added to rendering
         Wire lastWire = SpriteAnimationWindow.getAnimator().animationBlueprint.getLastWire();
 
+        if (lastWire == null) return;
+
         // If samePoint var reaches 2, we will have to delete the 2 lastPoints added, because
         // that means that the 2 last added points are located in the same animation box.
         int samePoint = 0;
@@ -256,18 +259,18 @@ public class AnimationBox {
         }
     }
 
-    private void unselectPreviousBoxes() {
-        for (AnimationBox animationBox : SpriteAnimationWindow.getAnimator().getAnimationBoxList()) {
-            if (animationBox.selected)
-                animationBox.selected = false;
-        }
-    }
-
     private void popupMenu() {
         if (mayOpenPopupWindow) {
             if (ImGui.beginPopupContextWindow("popup_animation_box_ctx")) {
+                // TODO: 10/06/2022 Give info with ? imgui
+                if (ImGui.menuItem("Set flag")) {
+                    for (AnimationBox animationBox : SpriteAnimationWindow.getAnimator().getAnimationBoxList()) {
+                        animationBox.flag = false;
+                    }
+                    this.flag = true;
+                }
                 if (ImGui.menuItem("Delete current animation box", "del")) {
-                    // SpriteAnimationWindow.getAnimator().removeAnimationBox(ID);
+                    SpriteAnimationWindow.getAnimator().delAnimationBox(ID);
                 }
                 ImGui.endPopup();
             }
@@ -276,6 +279,21 @@ public class AnimationBox {
 
     private void drawAnimationBox(ImVec2 origin, ImVec2 scrolling) {
         ImDrawList drawList = ImGui.getWindowDrawList();
+
+        // Don't want boundaries inside imgui child
+        int boundariesColor;
+        if (!selected) {
+            boundariesColor = ImColor.intToColor(255, 255, 255, 255);
+        } else {
+            boundariesColor = ImColor.intToColor(200, 200, 200, 255);
+        }
+
+        drawList.addRect(
+                origin.x + x - getWidth() / 2,
+                origin.y + y - getHeight() / 2,
+                origin.x + x + getWidth() / 2,
+                origin.y + y + getHeight() / 2,
+                boundariesColor, ROUNDING, ImDrawFlags.RoundCornersAll, THICKNESS);
 
         // Reserve the region to draw the animation box
         ImGui.setCursorPos(x - getWidth() / 2 + scrolling.x, + y - getHeight() / 2 + scrolling.y);
@@ -309,12 +327,17 @@ public class AnimationBox {
         //         origin.x + x + getWidth() / 2 * Animator.zoom,
         //         origin.y + y + getHeight() / 2 * Animator.zoom,
         //         ImColor.intToColor(112, 16, 20, 255), ROUNDING);
+
+        int boxColor = ImColor.intToColor(112, 16, 20, 255);
+        if (flag)
+            boxColor = ImColor.intToColor(124,252,0, 255);
+
         drawList.addRectFilled(
                 origin.x + x - getWidth() / 2,
                 origin.y + y - getHeight() / 2,
                 origin.x + x + getWidth() / 2,
                 origin.y + y + getHeight() / 2,
-                ImColor.intToColor(112, 16, 20, 255), ROUNDING);
+                boxColor, ROUNDING);
 
         // Center the animation box input text box
         ImGui.setCursorPos(ImGui.getCursorPosX() + 22, ImGui.getCursorPosY() + getHeight() / 3);
@@ -362,7 +385,7 @@ public class AnimationBox {
         // Box is selected if the mouse left is pressed and if the mouse is inside the box
         if (mouseAboveAnimationBox && ImGui.isMouseClicked(ImGuiMouseButton.Left)) {
             // If there are any animation boxes selected, we will want them to become unselected
-            unselectPreviousBoxes();
+            SpriteAnimationWindow.getAnimator().unselectAllBoxes();
 
             selected = true;
             // Box can't be unselected if the mouse left isn't inside the animator
@@ -395,21 +418,6 @@ public class AnimationBox {
         //             origin.y + y + getHeight() / 2 * Animator.zoom,
         //             ImColor.intToColor(200, 200, 200, 255), ROUNDING, ImDrawFlags.RoundCornersAll, THICKNESS);
         // }
-        if (!selected) {
-            drawList.addRect(
-                    origin.x + x - getWidth() / 2,
-                    origin.y + y - getHeight() / 2,
-                    origin.x + x + getWidth() / 2,
-                    origin.y + y + getHeight() / 2,
-                    ImColor.intToColor(255, 255, 255, 255), ROUNDING, ImDrawFlags.RoundCornersAll, THICKNESS);
-        } else {
-            drawList.addRect(
-                    origin.x + x - getWidth() / 2,
-                    origin.y + y - getHeight() / 2,
-                    origin.x + x + getWidth() / 2,
-                    origin.y + y + getHeight() / 2,
-                    ImColor.intToColor(200, 200, 200, 255), ROUNDING, ImDrawFlags.RoundCornersAll, THICKNESS);
-        }
 
         drawAnimationBox(origin, scrolling);
 
@@ -490,6 +498,10 @@ public class AnimationBox {
         return selected;
     }
 
+    public void setSelected(boolean selected) {
+        this.selected = selected;
+    }
+
     public int getId() {
         return ID;
     }
@@ -512,6 +524,14 @@ public class AnimationBox {
 
     public float getHeight() {
         return height;
+    }
+
+    public boolean isFlag() {
+        return flag;
+    }
+
+    public void setFlag(boolean flag) {
+        this.flag = flag;
     }
 
     public List<Frame> getFrameList() {

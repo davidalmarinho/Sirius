@@ -1,0 +1,252 @@
+{
+  "wireList": [
+    {
+      "from": {
+        "origin": "walk",
+        "ID": 4,
+        "position": {
+          "x": 268.0,
+          "y": 185.0
+        },
+        "radius": 6.0
+      },
+      "to": {
+        "origin": "squashMe",
+        "ID": 5,
+        "position": {
+          "x": 459.0,
+          "y": 142.0
+        },
+        "radius": 6.0
+      }
+    }
+  ],
+  "animationBoxList": [
+    {
+      "ID": 2,
+      "trigger": "squashMe",
+      "x": 544.0,
+      "y": 164.0,
+      "width": 166.0,
+      "frameList": [
+        {
+          "sprite": {
+            "width": 16,
+            "height": 24,
+            "texture": {
+              "filePath": "assets/images/spritesheets/turtle.png"
+            },
+            "textureCoordinates": [
+              {
+                "x": 0.75,
+                "y": 1.0
+              },
+              {
+                "x": 0.75,
+                "y": 0.0
+              },
+              {
+                "x": 0.5,
+                "y": 0.0
+              },
+              {
+                "x": 0.5,
+                "y": 1.0
+              }
+            ]
+          },
+          "frameTime": 0.25
+        }
+      ],
+      "doesLoop": false,
+      "flag": false,
+      "pointFields": [
+        {
+          "name": "up",
+          "position": {
+            "x": 544.0,
+            "y": 100.0
+          },
+          "size": {
+            "x": 126.0,
+            "y": 10.0
+          },
+          "pointList": []
+        },
+        {
+          "name": "right",
+          "position": {
+            "x": 627.0,
+            "y": 164.0
+          },
+          "size": {
+            "x": 10.0,
+            "y": 88.0
+          },
+          "pointList": []
+        },
+        {
+          "name": "down",
+          "position": {
+            "x": 544.0,
+            "y": 228.0
+          },
+          "size": {
+            "x": 126.0,
+            "y": 10.0
+          },
+          "pointList": []
+        },
+        {
+          "name": "left",
+          "position": {
+            "x": 461.0,
+            "y": 164.0
+          },
+          "size": {
+            "x": 10.0,
+            "y": 88.0
+          },
+          "pointList": [
+            {
+              "origin": "squashMe",
+              "ID": 5,
+              "position": {
+                "x": 459.0,
+                "y": 142.0
+              },
+              "radius": 6.0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "ID": 4,
+      "trigger": "walk",
+      "x": 182.0,
+      "y": 182.0,
+      "width": 166.0,
+      "frameList": [
+        {
+          "sprite": {
+            "width": 16,
+            "height": 24,
+            "texture": {
+              "filePath": "assets/images/spritesheets/turtle.png"
+            },
+            "textureCoordinates": [
+              {
+                "x": 0.25,
+                "y": 1.0
+              },
+              {
+                "x": 0.25,
+                "y": 0.0
+              },
+              {
+                "x": 0.0,
+                "y": 0.0
+              },
+              {
+                "x": 0.0,
+                "y": 1.0
+              }
+            ]
+          },
+          "frameTime": 0.25
+        },
+        {
+          "sprite": {
+            "width": 16,
+            "height": 24,
+            "texture": {
+              "filePath": "assets/images/spritesheets/turtle.png"
+            },
+            "textureCoordinates": [
+              {
+                "x": 0.5,
+                "y": 1.0
+              },
+              {
+                "x": 0.5,
+                "y": 0.0
+              },
+              {
+                "x": 0.25,
+                "y": 0.0
+              },
+              {
+                "x": 0.25,
+                "y": 1.0
+              }
+            ]
+          },
+          "frameTime": 0.25
+        }
+      ],
+      "doesLoop": true,
+      "flag": true,
+      "pointFields": [
+        {
+          "name": "up",
+          "position": {
+            "x": 182.0,
+            "y": 118.0
+          },
+          "size": {
+            "x": 126.0,
+            "y": 10.0
+          },
+          "pointList": []
+        },
+        {
+          "name": "right",
+          "position": {
+            "x": 265.0,
+            "y": 182.0
+          },
+          "size": {
+            "x": 10.0,
+            "y": 88.0
+          },
+          "pointList": [
+            {
+              "origin": "walk",
+              "ID": 4,
+              "position": {
+                "x": 268.0,
+                "y": 185.0
+              },
+              "radius": 6.0
+            }
+          ]
+        },
+        {
+          "name": "down",
+          "position": {
+            "x": 182.0,
+            "y": 246.0
+          },
+          "size": {
+            "x": 126.0,
+            "y": 10.0
+          },
+          "pointList": []
+        },
+        {
+          "name": "left",
+          "position": {
+            "x": 99.0,
+            "y": 182.0
+          },
+          "size": {
+            "x": 10.0,
+            "y": 88.0
+          },
+          "pointList": []
+        }
+      ]
+    }
+  ]
+}

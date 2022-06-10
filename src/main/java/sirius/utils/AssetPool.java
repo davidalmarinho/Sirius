@@ -105,9 +105,9 @@ public class AssetPool {
 
         if (!animationsMap.containsKey(file.getPath())) {
             animationsMap.put(file.getPath(), animation);
-        } else {
+        }/* else {
             System.err.println("Error: Couldn't add '" + filePath + "'. File already exists.");
-        }
+        }*/
     }
 
     public static AnimationBlueprint getAnimation(String filePath) {
