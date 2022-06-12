@@ -137,7 +137,6 @@ public class StateMachine extends Component {
             List<Wire> wireList = new ArrayList<>(bufferAnimationBlueprint.wireList);
 
             if (!animationBoxList.isEmpty()) {
-
                 for (int i = 0; i < animationBoxList.size(); i++) {
                     AnimationBox curAnimationBox = animationBoxList.get(i);
 

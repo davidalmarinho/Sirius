@@ -108,44 +108,47 @@ public class Animator {
     public void delAnimationBox(int id) {
         unselectAllBoxes();
 
-        List<AnimationBox> animationBoxList = this.animationBlueprint.animationBoxList;
-        AnimationBox queueBoxToRemove = null;
-        for (int i = animationBoxList.size() - 1; i >= 0; i--) {
-            AnimationBox curAnimationBox = animationBoxList.get(i);
+        AnimationBox queueRemoveBox = getAnimationBox(id);
 
-            List<Point> pointList = new ArrayList<>();
-            Arrays.stream(curAnimationBox.getPointFields()).forEach(
-                    pointField -> pointList.addAll(pointField.getPointList())
-            );
+        // Get all points that point fields have in the desired animation box to remove
+        List<Point> pointsInFieldList = new ArrayList<>();
+        for (PointField pointField : queueRemoveBox.getPointFields()) {
+            pointsInFieldList.addAll(pointField.getPointList());
+        }
 
-            for (int pIndex = pointList.size() - 1; pIndex >= 0; pIndex--) {
-                for (int currentWire = animationBlueprint.wireList.size() -1; currentWire >= 0; currentWire--) {
-                    Wire wire = this.animationBlueprint.wireList.get(currentWire);
-                    if (wire.getStartPoint().getId() == pointList.get(pIndex).getId()
-                            || wire.getEndPoint().getId() == pointList.get(pIndex).getId()) {
-                        this.animationBlueprint.removeWire(currentWire);
+        List<Wire> queueRemoveWireList = new ArrayList<>();
 
-                        for (int aniBoxIndex = animationBoxList.size() - 1; aniBoxIndex >= 0; aniBoxIndex--) {
+        // Remove points in point fields
+        for (Point pointInField : pointsInFieldList) {
+            animationBlueprint.wireList.stream()
+                    .filter(wire -> wire.getEndPoint().getId() == pointInField.getId() || wire.getStartPoint().getId() == pointInField.getId())
+                    .forEach(wire -> {
 
-                            AnimationBox otherAniBoxCheck = animationBoxList.get(aniBoxIndex);
-                            for (PointField pointField : otherAniBoxCheck.getPointFields()) {
-                                for (int p2I = pointField.getPointList().size() - 1; p2I >= 0; p2I--) {
-                                    if (pointField.getPointList().get(p2I) == pointList.get(pIndex)) {
-                                        pointField.getPointList().remove(pointField.getPointList().get(p2I));
+                        // Go throughout each animation box and check its points located in the point fields
+                        for (AnimationBox animationBox : animationBlueprint.animationBoxList) {
+                            if (animationBox == queueRemoveBox)
+                                continue;
+
+                            for (PointField pointField : animationBox.getPointFields()) {
+                                for (int i = pointField.getPointList().size() - 1; i >= 0; i--) {
+                                    Point p = pointField.getPointList().get(i);
+                                    if (wire.getStartPoint().getId() == p.getId() || wire.getEndPoint().getId() == p.getId()) {
+                                        queueRemoveWireList.add(wire);
+                                        pointField.getPointList().remove(i);
                                     }
                                 }
                             }
                         }
-                    }
-                }
-            }
+                    });
 
-            if (curAnimationBox.getId() == id) {
-                queueBoxToRemove = curAnimationBox;
+            for (int i = animationBlueprint.wireList.size() - 1; i >= 0; i--) {
+                for (int j = 0; j < queueRemoveWireList.size(); j++) {
+                    animationBlueprint.wireList.remove(queueRemoveWireList.get(j));
+                }
             }
         }
 
-        animationBoxList.remove(queueBoxToRemove);
+        this.animationBlueprint.animationBoxList.remove(queueRemoveBox);
     }
 
     private void drawArrows(ImDrawList imDrawList, ImVec2 origin) {
