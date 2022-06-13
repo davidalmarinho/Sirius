@@ -21,7 +21,6 @@ public class Animator {
 
     public transient AnimationBox activeAnimationBox;
 
-
     private transient boolean hovered = false;
     private transient boolean addingLine = false;
     private transient boolean mayOpenPopupWindow = false;
@@ -31,12 +30,16 @@ public class Animator {
     private transient Wire fakeWire;
     private transient boolean mayDrawFakeWire;
     private transient Wire bufferWire;
+    private transient ImVec2 origin;
+    private transient ImVec2 mousePosInCanvas;
 
     public Animator() {
         this.showAnimator = true;
 
         this.fakeWire = new Wire();
         this.scrolling = new ImVec2();
+        this.origin = new ImVec2();
+        this.mousePosInCanvas = new ImVec2();
 
         this.animationBlueprint = new AnimationBlueprint();
     }
@@ -46,6 +49,8 @@ public class Animator {
 
         this.fakeWire = new Wire();
         this.scrolling = new ImVec2();
+        this.origin = new ImVec2();
+        this.mousePosInCanvas = new ImVec2();
 
         if (animationBlueprint != null) {
             this.animationBlueprint = new AnimationBlueprint(animationBlueprint.wireList, animationBlueprint.animationBoxList);
@@ -300,10 +305,10 @@ public class Animator {
         hovered = ImGui.isWindowHovered();
 
         // Lock scrolled origin
-        ImVec2 origin = new ImVec2(canvasP0.x + scrolling.x, canvasP0.y + scrolling.y);
+        origin.set(canvasP0.x + scrolling.x, canvasP0.y + scrolling.y);
 
         // Mouse's position on canvas
-        ImVec2 mousePosInCanvas = new ImVec2(io.getMousePos().x - origin.x, io.getMousePos().y - origin.y);
+        mousePosInCanvas.set(io.getMousePos().x - origin.x, io.getMousePos().y - origin.y);
 
         createAndJoinPoints(origin);
 
@@ -366,20 +371,16 @@ public class Animator {
 
         // Draw animation boxes in SpriteWindowAnimation's canvas
         for (int i = 0; i < animationBlueprint.animationBoxList.size(); i++) {
-            animationBlueprint.animationBoxList.get(i).imgui(origin, scrolling);
+            animationBlueprint.animationBoxList.get(i).imgui();
         }
 
         // Draw linked lines
         for (Wire wire : animationBlueprint.wireList) {
-            drawList.addLine(
-                    wire.getStartX() + origin.x,
-                    wire.getStartY() + origin.y,
-                    wire.getEndX() + origin.x,
-                    wire.getEndY() + origin.y,
-                    ImColor.intToColor(255, 255, 0, 255), thickness);
+            wire.imgui();
         }
 
         // Draw a line when a point is looking for linking
+        fakeWire.imgui();
         drawList.addLine(
                 fakeWire.getStartX() + scrolling.x,
                 fakeWire.getStartY() + scrolling.y,
@@ -398,7 +399,7 @@ public class Animator {
         // Draw the points
         animationBlueprint.animationBoxList
                 .forEach(animationBox -> Arrays.stream(animationBox.getPointFields())
-                        .forEach(pointField -> pointField.getPointList().forEach(point -> point.imgui(origin))));
+                        .forEach(pointField -> pointField.getPointList().forEach(Point::imgui)));
 
         drawList.popClipRect();
 
@@ -426,5 +427,21 @@ public class Animator {
 
     public AnimationBox getActiveBox() {
         return activeAnimationBox;
+    }
+
+    public ImVec2 getOrigin() {
+        return origin;
+    }
+
+    public ImVec2 getScrolling() {
+        return scrolling;
+    }
+
+    public float getThickness() {
+        return thickness;
+    }
+
+    public ImVec2 getMousePosition() {
+        return mousePosInCanvas;
     }
 }

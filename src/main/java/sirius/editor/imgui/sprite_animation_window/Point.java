@@ -41,7 +41,8 @@ public class Point {
     /**
      * Shows the points.
      */
-    public void imgui(ImVec2 origin) {
+    public void imgui() {
+        ImVec2 origin = SpriteAnimationWindow.getAnimator().getOrigin();
         ImDrawList imDrawList = ImGui.getWindowDrawList();
         imDrawList.addCircleFilled(origin.x + position.x, origin.y + position.y,
                 6.0f, ImColor.intToColor(247, 179, 43, 255));

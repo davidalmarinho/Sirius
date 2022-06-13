@@ -89,4 +89,31 @@ public class JMath {
         int result = (int) Math.floor(a / b);
         return a - result * b;
     }
+
+    public static float lengthSquared(float x1, float y1, float x2, float y2) {
+        return (x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2);
+    }
+
+    public static float distanceToSegmentSquared(float px, float py, float lx1, float ly1, float lx2, float ly2) {
+        float line_dist = lengthSquared(lx1, ly1, lx2, ly2);
+        if (line_dist == 0) return lengthSquared(px, py, lx1, ly1);
+
+        float t = ((px - lx1) * (lx2 - lx1) + (py - ly1) * (ly2 - ly1)) / line_dist;
+        t = constrain(t, 0, 1);
+        return lengthSquared(px, py, lx1 + t * (lx2 - lx1), ly1 + t * (ly2 - ly1));
+    }
+
+    /**
+     * @return x: if x is between a and b.
+     * a: if x is less than a.
+     * b: if x is greater than b.
+     */
+    public static float constrain(float x, float a, float b) {
+        if (x < a)
+            return a;
+        else if (x > b)
+            return b;
+
+        return x;
+    }
 }

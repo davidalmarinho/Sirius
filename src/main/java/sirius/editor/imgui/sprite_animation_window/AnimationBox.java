@@ -277,8 +277,10 @@ public class AnimationBox {
         }
     }
 
-    private void drawAnimationBox(ImVec2 origin, ImVec2 scrolling) {
+    private void drawAnimationBox() {
         ImDrawList drawList = ImGui.getWindowDrawList();
+        ImVec2 origin       = SpriteAnimationWindow.getAnimator().getOrigin();
+        ImVec2 scrolling    = SpriteAnimationWindow.getAnimator().getScrolling();
 
         // Don't want boundaries inside imgui child
         int boundariesColor;
@@ -310,7 +312,7 @@ public class AnimationBox {
         // Check what size the animation box will have --it changes depending on how many characters we have in text field
         final float BREAKER_WIDTH = 48f;
         float val = 11.8f;
-        int charsNumber = this.trigger.toString().length();
+        int charsNumber = this.trigger.length();
         float currentSize = (charsNumber + 1) * val; // +1 to maintain the integrity of this logic
         float maxSize = 20.8f * val;
 
@@ -399,9 +401,8 @@ public class AnimationBox {
         ImGui.endChild();
     }
 
-    public void imgui(ImVec2 origin, ImVec2 scrolling) {
+    public void imgui() {
         // Draw the outlines of the animation box
-        ImDrawList drawList = ImGui.getWindowDrawList();
 
         // if (!selected) {
         //     drawList.addRect(
@@ -419,7 +420,7 @@ public class AnimationBox {
         //             ImColor.intToColor(200, 200, 200, 255), ROUNDING, ImDrawFlags.RoundCornersAll, THICKNESS);
         // }
 
-        drawAnimationBox(origin, scrolling);
+        drawAnimationBox();
 
         // When we shrink or enlarge the animation box, we should update the point fields' interactions rectangles
         float dtWidth = 0.0f;

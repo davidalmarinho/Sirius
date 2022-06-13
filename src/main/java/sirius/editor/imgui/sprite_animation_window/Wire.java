@@ -1,8 +1,16 @@
 package sirius.editor.imgui.sprite_animation_window;
 
+import imgui.ImColor;
+import imgui.ImDrawList;
+import imgui.ImGui;
+import imgui.ImVec2;
+import sirius.utils.JMath;
+
 public class Wire {
     private Point from;
     private Point to;
+    private transient boolean selected;
+    private transient boolean hovered;
 
     public Wire(Point from, Point to) {
         this.from = from;
@@ -16,6 +24,32 @@ public class Wire {
     public Wire(Wire newWire) {
         this.from = new Point(newWire.getStartPoint());
         this.to   = new Point(newWire.getEndPoint());
+    }
+
+    public void imgui() {
+        // ImVec2 mousePosInCanvas = new ImVec2(SpriteAnimationWindow.getAnimator().getMousePosition());
+        ImVec2 mousePosInCanvas = SpriteAnimationWindow.getAnimator().getMousePosition();
+        // ImVec2 origin = new ImVec2(SpriteAnimationWindow.getAnimator().getOrigin());
+        ImVec2 origin = SpriteAnimationWindow.getAnimator().getOrigin();
+
+        ImDrawList drawList = ImGui.getWindowDrawList();
+        int color = ImColor.intToColor(255, 255, 0, 255);
+
+        hovered = JMath.distanceToSegmentSquared(mousePosInCanvas.x, mousePosInCanvas.y,
+                getStartX(), getStartY(), getEndX(), getEndY()) < 50.0f;
+
+        if (hovered) {
+            color = ImColor.intToColor(0, 255, 0, 255);
+        }
+
+        drawList.addLine(
+                getStartX() + origin.x,
+                getStartY() + origin.y,
+                getEndX() + origin.x,
+                getEndY() + origin.y,
+                color,
+                SpriteAnimationWindow.getAnimator().getThickness());
+
     }
 
     public float getStartX() {
@@ -58,5 +92,9 @@ public class Wire {
 
     public void setEndPoint(Point newPoint) {
         this.to = newPoint;
+    }
+
+    public boolean isSelected() {
+        return selected;
     }
 }
