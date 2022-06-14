@@ -6,6 +6,10 @@ public class Settings {
 
     public static final float DEFAULT_FRAME_TIME = 0.25f;
 
+    public static class GameObjects {
+        public static final String GENERATED_NAME = "Sprite_Object_Gen";
+    }
+
     public static class Files {
         public static final String ANIMATIONS_FOLDER = "assets/animations/";
         public static final String LEVELS_FOLDER = "assets/levels";

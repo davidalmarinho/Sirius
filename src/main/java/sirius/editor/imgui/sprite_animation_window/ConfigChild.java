@@ -247,7 +247,7 @@ public class ConfigChild {
                 ImGuiWindowFlags.AlwaysAutoResize | ImGuiWindowFlags.HorizontalScrollbar);
 
         // Get the animation box that is selected
-        this.activeBox = SpriteAnimationWindow.getStateMachineChild().getActiveBox();
+        this.activeBox = SpriteAnimationWindow.getAnimator().getActiveBox();
 
         // Don't have active box to show its configs
         if (activeBox == null) {
@@ -278,17 +278,6 @@ public class ConfigChild {
 
         // Show a preview of the animation
         previewAnimation(dt);
-
-        // TODO: 15/05/2022 Code needed for:
-        // Just let edit sprite animation window's children if a game object has been selected
-        // SOLVED -> Get the trigger based on the last selected animation box, so the user knows which box is selected
-        // SOLVED -> It is convenient to draw a border around the selected box
-        // SOLVED -> If it has to loop
-        // SOLVED -> Add frames / sprites (if it doesn't loop just let put one frame)
-        // SOLVED -> Set its active time
-        // SOLVED -> Code to automatically add the states to the state machine, based on the points connection
-        // SOLVED -> Save all to one or more json files (depends on the organization)
-        // SOLVED -> Add state machine component to the current selected game object
 
         // Terminate child
         ImGui.endChild();

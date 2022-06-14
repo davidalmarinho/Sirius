@@ -15,7 +15,7 @@ public class Prefabs {
     public static int uid = 0;
 
     public static GameObject generateSpriteObject(Sprite sprite, float sizeX, float sizeY) {
-        GameObject block = SiriusTheFox.getCurrentScene().createGameObject("Sprite_Object_Gen");
+        GameObject block = SiriusTheFox.getCurrentScene().createGameObject(Settings.GameObjects.GENERATED_NAME);
         block.setScale(sizeX, sizeY);
         SpriteRenderer spriteRenderer = SpriteRenderer.Builder.newInstance().setSprite(sprite).build();
         block.addComponent(spriteRenderer);

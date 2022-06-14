@@ -6,9 +6,12 @@ import imgui.ImGui;
 import imgui.ImVec2;
 
 public class Point {
-    private String origin;
     public static int maxId = 0;
-    private final int ID;
+
+    // Keeps the trigger of the animation box that it belongs
+    private String origin;
+
+    private int ID;
     public ImVec2 position;
     private float radius;
 
@@ -27,6 +30,10 @@ public class Point {
         this.radius   = newPoint.radius;
     }
 
+    public Point() {
+        this.position = new ImVec2();
+    }
+
     public Point(String origin) {
         this(origin, new ImVec2(0, 0), 6.0f);
     }
@@ -34,7 +41,8 @@ public class Point {
     /**
      * Shows the points.
      */
-    public void imgui(ImVec2 origin) {
+    public void imgui() {
+        ImVec2 origin = SpriteAnimationWindow.getAnimator().getOrigin();
         ImDrawList imDrawList = ImGui.getWindowDrawList();
         imDrawList.addCircleFilled(origin.x + position.x, origin.y + position.y,
                 6.0f, ImColor.intToColor(247, 179, 43, 255));
@@ -51,6 +59,10 @@ public class Point {
 
     public String getOrigin() {
         return origin;
+    }
+
+    public void setOrigin(String origin) {
+        this.origin = origin;
     }
 
     public void setRadius(float radius) {

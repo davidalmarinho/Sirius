@@ -6,7 +6,8 @@ import com.sun.istack.internal.NotNull;
 import gameobjects.GameObject;
 import gameobjects.components.Component;
 import sirius.editor.NonPickable;
-import sirius.editor.imgui.sprite_animation_window.StateMachineChild;
+import sirius.editor.imgui.sprite_animation_window.AnimationBlueprint;
+import sirius.editor.imgui.sprite_animation_window.Animator;
 import sirius.levels.Level;
 import sirius.utils.AssetPool;
 
@@ -40,10 +41,10 @@ public class Encode {
                 .create();
     }
 
-    public static Gson stateMachineChildGson() {
+    public static Gson animatorGson() {
         return new GsonBuilder()
                 .setPrettyPrinting()
-                .registerTypeAdapter(StateMachineChild.class, new StateMachineChildDeserializer())
+                .registerTypeAdapter(Animator.class, new AnimatorDeserializer())
                 .enableComplexMapKeySerialization()
                 .create();
     }
@@ -77,18 +78,17 @@ public class Encode {
     }
 
     /**
-     * Saves a {@link StateMachineChild} object into a file.
+     * Saves a {@link AnimationBlueprint} object into a file.
      *
-     * @param stateMachineChild Object needed to be saved in the file.
+     * @param animationBlueprint Object needed to be saved in the file.
      * @param filePath Path to the saved file.
      */
-    public static void saveAnimation(@NotNull StateMachineChild stateMachineChild, @NotNull String filePath) {
-        Gson gson = stateMachineChildGson();
+    public static void saveAnimation(@NotNull AnimationBlueprint animationBlueprint, @NotNull String filePath) {
+        Gson gson = animatorGson();
 
         try {
-            // Save state machine child in a .json file
             FileWriter writer = new FileWriter(filePath);
-            writer.write(gson.toJson(stateMachineChild));
+            writer.write(gson.toJson(animationBlueprint));
             writer.close();
         } catch (IOException e) {
             e.printStackTrace();
@@ -99,11 +99,11 @@ public class Encode {
      * Get a game object's animation from a file.
      *
      * @param filePath Path to the saved file.
-     * @return A {@link StateMachineChild} object.
+     * @return A {@link Animator} object.
      */
-    public static StateMachineChild getAnimation(@NotNull String filePath) {
-        Gson gson = stateMachineChildGson();
-        return gson.fromJson(readFile(filePath), StateMachineChild.class);
+    public static AnimationBlueprint getAnimation(@NotNull String filePath) {
+        Gson gson = animatorGson();
+        return gson.fromJson(readFile(filePath), AnimationBlueprint.class);
     }
 
     /**

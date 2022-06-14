@@ -6,7 +6,9 @@ import gameobjects.components.Component;
 import observers.EventSystem;
 import observers.events.Event;
 import observers.events.Events;
+import sirius.editor.imgui.sprite_animation_window.AnimationBlueprint;
 import sirius.editor.imgui.sprite_animation_window.SpriteAnimationWindow;
+import sirius.editor.imgui.sprite_animation_window.Animator;
 import sirius.encode_tools.Encode;
 import sirius.SiriusTheFox;
 import sirius.editor.MouseControls;
@@ -50,6 +52,7 @@ public class Scene {
     public void init() {
         this.camera = new Camera(new Vector2f(0, 0));
         this.sceneInitializer.loadResources(this);
+        loadAnimations();
         this.sceneInitializer.init(this);
     }
 
@@ -272,6 +275,17 @@ public class Scene {
         Level.maxLevel = loadedLevels[loadedLevels.length - 1];
     }
 
+    private void loadAnimations() {
+        File directory = new File(Settings.Files.ANIMATIONS_FOLDER);
+        File[] animations = directory.listFiles();
+
+        for (int i = 0; i < Objects.requireNonNull(animations).length; i++) {
+            File file = animations[i];
+            AnimationBlueprint animationBlueprint = Encode.getAnimation(file.getPath());
+            AssetPool.addAnimation(file.getPath(), animationBlueprint);
+        }
+    }
+
     public void save() {
         // ===============================================================================
         // Bug fix:
@@ -294,14 +308,6 @@ public class Scene {
 
         // Save game objects
         Encode.saveGameObjectListInFile(gameObjectList);
-        // TODO: 01/06/2022 Not pulling the animations to a desired game object.
-
-        // Save animation --animations' auto save needs that active game list be different from one. So, we need to
-        // save this one by this way.
-        if (propertiesWindow.getActiveGameObjectList().size() == 1) {
-            Encode.saveAnimation(SpriteAnimationWindow.getStateMachineChild(),
-                    Settings.Files.ANIMATIONS_FOLDER + propertiesWindow.getActiveGameObject().name + ".json");
-        }
     }
 
     public void load() {

@@ -1,6 +1,8 @@
 package sirius.utils;
 
 import sirius.Sound;
+import sirius.editor.imgui.sprite_animation_window.AnimationBlueprint;
+import sirius.editor.imgui.sprite_animation_window.Animator;
 import sirius.levels.Level;
 import sirius.rendering.spritesheet.Spritesheet;
 import sirius.rendering.Shader;
@@ -8,11 +10,14 @@ import sirius.rendering.spritesheet.Texture;
 
 import java.io.File;
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class AssetPool {
     private static Map<String, Shader> shaders = new HashMap<>();
     private static Map<String, Texture> textures = new HashMap<>();
     private static List<Level> levelList = new ArrayList<>();
+    private static Map<String, AnimationBlueprint> animationsMap = new HashMap<>();
     private static Map<String, Spritesheet> spritesheets = new HashMap<>();
     private static Map<String, Sound> stringSoundHashMap = new HashMap<>();
 
@@ -95,6 +100,63 @@ public class AssetPool {
         return levelList.stream().filter(level -> level.getId() == id).findFirst().orElse(null);
     }
 
+    public static void addAnimation(String filePath, AnimationBlueprint animation) {
+        File file = new File(filePath);
+
+        if (!animationsMap.containsKey(file.getPath())) {
+            animationsMap.put(file.getPath(), animation);
+        }/* else {
+            System.err.println("Error: Couldn't add '" + filePath + "'. File already exists.");
+        }*/
+    }
+
+    public static AnimationBlueprint getAnimation(String filePath) {
+        File file = new File(filePath);
+
+        if (animationsMap.containsKey(file.getPath()))
+            return animationsMap.get(file.getPath());
+        else
+            System.err.println("Error: Couldn't get '" + filePath + "'. File doesn't exist.");
+
+        return null;
+    }
+
+    public static void updateAnimation(String filePath, AnimationBlueprint animation) {
+        File file = new File(filePath);
+
+        if (!animationsMap.containsKey(file.getPath())) {
+            animationsMap.put(file.getPath(), animation);
+        } else {
+            animationsMap.remove(file.getPath());
+            animationsMap.put(file.getPath(), animation);
+        }
+    }
+
+    public static String[] getAnimationsPaths() {
+        String[] keys = new String[animationsMap.size()];
+
+        int i = 0;
+        for (String key : animationsMap.keySet()) {
+            keys[i] = key;
+            i++;
+        }
+
+        return keys;
+    }
+
+    public static String[] getAnimationsNames() {
+        String[] keys = new String[animationsMap.size()];
+
+        int i = 0;
+        for (String key : animationsMap.keySet()) {
+            String[] split = key.split("(assets\\\\animations\\\\)|(assets/animations/)");
+            keys[i] = split[1].split(".json")[0];
+            i++;
+        }
+
+        return keys;
+    }
+
     public static List<Level> getLevelList() {
         return levelList;
     }
@@ -109,7 +171,6 @@ public class AssetPool {
 
         int i = 0;
         for (String key : spritesheets.keySet()) {
-            // TODO: 18/05/2022 Get the path that doesn't depends on the OS
             spritesheetsPaths[i] = key;
             i++;
         }

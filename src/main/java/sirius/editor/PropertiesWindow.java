@@ -6,6 +6,7 @@ import gameobjects.components.SpriteRenderer;
 import gameobjects.components.game_components.Ground;
 import imgui.ImGui;
 import sirius.SiriusTheFox;
+import sirius.editor.imgui.sprite_animation_window.SpriteAnimationWindow;
 import sirius.rendering.PickingTexture;
 import org.joml.Vector4f;
 import physics2d.components.Box2DCollider;
@@ -80,6 +81,7 @@ public class PropertiesWindow {
             }
 
             activeGameObject.imgui();
+
             ImGui.end();
         } /*else if (activeGameObjectList.isEmpty()) {
             activeGameObjectLastPosition.zero();

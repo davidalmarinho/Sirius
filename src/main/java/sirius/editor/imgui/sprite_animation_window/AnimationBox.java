@@ -5,12 +5,14 @@ import imgui.ImDrawList;
 import imgui.ImGui;
 import imgui.ImVec2;
 import imgui.flag.ImDrawFlags;
+import imgui.flag.ImGuiInputTextFlags;
 import imgui.flag.ImGuiMouseButton;
 import imgui.flag.ImGuiWindowFlags;
 import imgui.type.ImString;
 import sirius.animations.Frame;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class AnimationBox {
@@ -24,6 +26,7 @@ public class AnimationBox {
 
     private List<Frame> frameList;
     public boolean doesLoop = false;
+    private boolean flag;
 
     private transient boolean mouseAboveAnimationBox;
     private transient boolean movingAnimationBox;
@@ -31,12 +34,14 @@ public class AnimationBox {
     private PointField[] pointFields;
     private transient boolean updatePointFields;
     private transient boolean mayCheckForUncheckedPoints;
-    private transient boolean checkPointsSameBox;
+    public transient boolean checkPointsSameBox;
 
     private transient final float THICKNESS = 10.0f;
     private transient final float ROUNDING  = 20.0f;
 
     private transient boolean selected;
+
+    private transient boolean mayOpenPopupWindow;
 
     public AnimationBox(int id, String trigger, float x, float y, float width) {
         this.ID = id;
@@ -117,19 +122,12 @@ public class AnimationBox {
 
     private void delUnlinkedPoints() {
         if (mayCheckForUncheckedPoints) {
-            List<Point> pointList = SpriteAnimationWindow.getStateMachineChild().pointList;
-
-            // We do this check to make sure that the point is unlinked
-            if (pointList.size() % 2 == 0) {
-                mayCheckForUncheckedPoints = false;
-                return;
-            }
+            //List<Point> pointList = SpriteAnimationWindow.getAnimator().animationBlueprint.pointList;
 
             // If is an unlinked point, remove it
             for (PointField pointField : pointFields) {
                 if (pointField.hasUnLinkedPoint) {
                     // Remove the last points from the lists
-                    pointList.remove(pointList.size() - 1);
                     pointField.removeLastPoint();
                     pointField.hasUnLinkedPoint = false;
                 }
@@ -178,29 +176,30 @@ public class AnimationBox {
         checkPointsSameBox = false;
 
         // Get the 2 last points added to rendering
-        List<Point> saPointList = SpriteAnimationWindow.getStateMachineChild().pointList;
-        Point[] last2Points = {saPointList.get(saPointList.size() - 1), saPointList.get(saPointList.size() - 2)};
+        Wire lastWire = SpriteAnimationWindow.getAnimator().animationBlueprint.getLastWire();
+
+        if (lastWire == null) return;
 
         // If samePoint var reaches 2, we will have to delete the 2 lastPoints added, because
         // that means that the 2 last added points are located in the same animation box.
         int samePoint = 0;
-        if (isSameId(last2Points[0]))
+        if (isSameId(lastWire.getStartPoint()))
             samePoint++;
-        if (isSameId(last2Points[1]))
+        if (isSameId(lastWire.getEndPoint()))
             samePoint++;
 
         if (samePoint == 2) {
             // Search for where are the 2 last points added located, and erase them.
             for (PointField pointField : pointFields) {
-                if (isSameId(pointField.getPointList(), last2Points[0]))
+                if (isSameId(pointField.getPointList(), lastWire.getEndPoint()))
                     pointField.removeLastPoint();
-                if (isSameId(pointField.getPointList(), last2Points[1]))
+
+                if (isSameId(pointField.getPointList(), lastWire.getStartPoint()))
                     pointField.removeLastPoint();
             }
 
-            // Remove the 2 last points added to the rendering
-            saPointList.remove(last2Points[0]);
-            saPointList.remove(last2Points[1]);
+            // Remove the 2 last points / last wire added to the rendering
+            SpriteAnimationWindow.getAnimator().animationBlueprint.removeLastWire();
         }
     }
 
@@ -244,10 +243,13 @@ public class AnimationBox {
             // Load the new points positions to the drawing list in Sprite Animation Window
             for (PointField pointField : pointFields) {
                 for (Point p : pointField.getPointList()) {
-                    SpriteAnimationWindow.getStateMachineChild().pointList.stream()
-                            .filter(point -> p.getId() == point.getId())
-                            .findFirst()
-                            .ifPresent(asP -> asP.position.set(new ImVec2(p.position)));
+                    for (Wire wire : SpriteAnimationWindow.getAnimator().animationBlueprint.wireList) {
+                        if (wire.getEndPoint().getId() == p.getId()) {
+                            wire.getEndPoint().position.set(new ImVec2(p.position));
+                        } else if (wire.getStartPoint().getId() == p.getId()) {
+                            wire.getStartPoint().position.set(new ImVec2(p.position));
+                        }
+                    }
                 }
             }
 
@@ -257,25 +259,60 @@ public class AnimationBox {
         }
     }
 
-    private void unselectPreviousBoxes() {
-        for (AnimationBox animationBox : SpriteAnimationWindow.getStateMachineChild().getAnimationBoxList()) {
-            if (animationBox.selected)
-                animationBox.selected = false;
+    private void popupMenu() {
+        if (mayOpenPopupWindow) {
+            if (ImGui.beginPopupContextWindow("popup_animation_box_ctx")) {
+                // TODO: 10/06/2022 Give info with ? imgui
+                if (ImGui.menuItem("Set flag")) {
+                    for (AnimationBox animationBox : SpriteAnimationWindow.getAnimator().getAnimationBoxList()) {
+                        animationBox.flag = false;
+                    }
+                    this.flag = true;
+                }
+                if (ImGui.menuItem("Delete current animation box", "del")) {
+                    SpriteAnimationWindow.getAnimator().delAnimationBox(ID);
+                }
+                ImGui.endPopup();
+            }
         }
     }
 
-    private void drawAnimationBox(ImVec2 origin, ImVec2 scrolling) {
+    private void drawAnimationBox() {
         ImDrawList drawList = ImGui.getWindowDrawList();
+        ImVec2 origin       = SpriteAnimationWindow.getAnimator().getOrigin();
+        ImVec2 scrolling    = SpriteAnimationWindow.getAnimator().getScrolling();
+
+        // Don't want boundaries inside imgui child
+        int boundariesColor;
+        if (!selected) {
+            boundariesColor = ImColor.intToColor(255, 255, 255, 255);
+        } else {
+            boundariesColor = ImColor.intToColor(200, 200, 200, 255);
+        }
+
+        drawList.addRect(
+                origin.x + x - getWidth() / 2,
+                origin.y + y - getHeight() / 2,
+                origin.x + x + getWidth() / 2,
+                origin.y + y + getHeight() / 2,
+                boundariesColor, ROUNDING, ImDrawFlags.RoundCornersAll, THICKNESS);
 
         // Reserve the region to draw the animation box
         ImGui.setCursorPos(x - getWidth() / 2 + scrolling.x, + y - getHeight() / 2 + scrolling.y);
         ImGui.beginChild("box" + ID, width, height, false, ImGuiWindowFlags.AlwaysAutoResize
                 | ImGuiWindowFlags.NoCollapse | ImGuiWindowFlags.NoScrollbar);
 
+        if (selected && ImGui.isMouseClicked(ImGuiMouseButton.Right)) {
+            mayOpenPopupWindow = !mayOpenPopupWindow;
+        }
+
+        // Menu popup properties
+        popupMenu();
+
         // Check what size the animation box will have --it changes depending on how many characters we have in text field
         final float BREAKER_WIDTH = 48f;
         float val = 11.8f;
-        int charsNumber = this.trigger.toString().length();
+        int charsNumber = this.trigger.length();
         float currentSize = (charsNumber + 1) * val; // +1 to maintain the integrity of this logic
         float maxSize = 20.8f * val;
 
@@ -287,17 +324,22 @@ public class AnimationBox {
 
         // ImDrawList drawList = ImGui.getWindowDrawList();
         // drawList.addRectFilled(
-        //         origin.x + x - getWidth() / 2 * StateMachineChild.zoom,
-        //         origin.y + y - getHeight() / 2 * StateMachineChild.zoom,
-        //         origin.x + x + getWidth() / 2 * StateMachineChild.zoom,
-        //         origin.y + y + getHeight() / 2 * StateMachineChild.zoom,
+        //         origin.x + x - getWidth() / 2 * Animator.zoom,
+        //         origin.y + y - getHeight() / 2 * Animator.zoom,
+        //         origin.x + x + getWidth() / 2 * Animator.zoom,
+        //         origin.y + y + getHeight() / 2 * Animator.zoom,
         //         ImColor.intToColor(112, 16, 20, 255), ROUNDING);
+
+        int boxColor = ImColor.intToColor(112, 16, 20, 255);
+        if (flag)
+            boxColor = ImColor.intToColor(124,252,0, 255);
+
         drawList.addRectFilled(
                 origin.x + x - getWidth() / 2,
                 origin.y + y - getHeight() / 2,
                 origin.x + x + getWidth() / 2,
                 origin.y + y + getHeight() / 2,
-                ImColor.intToColor(112, 16, 20, 255), ROUNDING);
+                boxColor, ROUNDING);
 
         // Center the animation box input text box
         ImGui.setCursorPos(ImGui.getCursorPosX() + 22, ImGui.getCursorPosY() + getHeight() / 3);
@@ -311,7 +353,27 @@ public class AnimationBox {
         }
 
         this.trigger = inputText(this.trigger);
-        // System.out.println("MinMax zoom: " + StateMachineChild.zoom); // 0.79
+
+        // Change points' origin variable if the trigger is changed
+        Arrays.stream(pointFields)
+                .forEach(pointField -> pointField.getPointList()
+                        .forEach(point -> {
+                            if (!point.getOrigin().equals(this.trigger)) {
+                                point.setOrigin(this.trigger);
+
+                                for (Wire wire : SpriteAnimationWindow.getAnimator().animationBlueprint.wireList) {
+                                    if (wire.getStartPoint().getId() == point.getId()) {
+                                        wire.getStartPoint().setOrigin(this.trigger);
+                                    }
+
+                                    if (wire.getEndPoint().getId() == point.getId()) {
+                                        wire.getEndPoint().setOrigin(this.trigger);
+                                    }
+                                }
+                            }
+                        }));
+
+        // System.out.println("MinMax zoom: " + Animator.zoom); // 0.79
 
         // Select the box if the text input field was activated
         if (ImGui.isItemActivated())
@@ -325,11 +387,11 @@ public class AnimationBox {
         // Box is selected if the mouse left is pressed and if the mouse is inside the box
         if (mouseAboveAnimationBox && ImGui.isMouseClicked(ImGuiMouseButton.Left)) {
             // If there are any animation boxes selected, we will want them to become unselected
-            unselectPreviousBoxes();
+            SpriteAnimationWindow.getAnimator().unselectAllBoxes();
 
             selected = true;
-            // Box can't be unselected if the mouse left isn't inside the state machine child
-        } else if (SpriteAnimationWindow.getStateMachineChild().isHovered()
+            // Box can't be unselected if the mouse left isn't inside the animator
+        } else if (SpriteAnimationWindow.getAnimator().isHovered()
                 && !mouseAboveAnimationBox && ImGui.isMouseClicked(ImGuiMouseButton.Left)) {
             selected = false;
         }
@@ -339,81 +401,26 @@ public class AnimationBox {
         ImGui.endChild();
     }
 
-    public void imgui(ImVec2 origin, ImVec2 scrolling) {
+    public void imgui() {
         // Draw the outlines of the animation box
-        ImDrawList drawList = ImGui.getWindowDrawList();
 
         // if (!selected) {
         //     drawList.addRect(
-        //             origin.x + x - getWidth() / 2 * StateMachineChild.zoom,
-        //             origin.y + y - getHeight() / 2 * StateMachineChild.zoom,
-        //             origin.x + x + getWidth() / 2 * StateMachineChild.zoom,
-        //             origin.y + y + getHeight() / 2 * StateMachineChild.zoom,
+        //             origin.x + x - getWidth() / 2 * Animator.zoom,
+        //             origin.y + y - getHeight() / 2 * Animator.zoom,
+        //             origin.x + x + getWidth() / 2 * Animator.zoom,
+        //             origin.y + y + getHeight() / 2 * Animator.zoom,
         //             ImColor.intToColor(255, 255, 255, 255), ROUNDING, ImDrawFlags.RoundCornersAll, THICKNESS);
         // } else {
         //     drawList.addRect(
-        //             origin.x + x - getWidth() / 2 * StateMachineChild.zoom,
-        //             origin.y + y - getHeight() / 2 * StateMachineChild.zoom,
-        //             origin.x + x + getWidth() / 2 * StateMachineChild.zoom,
-        //             origin.y + y + getHeight() / 2 * StateMachineChild.zoom,
+        //             origin.x + x - getWidth() / 2 * Animator.zoom,
+        //             origin.y + y - getHeight() / 2 * Animator.zoom,
+        //             origin.x + x + getWidth() / 2 * Animator.zoom,
+        //             origin.y + y + getHeight() / 2 * Animator.zoom,
         //             ImColor.intToColor(200, 200, 200, 255), ROUNDING, ImDrawFlags.RoundCornersAll, THICKNESS);
         // }
-        if (!selected) {
-            drawList.addRect(
-                    origin.x + x - getWidth() / 2,
-                    origin.y + y - getHeight() / 2,
-                    origin.x + x + getWidth() / 2,
-                    origin.y + y + getHeight() / 2,
-                    ImColor.intToColor(255, 255, 255, 255), ROUNDING, ImDrawFlags.RoundCornersAll, THICKNESS);
-        } else {
-            drawList.addRect(
-                    origin.x + x - getWidth() / 2,
-                    origin.y + y - getHeight() / 2,
-                    origin.x + x + getWidth() / 2,
-                    origin.y + y + getHeight() / 2,
-                    ImColor.intToColor(200, 200, 200, 255), ROUNDING, ImDrawFlags.RoundCornersAll, THICKNESS);
-        }
 
-        drawAnimationBox(origin, scrolling);
-
-        // Create points to after join them and form a line, if the left mouse button isn't realised
-        boolean mouseReleasedOrClicked =
-                ImGui.isMouseClicked(ImGuiMouseButton.Left) || ImGui.isMouseReleased(ImGuiMouseButton.Left);
-        List<Point> pointList = SpriteAnimationWindow.getStateMachineChild().pointList;
-        for (PointField pointField : pointFields) {
-            if (!movingAnimationBox) {
-                if (pointField.hasUnLinkedPoint && pointList.size() % 2 == 0)
-                    pointField.hasUnLinkedPoint = false;
-
-                // pointField.debug(origin);
-                if (pointField.isMouseAbove(origin) && !mouseAboveAnimationBox) {
-                    drawList.addCircleFilled(ImGui.getMousePosX(), ImGui.getMousePosY(),
-                            6.0f, ImColor.intToColor(247, 179, 43, 150));
-
-                    // Establish a union between 2 point --draw a line between 2 points
-                    if (mouseReleasedOrClicked) {
-                        ImVec2 pointPos = new ImVec2(ImGui.getMousePosX() - origin.x, ImGui.getMousePosY() - origin.y);
-                        Point newPoint = new Point(trigger, pointPos, 6.0f);
-                        pointList.add(new Point(newPoint));
-                        pointField.addPoint(newPoint);
-
-                        // Mark in which point field a possible unlinked point is
-                        if (pointList.size() % 2 != 0) {
-                            pointField.hasUnLinkedPoint = true;
-                            // Mark check to see if there are 2 points in the same animation box
-                        } else {
-                            checkPointsSameBox = true;
-                            SpriteAnimationWindow.getStateMachineChild().lookMessyLines = true;
-                        }
-                    }
-                }
-            }
-
-            // Draw the points
-            for (Point point : pointField.getPointList()) {
-                point.imgui(origin);
-            }
-        }
+        drawAnimationBox();
 
         // When we shrink or enlarge the animation box, we should update the point fields' interactions rectangles
         float dtWidth = 0.0f;
@@ -429,23 +436,34 @@ public class AnimationBox {
             updatePointFields = false;
             setPointFields();
 
+            List<Wire> wireList = SpriteAnimationWindow.getAnimator().animationBlueprint.wireList;
+
             // Update points --move them because the animation box has been resized
             for (PointField pointField : pointFields) {
                 for (Point point : pointField.getPointList()) {
-                    // Move left
                     float moveValue = dtWidth / 2;
 
+                    // Move left
                     if (point.position.x < this.x) {
                         point.position.x -= moveValue;
-                        pointList.stream()
-                                .filter(saPoint -> point.getId() == saPoint.getId())
-                                .forEach(saPoint -> saPoint.position.x -= moveValue);
+                        for (Wire wire : wireList) {
+                            if (wire.getStartPoint().getId() == point.getId()) {
+                                wire.getStartPoint().position.x -= moveValue;
+                            } else if (wire.getEndPoint().getId() == point.getId()) {
+                                wire.getEndPoint().position.x -= moveValue;
+                            }
+                        }
+
                     // Move right
                     } else {
                         point.position.x += moveValue;
-                        pointList.stream()
-                                .filter(saPoint -> point.getId() == saPoint.getId())
-                                .forEach(saPoint -> saPoint.position.x += moveValue);
+                        for (Wire wire : wireList) {
+                            if (wire.getStartPoint().getId() == point.getId()) {
+                                wire.getStartPoint().position.x += moveValue;
+                            } else if (wire.getEndPoint().getId() == point.getId()) {
+                                wire.getEndPoint().position.x += moveValue;
+                            }
+                        }
                     }
                 }
             }
@@ -458,11 +476,19 @@ public class AnimationBox {
     private String inputText(String text) {
         ImString outString = new ImString(text, 32);
 
-        if (ImGui.inputText("", outString)) {
+        if (ImGui.inputText("", outString, ImGuiInputTextFlags.AutoSelectAll)) {
             return outString.get();
         }
 
         return text;
+    }
+
+    public boolean isMovingAnimationBox() {
+        return movingAnimationBox;
+    }
+
+    public boolean isMouseAboveAnimationBox() {
+        return mouseAboveAnimationBox;
     }
 
     public String getTrigger() {
@@ -471,6 +497,10 @@ public class AnimationBox {
 
     public boolean isSelected() {
         return selected;
+    }
+
+    public void setSelected(boolean selected) {
+        this.selected = selected;
     }
 
     public int getId() {
@@ -495,6 +525,14 @@ public class AnimationBox {
 
     public float getHeight() {
         return height;
+    }
+
+    public boolean isFlag() {
+        return flag;
+    }
+
+    public void setFlag(boolean flag) {
+        this.flag = flag;
     }
 
     public List<Frame> getFrameList() {

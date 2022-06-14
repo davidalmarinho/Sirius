@@ -1,5 +1,6 @@
 package sirius.editor.imgui;
 
+import com.sun.istack.internal.NotNull;
 import gameobjects.GameObject;
 import gameobjects.Prefabs;
 import gameobjects.components.Sprite;
@@ -7,6 +8,7 @@ import imgui.ImGui;
 import imgui.ImVec2;
 import imgui.flag.ImGuiCol;
 import imgui.flag.ImGuiStyleVar;
+import imgui.flag.ImGuiTreeNodeFlags;
 import imgui.type.ImBoolean;
 import imgui.type.ImInt;
 import imgui.type.ImString;
@@ -14,6 +16,7 @@ import org.joml.Vector2f;
 import org.joml.Vector4f;
 import sirius.rendering.Color;
 import sirius.rendering.spritesheet.Spritesheet;
+import sirius.utils.AssetPool;
 
 public class JImGui {
     // Keeps the game object selected on the sprites layout
@@ -156,14 +159,19 @@ public class JImGui {
     }
 
     public static String inputText(String label, String text) {
+        return inputText(label, text, defaultColumnWidth, 256);
+    }
+
+    public static String inputText(String label, String text, float columnWidth, int maxTextLength) {
         ImGui.pushID(label);
 
         ImGui.columns(2);
         ImGui.setColumnWidth(0, defaultColumnWidth);
         ImGui.text(label);
         ImGui.nextColumn();
+        ImGui.setColumnWidth(1, columnWidth);
 
-        ImString outString = new ImString(text, 256);
+        ImString outString = new ImString(text, maxTextLength);
         if (ImGui.inputText("##" + label, outString)) {
             ImGui.columns(1);
             ImGui.popID();
@@ -345,5 +353,49 @@ public class JImGui {
     public static GameObject getSelectedGameObject() {
         // TODO: 18/05/2022 This should be a copy
         return selectedGameObject;
+    }
+
+    public static int listBox(String label, int currentItem, @NotNull String[] items, int heightItems) {
+        ImInt imInt = new ImInt(currentItem);
+        ImGui.listBox("##" + label, imInt, items, heightItems);
+
+        return imInt.get();
+    }
+
+    /**
+     * Uses {@link ImGui#beginListBox(String)} API.
+     */
+    public static int doListBox(String label, int currentItem, @NotNull String[] items) {
+        if (ImGui.beginListBox("##" + label)) {
+            for (int i = 0; i < items.length; i++) {
+
+                boolean is_selected = (currentItem == i);
+                if (ImGui.selectable(items[i], is_selected)) {
+                    System.out.println(currentItem);
+                    currentItem = i;
+                }
+
+                // Set the initial focus when opening the combo (scrolling + keyboard navigation focus)
+                if (is_selected)
+                    ImGui.setItemDefaultFocus();
+            }
+            ImGui.endListBox();
+        }
+        return currentItem;
+    }
+
+    public static int list(String label, int currentItem, String[] items) {
+        // ImGui.pushID(label);
+        if (ImGui.treeNodeEx("##" + label, ImGuiTreeNodeFlags.Leaf)) {
+
+            for (int i = 0; i < items.length; i++) {
+                if (ImGui.selectable(items[i], currentItem == i))
+                    currentItem = i;
+            }
+            ImGui.treePop();
+        }
+        // ImGui.popID();
+
+        return currentItem;
     }
 }
