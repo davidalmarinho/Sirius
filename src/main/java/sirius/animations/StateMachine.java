@@ -141,7 +141,7 @@ public class StateMachine extends Component {
                     AnimationBox curAnimationBox = animationBoxList.get(i);
 
                     AnimationState animationState = new AnimationState();
-                    animationState.title = curAnimationBox.getTrigger();
+                    animationState.title = curAnimationBox.getTitle();
                     for (Frame frame : curAnimationBox.getFrameList()) {
                         animationState.addFrame(new Frame(frame));
                     }
@@ -153,12 +153,12 @@ public class StateMachine extends Component {
                     addStateTrigger(
                             wire.getStartPoint().getOrigin(),
                             wire.getEndPoint().getOrigin(),
-                            wire.getEndPoint().getOrigin());
+                            wire.getTrigger());
                 }
 
                 for (int i = 0; i < animationBoxList.size(); i++) {
                     if (animationBoxList.get(i).isFlag())
-                        setDefaultState(animationBoxList.get(i).getTrigger());
+                        setDefaultState(animationBoxList.get(i).getTitle());
                 }
                 gameObject.getComponent(StateMachine.class).refreshTextures();
             }

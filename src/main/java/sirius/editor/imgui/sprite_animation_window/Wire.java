@@ -8,6 +8,7 @@ import imgui.flag.ImGuiMouseButton;
 import sirius.utils.JMath;
 
 public class Wire {
+    private String trigger = "";
     private Point from;
     private Point to;
     private transient boolean selected;
@@ -23,8 +24,9 @@ public class Wire {
     }
 
     public Wire(Wire newWire) {
-        this.from = new Point(newWire.getStartPoint());
-        this.to   = new Point(newWire.getEndPoint());
+        this.trigger = newWire.trigger;
+        this.from    = new Point(newWire.getStartPoint());
+        this.to      = new Point(newWire.getEndPoint());
     }
 
     public void imgui() {
@@ -36,6 +38,7 @@ public class Wire {
         ImDrawList drawList = ImGui.getWindowDrawList();
         int color = ImColor.intToColor(255, 255, 0, 255);
 
+        // TODO: 17/06/2022 If any animation box is selected, wire can't be selected
         if (selected) {
             color = ImColor.intToColor(0, 255, 0, 255);
         }
@@ -50,9 +53,14 @@ public class Wire {
 
             boolean mouseLeft = ImGui.isMouseClicked(ImGuiMouseButton.Left);
             if ((mouseLeft || ImGui.isMouseClicked(ImGuiMouseButton.Right)) && hovered) {
+                // Unselect all the others wires
+                // for (Wire wire : SpriteAnimationWindow.getAnimator().animationBlueprint.wireList) {
+                //     wire.selected = false;
+                // }
+
                 this.selected = true;
             }
-            if (mouseLeft && !hovered) {
+            if (mouseLeft && !hovered && SpriteAnimationWindow.getAnimator().isHovered()) {
                 this.selected = false;
             }
         }
@@ -65,6 +73,14 @@ public class Wire {
                 color,
                 SpriteAnimationWindow.getAnimator().getThickness());
 
+    }
+
+    public String getTrigger() {
+        return trigger;
+    }
+
+    public void setTrigger(String trigger) {
+        this.trigger = trigger;
     }
 
     public float getStartX() {

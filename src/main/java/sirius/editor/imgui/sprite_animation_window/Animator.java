@@ -20,6 +20,7 @@ public class Animator {
     public transient boolean showAnimator;
 
     public transient AnimationBox activeAnimationBox;
+    public transient Wire activeWire;
     public transient String POPUP_ANIMATOR_MENU = "popup_animator_menu_context";
 
     private transient boolean hovered = false;
@@ -221,7 +222,7 @@ public class Animator {
                     ImVec2 pointPos = new ImVec2(ImGui.getMousePosX() - origin.x, ImGui.getMousePosY() - origin.y);
 
                     if (clicked) {
-                        Point newPoint = new Point(animationBox.getTrigger(), pointPos, 6.0f);
+                        Point newPoint = new Point(animationBox.getTitle(), pointPos, 6.0f);
                         this.bufferWire = new Wire();
                         this.bufferWire.setStartPoint(new Point(newPoint));
                         pointField.addPoint(newPoint);
@@ -234,7 +235,7 @@ public class Animator {
                     }
 
                     if (released && bufferWire != null) {
-                        Point newPoint = new Point(animationBox.getTrigger(), pointPos, 6.0f);
+                        Point newPoint = new Point(animationBox.getTitle(), pointPos, 6.0f);
                         this.bufferWire.setEndPoint(new Point(newPoint));
                         pointField.addPoint(newPoint);
 
@@ -279,6 +280,8 @@ public class Animator {
                 .filter(animationBox -> getAnimationBox(animationBox.getId()).isSelected())
                 .findFirst()
                 .orElse(null);
+
+        activeWire = this.getSelectedWire();
 
         ImVec2 canvasSize = contentRegionAvailable;   // Resize canvas to what's available
         ImVec2 canvasP0 = ImGui.getCursorScreenPos(); // ImDrawList API uses screen coordinates!
@@ -407,11 +410,14 @@ public class Animator {
                             .forEach(animationBox -> Arrays
                                     .stream(animationBox.getPointFields())
                                     .forEach(pointField -> pointField.getPointList()
-                                            .removeIf(p -> p.getId() == getSelectedWire().getEndPoint().getId()
-                                                    || p.getId() == getSelectedWire().getStartPoint().getId())
+                                            .removeIf(p -> p.getId() == activeWire.getEndPoint().getId()
+                                                    || p.getId() == activeWire.getStartPoint().getId())
                             ));
 
-                    animationBlueprint.wireList.remove(getSelectedWire());
+                    animationBlueprint.wireList.remove(activeWire);
+
+                    // Reset active wire
+                    this.activeWire = null;
                 }
             } else {
                 if (ImGui.menuItem("Add Animation Box", "")) {
@@ -455,6 +461,10 @@ public class Animator {
 
     public AnimationBox getActiveBox() {
         return activeAnimationBox;
+    }
+
+    public Wire getActiveWire() {
+        return activeWire;
     }
 
     public ImVec2 getOrigin() {

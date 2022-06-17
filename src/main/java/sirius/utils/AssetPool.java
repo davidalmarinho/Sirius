@@ -110,6 +110,15 @@ public class AssetPool {
         }*/
     }
 
+    public static void removeAnimation(String filePath) {
+        File file = new File(filePath);
+
+        /* else {
+            System.err.println("Error: Couldn't add '" + filePath + "'. File already exists.");
+        }*/
+        animationsMap.remove(file.getPath());
+    }
+
     public static AnimationBlueprint getAnimation(String filePath) {
         File file = new File(filePath);
 

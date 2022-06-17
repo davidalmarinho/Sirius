@@ -5,8 +5,10 @@ import gameobjects.components.Sprite;
 import gameobjects.components.SpriteRenderer;
 import imgui.ImGui;
 import imgui.ImVec2;
+import imgui.flag.ImGuiInputTextFlags;
 import imgui.flag.ImGuiWindowFlags;
 import imgui.type.ImBoolean;
+import imgui.type.ImString;
 import sirius.animations.Frame;
 import sirius.editor.imgui.JImGui;
 import sirius.rendering.Color;
@@ -29,6 +31,7 @@ public class ConfigChild {
     private float allFramesTime = Settings.DEFAULT_FRAME_TIME;
 
     private AnimationBox activeBox;
+    private Wire activeWire;
     private Frame activeFrame = null;
 
     // Just have the objective to show a preview of the animation
@@ -150,7 +153,7 @@ public class ConfigChild {
             animationTime += dt;
 
             // Bug fix
-            if (activeBox.getFrame(curFrameAnimationIndex) == null)
+            if (curFrameAnimationIndex >= activeBox.getFrameListSize() || activeBox.getFrame(curFrameAnimationIndex) == null)
                 resetAnimationPreview();
 
             if (animationTime >= activeBox.getFrame(curFrameAnimationIndex).frameTime) {
@@ -246,42 +249,61 @@ public class ConfigChild {
         ImGui.beginChild("config", regionAvailable.x, regionAvailable.y, true,
                 ImGuiWindowFlags.AlwaysAutoResize | ImGuiWindowFlags.HorizontalScrollbar);
 
-        // Get the animation box that is selected
-        this.activeBox = SpriteAnimationWindow.getAnimator().getActiveBox();
+        // Get the animation box that is selected or get the selected wire if it is select.
+        // Just one of these may be selected.
+        this.activeBox  = SpriteAnimationWindow.getAnimator().getActiveBox();
+        this.activeWire = SpriteAnimationWindow.getAnimator().getActiveWire();
 
         // Don't have active box to show its configs
-        if (activeBox == null) {
+        if (activeBox == null && activeWire == null) {
             resetAnimationPreview();
             ImGui.endChild();
             ImGui.sameLine();
             return;
         }
 
-        ImGui.text("Trigger: ");
-        ImGui.sameLine();
-        ImGui.text(activeBox.getTrigger());
-        activeBox.doesLoop = JImGui.checkBox("Loop:", activeBox.doesLoop);
+        if (activeBox != null) {
+            ImGui.text("Title: ");
+            ImGui.sameLine();
+            ImGui.text(activeBox.getTitle());
+            activeBox.doesLoop = JImGui.checkBox("Loop:", activeBox.doesLoop);
 
-        framesMenu();
+            framesMenu();
 
-        // Can't un-mark 'doesLoop' checkbox if frame list size > 1
-        if (!activeBox.doesLoop && activeBox.getFrameListSize() > 1) {
-            JOptionPane.showMessageDialog(new JFrame("Error message"),
-                    "Couldn't un-mark this checkbox." +
-                            "\nEnsure that you have just one frame so you acn un-mark the checkbox.");
-            activeBox.doesLoop = true;
+            // Can't un-mark 'doesLoop' checkbox if frame list size > 1
+            if (!activeBox.doesLoop && activeBox.getFrameListSize() > 1) {
+                JOptionPane.showMessageDialog(new JFrame("Error message"),
+                        "Couldn't un-mark this checkbox." +
+                                "\nEnsure that you have just one frame so you acn un-mark the checkbox.");
+                activeBox.doesLoop = true;
+            }
+
+            addFrameButton();
+
+            framesSettings();
+
+            // Show a preview of the animation
+            previewAnimation(dt);
+        } else {
+            // TODO: 17/06/2022 Make system to create the trigger and reuse them
+            ImGui.text("Trigger: ");
+            ImGui.sameLine();
+            activeWire.setTrigger(inputText(activeWire.getTrigger()));
         }
-
-        addFrameButton();
-
-        framesSettings();
-
-        // Show a preview of the animation
-        previewAnimation(dt);
 
         // Terminate child
         ImGui.endChild();
         ImGui.sameLine();
+    }
+
+    private String inputText(String text) {
+        ImString outString = new ImString(text, 32);
+
+        if (ImGui.inputText("Trigger: ", outString, ImGuiInputTextFlags.AutoSelectAll)) {
+            return outString.get();
+        }
+
+        return text;
     }
 
     public boolean isShowConfigChild() {
