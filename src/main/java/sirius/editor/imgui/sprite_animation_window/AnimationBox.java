@@ -19,7 +19,7 @@ public class AnimationBox {
     public static int maxId = 0;
 
     private final int ID;
-    private String trigger;
+    private String title;
     public float x, y;
     private float width;
     private transient float height, lastWidth;
@@ -43,10 +43,10 @@ public class AnimationBox {
 
     private transient boolean mayOpenPopupWindow;
 
-    public AnimationBox(int id, String trigger, float x, float y, float width) {
+    public AnimationBox(int id, String title, float x, float y, float width) {
         this.ID = id;
         this.frameList = new ArrayList<>();
-        this.trigger   = trigger;
+        this.title     = title;
         this.x         = x;
         this.y         = y;
 
@@ -58,22 +58,23 @@ public class AnimationBox {
         setPointFields();
     }
 
-    public AnimationBox(String trigger, float x, float y) {
-        this(maxId, trigger, x, y, 128.0f);
+    public AnimationBox(String title, float x, float y) {
+        this(maxId, title, x, y, 128.0f);
         maxId++;
     }
 
-    public AnimationBox(String trigger, ImVec2 position) {
-        this(trigger, position.x, position.y);
+    public AnimationBox(String title, ImVec2 position) {
+        this(title, position.x, position.y);
         maxId++;
     }
 
     public AnimationBox(AnimationBox newAnimationBox) {
-        this(newAnimationBox.ID, newAnimationBox.trigger, newAnimationBox.x, newAnimationBox.y, newAnimationBox.width);
+        this(newAnimationBox.ID, newAnimationBox.title, newAnimationBox.x, newAnimationBox.y, newAnimationBox.width);
         for (Frame frame : newAnimationBox.getFrameList()) {
             frameList.add(new Frame(frame));
         }
-        this.doesLoop = newAnimationBox.doesLoop;
+        this.flag        = newAnimationBox.flag;
+        this.doesLoop    = newAnimationBox.doesLoop;
         this.pointFields = newAnimationBox.pointFields;
     }
 
@@ -312,7 +313,7 @@ public class AnimationBox {
         // Check what size the animation box will have --it changes depending on how many characters we have in text field
         final float BREAKER_WIDTH = 48f;
         float val = 11.8f;
-        int charsNumber = this.trigger.length();
+        int charsNumber = this.title.length();
         float currentSize = (charsNumber + 1) * val; // +1 to maintain the integrity of this logic
         float maxSize = 20.8f * val;
 
@@ -352,22 +353,22 @@ public class AnimationBox {
             ImGui.setNextItemWidth(Math.min(currentSize, maxSize));
         }
 
-        this.trigger = inputText(this.trigger);
+        this.title = inputText(this.title);
 
-        // Change points' origin variable if the trigger is changed
+        // Change points' origin variable if the title is changed
         Arrays.stream(pointFields)
                 .forEach(pointField -> pointField.getPointList()
                         .forEach(point -> {
-                            if (!point.getOrigin().equals(this.trigger)) {
-                                point.setOrigin(this.trigger);
+                            if (!point.getOrigin().equals(this.title)) {
+                                point.setOrigin(this.title);
 
                                 for (Wire wire : SpriteAnimationWindow.getAnimator().animationBlueprint.wireList) {
                                     if (wire.getStartPoint().getId() == point.getId()) {
-                                        wire.getStartPoint().setOrigin(this.trigger);
+                                        wire.getStartPoint().setOrigin(this.title);
                                     }
 
                                     if (wire.getEndPoint().getId() == point.getId()) {
-                                        wire.getEndPoint().setOrigin(this.trigger);
+                                        wire.getEndPoint().setOrigin(this.title);
                                     }
                                 }
                             }
@@ -491,8 +492,8 @@ public class AnimationBox {
         return mouseAboveAnimationBox;
     }
 
-    public String getTrigger() {
-        return trigger;
+    public String getTitle() {
+        return title;
     }
 
     public boolean isSelected() {

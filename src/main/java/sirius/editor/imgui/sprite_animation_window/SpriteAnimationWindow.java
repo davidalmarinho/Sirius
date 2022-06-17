@@ -20,6 +20,7 @@ public class SpriteAnimationWindow {
 
     private final String NEW_ANIMATION_CONTEXT = "New Animation";
     private final String LOAD_CONTEXT = "Load Animation";
+    private final String DELETE_CONTEXT = "Delete Animation";
     private String bufferFileName = "";
     private String currentAnimationPath = "";
     private int currentItem = -1;
@@ -36,13 +37,20 @@ public class SpriteAnimationWindow {
 
             ImGui.sameLine();
 
-            if (ImGui.button("Load")) {
-                ImGui.openPopup(LOAD_CONTEXT);
+            if (ImGui.button("Delete")) {
+                ImGui.openPopup(DELETE_CONTEXT);
             }
 
             if (ImGui.button("Save")) {
+                // TODO: 17/06/2022 Throw error when a trigger is just "" (empty)
                 Encode.saveAnimation(animator.animationBlueprint, currentAnimationPath);
                 AssetPool.updateAnimation(currentAnimationPath, animator.animationBlueprint);
+            }
+
+            ImGui.sameLine();
+
+            if (ImGui.button("Load")) {
+                ImGui.openPopup(LOAD_CONTEXT);
             }
 
             if (ImGui.beginPopupModal(NEW_ANIMATION_CONTEXT, ImGuiWindowFlags.AlwaysUseWindowPadding)) {
@@ -76,7 +84,34 @@ public class SpriteAnimationWindow {
                 ImGui.endPopup();
             }
 
-            if (ImGui.beginPopupModal(LOAD_CONTEXT, ImGuiWindowFlags.AlwaysUseWindowPadding | ImGuiWindowFlags.AlwaysAutoResize)) {
+            if (ImGui.beginPopupModal(DELETE_CONTEXT, ImGuiWindowFlags.AlwaysUseWindowPadding
+                    | ImGuiWindowFlags.AlwaysAutoResize)) {
+                String[] items = AssetPool.getAnimationsPaths();
+
+                // Close instantly the load menu popup if there aren't any animations files
+                if (items.length == 0)
+                    ImGui.closeCurrentPopup();
+
+                currentItem = JImGui.list("", currentItem, items);
+
+                if (ImGui.isMouseReleased(ImGuiMouseButton.Left) && currentItem >= 0) {
+                    // TODO: 17/06/2022 Are you sure? Window
+                    currentAnimationPath = items[currentItem];
+                    new File(currentAnimationPath).delete();
+                    AssetPool.removeAnimation(currentAnimationPath);
+                    ImGui.closeCurrentPopup();
+                }
+
+                ImGui.newLine();
+                if (ImGui.button("Close")) {
+                    ImGui.closeCurrentPopup();
+                }
+
+                ImGui.endPopup();
+            }
+
+            if (ImGui.beginPopupModal(LOAD_CONTEXT, ImGuiWindowFlags.AlwaysUseWindowPadding
+                    | ImGuiWindowFlags.AlwaysAutoResize)) {
                 String[] items = AssetPool.getAnimationsPaths();
 
                 // Close instantly the load menu popup if there aren't any animations files

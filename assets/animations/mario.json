@@ -1,0 +1,3710 @@
+{
+  "wireList": [
+    {
+      "trigger": "switchDirection",
+      "from": {
+        "origin": "Run",
+        "ID": 11,
+        "position": {
+          "x": 25.0,
+          "y": 219.0
+        },
+        "radius": 6.0
+      },
+      "to": {
+        "origin": "Switch Direction",
+        "ID": 12,
+        "position": {
+          "x": 110.0,
+          "y": 336.0
+        },
+        "radius": 6.0
+      }
+    },
+    {
+      "trigger": "stopRunning",
+      "from": {
+        "origin": "Run",
+        "ID": 13,
+        "position": {
+          "x": -67.0,
+          "y": 300.0
+        },
+        "radius": 6.0
+      },
+      "to": {
+        "origin": "Idle",
+        "ID": 14,
+        "position": {
+          "x": -89.0,
+          "y": 673.0
+        },
+        "radius": 6.0
+      }
+    },
+    {
+      "trigger": "jump",
+      "from": {
+        "origin": "Run",
+        "ID": 15,
+        "position": {
+          "x": 25.0,
+          "y": 264.0
+        },
+        "radius": 6.0
+      },
+      "to": {
+        "origin": "Jump",
+        "ID": 16,
+        "position": {
+          "x": 168.0,
+          "y": 504.0
+        },
+        "radius": 6.0
+      }
+    },
+    {
+      "trigger": "stopRunning",
+      "from": {
+        "origin": "Switch Direction",
+        "ID": 17,
+        "position": {
+          "x": 267.0,
+          "y": 422.0
+        },
+        "radius": 6.0
+      },
+      "to": {
+        "origin": "Idle",
+        "ID": 18,
+        "position": {
+          "x": 22.0,
+          "y": 764.0
+        },
+        "radius": 6.0
+      }
+    },
+    {
+      "trigger": "startRunning",
+      "from": {
+        "origin": "Switch Direction",
+        "ID": 19,
+        "position": {
+          "x": 111.0,
+          "y": 355.0
+        },
+        "radius": 6.0
+      },
+      "to": {
+        "origin": "Run",
+        "ID": 20,
+        "position": {
+          "x": 27.0,
+          "y": 234.0
+        },
+        "radius": 6.0
+      }
+    },
+    {
+      "trigger": "jump",
+      "from": {
+        "origin": "Switch Direction",
+        "ID": 21,
+        "position": {
+          "x": 231.0,
+          "y": 423.0
+        },
+        "radius": 6.0
+      },
+      "to": {
+        "origin": "Jump",
+        "ID": 22,
+        "position": {
+          "x": 245.0,
+          "y": 504.0
+        },
+        "radius": 6.0
+      }
+    },
+    {
+      "trigger": "startRunning",
+      "from": {
+        "origin": "Idle",
+        "ID": 23,
+        "position": {
+          "x": -69.0,
+          "y": 675.0
+        },
+        "radius": 6.0
+      },
+      "to": {
+        "origin": "Run",
+        "ID": 24,
+        "position": {
+          "x": -48.0,
+          "y": 301.0
+        },
+        "radius": 6.0
+      }
+    },
+    {
+      "trigger": "jump",
+      "from": {
+        "origin": "Idle",
+        "ID": 25,
+        "position": {
+          "x": 22.0,
+          "y": 718.0
+        },
+        "radius": 6.0
+      },
+      "to": {
+        "origin": "Jump",
+        "ID": 26,
+        "position": {
+          "x": 134.0,
+          "y": 541.0
+        },
+        "radius": 6.0
+      }
+    },
+    {
+      "trigger": "stopJumping",
+      "from": {
+        "origin": "Jump",
+        "ID": 27,
+        "position": {
+          "x": 134.0,
+          "y": 559.0
+        },
+        "radius": 6.0
+      },
+      "to": {
+        "origin": "Idle",
+        "ID": 28,
+        "position": {
+          "x": 20.0,
+          "y": 735.0
+        },
+        "radius": 6.0
+      }
+    },
+    {
+      "trigger": "swicthDirection",
+      "from": {
+        "origin": "BigRun",
+        "ID": 29,
+        "position": {
+          "x": -458.0,
+          "y": 392.0
+        },
+        "radius": 6.0
+      },
+      "to": {
+        "origin": "Big Switch Direction",
+        "ID": 30,
+        "position": {
+          "x": -370.0,
+          "y": 455.0
+        },
+        "radius": 6.0
+      }
+    },
+    {
+      "trigger": "stopRunning",
+      "from": {
+        "origin": "BigRun",
+        "ID": 31,
+        "position": {
+          "x": -584.0,
+          "y": 303.0
+        },
+        "radius": 6.0
+      },
+      "to": {
+        "origin": "Big Idle",
+        "ID": 32,
+        "position": {
+          "x": -653.0,
+          "y": 316.0
+        },
+        "radius": 6.0
+      }
+    },
+    {
+      "trigger": "jump",
+      "from": {
+        "origin": "BigRun",
+        "ID": 33,
+        "position": {
+          "x": -412.0,
+          "y": 303.0
+        },
+        "radius": 6.0
+      },
+      "to": {
+        "origin": "Big Jump",
+        "ID": 34,
+        "position": {
+          "x": -1098.0,
+          "y": -29.0
+        },
+        "radius": 6.0
+      }
+    },
+    {
+      "trigger": "stopRunning",
+      "from": {
+        "origin": "Big Switch Direction",
+        "ID": 35,
+        "position": {
+          "x": -491.0,
+          "y": 458.0
+        },
+        "radius": 6.0
+      },
+      "to": {
+        "origin": "Big Idle",
+        "ID": 36,
+        "position": {
+          "x": -706.0,
+          "y": 400.0
+        },
+        "radius": 6.0
+      }
+    },
+    {
+      "trigger": "startRunning",
+      "from": {
+        "origin": "Big Switch Direction",
+        "ID": 37,
+        "position": {
+          "x": -392.0,
+          "y": 457.0
+        },
+        "radius": 6.0
+      },
+      "to": {
+        "origin": "BigRun",
+        "ID": 38,
+        "position": {
+          "x": -483.0,
+          "y": 391.0
+        },
+        "radius": 6.0
+      }
+    },
+    {
+      "trigger": "jump",
+      "from": {
+        "origin": "Big Switch Direction",
+        "ID": 39,
+        "position": {
+          "x": -278.0,
+          "y": 456.0
+        },
+        "radius": 6.0
+      },
+      "to": {
+        "origin": "Big Jump",
+        "ID": 40,
+        "position": {
+          "x": -1044.0,
+          "y": 50.0
+        },
+        "radius": 6.0
+      }
+    },
+    {
+      "trigger": "startRunning",
+      "from": {
+        "origin": "Big Idle",
+        "ID": 41,
+        "position": {
+          "x": -653.0,
+          "y": 339.0
+        },
+        "radius": 6.0
+      },
+      "to": {
+        "origin": "BigRun",
+        "ID": 42,
+        "position": {
+          "x": -587.0,
+          "y": 327.0
+        },
+        "radius": 6.0
+      }
+    },
+    {
+      "trigger": "jump",
+      "from": {
+        "origin": "Big Idle",
+        "ID": 43,
+        "position": {
+          "x": -720.0,
+          "y": 271.0
+        },
+        "radius": 6.0
+      },
+      "to": {
+        "origin": "Big Jump",
+        "ID": 44,
+        "position": {
+          "x": -1097.0,
+          "y": 18.0
+        },
+        "radius": 6.0
+      }
+    },
+    {
+      "trigger": "stopJumping",
+      "from": {
+        "origin": "Big Jump",
+        "ID": 47,
+        "position": {
+          "x": -1096.0,
+          "y": 1.0
+        },
+        "radius": 6.0
+      },
+      "to": {
+        "origin": "Big Idle",
+        "ID": 48,
+        "position": {
+          "x": -732.0,
+          "y": 270.0
+        },
+        "radius": 6.0
+      }
+    },
+    {
+      "trigger": "swicthDirection",
+      "from": {
+        "origin": "FireRun",
+        "ID": 50,
+        "position": {
+          "x": -456.0,
+          "y": 831.0
+        },
+        "radius": 6.0
+      },
+      "to": {
+        "origin": "Fire Switch Direction",
+        "ID": 51,
+        "position": {
+          "x": -751.0,
+          "y": 910.0
+        },
+        "radius": 6.0
+      }
+    },
+    {
+      "trigger": "stopRunning",
+      "from": {
+        "origin": "FireRun",
+        "ID": 52,
+        "position": {
+          "x": -453.0,
+          "y": 697.0
+        },
+        "radius": 6.0
+      },
+      "to": {
+        "origin": "FireIdle",
+        "ID": 53,
+        "position": {
+          "x": -739.0,
+          "y": 558.0
+        },
+        "radius": 6.0
+      }
+    },
+    {
+      "trigger": "jump",
+      "from": {
+        "origin": "FireRun",
+        "ID": 54,
+        "position": {
+          "x": -500.0,
+          "y": 728.0
+        },
+        "radius": 6.0
+      },
+      "to": {
+        "origin": "FireJump",
+        "ID": 55,
+        "position": {
+          "x": -1157.0,
+          "y": 622.0
+        },
+        "radius": 6.0
+      }
+    },
+    {
+      "trigger": "stopRunning",
+      "from": {
+        "origin": "Fire Switch Direction",
+        "ID": 56,
+        "position": {
+          "x": -643.0,
+          "y": 911.0
+        },
+        "radius": 6.0
+      },
+      "to": {
+        "origin": "FireIdle",
+        "ID": 57,
+        "position": {
+          "x": -647.0,
+          "y": 463.0
+        },
+        "radius": 6.0
+      }
+    },
+    {
+      "trigger": "startRunning",
+      "from": {
+        "origin": "Fire Switch Direction",
+        "ID": 58,
+        "position": {
+          "x": -723.0,
+          "y": 911.0
+        },
+        "radius": 6.0
+      },
+      "to": {
+        "origin": "FireRun",
+        "ID": 59,
+        "position": {
+          "x": -410.0,
+          "y": 828.0
+        },
+        "radius": 6.0
+      }
+    },
+    {
+      "trigger": "jump",
+      "from": {
+        "origin": "Fire Switch Direction",
+        "ID": 60,
+        "position": {
+          "x": -799.0,
+          "y": 975.0
+        },
+        "radius": 6.0
+      },
+      "to": {
+        "origin": "FireJump",
+        "ID": 61,
+        "position": {
+          "x": -1157.0,
+          "y": 675.0
+        },
+        "radius": 6.0
+      }
+    },
+    {
+      "trigger": "startRunning",
+      "from": {
+        "origin": "FireIdle",
+        "ID": 62,
+        "position": {
+          "x": -717.0,
+          "y": 559.0
+        },
+        "radius": 6.0
+      },
+      "to": {
+        "origin": "FireRun",
+        "ID": 63,
+        "position": {
+          "x": -431.0,
+          "y": 697.0
+        },
+        "radius": 6.0
+      }
+    },
+    {
+      "trigger": "jump",
+      "from": {
+        "origin": "FireIdle",
+        "ID": 64,
+        "position": {
+          "x": -820.0,
+          "y": 509.0
+        },
+        "radius": 6.0
+      },
+      "to": {
+        "origin": "FireJump",
+        "ID": 65,
+        "position": {
+          "x": -1205.0,
+          "y": 589.0
+        },
+        "radius": 6.0
+      }
+    },
+    {
+      "trigger": "stopJumping",
+      "from": {
+        "origin": "FireJump",
+        "ID": 66,
+        "position": {
+          "x": -1232.0,
+          "y": 587.0
+        },
+        "radius": 6.0
+      },
+      "to": {
+        "origin": "FireIdle",
+        "ID": 67,
+        "position": {
+          "x": -819.0,
+          "y": 472.0
+        },
+        "radius": 6.0
+      }
+    },
+    {
+      "trigger": "powerup",
+      "from": {
+        "origin": "Run",
+        "ID": 68,
+        "position": {
+          "x": -147.0,
+          "y": 257.0
+        },
+        "radius": 6.0
+      },
+      "to": {
+        "origin": "BigRun",
+        "ID": 69,
+        "position": {
+          "x": -413.0,
+          "y": 353.0
+        },
+        "radius": 6.0
+      }
+    },
+    {
+      "trigger": "powerup",
+      "from": {
+        "origin": "Idle",
+        "ID": 71,
+        "position": {
+          "x": -149.0,
+          "y": 767.0
+        },
+        "radius": 6.0
+      },
+      "to": {
+        "origin": "Big Idle",
+        "ID": 72,
+        "position": {
+          "x": -653.0,
+          "y": 357.0
+        },
+        "radius": 6.0
+      }
+    },
+    {
+      "trigger": "powerup",
+      "from": {
+        "origin": "Switch Direction",
+        "ID": 73,
+        "position": {
+          "x": 111.0,
+          "y": 369.0
+        },
+        "radius": 6.0
+      },
+      "to": {
+        "origin": "Big Switch Direction",
+        "ID": 74,
+        "position": {
+          "x": -238.0,
+          "y": 498.0
+        },
+        "radius": 6.0
+      }
+    },
+    {
+      "trigger": "powerup",
+      "from": {
+        "origin": "Jump",
+        "ID": 75,
+        "position": {
+          "x": 135.0,
+          "y": 582.0
+        },
+        "radius": 6.0
+      },
+      "to": {
+        "origin": "Big Jump",
+        "ID": 76,
+        "position": {
+          "x": -927.0,
+          "y": -43.0
+        },
+        "radius": 6.0
+      }
+    },
+    {
+      "trigger": "powerup",
+      "from": {
+        "origin": "BigRun",
+        "ID": 77,
+        "position": {
+          "x": -530.0,
+          "y": 391.0
+        },
+        "radius": 6.0
+      },
+      "to": {
+        "origin": "FireRun",
+        "ID": 78,
+        "position": {
+          "x": -379.0,
+          "y": 696.0
+        },
+        "radius": 6.0
+      }
+    },
+    {
+      "trigger": "powerup",
+      "from": {
+        "origin": "Big Idle",
+        "ID": 79,
+        "position": {
+          "x": -767.0,
+          "y": 403.0
+        },
+        "radius": 6.0
+      },
+      "to": {
+        "origin": "FireIdle",
+        "ID": 80,
+        "position": {
+          "x": -766.0,
+          "y": 426.0
+        },
+        "radius": 6.0
+      }
+    },
+    {
+      "trigger": "powerup",
+      "from": {
+        "origin": "Big Switch Direction",
+        "ID": 81,
+        "position": {
+          "x": -478.0,
+          "y": 592.0
+        },
+        "radius": 6.0
+      },
+      "to": {
+        "origin": "Fire Switch Direction",
+        "ID": 82,
+        "position": {
+          "x": -542.0,
+          "y": 912.0
+        },
+        "radius": 6.0
+      }
+    },
+    {
+      "trigger": "powerup",
+      "from": {
+        "origin": "Big Jump",
+        "ID": 83,
+        "position": {
+          "x": -992.0,
+          "y": 54.0
+        },
+        "radius": 6.0
+      },
+      "to": {
+        "origin": "FireJump",
+        "ID": 84,
+        "position": {
+          "x": -1272.0,
+          "y": 586.0
+        },
+        "radius": 6.0
+      }
+    },
+    {
+      "trigger": "damage",
+      "from": {
+        "origin": "BigRun",
+        "ID": 85,
+        "position": {
+          "x": -412.0,
+          "y": 332.0
+        },
+        "radius": 6.0
+      },
+      "to": {
+        "origin": "Run",
+        "ID": 86,
+        "position": {
+          "x": -147.0,
+          "y": 223.0
+        },
+        "radius": 6.0
+      }
+    },
+    {
+      "trigger": "damage",
+      "from": {
+        "origin": "Big Idle",
+        "ID": 87,
+        "position": {
+          "x": -655.0,
+          "y": 375.0
+        },
+        "radius": 6.0
+      },
+      "to": {
+        "origin": "Idle",
+        "ID": 88,
+        "position": {
+          "x": -149.0,
+          "y": 782.0
+        },
+        "radius": 6.0
+      }
+    },
+    {
+      "trigger": "damage",
+      "from": {
+        "origin": "Big Switch Direction",
+        "ID": 89,
+        "position": {
+          "x": -238.0,
+          "y": 527.0
+        },
+        "radius": 6.0
+      },
+      "to": {
+        "origin": "Switch Direction",
+        "ID": 90,
+        "position": {
+          "x": 111.0,
+          "y": 390.0
+        },
+        "radius": 6.0
+      }
+    },
+    {
+      "trigger": "damage",
+      "from": {
+        "origin": "Big Jump",
+        "ID": 91,
+        "position": {
+          "x": -926.0,
+          "y": -26.0
+        },
+        "radius": 6.0
+      },
+      "to": {
+        "origin": "Jump",
+        "ID": 92,
+        "position": {
+          "x": 135.0,
+          "y": 604.0
+        },
+        "radius": 6.0
+      }
+    },
+    {
+      "trigger": "damage",
+      "from": {
+        "origin": "FireRun",
+        "ID": 93,
+        "position": {
+          "x": -406.0,
+          "y": 697.0
+        },
+        "radius": 6.0
+      },
+      "to": {
+        "origin": "BigRun",
+        "ID": 94,
+        "position": {
+          "x": -548.0,
+          "y": 390.0
+        },
+        "radius": 6.0
+      }
+    },
+    {
+      "trigger": "damage",
+      "from": {
+        "origin": "FireIdle",
+        "ID": 95,
+        "position": {
+          "x": -746.0,
+          "y": 427.0
+        },
+        "radius": 6.0
+      },
+      "to": {
+        "origin": "Big Idle",
+        "ID": 96,
+        "position": {
+          "x": -744.0,
+          "y": 404.0
+        },
+        "radius": 6.0
+      }
+    },
+    {
+      "trigger": "damage",
+      "from": {
+        "origin": "Fire Switch Direction",
+        "ID": 97,
+        "position": {
+          "x": -558.0,
+          "y": 909.0
+        },
+        "radius": 6.0
+      },
+      "to": {
+        "origin": "Big Switch Direction",
+        "ID": 98,
+        "position": {
+          "x": -496.0,
+          "y": 588.0
+        },
+        "radius": 6.0
+      }
+    },
+    {
+      "trigger": "damage",
+      "from": {
+        "origin": "FireJump",
+        "ID": 99,
+        "position": {
+          "x": -1253.0,
+          "y": 588.0
+        },
+        "radius": 6.0
+      },
+      "to": {
+        "origin": "Big Jump",
+        "ID": 100,
+        "position": {
+          "x": -969.0,
+          "y": 52.0
+        },
+        "radius": 6.0
+      }
+    },
+    {
+      "trigger": "die",
+      "from": {
+        "origin": "Run",
+        "ID": 101,
+        "position": {
+          "x": -93.0,
+          "y": 166.0
+        },
+        "radius": 6.0
+      },
+      "to": {
+        "origin": "Die",
+        "ID": 102,
+        "position": {
+          "x": 126.0,
+          "y": 35.0
+        },
+        "radius": 6.0
+      }
+    },
+    {
+      "trigger": "die",
+      "from": {
+        "origin": "Switch Direction",
+        "ID": 103,
+        "position": {
+          "x": 206.0,
+          "y": 288.0
+        },
+        "radius": 6.0
+      },
+      "to": {
+        "origin": "Die",
+        "ID": 104,
+        "position": {
+          "x": 84.0,
+          "y": 85.0
+        },
+        "radius": 6.0
+      }
+    },
+    {
+      "trigger": "die",
+      "from": {
+        "origin": "Idle",
+        "ID": 105,
+        "position": {
+          "x": -18.0,
+          "y": 677.0
+        },
+        "radius": 6.0
+      },
+      "to": {
+        "origin": "Die",
+        "ID": 106,
+        "position": {
+          "x": 62.0,
+          "y": 83.0
+        },
+        "radius": 6.0
+      }
+    },
+    {
+      "trigger": "die",
+      "from": {
+        "origin": "Jump",
+        "ID": 107,
+        "position": {
+          "x": 192.0,
+          "y": 506.0
+        },
+        "radius": 6.0
+      },
+      "to": {
+        "origin": "Die",
+        "ID": 108,
+        "position": {
+          "x": 97.0,
+          "y": 85.0
+        },
+        "radius": 6.0
+      }
+    },
+    {
+      "trigger": "die",
+      "from": {
+        "origin": "BigRun",
+        "ID": 109,
+        "position": {
+          "x": -415.0,
+          "y": 320.0
+        },
+        "radius": 6.0
+      },
+      "to": {
+        "origin": "Run",
+        "ID": 110,
+        "position": {
+          "x": -148.0,
+          "y": 204.0
+        },
+        "radius": 6.0
+      }
+    },
+    {
+      "trigger": "die",
+      "from": {
+        "origin": "Big Switch Direction",
+        "ID": 111,
+        "position": {
+          "x": -236.0,
+          "y": 550.0
+        },
+        "radius": 6.0
+      },
+      "to": {
+        "origin": "Switch Direction",
+        "ID": 112,
+        "position": {
+          "x": 161.0,
+          "y": 420.0
+        },
+        "radius": 6.0
+      }
+    },
+    {
+      "trigger": "die",
+      "from": {
+        "origin": "Big Idle",
+        "ID": 113,
+        "position": {
+          "x": -654.0,
+          "y": 298.0
+        },
+        "radius": 6.0
+      },
+      "to": {
+        "origin": "Idle",
+        "ID": 114,
+        "position": {
+          "x": -148.0,
+          "y": 734.0
+        },
+        "radius": 6.0
+      }
+    },
+    {
+      "trigger": "die",
+      "from": {
+        "origin": "Big Jump",
+        "ID": 116,
+        "position": {
+          "x": -929.0,
+          "y": -4.0
+        },
+        "radius": 6.0
+      },
+      "to": {
+        "origin": "Jump",
+        "ID": 117,
+        "position": {
+          "x": 160.0,
+          "y": 637.0
+        },
+        "radius": 6.0
+      }
+    },
+    {
+      "trigger": "die",
+      "from": {
+        "origin": "FireRun",
+        "ID": 118,
+        "position": {
+          "x": -359.0,
+          "y": 698.0
+        },
+        "radius": 6.0
+      },
+      "to": {
+        "origin": "BigRun",
+        "ID": 119,
+        "position": {
+          "x": -504.0,
+          "y": 388.0
+        },
+        "radius": 6.0
+      }
+    },
+    {
+      "trigger": "die",
+      "from": {
+        "origin": "Fire Switch Direction",
+        "ID": 120,
+        "position": {
+          "x": -601.0,
+          "y": 911.0
+        },
+        "radius": 6.0
+      },
+      "to": {
+        "origin": "Big Switch Direction",
+        "ID": 121,
+        "position": {
+          "x": -440.0,
+          "y": 589.0
+        },
+        "radius": 6.0
+      }
+    },
+    {
+      "trigger": "die",
+      "from": {
+        "origin": "FireIdle",
+        "ID": 122,
+        "position": {
+          "x": -786.0,
+          "y": 426.0
+        },
+        "radius": 6.0
+      },
+      "to": {
+        "origin": "Big Idle",
+        "ID": 123,
+        "position": {
+          "x": -788.0,
+          "y": 402.0
+        },
+        "radius": 6.0
+      }
+    },
+    {
+      "trigger": "die",
+      "from": {
+        "origin": "FireJump",
+        "ID": 124,
+        "position": {
+          "x": -1298.0,
+          "y": 589.0
+        },
+        "radius": 6.0
+      },
+      "to": {
+        "origin": "Big Jump",
+        "ID": 125,
+        "position": {
+          "x": -1063.0,
+          "y": 51.0
+        },
+        "radius": 6.0
+      }
+    }
+  ],
+  "animationBoxList": [
+    {
+      "ID": 1,
+      "title": "Run",
+      "x": -60.0,
+      "y": 233.0,
+      "width": 166.0,
+      "frameList": [
+        {
+          "sprite": {
+            "width": 16,
+            "height": 16,
+            "texture": {
+              "filePath": "assets/images/spritesheets/spritesheet.png"
+            },
+            "textureCoordinates": [
+              {
+                "x": 0.071428575,
+                "y": 1.0
+              },
+              {
+                "x": 0.071428575,
+                "y": 0.5
+              },
+              {
+                "x": 0.0,
+                "y": 0.5
+              },
+              {
+                "x": 0.0,
+                "y": 1.0
+              }
+            ]
+          },
+          "frameTime": 0.2
+        },
+        {
+          "sprite": {
+            "width": 16,
+            "height": 16,
+            "texture": {
+              "filePath": "assets/images/spritesheets/spritesheet.png"
+            },
+            "textureCoordinates": [
+              {
+                "x": 0.21428572,
+                "y": 1.0
+              },
+              {
+                "x": 0.21428572,
+                "y": 0.5
+              },
+              {
+                "x": 0.14285715,
+                "y": 0.5
+              },
+              {
+                "x": 0.14285715,
+                "y": 1.0
+              }
+            ]
+          },
+          "frameTime": 0.2
+        },
+        {
+          "sprite": {
+            "width": 16,
+            "height": 16,
+            "texture": {
+              "filePath": "assets/images/spritesheets/spritesheet.png"
+            },
+            "textureCoordinates": [
+              {
+                "x": 0.2857143,
+                "y": 1.0
+              },
+              {
+                "x": 0.2857143,
+                "y": 0.5
+              },
+              {
+                "x": 0.21428572,
+                "y": 0.5
+              },
+              {
+                "x": 0.21428572,
+                "y": 1.0
+              }
+            ]
+          },
+          "frameTime": 0.2
+        },
+        {
+          "sprite": {
+            "width": 16,
+            "height": 16,
+            "texture": {
+              "filePath": "assets/images/spritesheets/spritesheet.png"
+            },
+            "textureCoordinates": [
+              {
+                "x": 0.21428572,
+                "y": 1.0
+              },
+              {
+                "x": 0.21428572,
+                "y": 0.5
+              },
+              {
+                "x": 0.14285715,
+                "y": 0.5
+              },
+              {
+                "x": 0.14285715,
+                "y": 1.0
+              }
+            ]
+          },
+          "frameTime": 0.2
+        }
+      ],
+      "doesLoop": true,
+      "flag": true,
+      "pointFields": [
+        {
+          "name": "up",
+          "position": {
+            "x": -60.0,
+            "y": 169.0
+          },
+          "size": {
+            "x": 126.0,
+            "y": 10.0
+          },
+          "pointList": [
+            {
+              "origin": "Run",
+              "ID": 101,
+              "position": {
+                "x": -93.0,
+                "y": 166.0
+              },
+              "radius": 6.0
+            }
+          ]
+        },
+        {
+          "name": "right",
+          "position": {
+            "x": 23.0,
+            "y": 233.0
+          },
+          "size": {
+            "x": 10.0,
+            "y": 88.0
+          },
+          "pointList": [
+            {
+              "origin": "Run",
+              "ID": 11,
+              "position": {
+                "x": 25.0,
+                "y": 219.0
+              },
+              "radius": 6.0
+            },
+            {
+              "origin": "Run",
+              "ID": 15,
+              "position": {
+                "x": 25.0,
+                "y": 264.0
+              },
+              "radius": 6.0
+            },
+            {
+              "origin": "Run",
+              "ID": 20,
+              "position": {
+                "x": 27.0,
+                "y": 234.0
+              },
+              "radius": 6.0
+            }
+          ]
+        },
+        {
+          "name": "down",
+          "position": {
+            "x": -60.0,
+            "y": 297.0
+          },
+          "size": {
+            "x": 126.0,
+            "y": 10.0
+          },
+          "pointList": [
+            {
+              "origin": "Run",
+              "ID": 13,
+              "position": {
+                "x": -67.0,
+                "y": 300.0
+              },
+              "radius": 6.0
+            },
+            {
+              "origin": "Run",
+              "ID": 24,
+              "position": {
+                "x": -48.0,
+                "y": 301.0
+              },
+              "radius": 6.0
+            }
+          ]
+        },
+        {
+          "name": "left",
+          "position": {
+            "x": -143.0,
+            "y": 233.0
+          },
+          "size": {
+            "x": 10.0,
+            "y": 88.0
+          },
+          "pointList": [
+            {
+              "origin": "Run",
+              "ID": 68,
+              "position": {
+                "x": -147.0,
+                "y": 257.0
+              },
+              "radius": 6.0
+            },
+            {
+              "origin": "Run",
+              "ID": 86,
+              "position": {
+                "x": -147.0,
+                "y": 223.0
+              },
+              "radius": 6.0
+            },
+            {
+              "origin": "Run",
+              "ID": 110,
+              "position": {
+                "x": -148.0,
+                "y": 204.0
+              },
+              "radius": 6.0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "ID": 3,
+      "title": "Switch Direction",
+      "x": 238.0,
+      "y": 355.0,
+      "width": 248.6,
+      "frameList": [
+        {
+          "sprite": {
+            "width": 16,
+            "height": 16,
+            "texture": {
+              "filePath": "assets/images/spritesheets/spritesheet.png"
+            },
+            "textureCoordinates": [
+              {
+                "x": 0.35714287,
+                "y": 1.0
+              },
+              {
+                "x": 0.35714287,
+                "y": 0.5
+              },
+              {
+                "x": 0.2857143,
+                "y": 0.5
+              },
+              {
+                "x": 0.2857143,
+                "y": 1.0
+              }
+            ]
+          },
+          "frameTime": 0.1
+        }
+      ],
+      "doesLoop": false,
+      "flag": false,
+      "pointFields": [
+        {
+          "name": "up",
+          "position": {
+            "x": 238.0,
+            "y": 291.0
+          },
+          "size": {
+            "x": 208.6,
+            "y": 10.0
+          },
+          "pointList": [
+            {
+              "origin": "Switch Direction",
+              "ID": 103,
+              "position": {
+                "x": 206.0,
+                "y": 288.0
+              },
+              "radius": 6.0
+            }
+          ]
+        },
+        {
+          "name": "right",
+          "position": {
+            "x": 362.3,
+            "y": 355.0
+          },
+          "size": {
+            "x": 10.0,
+            "y": 88.0
+          },
+          "pointList": []
+        },
+        {
+          "name": "down",
+          "position": {
+            "x": 238.0,
+            "y": 419.0
+          },
+          "size": {
+            "x": 208.6,
+            "y": 10.0
+          },
+          "pointList": [
+            {
+              "origin": "Switch Direction",
+              "ID": 17,
+              "position": {
+                "x": 267.0,
+                "y": 422.0
+              },
+              "radius": 6.0
+            },
+            {
+              "origin": "Switch Direction",
+              "ID": 21,
+              "position": {
+                "x": 231.0,
+                "y": 423.0
+              },
+              "radius": 6.0
+            },
+            {
+              "origin": "Switch Direction",
+              "ID": 112,
+              "position": {
+                "x": 161.0,
+                "y": 420.0
+              },
+              "radius": 6.0
+            }
+          ]
+        },
+        {
+          "name": "left",
+          "position": {
+            "x": 113.7,
+            "y": 355.0
+          },
+          "size": {
+            "x": 10.0,
+            "y": 88.0
+          },
+          "pointList": [
+            {
+              "origin": "Switch Direction",
+              "ID": 12,
+              "position": {
+                "x": 110.0,
+                "y": 336.0
+              },
+              "radius": 6.0
+            },
+            {
+              "origin": "Switch Direction",
+              "ID": 19,
+              "position": {
+                "x": 111.0,
+                "y": 355.0
+              },
+              "radius": 6.0
+            },
+            {
+              "origin": "Switch Direction",
+              "ID": 73,
+              "position": {
+                "x": 111.0,
+                "y": 369.0
+              },
+              "radius": 6.0
+            },
+            {
+              "origin": "Switch Direction",
+              "ID": 90,
+              "position": {
+                "x": 111.0,
+                "y": 390.0
+              },
+              "radius": 6.0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "ID": 5,
+      "title": "Idle",
+      "x": -63.0,
+      "y": 742.0,
+      "width": 166.0,
+      "frameList": [
+        {
+          "sprite": {
+            "width": 16,
+            "height": 16,
+            "texture": {
+              "filePath": "assets/images/spritesheets/spritesheet.png"
+            },
+            "textureCoordinates": [
+              {
+                "x": 0.071428575,
+                "y": 1.0
+              },
+              {
+                "x": 0.071428575,
+                "y": 0.5
+              },
+              {
+                "x": 0.0,
+                "y": 0.5
+              },
+              {
+                "x": 0.0,
+                "y": 1.0
+              }
+            ]
+          },
+          "frameTime": 0.1
+        }
+      ],
+      "doesLoop": false,
+      "flag": false,
+      "pointFields": [
+        {
+          "name": "up",
+          "position": {
+            "x": -63.0,
+            "y": 678.0
+          },
+          "size": {
+            "x": 126.0,
+            "y": 10.0
+          },
+          "pointList": [
+            {
+              "origin": "Idle",
+              "ID": 14,
+              "position": {
+                "x": -89.0,
+                "y": 673.0
+              },
+              "radius": 6.0
+            },
+            {
+              "origin": "Idle",
+              "ID": 23,
+              "position": {
+                "x": -69.0,
+                "y": 675.0
+              },
+              "radius": 6.0
+            },
+            {
+              "origin": "Idle",
+              "ID": 105,
+              "position": {
+                "x": -18.0,
+                "y": 677.0
+              },
+              "radius": 6.0
+            }
+          ]
+        },
+        {
+          "name": "right",
+          "position": {
+            "x": 20.0,
+            "y": 742.0
+          },
+          "size": {
+            "x": 10.0,
+            "y": 88.0
+          },
+          "pointList": [
+            {
+              "origin": "Idle",
+              "ID": 18,
+              "position": {
+                "x": 22.0,
+                "y": 764.0
+              },
+              "radius": 6.0
+            },
+            {
+              "origin": "Idle",
+              "ID": 25,
+              "position": {
+                "x": 22.0,
+                "y": 718.0
+              },
+              "radius": 6.0
+            },
+            {
+              "origin": "Idle",
+              "ID": 28,
+              "position": {
+                "x": 20.0,
+                "y": 735.0
+              },
+              "radius": 6.0
+            }
+          ]
+        },
+        {
+          "name": "down",
+          "position": {
+            "x": -63.0,
+            "y": 806.0
+          },
+          "size": {
+            "x": 126.0,
+            "y": 10.0
+          },
+          "pointList": []
+        },
+        {
+          "name": "left",
+          "position": {
+            "x": -146.0,
+            "y": 742.0
+          },
+          "size": {
+            "x": 10.0,
+            "y": 88.0
+          },
+          "pointList": [
+            {
+              "origin": "Idle",
+              "ID": 71,
+              "position": {
+                "x": -149.0,
+                "y": 767.0
+              },
+              "radius": 6.0
+            },
+            {
+              "origin": "Idle",
+              "ID": 88,
+              "position": {
+                "x": -149.0,
+                "y": 782.0
+              },
+              "radius": 6.0
+            },
+            {
+              "origin": "Idle",
+              "ID": 114,
+              "position": {
+                "x": -148.0,
+                "y": 734.0
+              },
+              "radius": 6.0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "ID": 7,
+      "title": "Jump",
+      "x": 219.0,
+      "y": 571.0,
+      "width": 166.0,
+      "frameList": [
+        {
+          "sprite": {
+            "width": 16,
+            "height": 16,
+            "texture": {
+              "filePath": "assets/images/spritesheets/spritesheet.png"
+            },
+            "textureCoordinates": [
+              {
+                "x": 0.42857143,
+                "y": 1.0
+              },
+              {
+                "x": 0.42857143,
+                "y": 0.5
+              },
+              {
+                "x": 0.35714287,
+                "y": 0.5
+              },
+              {
+                "x": 0.35714287,
+                "y": 1.0
+              }
+            ]
+          },
+          "frameTime": 0.1
+        }
+      ],
+      "doesLoop": false,
+      "flag": false,
+      "pointFields": [
+        {
+          "name": "up",
+          "position": {
+            "x": 219.0,
+            "y": 507.0
+          },
+          "size": {
+            "x": 126.0,
+            "y": 10.0
+          },
+          "pointList": [
+            {
+              "origin": "Jump",
+              "ID": 16,
+              "position": {
+                "x": 168.0,
+                "y": 504.0
+              },
+              "radius": 6.0
+            },
+            {
+              "origin": "Jump",
+              "ID": 22,
+              "position": {
+                "x": 245.0,
+                "y": 504.0
+              },
+              "radius": 6.0
+            },
+            {
+              "origin": "Jump",
+              "ID": 107,
+              "position": {
+                "x": 192.0,
+                "y": 506.0
+              },
+              "radius": 6.0
+            }
+          ]
+        },
+        {
+          "name": "right",
+          "position": {
+            "x": 302.0,
+            "y": 571.0
+          },
+          "size": {
+            "x": 10.0,
+            "y": 88.0
+          },
+          "pointList": []
+        },
+        {
+          "name": "down",
+          "position": {
+            "x": 219.0,
+            "y": 635.0
+          },
+          "size": {
+            "x": 126.0,
+            "y": 10.0
+          },
+          "pointList": [
+            {
+              "origin": "Jump",
+              "ID": 117,
+              "position": {
+                "x": 160.0,
+                "y": 637.0
+              },
+              "radius": 6.0
+            }
+          ]
+        },
+        {
+          "name": "left",
+          "position": {
+            "x": 136.0,
+            "y": 571.0
+          },
+          "size": {
+            "x": 10.0,
+            "y": 88.0
+          },
+          "pointList": [
+            {
+              "origin": "Jump",
+              "ID": 26,
+              "position": {
+                "x": 134.0,
+                "y": 541.0
+              },
+              "radius": 6.0
+            },
+            {
+              "origin": "Jump",
+              "ID": 27,
+              "position": {
+                "x": 134.0,
+                "y": 559.0
+              },
+              "radius": 6.0
+            },
+            {
+              "origin": "Jump",
+              "ID": 75,
+              "position": {
+                "x": 135.0,
+                "y": 582.0
+              },
+              "radius": 6.0
+            },
+            {
+              "origin": "Jump",
+              "ID": 92,
+              "position": {
+                "x": 135.0,
+                "y": 604.0
+              },
+              "radius": 6.0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "ID": 9,
+      "title": "BigRun",
+      "x": -499.0,
+      "y": 324.0,
+      "width": 166.0,
+      "frameList": [
+        {
+          "sprite": {
+            "width": 16,
+            "height": 32,
+            "texture": {
+              "filePath": "assets/images/spritesheets/bigSpritesheet.png"
+            },
+            "textureCoordinates": [
+              {
+                "x": 0.04761905,
+                "y": 1.0
+              },
+              {
+                "x": 0.04761905,
+                "y": 0.5
+              },
+              {
+                "x": 0.0,
+                "y": 0.5
+              },
+              {
+                "x": 0.0,
+                "y": 1.0
+              }
+            ]
+          },
+          "frameTime": 0.2
+        },
+        {
+          "sprite": {
+            "width": 16,
+            "height": 32,
+            "texture": {
+              "filePath": "assets/images/spritesheets/bigSpritesheet.png"
+            },
+            "textureCoordinates": [
+              {
+                "x": 0.0952381,
+                "y": 1.0
+              },
+              {
+                "x": 0.0952381,
+                "y": 0.5
+              },
+              {
+                "x": 0.04761905,
+                "y": 0.5
+              },
+              {
+                "x": 0.04761905,
+                "y": 1.0
+              }
+            ]
+          },
+          "frameTime": 0.2
+        },
+        {
+          "sprite": {
+            "width": 16,
+            "height": 32,
+            "texture": {
+              "filePath": "assets/images/spritesheets/bigSpritesheet.png"
+            },
+            "textureCoordinates": [
+              {
+                "x": 0.14285715,
+                "y": 1.0
+              },
+              {
+                "x": 0.14285715,
+                "y": 0.5
+              },
+              {
+                "x": 0.0952381,
+                "y": 0.5
+              },
+              {
+                "x": 0.0952381,
+                "y": 1.0
+              }
+            ]
+          },
+          "frameTime": 0.2
+        },
+        {
+          "sprite": {
+            "width": 16,
+            "height": 32,
+            "texture": {
+              "filePath": "assets/images/spritesheets/bigSpritesheet.png"
+            },
+            "textureCoordinates": [
+              {
+                "x": 0.1904762,
+                "y": 1.0
+              },
+              {
+                "x": 0.1904762,
+                "y": 0.5
+              },
+              {
+                "x": 0.14285715,
+                "y": 0.5
+              },
+              {
+                "x": 0.14285715,
+                "y": 1.0
+              }
+            ]
+          },
+          "frameTime": 0.2
+        },
+        {
+          "sprite": {
+            "width": 16,
+            "height": 32,
+            "texture": {
+              "filePath": "assets/images/spritesheets/bigSpritesheet.png"
+            },
+            "textureCoordinates": [
+              {
+                "x": 0.14285715,
+                "y": 1.0
+              },
+              {
+                "x": 0.14285715,
+                "y": 0.5
+              },
+              {
+                "x": 0.0952381,
+                "y": 0.5
+              },
+              {
+                "x": 0.0952381,
+                "y": 1.0
+              }
+            ]
+          },
+          "frameTime": 0.2
+        },
+        {
+          "sprite": {
+            "width": 16,
+            "height": 32,
+            "texture": {
+              "filePath": "assets/images/spritesheets/bigSpritesheet.png"
+            },
+            "textureCoordinates": [
+              {
+                "x": 0.0952381,
+                "y": 1.0
+              },
+              {
+                "x": 0.0952381,
+                "y": 0.5
+              },
+              {
+                "x": 0.04761905,
+                "y": 0.5
+              },
+              {
+                "x": 0.04761905,
+                "y": 1.0
+              }
+            ]
+          },
+          "frameTime": 0.2
+        }
+      ],
+      "doesLoop": true,
+      "flag": false,
+      "pointFields": [
+        {
+          "name": "up",
+          "position": {
+            "x": -499.0,
+            "y": 260.0
+          },
+          "size": {
+            "x": 126.0,
+            "y": 10.0
+          },
+          "pointList": []
+        },
+        {
+          "name": "right",
+          "position": {
+            "x": -416.0,
+            "y": 324.0
+          },
+          "size": {
+            "x": 10.0,
+            "y": 88.0
+          },
+          "pointList": [
+            {
+              "origin": "BigRun",
+              "ID": 33,
+              "position": {
+                "x": -412.0,
+                "y": 303.0
+              },
+              "radius": 6.0
+            },
+            {
+              "origin": "BigRun",
+              "ID": 69,
+              "position": {
+                "x": -413.0,
+                "y": 353.0
+              },
+              "radius": 6.0
+            },
+            {
+              "origin": "BigRun",
+              "ID": 85,
+              "position": {
+                "x": -412.0,
+                "y": 332.0
+              },
+              "radius": 6.0
+            },
+            {
+              "origin": "BigRun",
+              "ID": 109,
+              "position": {
+                "x": -415.0,
+                "y": 320.0
+              },
+              "radius": 6.0
+            }
+          ]
+        },
+        {
+          "name": "down",
+          "position": {
+            "x": -499.0,
+            "y": 388.0
+          },
+          "size": {
+            "x": 126.0,
+            "y": 10.0
+          },
+          "pointList": [
+            {
+              "origin": "BigRun",
+              "ID": 29,
+              "position": {
+                "x": -458.0,
+                "y": 392.0
+              },
+              "radius": 6.0
+            },
+            {
+              "origin": "BigRun",
+              "ID": 38,
+              "position": {
+                "x": -483.0,
+                "y": 391.0
+              },
+              "radius": 6.0
+            },
+            {
+              "origin": "BigRun",
+              "ID": 77,
+              "position": {
+                "x": -530.0,
+                "y": 391.0
+              },
+              "radius": 6.0
+            },
+            {
+              "origin": "BigRun",
+              "ID": 94,
+              "position": {
+                "x": -548.0,
+                "y": 390.0
+              },
+              "radius": 6.0
+            },
+            {
+              "origin": "BigRun",
+              "ID": 119,
+              "position": {
+                "x": -504.0,
+                "y": 388.0
+              },
+              "radius": 6.0
+            }
+          ]
+        },
+        {
+          "name": "left",
+          "position": {
+            "x": -582.0,
+            "y": 324.0
+          },
+          "size": {
+            "x": 10.0,
+            "y": 88.0
+          },
+          "pointList": [
+            {
+              "origin": "BigRun",
+              "ID": 31,
+              "position": {
+                "x": -584.0,
+                "y": 303.0
+              },
+              "radius": 6.0
+            },
+            {
+              "origin": "BigRun",
+              "ID": 42,
+              "position": {
+                "x": -587.0,
+                "y": 327.0
+              },
+              "radius": 6.0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "ID": 11,
+      "title": "Big Switch Direction",
+      "x": -387.0,
+      "y": 524.0,
+      "width": 293.44,
+      "frameList": [
+        {
+          "sprite": {
+            "width": 16,
+            "height": 32,
+            "texture": {
+              "filePath": "assets/images/spritesheets/bigSpritesheet.png"
+            },
+            "textureCoordinates": [
+              {
+                "x": 0.23809524,
+                "y": 1.0
+              },
+              {
+                "x": 0.23809524,
+                "y": 0.5
+              },
+              {
+                "x": 0.1904762,
+                "y": 0.5
+              },
+              {
+                "x": 0.1904762,
+                "y": 1.0
+              }
+            ]
+          },
+          "frameTime": 0.1
+        }
+      ],
+      "doesLoop": false,
+      "flag": false,
+      "pointFields": [
+        {
+          "name": "up",
+          "position": {
+            "x": -387.0,
+            "y": 460.0
+          },
+          "size": {
+            "x": 253.44,
+            "y": 10.0
+          },
+          "pointList": [
+            {
+              "origin": "Big Switch Direction",
+              "ID": 30,
+              "position": {
+                "x": -370.0,
+                "y": 455.0
+              },
+              "radius": 6.0
+            },
+            {
+              "origin": "Big Switch Direction",
+              "ID": 35,
+              "position": {
+                "x": -491.0,
+                "y": 458.0
+              },
+              "radius": 6.0
+            },
+            {
+              "origin": "Big Switch Direction",
+              "ID": 37,
+              "position": {
+                "x": -392.0,
+                "y": 457.0
+              },
+              "radius": 6.0
+            },
+            {
+              "origin": "Big Switch Direction",
+              "ID": 39,
+              "position": {
+                "x": -278.0,
+                "y": 456.0
+              },
+              "radius": 6.0
+            }
+          ]
+        },
+        {
+          "name": "right",
+          "position": {
+            "x": -240.28,
+            "y": 524.0
+          },
+          "size": {
+            "x": 10.0,
+            "y": 88.0
+          },
+          "pointList": [
+            {
+              "origin": "Big Switch Direction",
+              "ID": 74,
+              "position": {
+                "x": -238.0,
+                "y": 498.0
+              },
+              "radius": 6.0
+            },
+            {
+              "origin": "Big Switch Direction",
+              "ID": 89,
+              "position": {
+                "x": -238.0,
+                "y": 527.0
+              },
+              "radius": 6.0
+            },
+            {
+              "origin": "Big Switch Direction",
+              "ID": 111,
+              "position": {
+                "x": -236.0,
+                "y": 550.0
+              },
+              "radius": 6.0
+            }
+          ]
+        },
+        {
+          "name": "down",
+          "position": {
+            "x": -387.0,
+            "y": 588.0
+          },
+          "size": {
+            "x": 253.44,
+            "y": 10.0
+          },
+          "pointList": [
+            {
+              "origin": "Big Switch Direction",
+              "ID": 81,
+              "position": {
+                "x": -478.0,
+                "y": 592.0
+              },
+              "radius": 6.0
+            },
+            {
+              "origin": "Big Switch Direction",
+              "ID": 98,
+              "position": {
+                "x": -496.0,
+                "y": 588.0
+              },
+              "radius": 6.0
+            },
+            {
+              "origin": "Big Switch Direction",
+              "ID": 121,
+              "position": {
+                "x": -440.0,
+                "y": 589.0
+              },
+              "radius": 6.0
+            }
+          ]
+        },
+        {
+          "name": "left",
+          "position": {
+            "x": -533.72,
+            "y": 524.0
+          },
+          "size": {
+            "x": 10.0,
+            "y": 88.0
+          },
+          "pointList": []
+        }
+      ]
+    },
+    {
+      "ID": 13,
+      "title": "Big Idle",
+      "x": -739.0,
+      "y": 337.0,
+      "width": 166.0,
+      "frameList": [
+        {
+          "sprite": {
+            "width": 16,
+            "height": 32,
+            "texture": {
+              "filePath": "assets/images/spritesheets/bigSpritesheet.png"
+            },
+            "textureCoordinates": [
+              {
+                "x": 0.04761905,
+                "y": 1.0
+              },
+              {
+                "x": 0.04761905,
+                "y": 0.5
+              },
+              {
+                "x": 0.0,
+                "y": 0.5
+              },
+              {
+                "x": 0.0,
+                "y": 1.0
+              }
+            ]
+          },
+          "frameTime": 0.1
+        }
+      ],
+      "doesLoop": false,
+      "flag": false,
+      "pointFields": [
+        {
+          "name": "up",
+          "position": {
+            "x": -739.0,
+            "y": 273.0
+          },
+          "size": {
+            "x": 126.0,
+            "y": 10.0
+          },
+          "pointList": [
+            {
+              "origin": "Big Idle",
+              "ID": 43,
+              "position": {
+                "x": -720.0,
+                "y": 271.0
+              },
+              "radius": 6.0
+            },
+            {
+              "origin": "Big Idle",
+              "ID": 48,
+              "position": {
+                "x": -732.0,
+                "y": 270.0
+              },
+              "radius": 6.0
+            }
+          ]
+        },
+        {
+          "name": "right",
+          "position": {
+            "x": -656.0,
+            "y": 337.0
+          },
+          "size": {
+            "x": 10.0,
+            "y": 88.0
+          },
+          "pointList": [
+            {
+              "origin": "Big Idle",
+              "ID": 32,
+              "position": {
+                "x": -653.0,
+                "y": 316.0
+              },
+              "radius": 6.0
+            },
+            {
+              "origin": "Big Idle",
+              "ID": 41,
+              "position": {
+                "x": -653.0,
+                "y": 339.0
+              },
+              "radius": 6.0
+            },
+            {
+              "origin": "Big Idle",
+              "ID": 72,
+              "position": {
+                "x": -653.0,
+                "y": 357.0
+              },
+              "radius": 6.0
+            },
+            {
+              "origin": "Big Idle",
+              "ID": 87,
+              "position": {
+                "x": -655.0,
+                "y": 375.0
+              },
+              "radius": 6.0
+            },
+            {
+              "origin": "Big Idle",
+              "ID": 113,
+              "position": {
+                "x": -654.0,
+                "y": 298.0
+              },
+              "radius": 6.0
+            }
+          ]
+        },
+        {
+          "name": "down",
+          "position": {
+            "x": -739.0,
+            "y": 401.0
+          },
+          "size": {
+            "x": 126.0,
+            "y": 10.0
+          },
+          "pointList": [
+            {
+              "origin": "Big Idle",
+              "ID": 36,
+              "position": {
+                "x": -706.0,
+                "y": 400.0
+              },
+              "radius": 6.0
+            },
+            {
+              "origin": "Big Idle",
+              "ID": 79,
+              "position": {
+                "x": -767.0,
+                "y": 403.0
+              },
+              "radius": 6.0
+            },
+            {
+              "origin": "Big Idle",
+              "ID": 96,
+              "position": {
+                "x": -744.0,
+                "y": 404.0
+              },
+              "radius": 6.0
+            },
+            {
+              "origin": "Big Idle",
+              "ID": 123,
+              "position": {
+                "x": -788.0,
+                "y": 402.0
+              },
+              "radius": 6.0
+            }
+          ]
+        },
+        {
+          "name": "left",
+          "position": {
+            "x": -822.0,
+            "y": 337.0
+          },
+          "size": {
+            "x": 10.0,
+            "y": 88.0
+          },
+          "pointList": []
+        }
+      ]
+    },
+    {
+      "ID": 15,
+      "title": "Big Jump",
+      "x": -1012.0,
+      "y": -14.0,
+      "width": 166.0,
+      "frameList": [
+        {
+          "sprite": {
+            "width": 16,
+            "height": 32,
+            "texture": {
+              "filePath": "assets/images/spritesheets/bigSpritesheet.png"
+            },
+            "textureCoordinates": [
+              {
+                "x": 0.2857143,
+                "y": 1.0
+              },
+              {
+                "x": 0.2857143,
+                "y": 0.5
+              },
+              {
+                "x": 0.23809524,
+                "y": 0.5
+              },
+              {
+                "x": 0.23809524,
+                "y": 1.0
+              }
+            ]
+          },
+          "frameTime": 0.1
+        }
+      ],
+      "doesLoop": false,
+      "flag": false,
+      "pointFields": [
+        {
+          "name": "up",
+          "position": {
+            "x": -1012.0,
+            "y": -78.0
+          },
+          "size": {
+            "x": 126.0,
+            "y": 10.0
+          },
+          "pointList": []
+        },
+        {
+          "name": "right",
+          "position": {
+            "x": -929.0,
+            "y": -14.0
+          },
+          "size": {
+            "x": 10.0,
+            "y": 88.0
+          },
+          "pointList": [
+            {
+              "origin": "Big Jump",
+              "ID": 76,
+              "position": {
+                "x": -927.0,
+                "y": -43.0
+              },
+              "radius": 6.0
+            },
+            {
+              "origin": "Big Jump",
+              "ID": 91,
+              "position": {
+                "x": -926.0,
+                "y": -26.0
+              },
+              "radius": 6.0
+            },
+            {
+              "origin": "Big Jump",
+              "ID": 116,
+              "position": {
+                "x": -929.0,
+                "y": -4.0
+              },
+              "radius": 6.0
+            }
+          ]
+        },
+        {
+          "name": "down",
+          "position": {
+            "x": -1012.0,
+            "y": 50.0
+          },
+          "size": {
+            "x": 126.0,
+            "y": 10.0
+          },
+          "pointList": [
+            {
+              "origin": "Big Jump",
+              "ID": 40,
+              "position": {
+                "x": -1044.0,
+                "y": 50.0
+              },
+              "radius": 6.0
+            },
+            {
+              "origin": "Big Jump",
+              "ID": 83,
+              "position": {
+                "x": -992.0,
+                "y": 54.0
+              },
+              "radius": 6.0
+            },
+            {
+              "origin": "Big Jump",
+              "ID": 100,
+              "position": {
+                "x": -969.0,
+                "y": 52.0
+              },
+              "radius": 6.0
+            },
+            {
+              "origin": "Big Jump",
+              "ID": 125,
+              "position": {
+                "x": -1063.0,
+                "y": 51.0
+              },
+              "radius": 6.0
+            }
+          ]
+        },
+        {
+          "name": "left",
+          "position": {
+            "x": -1095.0,
+            "y": -14.0
+          },
+          "size": {
+            "x": 10.0,
+            "y": 88.0
+          },
+          "pointList": [
+            {
+              "origin": "Big Jump",
+              "ID": 34,
+              "position": {
+                "x": -1098.0,
+                "y": -29.0
+              },
+              "radius": 6.0
+            },
+            {
+              "origin": "Big Jump",
+              "ID": 44,
+              "position": {
+                "x": -1097.0,
+                "y": 18.0
+              },
+              "radius": 6.0
+            },
+            {
+              "origin": "Big Jump",
+              "ID": 47,
+              "position": {
+                "x": -1096.0,
+                "y": 1.0
+              },
+              "radius": 6.0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "ID": 17,
+      "title": "FireRun",
+      "x": -416.0,
+      "y": 764.0,
+      "width": 166.0,
+      "frameList": [
+        {
+          "sprite": {
+            "width": 16,
+            "height": 32,
+            "texture": {
+              "filePath": "assets/images/spritesheets/bigSpritesheet.png"
+            },
+            "textureCoordinates": [
+              {
+                "x": 0.04761905,
+                "y": 0.5
+              },
+              {
+                "x": 0.04761905,
+                "y": 0.0
+              },
+              {
+                "x": 0.0,
+                "y": 0.0
+              },
+              {
+                "x": 0.0,
+                "y": 0.5
+              }
+            ]
+          },
+          "frameTime": 0.2
+        },
+        {
+          "sprite": {
+            "width": 16,
+            "height": 32,
+            "texture": {
+              "filePath": "assets/images/spritesheets/bigSpritesheet.png"
+            },
+            "textureCoordinates": [
+              {
+                "x": 0.0952381,
+                "y": 0.5
+              },
+              {
+                "x": 0.0952381,
+                "y": 0.0
+              },
+              {
+                "x": 0.04761905,
+                "y": 0.0
+              },
+              {
+                "x": 0.04761905,
+                "y": 0.5
+              }
+            ]
+          },
+          "frameTime": 0.2
+        },
+        {
+          "sprite": {
+            "width": 16,
+            "height": 32,
+            "texture": {
+              "filePath": "assets/images/spritesheets/bigSpritesheet.png"
+            },
+            "textureCoordinates": [
+              {
+                "x": 0.14285715,
+                "y": 0.5
+              },
+              {
+                "x": 0.14285715,
+                "y": 0.0
+              },
+              {
+                "x": 0.0952381,
+                "y": 0.0
+              },
+              {
+                "x": 0.0952381,
+                "y": 0.5
+              }
+            ]
+          },
+          "frameTime": 0.2
+        },
+        {
+          "sprite": {
+            "width": 16,
+            "height": 32,
+            "texture": {
+              "filePath": "assets/images/spritesheets/bigSpritesheet.png"
+            },
+            "textureCoordinates": [
+              {
+                "x": 0.1904762,
+                "y": 0.5
+              },
+              {
+                "x": 0.1904762,
+                "y": 0.0
+              },
+              {
+                "x": 0.14285715,
+                "y": 0.0
+              },
+              {
+                "x": 0.14285715,
+                "y": 0.5
+              }
+            ]
+          },
+          "frameTime": 0.2
+        },
+        {
+          "sprite": {
+            "width": 16,
+            "height": 32,
+            "texture": {
+              "filePath": "assets/images/spritesheets/bigSpritesheet.png"
+            },
+            "textureCoordinates": [
+              {
+                "x": 0.14285715,
+                "y": 0.5
+              },
+              {
+                "x": 0.14285715,
+                "y": 0.0
+              },
+              {
+                "x": 0.0952381,
+                "y": 0.0
+              },
+              {
+                "x": 0.0952381,
+                "y": 0.5
+              }
+            ]
+          },
+          "frameTime": 0.2
+        },
+        {
+          "sprite": {
+            "width": 16,
+            "height": 32,
+            "texture": {
+              "filePath": "assets/images/spritesheets/bigSpritesheet.png"
+            },
+            "textureCoordinates": [
+              {
+                "x": 0.0952381,
+                "y": 0.5
+              },
+              {
+                "x": 0.0952381,
+                "y": 0.0
+              },
+              {
+                "x": 0.04761905,
+                "y": 0.0
+              },
+              {
+                "x": 0.04761905,
+                "y": 0.5
+              }
+            ]
+          },
+          "frameTime": 0.2
+        }
+      ],
+      "doesLoop": true,
+      "flag": false,
+      "pointFields": [
+        {
+          "name": "up",
+          "position": {
+            "x": -416.0,
+            "y": 700.0
+          },
+          "size": {
+            "x": 126.0,
+            "y": 10.0
+          },
+          "pointList": [
+            {
+              "origin": "FireRun",
+              "ID": 52,
+              "position": {
+                "x": -453.0,
+                "y": 697.0
+              },
+              "radius": 6.0
+            },
+            {
+              "origin": "FireRun",
+              "ID": 63,
+              "position": {
+                "x": -431.0,
+                "y": 697.0
+              },
+              "radius": 6.0
+            },
+            {
+              "origin": "FireRun",
+              "ID": 78,
+              "position": {
+                "x": -379.0,
+                "y": 696.0
+              },
+              "radius": 6.0
+            },
+            {
+              "origin": "FireRun",
+              "ID": 93,
+              "position": {
+                "x": -406.0,
+                "y": 697.0
+              },
+              "radius": 6.0
+            },
+            {
+              "origin": "FireRun",
+              "ID": 118,
+              "position": {
+                "x": -359.0,
+                "y": 698.0
+              },
+              "radius": 6.0
+            }
+          ]
+        },
+        {
+          "name": "right",
+          "position": {
+            "x": -333.0,
+            "y": 764.0
+          },
+          "size": {
+            "x": 10.0,
+            "y": 88.0
+          },
+          "pointList": []
+        },
+        {
+          "name": "down",
+          "position": {
+            "x": -416.0,
+            "y": 828.0
+          },
+          "size": {
+            "x": 126.0,
+            "y": 10.0
+          },
+          "pointList": [
+            {
+              "origin": "FireRun",
+              "ID": 50,
+              "position": {
+                "x": -456.0,
+                "y": 831.0
+              },
+              "radius": 6.0
+            },
+            {
+              "origin": "FireRun",
+              "ID": 59,
+              "position": {
+                "x": -410.0,
+                "y": 828.0
+              },
+              "radius": 6.0
+            }
+          ]
+        },
+        {
+          "name": "left",
+          "position": {
+            "x": -499.0,
+            "y": 764.0
+          },
+          "size": {
+            "x": 10.0,
+            "y": 88.0
+          },
+          "pointList": [
+            {
+              "origin": "FireRun",
+              "ID": 54,
+              "position": {
+                "x": -500.0,
+                "y": 728.0
+              },
+              "radius": 6.0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "ID": 19,
+      "title": "Fire Switch Direction",
+      "x": -649.0,
+      "y": 978.0,
+      "width": 293.44,
+      "frameList": [
+        {
+          "sprite": {
+            "width": 16,
+            "height": 32,
+            "texture": {
+              "filePath": "assets/images/spritesheets/bigSpritesheet.png"
+            },
+            "textureCoordinates": [
+              {
+                "x": 0.23809524,
+                "y": 0.5
+              },
+              {
+                "x": 0.23809524,
+                "y": 0.0
+              },
+              {
+                "x": 0.1904762,
+                "y": 0.0
+              },
+              {
+                "x": 0.1904762,
+                "y": 0.5
+              }
+            ]
+          },
+          "frameTime": 0.1
+        }
+      ],
+      "doesLoop": false,
+      "flag": false,
+      "pointFields": [
+        {
+          "name": "up",
+          "position": {
+            "x": -649.0,
+            "y": 914.0
+          },
+          "size": {
+            "x": 253.44,
+            "y": 10.0
+          },
+          "pointList": [
+            {
+              "origin": "Fire Switch Direction",
+              "ID": 51,
+              "position": {
+                "x": -751.0,
+                "y": 910.0
+              },
+              "radius": 6.0
+            },
+            {
+              "origin": "Fire Switch Direction",
+              "ID": 56,
+              "position": {
+                "x": -643.0,
+                "y": 911.0
+              },
+              "radius": 6.0
+            },
+            {
+              "origin": "Fire Switch Direction",
+              "ID": 58,
+              "position": {
+                "x": -723.0,
+                "y": 911.0
+              },
+              "radius": 6.0
+            },
+            {
+              "origin": "Fire Switch Direction",
+              "ID": 82,
+              "position": {
+                "x": -542.0,
+                "y": 912.0
+              },
+              "radius": 6.0
+            },
+            {
+              "origin": "Fire Switch Direction",
+              "ID": 97,
+              "position": {
+                "x": -558.0,
+                "y": 909.0
+              },
+              "radius": 6.0
+            },
+            {
+              "origin": "Fire Switch Direction",
+              "ID": 120,
+              "position": {
+                "x": -601.0,
+                "y": 911.0
+              },
+              "radius": 6.0
+            }
+          ]
+        },
+        {
+          "name": "right",
+          "position": {
+            "x": -502.28,
+            "y": 978.0
+          },
+          "size": {
+            "x": 10.0,
+            "y": 88.0
+          },
+          "pointList": []
+        },
+        {
+          "name": "down",
+          "position": {
+            "x": -649.0,
+            "y": 1042.0
+          },
+          "size": {
+            "x": 253.44,
+            "y": 10.0
+          },
+          "pointList": []
+        },
+        {
+          "name": "left",
+          "position": {
+            "x": -795.72,
+            "y": 978.0
+          },
+          "size": {
+            "x": 10.0,
+            "y": 88.0
+          },
+          "pointList": [
+            {
+              "origin": "Fire Switch Direction",
+              "ID": 60,
+              "position": {
+                "x": -799.0,
+                "y": 975.0
+              },
+              "radius": 6.0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "ID": 21,
+      "title": "FireIdle",
+      "x": -732.0,
+      "y": 493.0,
+      "width": 166.0,
+      "frameList": [
+        {
+          "sprite": {
+            "width": 16,
+            "height": 32,
+            "texture": {
+              "filePath": "assets/images/spritesheets/bigSpritesheet.png"
+            },
+            "textureCoordinates": [
+              {
+                "x": 0.04761905,
+                "y": 0.5
+              },
+              {
+                "x": 0.04761905,
+                "y": 0.0
+              },
+              {
+                "x": 0.0,
+                "y": 0.0
+              },
+              {
+                "x": 0.0,
+                "y": 0.5
+              }
+            ]
+          },
+          "frameTime": 0.1
+        }
+      ],
+      "doesLoop": false,
+      "flag": false,
+      "pointFields": [
+        {
+          "name": "up",
+          "position": {
+            "x": -732.0,
+            "y": 429.0
+          },
+          "size": {
+            "x": 126.0,
+            "y": 10.0
+          },
+          "pointList": [
+            {
+              "origin": "FireIdle",
+              "ID": 80,
+              "position": {
+                "x": -766.0,
+                "y": 426.0
+              },
+              "radius": 6.0
+            },
+            {
+              "origin": "FireIdle",
+              "ID": 95,
+              "position": {
+                "x": -746.0,
+                "y": 427.0
+              },
+              "radius": 6.0
+            },
+            {
+              "origin": "FireIdle",
+              "ID": 122,
+              "position": {
+                "x": -786.0,
+                "y": 426.0
+              },
+              "radius": 6.0
+            }
+          ]
+        },
+        {
+          "name": "right",
+          "position": {
+            "x": -649.0,
+            "y": 493.0
+          },
+          "size": {
+            "x": 10.0,
+            "y": 88.0
+          },
+          "pointList": [
+            {
+              "origin": "FireIdle",
+              "ID": 57,
+              "position": {
+                "x": -647.0,
+                "y": 463.0
+              },
+              "radius": 6.0
+            }
+          ]
+        },
+        {
+          "name": "down",
+          "position": {
+            "x": -732.0,
+            "y": 557.0
+          },
+          "size": {
+            "x": 126.0,
+            "y": 10.0
+          },
+          "pointList": [
+            {
+              "origin": "FireIdle",
+              "ID": 53,
+              "position": {
+                "x": -739.0,
+                "y": 558.0
+              },
+              "radius": 6.0
+            },
+            {
+              "origin": "FireIdle",
+              "ID": 62,
+              "position": {
+                "x": -717.0,
+                "y": 559.0
+              },
+              "radius": 6.0
+            }
+          ]
+        },
+        {
+          "name": "left",
+          "position": {
+            "x": -815.0,
+            "y": 493.0
+          },
+          "size": {
+            "x": 10.0,
+            "y": 88.0
+          },
+          "pointList": [
+            {
+              "origin": "FireIdle",
+              "ID": 64,
+              "position": {
+                "x": -820.0,
+                "y": 509.0
+              },
+              "radius": 6.0
+            },
+            {
+              "origin": "FireIdle",
+              "ID": 67,
+              "position": {
+                "x": -819.0,
+                "y": 472.0
+              },
+              "radius": 6.0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "ID": 23,
+      "title": "Die",
+      "x": 40.0,
+      "y": 19.0,
+      "width": 166.0,
+      "frameList": [
+        {
+          "sprite": {
+            "width": 16,
+            "height": 16,
+            "texture": {
+              "filePath": "assets/images/spritesheets/spritesheet.png"
+            },
+            "textureCoordinates": [
+              {
+                "x": 0.5,
+                "y": 1.0
+              },
+              {
+                "x": 0.5,
+                "y": 0.5
+              },
+              {
+                "x": 0.42857143,
+                "y": 0.5
+              },
+              {
+                "x": 0.42857143,
+                "y": 1.0
+              }
+            ]
+          },
+          "frameTime": 0.1
+        }
+      ],
+      "doesLoop": false,
+      "flag": false,
+      "pointFields": [
+        {
+          "name": "up",
+          "position": {
+            "x": 40.0,
+            "y": -45.0
+          },
+          "size": {
+            "x": 126.0,
+            "y": 10.0
+          },
+          "pointList": []
+        },
+        {
+          "name": "right",
+          "position": {
+            "x": 123.0,
+            "y": 19.0
+          },
+          "size": {
+            "x": 10.0,
+            "y": 88.0
+          },
+          "pointList": [
+            {
+              "origin": "Die",
+              "ID": 102,
+              "position": {
+                "x": 126.0,
+                "y": 35.0
+              },
+              "radius": 6.0
+            }
+          ]
+        },
+        {
+          "name": "down",
+          "position": {
+            "x": 40.0,
+            "y": 83.0
+          },
+          "size": {
+            "x": 126.0,
+            "y": 10.0
+          },
+          "pointList": [
+            {
+              "origin": "Die",
+              "ID": 104,
+              "position": {
+                "x": 84.0,
+                "y": 85.0
+              },
+              "radius": 6.0
+            },
+            {
+              "origin": "Die",
+              "ID": 106,
+              "position": {
+                "x": 62.0,
+                "y": 83.0
+              },
+              "radius": 6.0
+            },
+            {
+              "origin": "Die",
+              "ID": 108,
+              "position": {
+                "x": 97.0,
+                "y": 85.0
+              },
+              "radius": 6.0
+            }
+          ]
+        },
+        {
+          "name": "left",
+          "position": {
+            "x": -43.0,
+            "y": 19.0
+          },
+          "size": {
+            "x": 10.0,
+            "y": 88.0
+          },
+          "pointList": []
+        }
+      ]
+    },
+    {
+      "ID": 25,
+      "title": "FireJump",
+      "x": -1243.0,
+      "y": 655.0,
+      "width": 166.0,
+      "frameList": [
+        {
+          "sprite": {
+            "width": 16,
+            "height": 32,
+            "texture": {
+              "filePath": "assets/images/spritesheets/bigSpritesheet.png"
+            },
+            "textureCoordinates": [
+              {
+                "x": 0.2857143,
+                "y": 0.5
+              },
+              {
+                "x": 0.2857143,
+                "y": 0.0
+              },
+              {
+                "x": 0.23809524,
+                "y": 0.0
+              },
+              {
+                "x": 0.23809524,
+                "y": 0.5
+              }
+            ]
+          },
+          "frameTime": 0.1
+        }
+      ],
+      "doesLoop": false,
+      "flag": false,
+      "pointFields": [
+        {
+          "name": "up",
+          "position": {
+            "x": -1243.0,
+            "y": 591.0
+          },
+          "size": {
+            "x": 126.0,
+            "y": 10.0
+          },
+          "pointList": [
+            {
+              "origin": "FireJump",
+              "ID": 65,
+              "position": {
+                "x": -1205.0,
+                "y": 589.0
+              },
+              "radius": 6.0
+            },
+            {
+              "origin": "FireJump",
+              "ID": 66,
+              "position": {
+                "x": -1232.0,
+                "y": 587.0
+              },
+              "radius": 6.0
+            },
+            {
+              "origin": "FireJump",
+              "ID": 84,
+              "position": {
+                "x": -1272.0,
+                "y": 586.0
+              },
+              "radius": 6.0
+            },
+            {
+              "origin": "FireJump",
+              "ID": 99,
+              "position": {
+                "x": -1253.0,
+                "y": 588.0
+              },
+              "radius": 6.0
+            },
+            {
+              "origin": "FireJump",
+              "ID": 124,
+              "position": {
+                "x": -1298.0,
+                "y": 589.0
+              },
+              "radius": 6.0
+            }
+          ]
+        },
+        {
+          "name": "right",
+          "position": {
+            "x": -1160.0,
+            "y": 655.0
+          },
+          "size": {
+            "x": 10.0,
+            "y": 88.0
+          },
+          "pointList": [
+            {
+              "origin": "FireJump",
+              "ID": 55,
+              "position": {
+                "x": -1157.0,
+                "y": 622.0
+              },
+              "radius": 6.0
+            },
+            {
+              "origin": "FireJump",
+              "ID": 61,
+              "position": {
+                "x": -1157.0,
+                "y": 675.0
+              },
+              "radius": 6.0
+            }
+          ]
+        },
+        {
+          "name": "down",
+          "position": {
+            "x": -1243.0,
+            "y": 719.0
+          },
+          "size": {
+            "x": 126.0,
+            "y": 10.0
+          },
+          "pointList": []
+        },
+        {
+          "name": "left",
+          "position": {
+            "x": -1326.0,
+            "y": 655.0
+          },
+          "size": {
+            "x": 10.0,
+            "y": 88.0
+          },
+          "pointList": []
+        }
+      ]
+    }
+  ]
+}
