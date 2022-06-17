@@ -4,6 +4,7 @@ import imgui.ImColor;
 import imgui.ImDrawList;
 import imgui.ImGui;
 import imgui.ImVec2;
+import imgui.flag.ImGuiMouseButton;
 import sirius.utils.JMath;
 
 public class Wire {
@@ -35,11 +36,25 @@ public class Wire {
         ImDrawList drawList = ImGui.getWindowDrawList();
         int color = ImColor.intToColor(255, 255, 0, 255);
 
-        hovered = JMath.distanceToSegmentSquared(mousePosInCanvas.x, mousePosInCanvas.y,
-                getStartX(), getStartY(), getEndX(), getEndY()) < 50.0f;
-
-        if (hovered) {
+        if (selected) {
             color = ImColor.intToColor(0, 255, 0, 255);
+        }
+
+        if (!ImGui.isPopupOpen(SpriteAnimationWindow.getAnimator().POPUP_ANIMATOR_MENU)) {
+            hovered = JMath.distanceToSegmentSquared(mousePosInCanvas.x, mousePosInCanvas.y,
+                    getStartX(), getStartY(), getEndX(), getEndY()) < 50.0f;
+
+            if (hovered) {
+                color = ImColor.intToColor(0, 255, 0, 255);
+            }
+
+            boolean mouseLeft = ImGui.isMouseClicked(ImGuiMouseButton.Left);
+            if ((mouseLeft || ImGui.isMouseClicked(ImGuiMouseButton.Right)) && hovered) {
+                this.selected = true;
+            }
+            if (mouseLeft && !hovered) {
+                this.selected = false;
+            }
         }
 
         drawList.addLine(
@@ -96,5 +111,9 @@ public class Wire {
 
     public boolean isSelected() {
         return selected;
+    }
+
+    public boolean isHovered() {
+        return hovered;
     }
 }

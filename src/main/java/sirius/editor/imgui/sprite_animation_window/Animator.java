@@ -20,10 +20,10 @@ public class Animator {
     public transient boolean showAnimator;
 
     public transient AnimationBox activeAnimationBox;
+    public transient String POPUP_ANIMATOR_MENU = "popup_animator_menu_context";
 
     private transient boolean hovered = false;
     private transient boolean addingLine = false;
-    private transient boolean mayOpenPopupWindow = false;
 
     private transient ImVec2 scrolling;
     private transient float thickness = 2.0f;
@@ -337,14 +337,6 @@ public class Animator {
             scrolling.y += io.getMouseDelta().y;
         }
 
-        // Context menu (under default mouse threshold)
-        ImVec2 dragDelta = ImGui.getMouseDragDelta(ImGuiMouseButton.Middle);
-        if (dragDelta.x == 0.0f && dragDelta.y == 0.0f) {
-            if (ImGui.isMouseClicked(ImGuiMouseButton.Right)) {
-                mayOpenPopupWindow = !mayOpenPopupWindow;
-            }
-        }
-
         // Draw grid
         drawList.pushClipRect(canvasP0.x, canvasP0.y, canvasP1.x, canvasP1.y, false);
         float GRID_STEP = 64.0f;
@@ -404,17 +396,53 @@ public class Animator {
         drawList.popClipRect();
 
         // Menu popup properties
-        if (mayOpenPopupWindow) {
-            if (ImGui.beginPopupContextWindow("context")) {
-                addingLine = false;
+        if (ImGui.beginPopupContextWindow(POPUP_ANIMATOR_MENU)) {
+            addingLine = false;
+
+            // Just show 'add animation box' option when there isn't any selected wire.
+            if (isWireHovered() || isWireSelected()) {
+                if (ImGui.menuItem("Delete wire", "")) {
+                    // Deletes current selected wire
+                    animationBlueprint.animationBoxList
+                            .forEach(animationBox -> Arrays
+                                    .stream(animationBox.getPointFields())
+                                    .forEach(pointField -> pointField.getPointList()
+                                            .removeIf(p -> p.getId() == getSelectedWire().getEndPoint().getId()
+                                                    || p.getId() == getSelectedWire().getStartPoint().getId())
+                            ));
+
+                    animationBlueprint.wireList.remove(getSelectedWire());
+                }
+            } else {
                 if (ImGui.menuItem("Add Animation Box", "")) {
                     animationBlueprint.animationBoxList.add(new AnimationBox("I'm a box!", mousePosInCanvas));
                 }
-                ImGui.endPopup();
             }
+
+            ImGui.endPopup();
         }
 
         ImGui.endChild();
+    }
+
+    private Wire getSelectedWire() {
+        return animationBlueprint.wireList
+                .stream()
+                .filter(Wire::isSelected)
+                .findFirst()
+                .orElse(null);
+    }
+
+    private boolean isWireHovered() {
+        return animationBlueprint.wireList
+                .stream()
+                .anyMatch(Wire::isHovered);
+    }
+
+    private boolean isWireSelected() {
+        return animationBlueprint.wireList
+                .stream()
+                .anyMatch(Wire::isSelected);
     }
 
     public boolean isHovered() {

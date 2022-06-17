@@ -73,7 +73,8 @@ public class AnimationBox {
         for (Frame frame : newAnimationBox.getFrameList()) {
             frameList.add(new Frame(frame));
         }
-        this.doesLoop = newAnimationBox.doesLoop;
+        this.flag        = newAnimationBox.flag;
+        this.doesLoop    = newAnimationBox.doesLoop;
         this.pointFields = newAnimationBox.pointFields;
     }
 
