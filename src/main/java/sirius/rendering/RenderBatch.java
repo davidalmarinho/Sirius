@@ -52,7 +52,7 @@ public class RenderBatch implements Comparable<RenderBatch> {
     private Renderer renderer;
 
     /**
-     * @param maxBatchSize Quantos tiles desenhamos de uma só vez
+     * @param maxBatchSize How many textures we can draw with the current batch
      */
     public RenderBatch(int maxBatchSize, int zIndex, Renderer renderer) {
         this.renderer = renderer;
@@ -95,7 +95,7 @@ public class RenderBatch implements Comparable<RenderBatch> {
 
     public void addSprite(SpriteRenderer spr) {
         // Get index and add renderObject
-        int index = this.numSprites; // Colocar no fim do array
+        int index = this.numSprites;
         this.sprites[index] = spr;
         this.numSprites++;
 

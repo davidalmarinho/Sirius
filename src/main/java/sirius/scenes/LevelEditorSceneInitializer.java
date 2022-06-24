@@ -87,8 +87,6 @@ public class LevelEditorSceneInitializer implements ISceneInitializer {
 
         AssetPool.getTexture(Images.BLEND_IMAGE_2.getTexture());
 
-
-
         AssetPool.addSound("assets/sounds/main-theme-overworld.ogg", true);
         AssetPool.addSound("assets/sounds/flagpole.ogg", false);
         AssetPool.addSound("assets/sounds/break_block.ogg", false);
@@ -121,6 +119,7 @@ public class LevelEditorSceneInitializer implements ISceneInitializer {
             }
         }
 
+        AssetPool.addFont("assets/fonts/verdana.ttf");
     }
 
     @Override

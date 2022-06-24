@@ -3,10 +3,11 @@ package sirius.editor;
 import gameobjects.GameObject;
 import gameobjects.components.Component;
 import gameobjects.components.SpriteRenderer;
+import gameobjects.components.fonts.FontRenderer;
 import gameobjects.components.game_components.Ground;
 import imgui.ImGui;
 import sirius.SiriusTheFox;
-import sirius.editor.imgui.sprite_animation_window.SpriteAnimationWindow;
+import sirius.animations.StateMachine;
 import sirius.rendering.PickingTexture;
 import org.joml.Vector4f;
 import physics2d.components.Box2DCollider;
@@ -67,6 +68,18 @@ public class PropertiesWindow {
                     if (!activeGameObject.hasComponent(CircleCollider.class)
                             && !activeGameObject.hasComponent(Box2DCollider.class)) {
                         activeGameObject.addComponent(new CircleCollider());
+                    }
+                }
+
+                if (ImGui.menuItem("Add Font Renderer")) {
+                    if (!activeGameObject.hasComponent(FontRenderer.class)) {
+                        activeGameObject.addComponent(new FontRenderer());
+                    }
+                }
+
+                if (ImGui.menuItem("Add State Machine")) {
+                    if (!activeGameObject.hasComponent(StateMachine.class)) {
+                        activeGameObject.addComponent(new StateMachine());
                     }
                 }
 

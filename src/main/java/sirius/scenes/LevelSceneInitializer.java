@@ -85,6 +85,7 @@ public class LevelSceneInitializer implements ISceneInitializer {
             }
         }
 
+        AssetPool.addFont("assets/fonts/verdana.ttf");
     }
 
     @Override

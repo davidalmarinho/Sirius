@@ -385,7 +385,7 @@ public class JImGui {
     }
 
     public static int list(String label, int currentItem, String[] items) {
-        // ImGui.pushID(label);
+        ImGui.pushID(label);
         if (ImGui.treeNodeEx("##" + label, ImGuiTreeNodeFlags.Leaf)) {
 
             for (int i = 0; i < items.length; i++) {
@@ -394,7 +394,7 @@ public class JImGui {
             }
             ImGui.treePop();
         }
-        // ImGui.popID();
+        ImGui.popID();
 
         return currentItem;
     }
