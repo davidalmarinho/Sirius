@@ -6,9 +6,7 @@ import gameobjects.Prefabs;
 import gameobjects.components.Sprite;
 import imgui.ImGui;
 import imgui.ImVec2;
-import imgui.flag.ImGuiCol;
-import imgui.flag.ImGuiStyleVar;
-import imgui.flag.ImGuiTreeNodeFlags;
+import imgui.flag.*;
 import imgui.type.ImBoolean;
 import imgui.type.ImInt;
 import imgui.type.ImString;
@@ -16,7 +14,6 @@ import org.joml.Vector2f;
 import org.joml.Vector4f;
 import sirius.rendering.Color;
 import sirius.rendering.spritesheet.Spritesheet;
-import sirius.utils.AssetPool;
 
 public class JImGui {
     // Keeps the game object selected on the sprites layout
@@ -162,6 +159,28 @@ public class JImGui {
         return inputText(label, text, defaultColumnWidth, 256);
     }
 
+    public static String inputText(String label, String text, int maxTextLength) {
+        return inputText(label, text, 0, maxTextLength);
+    }
+
+    public static String defaultInputText(String label, String text, int maxTextLength) {
+        ImGui.pushID(label);
+
+        ImString outString = new ImString(text, maxTextLength);
+        ImGui.text(label);
+
+        ImGui.sameLine();
+
+        if (ImGui.inputText("##" + label, outString, ImGuiInputTextFlags.AutoSelectAll)) {
+            ImGui.popID();
+            return outString.get();
+        }
+
+        ImGui.popID();
+
+        return text;
+    }
+
     public static String inputText(String label, String text, float columnWidth, int maxTextLength) {
         ImGui.pushID(label);
 
@@ -169,7 +188,9 @@ public class JImGui {
         ImGui.setColumnWidth(0, defaultColumnWidth);
         ImGui.text(label);
         ImGui.nextColumn();
-        ImGui.setColumnWidth(1, columnWidth);
+
+        if (columnWidth != 0)
+            ImGui.setColumnWidth(1, columnWidth);
 
         ImString outString = new ImString(text, maxTextLength);
         if (ImGui.inputText("##" + label, outString)) {
@@ -384,10 +405,22 @@ public class JImGui {
         return currentItem;
     }
 
-    public static int list(String label, int currentItem, String[] items) {
-        ImGui.pushID(label);
-        if (ImGui.treeNodeEx("##" + label, ImGuiTreeNodeFlags.Leaf)) {
+    public static int listLeaf(String label, int currentItem, String[] items) {
+        return list(label, currentItem, items, ImGuiTreeNodeFlags.Leaf);
+    }
 
+    public static int listLeaf(int currentItem, String[] items) {
+        return list("##", currentItem, items, ImGuiTreeNodeFlags.Leaf);
+    }
+
+    public static int listOpenArrow(String label, int currentItem, String[] items) {
+        return list(label, currentItem, items, ImGuiTreeNodeFlags.OpenOnArrow);
+    }
+
+    private static int list(String label, int currentItem, String[] items, int imGuiTreeNodeFlags) {
+        ImGui.pushID(label);
+
+        if (ImGui.treeNodeEx("" + label, imGuiTreeNodeFlags)) {
             for (int i = 0; i < items.length; i++) {
                 if (ImGui.selectable(items[i], currentItem == i))
                     currentItem = i;

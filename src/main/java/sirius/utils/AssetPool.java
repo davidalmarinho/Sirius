@@ -228,7 +228,7 @@ public class AssetPool {
         String[] fontsPaths = new String[fontMap.size()];
 
         int i = 0;
-        for (String key : spritesheets.keySet()) {
+        for (String key : fontMap.keySet()) {
             fontsPaths[i] = key;
             i++;
         }
