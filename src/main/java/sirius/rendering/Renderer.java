@@ -72,7 +72,7 @@ public class Renderer {
     public void renderUserInterface() {
         currentShader.use();
 
-        SiriusTheFox.getCurrentScene().getRenderer()
+        /*SiriusTheFox.getCurrentScene().getRenderer()
                 .addText("Test Text and I love it!", 0.1f, 0.1f, 0.009f,
                         new Color(255, 255, 255));
 
@@ -82,7 +82,7 @@ public class Renderer {
 
         SiriusTheFox.getCurrentScene().getRenderer()
                 .addText("uncessary text? I mean LOLOL", 0.1f, 0.9f, 0.009f,
-                        new Color(255, 255, 255));
+                        new Color(255, 255, 255));*/
     }
 
     public void render() {

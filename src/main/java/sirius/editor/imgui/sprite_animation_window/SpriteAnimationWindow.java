@@ -25,12 +25,17 @@ public class SpriteAnimationWindow {
     private String currentAnimationPath = "";
     private int currentItem = -1;
 
+    public boolean show = true;
+
     private SpriteAnimationWindow() {
         this.configChild = new ConfigChild();
     }
 
     public void imgui(float dt) {
-        if (ImGui.begin("Sprite Animation Window", new ImBoolean(true))) {
+        if (!show)
+            return;
+
+        if (ImGui.begin("Sprite Animation Window")) {
             if (ImGui.button("Create")) {
                 ImGui.openPopup(NEW_ANIMATION_CONTEXT);
             }

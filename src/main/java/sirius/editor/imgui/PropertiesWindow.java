@@ -1,4 +1,4 @@
-package sirius.editor;
+package sirius.editor.imgui;
 
 import gameobjects.GameObject;
 import gameobjects.components.Component;
@@ -8,6 +8,7 @@ import gameobjects.components.game_components.Ground;
 import imgui.ImGui;
 import sirius.SiriusTheFox;
 import sirius.animations.StateMachine;
+import sirius.editor.MouseControls;
 import sirius.rendering.PickingTexture;
 import org.joml.Vector4f;
 import physics2d.components.Box2DCollider;

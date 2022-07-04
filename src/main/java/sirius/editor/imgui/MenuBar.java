@@ -6,6 +6,7 @@ import sirius.SiriusTheFox;
 import observers.EventSystem;
 import observers.events.Events;
 import observers.events.Event;
+import sirius.editor.imgui.sprite_animation_window.SpriteAnimationWindow;
 import sirius.levels.Level;
 import sirius.utils.AssetPool;
 
@@ -75,6 +76,23 @@ public class MenuBar {
 
             ImGui.endMenu();
         }
+
+        if (ImGui.beginMenu("Dock")) {
+            ImGuiLayer imGuiLayer = SiriusTheFox.getImGuiLayer();
+
+            GameViewWindow gameViewWindow = imGuiLayer.getGameViewWindow();
+            gameViewWindow.show = JImGui.checkBox("Game View Window", gameViewWindow.show);
+
+            SpriteAnimationWindow animationWindow = imGuiLayer.getSpriteAnimationWindow();
+            animationWindow.show = JImGui.checkBox("Sprite Animation Window", animationWindow.show);
+
+            TabBar tabBar = imGuiLayer.getTabBar();
+            tabBar.show = JImGui.checkBox("Tab Bar", tabBar.show);
+
+            ImGui.endMenu();
+        }
+
+        // TODO: 05/07/2022 select tool and text tool
 
         ImGui.endMenuBar();
     }

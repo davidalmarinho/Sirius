@@ -1,4 +1,4 @@
-package sirius.editor;
+package sirius.editor.imgui;
 
 import gameobjects.GameObject;
 

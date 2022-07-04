@@ -10,7 +10,7 @@ import sirius.editor.imgui.sprite_animation_window.AnimationBlueprint;
 import sirius.encode_tools.Encode;
 import sirius.SiriusTheFox;
 import sirius.editor.MouseControls;
-import sirius.editor.PropertiesWindow;
+import sirius.editor.imgui.PropertiesWindow;
 import sirius.input.KeyListener;
 import sirius.levels.Level;
 import sirius.rendering.Camera;

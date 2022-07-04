@@ -2,7 +2,6 @@ package sirius.editor.imgui;
 
 import com.sun.istack.internal.NotNull;
 import gameobjects.GameObject;
-import gameobjects.Prefabs;
 import gameobjects.components.Sprite;
 import imgui.ImGui;
 import imgui.ImVec2;
@@ -358,7 +357,7 @@ public class JImGui {
 
     /**
      * Shows a layout with buttons where each button has a sprite and if you click in a button, it generates a
-     * game object using {@link gameobjects.Prefabs#generateSpriteObject(Sprite, float, float)} method.
+     * game object using {@link Prefabs#generateSpriteObject(Sprite, float, float)} method.
      * The game object is kept in {@link JImGui#selectedGameObject} until next frame.
      *
      * @param spritesheet Spritesheet where the sprites will be caught.

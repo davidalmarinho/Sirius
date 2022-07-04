@@ -2,8 +2,8 @@ package main;
 
 import components.*;
 import gameobjects.GameObject;
-import gameobjects.ICustomPrefabs;
-import gameobjects.Prefabs;
+import sirius.editor.imgui.ICustomPrefabs;
+import sirius.editor.imgui.Prefabs;
 import gameobjects.components.Sprite;
 import gameobjects.components.game_components.Ground;
 import sirius.animations.AnimationState;
@@ -17,7 +17,7 @@ import physics2d.components.CircleCollider;
 import physics2d.components.PillboxCollider;
 import physics2d.components.RigidBody2d;
 
-import static gameobjects.Prefabs.generateSpriteObject;
+import static sirius.editor.imgui.Prefabs.generateSpriteObject;
 
 public class CustomPrefabs implements ICustomPrefabs {
 

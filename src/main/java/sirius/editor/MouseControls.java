@@ -6,6 +6,7 @@ import gameobjects.components.SpriteRenderer;
 import gameobjects.components.Transform;
 import sirius.SiriusTheFox;
 import sirius.animations.StateMachine;
+import sirius.editor.imgui.PropertiesWindow;
 import sirius.input.KeyListener;
 import sirius.input.MouseListener;
 import sirius.rendering.Color;

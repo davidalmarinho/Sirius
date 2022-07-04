@@ -1,9 +1,7 @@
-package sirius;
+package sirius.editor.imgui;
 
+import sirius.SiriusTheFox;
 import sirius.editor.imgui.sprite_animation_window.SpriteAnimationWindow;
-import sirius.editor.imgui.GameViewWindow;
-import sirius.editor.imgui.MenuBar;
-import sirius.editor.PropertiesWindow;
 import imgui.*;
 import imgui.callback.ImStrConsumer;
 import imgui.callback.ImStrSupplier;
@@ -11,7 +9,6 @@ import imgui.flag.*;
 import imgui.gl3.ImGuiImplGl3;
 import imgui.glfw.ImGuiImplGlfw;
 import imgui.type.ImBoolean;
-import sirius.editor.SceneHierarchy;
 import sirius.input.KeyListener;
 import sirius.input.MouseListener;
 import sirius.rendering.PickingTexture;
@@ -34,6 +31,7 @@ public class ImGuiLayer {
     private MenuBar menuBar;
     private SceneHierarchy sceneHierarchy;
     private SpriteAnimationWindow spriteAnimationWindow;
+    private TabBar tabBar;
 
     public ImGuiLayer(long glfwWindow, PickingTexture pickingTexture) {
         this.imGuiGl3 = new ImGuiImplGl3();
@@ -44,6 +42,7 @@ public class ImGuiLayer {
         this.menuBar = new MenuBar();
         this.sceneHierarchy = new SceneHierarchy();
         this.spriteAnimationWindow = SpriteAnimationWindow.get();
+        this.tabBar = new TabBar();
     }
 
     public void edit(long glfwWindow) {
@@ -179,8 +178,9 @@ public class ImGuiLayer {
 
         // Any Dear ImGui code SHOULD go between ImGui.newFrame()/ImGui.render() methods
         setupDockSpace();
-        ImGui.showDemoWindow();
+        // ImGui.showDemoWindow();
         currentScene.imgui();
+        tabBar.imgui();
         propertiesWindow.imgui();
         // sceneHierarchy.imgui();
         spriteAnimationWindow.imgui(dt);
@@ -259,5 +259,9 @@ public class ImGuiLayer {
 
     public GameViewWindow getGameViewWindow() {
         return gameViewWindow;
+    }
+
+    public TabBar getTabBar() {
+        return tabBar;
     }
 }

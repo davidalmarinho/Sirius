@@ -2,8 +2,9 @@ package sirius;
 
 import audio.Audio;
 import gameobjects.GameObject;
-import gameobjects.ICustomPrefabs;
-import sirius.editor.ICustomPropertiesWindow;
+import sirius.editor.imgui.ICustomPrefabs;
+import sirius.editor.imgui.ICustomPropertiesWindow;
+import sirius.editor.imgui.ImGuiLayer;
 import sirius.input.Input;
 import sirius.input.MouseListener;
 import sirius.rendering.Color;

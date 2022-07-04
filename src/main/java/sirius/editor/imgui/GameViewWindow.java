@@ -15,7 +15,12 @@ public class GameViewWindow {
     private boolean playing;
     private boolean collapsed;
 
+    public boolean show = true;
+
     public void imgui() {
+        if (!show)
+            return;
+
         ImGui.begin("Game Viewport",
                 ImGuiWindowFlags.NoScrollbar
                         | ImGuiWindowFlags.NoScrollWithMouse

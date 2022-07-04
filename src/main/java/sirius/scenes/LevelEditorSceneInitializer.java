@@ -1,7 +1,5 @@
 package sirius.scenes;
 
-import gameobjects.ICustomPrefabs;
-import gameobjects.Prefabs;
 import imgui.ImGui;
 import gameobjects.GameObject;
 import gameobjects.components.*;
@@ -10,21 +8,14 @@ import sirius.Sound;
 import sirius.animations.StateMachine;
 import sirius.editor.*;
 import sirius.editor.components.KeyControls;
-import sirius.editor.imgui.JImGui;
-import sirius.rendering.Color;
-import sirius.rendering.Renderer;
 import sirius.rendering.spritesheet.Images;
 import sirius.rendering.spritesheet.Spritesheet;
 import sirius.utils.AssetPool;
-
-import java.io.File;
-import java.util.Collection;
 
 /**
  * Logic to edit levels
  */
 public class LevelEditorSceneInitializer implements ISceneInitializer {
-    private Spritesheet sprites;
     private GameObject levelEditorStuff;
 
     public LevelEditorSceneInitializer() {
@@ -37,7 +28,8 @@ public class LevelEditorSceneInitializer implements ISceneInitializer {
         for (Sound sound : AssetPool.getAllSounds())
             sound.stop();
 
-        sprites = AssetPool.getSpritesheet(Images.DECORATIONS_AND_BLOCKS.getSpritesheet());
+        SiriusTheFox.getImGuiLayer().getTabBar()
+                .loadSpritesheet(AssetPool.getSpritesheet(Images.DECORATIONS_AND_BLOCKS.getSpritesheet()));
         Spritesheet gizmos = AssetPool.getSpritesheet(Images.GIZMOS.getTexture());
 
         levelEditorStuff = scene.createGameObject("LevelEditor");
@@ -127,50 +119,10 @@ public class LevelEditorSceneInitializer implements ISceneInitializer {
     public void imgui() {
         // ================
         // For debug purposes
-        ImGui.begin("Level Editor Stuff");
-        levelEditorStuff.imgui();
-        ImGui.end();
+        // ImGui.begin("Level Editor Stuff");
+        // levelEditorStuff.imgui();
+        // ImGui.end();
         // ================
-
-        ImGui.begin("Objects");
-
-        if (ImGui.beginTabBar("TabBar")) {
-            if (ImGui.beginTabItem("Icons")) {
-                if (JImGui.spritesLayout(sprites)) {
-                    levelEditorStuff.getComponent(MouseControls.class).pickupObject(JImGui.getSelectedGameObject());
-                }
-                ImGui.endTabItem();
-            }
-
-            if (ImGui.beginTabItem("Prefabs")) {
-                // Check if we have customized prefabs
-                ICustomPrefabs customPrefabs = SiriusTheFox.getWindow().getICustomPrefabs();
-                if (customPrefabs != null) {
-                    customPrefabs.imgui();
-                }
-                Prefabs.uid = 0;
-                ImGui.endTabItem();
-            }
-
-            if (ImGui.beginTabItem("Sounds")) {
-                Collection<Sound> sounds = AssetPool.getAllSounds();
-                for (Sound sound : sounds) {
-                    File tmp = new File(sound.getFilePath());
-                    if (ImGui.button(tmp.getName())) {
-                        if (!sound.isPlaying())
-                            sound.play();
-                        else
-                            sound.stop();
-                    }
-                }
-
-                ImGui.endTabItem();
-            }
-
-            ImGui.endTabBar();
-        }
-
-        ImGui.end();
     }
 
     @Override
