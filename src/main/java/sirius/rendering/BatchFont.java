@@ -72,28 +72,22 @@ public class BatchFont {
         glBufferData(GL_ARRAY_BUFFER, (long) Float.BYTES * VERTEX_SIZE * BATCH_SIZE, GL_DYNAMIC_DRAW);
         glBufferSubData(GL_ARRAY_BUFFER, 0, vertices);
 
-        // Draw the buffer that we just uploaded
         // Use shader
         Shader shader = Renderer.getBoundShader();
         shader.use();
         shader.uploadTexture("uFontTexture", 0);
         shader.uploadMat4f("uProjection", SiriusTheFox.getCurrentScene().getCamera().getProjectionMatrix());
-        // shader.uploadMat4f("uView", SiriusTheFox.getCurrentScene().getCamera().getViewMatrix());
 
         glActiveTexture(GL_TEXTURE0);
         glBindTexture(GL_TEXTURE_BUFFER, font.textureId);
 
         GlObjects.bindVao(vao);
-        glEnableVertexAttribArray(0);
-        glEnableVertexAttribArray(1);
+        GlObjects.enableAttributes(2);
 
         glDrawElements(GL_TRIANGLES, size * 6, GL_UNSIGNED_INT, 0);
 
-        glDisableVertexAttribArray(0);
-        glDisableVertexAttribArray(1);
-
         // Disengage everything
-        // GlObjects.disableAttributes(2);
+        GlObjects.disableAttributes(2);
         GlObjects.unbindVao();
 
         // Disengage the textures

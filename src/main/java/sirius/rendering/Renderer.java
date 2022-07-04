@@ -12,12 +12,13 @@ import java.util.List;
 public class Renderer {
     private final int MAX_BATCH_SIZE = 1000;
     private List<RenderBatch> batches;
-    private List<BatchFont> fontBatchList;
+    private BatchFont fontBatch;
     private static Shader currentShader;
 
     public Renderer() {
-        batches       = new ArrayList<>();
-        fontBatchList = new ArrayList<>();
+        batches = new ArrayList<>();
+        fontBatch = new BatchFont();
+        fontBatch.initBatch();
     }
 
     public void add(GameObject gameObject) {
@@ -56,9 +57,8 @@ public class Renderer {
     }
 
     public void addText(String text, float x, float y, float scale, Color color) {
-        fontBatchList.get(0).addText(text, x, y, scale, color.getDecimal32());
-
-        fontBatchList.get(0).flushBatch();
+        fontBatch.addText(text, x, y, scale, color.getDecimal32());
+        fontBatch.flushBatch();
     }
 
     public static void bindShader(Shader shader) {
@@ -72,12 +72,16 @@ public class Renderer {
     public void renderUserInterface() {
         currentShader.use();
 
-        if (fontBatchList.isEmpty()) {
-            fontBatchList.add(new BatchFont());
-            fontBatchList.get(0).initBatch();
-        }
         SiriusTheFox.getCurrentScene().getRenderer()
                 .addText("Test Text and I love it!", 0.1f, 0.1f, 0.009f,
+                        new Color(255, 255, 255));
+
+        SiriusTheFox.getCurrentScene().getRenderer()
+                .addText("Is it working if I had a lot of", 0.1f, 1.1f, 0.009f,
+                        new Color(255, 255, 255));
+
+        SiriusTheFox.getCurrentScene().getRenderer()
+                .addText("uncessary text? I mean LOLOL", 0.1f, 0.9f, 0.009f,
                         new Color(255, 255, 255));
     }
 
