@@ -53,8 +53,6 @@ public class SiriusTheFox implements Observer {
         audio.init();
         window.start();
 
-        loadEngineResources();
-
         // Put the scene
         if (!exportGame)
             changeScene(new LevelEditorSceneInitializer());
@@ -65,6 +63,8 @@ public class SiriusTheFox implements Observer {
             else
                 changeScene(new LevelSceneInitializer());
         }
+
+        loadEngineResources();
     }
 
     public void loop() {
@@ -75,6 +75,7 @@ public class SiriusTheFox implements Observer {
         Shader defaultShader = AssetPool.getShader("assets/shaders/default.glsl");
         Shader fontShader    = AssetPool.getShader("assets/shaders/font.glsl");
         Shader pickingShader = AssetPool.getShader("assets/shaders/pickingShader.glsl");
+
 
         while (!window.isWindowClosed()) {
             Input.updateEvents();

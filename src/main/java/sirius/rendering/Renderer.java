@@ -56,7 +56,7 @@ public class Renderer {
     }
 
     public void addText(String text, float x, float y, float scale, Color color) {
-        fontBatchList.get(0).addText(text, x, y, scale, 0xFFff00ff);
+        fontBatchList.get(0).addText(text, x, y, scale, color.getDecimal32());
 
         fontBatchList.get(0).flushBatch();
     }
@@ -77,7 +77,8 @@ public class Renderer {
             fontBatchList.get(0).initBatch();
         }
         SiriusTheFox.getCurrentScene().getRenderer()
-                .addText("Test Text and I love it!", 0.1f, 0.1f, 0.009f, new Color(150, 150, 150));
+                .addText("Test Text and I love it!", 0.1f, 0.1f, 0.009f,
+                        new Color(255, 255, 255));
     }
 
     public void render() {
