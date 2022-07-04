@@ -2,6 +2,7 @@ package sirius.rendering;
 
 import gameobjects.GameObject;
 import gameobjects.components.SpriteRenderer;
+import sirius.SiriusTheFox;
 import sirius.rendering.spritesheet.Texture;
 
 import java.util.ArrayList;
@@ -11,10 +12,13 @@ import java.util.List;
 public class Renderer {
     private final int MAX_BATCH_SIZE = 1000;
     private List<RenderBatch> batches;
+    private BatchFont fontBatch;
     private static Shader currentShader;
 
     public Renderer() {
         batches = new ArrayList<>();
+        fontBatch = new BatchFont();
+        fontBatch.initBatch();
     }
 
     public void add(GameObject gameObject) {
@@ -40,7 +44,7 @@ public class Renderer {
         }
 
         if (!added) {
-            // Se não, o renderBatch atual está cheio e precisamos de outro
+            // Else, the actual render batch is full and we need another one
             RenderBatch newRenderBatch = new RenderBatch(MAX_BATCH_SIZE,
                     spriteRenderer.gameObject.getTransform().zIndex, this);
             newRenderBatch.start();
@@ -52,6 +56,11 @@ public class Renderer {
         }
     }
 
+    public void addText(String text, float x, float y, float scale, Color color) {
+        fontBatch.addText(text, x, y, scale, color.getDecimal32());
+        fontBatch.flushBatch();
+    }
+
     public static void bindShader(Shader shader) {
         currentShader = shader;
     }
@@ -60,12 +69,27 @@ public class Renderer {
         return currentShader;
     }
 
+    public void renderUserInterface() {
+        currentShader.use();
+
+        SiriusTheFox.getCurrentScene().getRenderer()
+                .addText("Test Text and I love it!", 0.1f, 0.1f, 0.009f,
+                        new Color(255, 255, 255));
+
+        SiriusTheFox.getCurrentScene().getRenderer()
+                .addText("Is it working if I had a lot of", 0.1f, 1.1f, 0.009f,
+                        new Color(255, 255, 255));
+
+        SiriusTheFox.getCurrentScene().getRenderer()
+                .addText("uncessary text? I mean LOLOL", 0.1f, 0.9f, 0.009f,
+                        new Color(255, 255, 255));
+    }
+
     public void render() {
         currentShader.use();
 
         for (int i = 0; i < batches.size(); i++)
             batches.get(i).render();
-
     }
 
     public void destroyGameObject(GameObject go) {

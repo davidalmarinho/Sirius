@@ -7,8 +7,6 @@ import observers.EventSystem;
 import observers.events.Event;
 import observers.events.Events;
 import sirius.editor.imgui.sprite_animation_window.AnimationBlueprint;
-import sirius.editor.imgui.sprite_animation_window.SpriteAnimationWindow;
-import sirius.editor.imgui.sprite_animation_window.Animator;
 import sirius.encode_tools.Encode;
 import sirius.SiriusTheFox;
 import sirius.editor.MouseControls;
@@ -57,15 +55,6 @@ public class Scene {
     }
 
     public void editorUpdate(float dt) {
-        /*time -= dt;
-
-        if (time <= 0) {
-            for (GameObject gameObject : SiriusTheFox.getCurrentScene().getGameObjectList()) {
-                System.out.println("IDS: " + gameObject.getUid());
-            }
-            time = 1.0f;
-        }*/
-
         // Save and load file
         if (KeyListener.isBindPressed(GLFW_KEY_LEFT_CONTROL, GLFW_KEY_S)
                 && !SiriusTheFox.get().isRuntimePlaying()) {
@@ -131,6 +120,10 @@ public class Scene {
             this.physics2d.add(go);
         }
         pendingGameObjectList.clear();
+    }
+
+    public void renderUserInterface() {
+        this.renderer.renderUserInterface();
     }
 
     public void render() {

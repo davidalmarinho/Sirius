@@ -1,5 +1,6 @@
 package sirius.utils;
 
+import gameobjects.components.fonts.Font;
 import sirius.Sound;
 import sirius.editor.imgui.sprite_animation_window.AnimationBlueprint;
 import sirius.editor.imgui.sprite_animation_window.Animator;
@@ -10,8 +11,6 @@ import sirius.rendering.spritesheet.Texture;
 
 import java.io.File;
 import java.util.*;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class AssetPool {
     private static Map<String, Shader> shaders = new HashMap<>();
@@ -20,6 +19,7 @@ public class AssetPool {
     private static Map<String, AnimationBlueprint> animationsMap = new HashMap<>();
     private static Map<String, Spritesheet> spritesheets = new HashMap<>();
     private static Map<String, Sound> stringSoundHashMap = new HashMap<>();
+    private static Map<String, Font> fontMap = new HashMap<>();
 
 
     public static Shader getShader(String filePath) {
@@ -209,5 +209,45 @@ public class AssetPool {
         }
 
         return spritesheetsNames;
+    }
+
+    public static void addFont(String filepath) {
+        File file = new File(filepath);
+        Font font = new Font(filepath, 16);
+
+        if (!fontMap.containsKey(file.getPath())) {
+            fontMap.put(file.getPath(), font);
+        }
+    }
+
+    public static Font getFont(String filepath) {
+        return fontMap.get(new File(filepath).getPath());
+    }
+
+    public static String[] getFontsPaths() {
+        String[] fontsPaths = new String[fontMap.size()];
+
+        int i = 0;
+        for (String key : fontMap.keySet()) {
+            fontsPaths[i] = key;
+            i++;
+        }
+
+        return fontsPaths;
+    }
+
+    public static String[] getFontsNames() {
+        String[] fontsPaths = new String[fontMap.size()];
+
+        int i = 0;
+        File file;
+        for (String key : fontMap.keySet()) {
+            file = new File(key);
+            String name = file.getName();
+            fontsPaths[i] = name.split("\\.")[0];
+            i++;
+        }
+
+        return fontsPaths;
     }
 }

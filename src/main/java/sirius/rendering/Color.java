@@ -29,12 +29,11 @@ public class Color {
         return this.color;
     }
 
-    // TODO: 27/04/2022 Broken
     public int getDecimal32() {
-        int opacity = (int) (this.color.w * 255.0f) << 24;
-        int red     = (int) (this.color.x * 255.0f) << 16;
-        int green   = (int) (this.color.y * 255.0f) << 8;
-        int blue    = (int) (this.color.z * 255.0f);
+        int opacity = (int) this.color.w << 24;
+        int red     = (int) this.color.x << 16;
+        int green   = (int) this.color.y << 8;
+        int blue    = (int) this.color.z;
 
         return opacity + red + green + blue;
     }

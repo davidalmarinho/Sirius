@@ -2,6 +2,7 @@ package gameobjects;
 
 import gameobjects.components.Sprite;
 import gameobjects.components.SpriteRenderer;
+import gameobjects.components.fonts.FontRenderer;
 import imgui.ImGui;
 import sirius.SiriusTheFox;
 import sirius.editor.MouseControls;
@@ -21,6 +22,14 @@ public class Prefabs {
         block.addComponent(spriteRenderer);
 
         return block;
+    }
+
+    public static GameObject generateTextObject(float sizeX, float sizeY) {
+        GameObject textBlock = SiriusTheFox.getCurrentScene().createGameObject(Settings.GameObjects.GENERATED_NAME);
+        textBlock.setScale(sizeX, sizeY);
+        textBlock.addComponent(new FontRenderer());
+
+        return textBlock;
     }
 
     /**

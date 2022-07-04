@@ -193,7 +193,10 @@ public class GameObject {
     }
 
     public Vector2f getPosition() {
-        return this.getTransform().position;
+        if (this.hasComponent(Transform.class))
+            return this.getTransform().position;
+
+        return new Vector2f();
     }
 
     public void setPosition(float x, float y) {

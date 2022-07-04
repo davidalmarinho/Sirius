@@ -41,7 +41,7 @@ public class SpriteAnimationWindow {
                 ImGui.openPopup(DELETE_CONTEXT);
             }
 
-            if (ImGui.button("Save")) {
+            if (ImGui.button("Save") && animator.animationBlueprint != null) {
                 // TODO: 17/06/2022 Throw error when a trigger is just "" (empty)
                 Encode.saveAnimation(animator.animationBlueprint, currentAnimationPath);
                 AssetPool.updateAnimation(currentAnimationPath, animator.animationBlueprint);
@@ -92,7 +92,7 @@ public class SpriteAnimationWindow {
                 if (items.length == 0)
                     ImGui.closeCurrentPopup();
 
-                currentItem = JImGui.list("", currentItem, items);
+                currentItem = JImGui.listLeaf("", currentItem, items);
 
                 if (ImGui.isMouseReleased(ImGuiMouseButton.Left) && currentItem >= 0) {
                     // TODO: 17/06/2022 Are you sure? Window
@@ -118,7 +118,7 @@ public class SpriteAnimationWindow {
                 if (items.length == 0)
                     ImGui.closeCurrentPopup();
 
-                currentItem = JImGui.list("", currentItem, items);
+                currentItem = JImGui.listLeaf("", currentItem, items);
 
                 if (ImGui.isMouseReleased(ImGuiMouseButton.Left) && currentItem >= 0) {
                     currentAnimationPath = items[currentItem];
