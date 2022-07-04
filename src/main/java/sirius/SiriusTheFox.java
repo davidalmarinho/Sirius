@@ -53,7 +53,9 @@ public class SiriusTheFox implements Observer {
         audio.init();
         window.start();
 
-        // Colocar a scene
+        loadEngineResources();
+
+        // Put the scene
         if (!exportGame)
             changeScene(new LevelEditorSceneInitializer());
         else {
@@ -71,6 +73,7 @@ public class SiriusTheFox implements Observer {
         float dt = -1.0f;
 
         Shader defaultShader = AssetPool.getShader("assets/shaders/default.glsl");
+        Shader fontShader    = AssetPool.getShader("assets/shaders/font.glsl");
         Shader pickingShader = AssetPool.getShader("assets/shaders/pickingShader.glsl");
 
         while (!window.isWindowClosed()) {
@@ -124,6 +127,10 @@ public class SiriusTheFox implements Observer {
 
                 currentScene.render();
 
+                glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+                Renderer.bindShader(fontShader);
+                currentScene.renderUserInterface();
+
                 if (!exportGame) {
                     DebugDraw.draw();
                 }
@@ -137,7 +144,6 @@ public class SiriusTheFox implements Observer {
             MouseListener.endFrame();
             window.dispose();
 
-            // Gameloop
             endTime = (float) glfwGetTime();
             dt = endTime - beginTime;
             beginTime = endTime;
@@ -165,6 +171,10 @@ public class SiriusTheFox implements Observer {
         currentScene.load();
         currentScene.init();
         currentScene.start();
+    }
+
+    private void loadEngineResources() {
+        AssetPool.addFont("assets/fonts/verdana.ttf");
     }
 
     @Override

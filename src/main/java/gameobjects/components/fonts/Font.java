@@ -26,6 +26,20 @@ public class Font {
         generateBitmap();
     }
 
+    /**
+     * // TODO: 04/07/2022 Note this
+     * Created due to Java abstraction.
+     *
+     * @param newFont
+     */
+    public Font(Font newFont) {
+        this.filepath     = newFont.filepath;
+        this.size         = newFont.size;
+        this.characterMap = newFont.characterMap;
+        this.textureId    = newFont.textureId;
+        generateBitmap();
+    }
+
     public CharInfo getCharacter(int codepoint) {
         return characterMap.getOrDefault(codepoint, new CharInfo(0, 0, 0, 0));
     }

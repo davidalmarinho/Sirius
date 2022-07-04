@@ -11,6 +11,8 @@ import sirius.animations.StateMachine;
 import sirius.editor.*;
 import sirius.editor.components.KeyControls;
 import sirius.editor.imgui.JImGui;
+import sirius.rendering.Color;
+import sirius.rendering.Renderer;
 import sirius.rendering.spritesheet.Images;
 import sirius.rendering.spritesheet.Spritesheet;
 import sirius.utils.AssetPool;
@@ -52,7 +54,6 @@ public class LevelEditorSceneInitializer implements ISceneInitializer {
 
     @Override
     public void loadResources(Scene scene) {
-        AssetPool.getShader("assets/shaders/default.glsl");
         AssetPool.addSpritesheet(Images.DECORATIONS_AND_BLOCKS.getSpritesheet(),
                 new Spritesheet(
                         AssetPool.getTexture(Images.DECORATIONS_AND_BLOCKS.getSpritesheet()),
@@ -118,8 +119,6 @@ public class LevelEditorSceneInitializer implements ISceneInitializer {
                 stateMachine.refreshTextures();
             }
         }
-
-        AssetPool.addFont("assets/fonts/verdana.ttf");
     }
 
     @Override

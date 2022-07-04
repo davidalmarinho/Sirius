@@ -122,7 +122,7 @@ public class StateMachine extends Component {
         // List available blueprints animations
         ImGui.textUnformatted("Select animation: ");
 
-        currentItem = JImGui.listOpenArrow("", currentItem, animationsNames);
+        currentItem = JImGui.listOpenArrow("Animation List:", currentItem, animationsNames);
 
         String[] animationsPaths = AssetPool.getAnimationsPaths();
 

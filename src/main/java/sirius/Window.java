@@ -47,28 +47,16 @@ public class Window {
     }
 
     public void init() {
-        // Callback erro --se houver erros, vamos mostrá-los aqui
+        // Callback error --if there are errors, we will show them here.
         GLFWErrorCallback.createPrint(System.err).set();
-        /* Existem três tipos de comandos System no Java:
-         * -> System.err => Output padrão dos erros do sistema (Daí usarmos este nesta situação,
-         * pois "queremos" mostrar erros)
-         * -> System.in => Input padrão do sistema, daí, quando criamos um Scanner para ler dados do usuário
-         * fazemos:
-         *         Scanner scanner = new Scanner(System.in);
-         * -> System.out => Faz output de dados (não é muito certo para aqui por termos o System.err que é
-         * mais específico para este caso, mas se não usaríamos o System.out).
-         */
 
-        // Inicializar o GLFW
+        // Initialize GLFW
         if (!glfwInit()) {
             throw new IllegalStateException("Error: GLFW couldn't be Initialized.");
         }
 
-        // Configurar o GLFW (resizable window, close operation...)
-        /* Configuramos primeiro e depois criamos a janela, pois o GLFW vai usar isto par criar
-         * a janela
-         */
-        glfwDefaultWindowHints(); // Colocar tudo default primeiro
+        // Configure the GLFW --resizable window, close operation...)
+        glfwDefaultWindowHints(); // Put all default first
 
         // For linux compatibility, we have to specify the context version and make an opengl profile
         glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
@@ -76,26 +64,20 @@ public class Window {
         glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
         glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 
-        glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE); // Ainda não a queremos visível
+        glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE); // For now, we want the window invisible
         glfwWindowHint(GLFW_RESIZABLE, GLFW_TRUE);
         glfwWindowHint(GLFW_MAXIMIZED, GLFW_TRUE);
 
-        // Criar a janela
-        /* O primeiro NULL serve para selecionar o monitor (NULL vai indicar o monitor primário)
-         * O segundo NULL serve para ligar shared objects. Mas não é multiplataforma, por isso
-         * vamos fazê-lo nós.
-         */
         monitor = glfwGetPrimaryMonitor();
 
         // TODO: 13/09/2021 Define WIDTH and HEIGHT
         glfwWindow = glfwCreateWindow(1920, 1080, this.title, NULL, NULL);
 
-        // Verificar se a janela foi criada
         if (glfwWindow == NULL) {
             throw new IllegalStateException("Error: GLFW windows couldn't be initialized");
         }
 
-        // Configurar os callbacks do rato
+        // Configure mouse's callbacks
         glfwSetCursorPosCallback(glfwWindow, MouseListener::mousePosCallback);
         glfwSetScrollCallback(glfwWindow, MouseListener::mouseScrollCallback);
         glfwSetMouseButtonCallback(glfwWindow, MouseListener::mouseButtonCallback);
@@ -104,7 +86,7 @@ public class Window {
             setHeight(newHeight);
         });
 
-        // Configurar callbacks do teclado
+        // Configure keyboard's callbacks
         glfwSetKeyCallback(glfwWindow, KeyListener::keyCallback);
 
         try (MemoryStack stack = stackPush()) {
@@ -129,14 +111,13 @@ public class Window {
                 glfwSetWindowMonitor(glfwWindow, monitor, 0, 0, vidMode.width(), vidMode.height(), 0);
         }
 
-
-        // Contexto do OpenGL
+        // OpenGL context
         glfwMakeContextCurrent(glfwWindow);
 
-        // Ligar o v-sync (usar quantos hz o monitor tiver para dar refresh aos frames)
+        // Turn on the v-sync --Uses how many hz the monitor has to refresh the frames
         glfwSwapInterval(1);
 
-        // Agora vamos tornar a janela visível
+        // Turn the window visible
         glfwShowWindow(glfwWindow);
     }
 
@@ -196,8 +177,7 @@ public class Window {
     }
 
     public void dispose() {
-        glfwSwapBuffers(glfwWindow); /* Faz o mesmo que o Bufferstrategy, aquela parte de já termos uma
-            imagem pronta para mostrar antes de apagarmos a outra. */
+        glfwSwapBuffers(glfwWindow);
     }
 
     public int getWidth() {

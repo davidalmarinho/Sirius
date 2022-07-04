@@ -406,14 +406,16 @@ public class JImGui {
     }
 
     public static int listLeaf(String label, int currentItem, String[] items) {
+        if (label.isEmpty())
+            label = "##";
+
         return list(label, currentItem, items, ImGuiTreeNodeFlags.Leaf);
     }
 
-    public static int listLeaf(int currentItem, String[] items) {
-        return list("##", currentItem, items, ImGuiTreeNodeFlags.Leaf);
-    }
-
     public static int listOpenArrow(String label, int currentItem, String[] items) {
+        if (label.isEmpty())
+            label = "##";
+
         return list(label, currentItem, items, ImGuiTreeNodeFlags.OpenOnArrow);
     }
 

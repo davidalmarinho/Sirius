@@ -92,7 +92,7 @@ public class SpriteAnimationWindow {
                 if (items.length == 0)
                     ImGui.closeCurrentPopup();
 
-                currentItem = JImGui.listLeaf(currentItem, items);
+                currentItem = JImGui.listLeaf("", currentItem, items);
 
                 if (ImGui.isMouseReleased(ImGuiMouseButton.Left) && currentItem >= 0) {
                     // TODO: 17/06/2022 Are you sure? Window
@@ -118,7 +118,7 @@ public class SpriteAnimationWindow {
                 if (items.length == 0)
                     ImGui.closeCurrentPopup();
 
-                currentItem = JImGui.listLeaf(currentItem, items);
+                currentItem = JImGui.listLeaf("", currentItem, items);
 
                 if (ImGui.isMouseReleased(ImGuiMouseButton.Left) && currentItem >= 0) {
                     currentAnimationPath = items[currentItem];

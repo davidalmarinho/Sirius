@@ -51,6 +51,7 @@ public class GlObjects {
      * Unbinds the current vertex array object.
      */
     public static void unbindVao() {
+        glBindBuffer(GL_ARRAY_BUFFER, 0);
         glBindVertexArray(0);
     }
 

@@ -33,18 +33,16 @@ public class Camera {
     }
 
     public void adjustProjection() {
-        /* Aqui vamos normalizar a matriz. Ou seja, os seus valores passam a corresponder a 1.
-        * Fazendo com que os cálculos se baseiem nesta matriz.
-        */
+        // Here, we will normalize the matrix. So, its values become corresponding to 1
         projectionMatrix.identity();
         projectionMatrix.ortho(0.0f, projectionSize.x * zoom,
                 0.0f, projectionSize.y * zoom, 0.0f, 100.0f);
         projectionMatrix.invert(inverseProjection);
     }
 
-    // Onde a camara está no mundo e para once ela aponta
+    // Where the camera is in the world and where it is pointing to
     public Matrix4f getViewMatrix() {
-        // Frente da câmara (onde a câmara está a olhar)
+        // Front of the camera --Where the camera is looking to
         Vector3f center = new Vector3f(position.x, position.y, 1);
         Vector3f cameraForward = new Vector3f(0.0f, 0.0f, -1.0f); // x's direction
         center.add(cameraForward);
@@ -55,8 +53,8 @@ public class Camera {
         this.viewMatrix.identity();
 
         viewMatrix = viewMatrix.lookAt(
-                new Vector3f(position.x, position.y, 20.0f), // Onde a camara está posicionada
-                center, // Para onde está a olhar
+                new Vector3f(position.x, position.y, 20.0f), // Where the camera is positioned
+                center, // To where it is looking
                 cameraUp
         );
 

@@ -4,6 +4,8 @@ import gameobjects.components.fonts.CharInfo;
 import gameobjects.components.fonts.Font;
 import org.joml.Matrix4f;
 import org.lwjgl.opengl.GL15;
+import sirius.SiriusTheFox;
+import sirius.utils.AssetPool;
 
 import static org.lwjgl.opengl.GL11.GL_FLOAT;
 import static org.lwjgl.opengl.GL11.GL_TRIANGLES;
@@ -14,8 +16,7 @@ import static org.lwjgl.opengl.GL13.GL_TEXTURE0;
 import static org.lwjgl.opengl.GL13.glActiveTexture;
 import static org.lwjgl.opengl.GL15.*;
 import static org.lwjgl.opengl.GL15.GL_ARRAY_BUFFER;
-import static org.lwjgl.opengl.GL20.glEnableVertexAttribArray;
-import static org.lwjgl.opengl.GL20.glVertexAttribPointer;
+import static org.lwjgl.opengl.GL20.*;
 import static org.lwjgl.opengl.GL30.glBindVertexArray;
 import static org.lwjgl.opengl.GL30.glGenVertexArrays;
 import static org.lwjgl.opengl.GL31.GL_TEXTURE_BUFFER;
@@ -31,11 +32,9 @@ public class BatchFont {
     public static int VERTEX_SIZE = 7;
     public float[] vertices = new float[BATCH_SIZE * VERTEX_SIZE];
     public int size = 0;
-    private Matrix4f projection = new Matrix4f();
 
     public int vao;
     public int vbo;
-    public Shader shader;
     public Font font;
 
     public void generateEbo() {
@@ -52,9 +51,6 @@ public class BatchFont {
     }
 
     public void initBatch() {
-        projection.identity();
-        projection.ortho(0, 800, 0, 600, 1f, 100f);
-
         vao = glGenVertexArrays();
         glBindVertexArray(vao);
 
@@ -77,15 +73,33 @@ public class BatchFont {
         glBufferSubData(GL_ARRAY_BUFFER, 0, vertices);
 
         // Draw the buffer that we just uploaded
+        // Use shader
+        Shader shader = Renderer.getBoundShader();
         shader.use();
+        shader.uploadTexture("uFontTexture", 0);
+        shader.uploadMat4f("uProjection", SiriusTheFox.getCurrentScene().getCamera().getProjectionMatrix());
+        // shader.uploadMat4f("uView", SiriusTheFox.getCurrentScene().getCamera().getViewMatrix());
+
         glActiveTexture(GL_TEXTURE0);
         glBindTexture(GL_TEXTURE_BUFFER, font.textureId);
-        shader.uploadTexture("uFontTexture", 0);
-        shader.uploadMat4f("uProjection", projection);
 
-        glBindVertexArray(vao);
+        GlObjects.bindVao(vao);
+        glEnableVertexAttribArray(0);
+        glEnableVertexAttribArray(1);
 
         glDrawElements(GL_TRIANGLES, size * 6, GL_UNSIGNED_INT, 0);
+
+        glDisableVertexAttribArray(0);
+        glDisableVertexAttribArray(1);
+
+        // Disengage everything
+        // GlObjects.disableAttributes(2);
+        GlObjects.unbindVao();
+
+        // Disengage the textures
+        glBindTexture(GL_TEXTURE_2D, 0);
+
+        shader.detach();
 
         // Reset batch for use on next draw call
         size = 0;
@@ -150,11 +164,21 @@ public class BatchFont {
         size += 4;
     }
 
-    public void addText(String text, int x, int y, float scale, Color color) {
+    public void addText(String text, float x, float y, float scale, int color) {
+        if (font == null) {
+            this.font = new Font(AssetPool.getFont("assets/fonts/verdana.ttf"));
+
+            // TODO: 04/07/2022 Handle better this error
+            if (AssetPool.getFont("assets/fonts/verdana.ttf") == null) {
+                System.err.println("Error: Couldn't find font. Have you added a font?");
+            }
+        }
+
         for (int i = 0; i < text.length(); i++) {
             char c = text.charAt(i);
 
             CharInfo charInfo = font.getCharacter(c);
+
             if (charInfo.width == 0) {
                 System.out.println("Unknown character " + c);
                 continue;
@@ -162,7 +186,7 @@ public class BatchFont {
 
             float xPos = x;
             float yPos = y;
-            addCharacter(xPos, yPos, scale, charInfo, color.getDecimal16());
+            addCharacter(xPos, yPos, scale, charInfo, color);
             x += charInfo.width * scale;
         }
     }
