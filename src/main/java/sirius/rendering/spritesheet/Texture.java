@@ -45,28 +45,28 @@ public class Texture {
     }
 
     private void init() {
-        // Criar a textura
+        // Create the texture
         this.textureID = GL11.glGenTextures();
         GL11.glBindTexture(GL_TEXTURE_2D, textureID);
 
-        // Configurar os parâmetros
-        // Repetir a imagem nas mesmas direções
+        // Configure all parameters
+        // Repeat the image in the same directions
         GL11.glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
         GL11.glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 
-        // Para o caso se a imagem aumentar ficar pixelizada
+        // To in case if the image is pixelated
         GL11.glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 
-        // Para o caso de a imagem diminuir ficar pixelizada
+        // To in case that if the image is shrinked it keeps pixelated
         GL11.glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 
-        // Carregar a imagem
+        // Load the image
         IntBuffer width = BufferUtils.createIntBuffer(1);
         IntBuffer height = BufferUtils.createIntBuffer(1);
         IntBuffer channels = BufferUtils.createIntBuffer(1);
 
-        // uma vez que ela vai ser renderizada ao contrário
-        STBImage.stbi_set_flip_vertically_on_load(true); // Serve para virar a textura ao contrario
+        // One time that the image is rendered upside down --will turn the texture upside down
+        STBImage.stbi_set_flip_vertically_on_load(true);
 
         ByteBuffer image = STBImage.stbi_load(this.filePath, width, height, channels, 0);
 
@@ -74,7 +74,7 @@ public class Texture {
             this.width = width.get(0);
             this.height = height.get(0);
 
-            // Temos dados, então podemos carregar a imagem
+            // We have data, so we can load the image
             if (channels.get(0) == 4) {
                 glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width.get(0), height.get(0),
                         0, GL_RGBA, GL_UNSIGNED_BYTE, image);
@@ -88,7 +88,7 @@ public class Texture {
             assert false : "Error: (Texture) Couldn't load image '" + this.filePath + "'.";
         }
 
-        // Limpar a memória no GPU
+        // Clean the memory in GPU
         STBImage.stbi_image_free(image);
     }
 

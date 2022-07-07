@@ -32,6 +32,7 @@ public class ImGuiLayer {
     private SceneHierarchy sceneHierarchy;
     private SpriteAnimationWindow spriteAnimationWindow;
     private TabBar tabBar;
+    private ToolWindow toolWindow;
 
     public ImGuiLayer(long glfwWindow, PickingTexture pickingTexture) {
         this.imGuiGl3 = new ImGuiImplGl3();
@@ -43,6 +44,7 @@ public class ImGuiLayer {
         this.sceneHierarchy = new SceneHierarchy();
         this.spriteAnimationWindow = SpriteAnimationWindow.get();
         this.tabBar = new TabBar();
+        this.toolWindow = new ToolWindow();
     }
 
     public void edit(long glfwWindow) {
@@ -178,13 +180,14 @@ public class ImGuiLayer {
 
         // Any Dear ImGui code SHOULD go between ImGui.newFrame()/ImGui.render() methods
         setupDockSpace();
-        // ImGui.showDemoWindow();
+        ImGui.showDemoWindow();
         currentScene.imgui();
         tabBar.imgui();
         propertiesWindow.imgui();
         // sceneHierarchy.imgui();
         spriteAnimationWindow.imgui(dt);
         gameViewWindow.imgui();
+        toolWindow.imgui();
 
         // We have to end ImGui before we render ImGui
         endFrame();
@@ -263,5 +266,9 @@ public class ImGuiLayer {
 
     public TabBar getTabBar() {
         return tabBar;
+    }
+
+    public ToolWindow getToolWindow() {
+        return toolWindow;
     }
 }

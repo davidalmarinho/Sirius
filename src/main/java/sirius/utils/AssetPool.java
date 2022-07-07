@@ -3,7 +3,6 @@ package sirius.utils;
 import gameobjects.components.fonts.Font;
 import sirius.Sound;
 import sirius.editor.imgui.sprite_animation_window.AnimationBlueprint;
-import sirius.editor.imgui.sprite_animation_window.Animator;
 import sirius.levels.Level;
 import sirius.rendering.spritesheet.Spritesheet;
 import sirius.rendering.Shader;

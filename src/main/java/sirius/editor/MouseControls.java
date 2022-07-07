@@ -7,6 +7,7 @@ import gameobjects.components.Transform;
 import sirius.SiriusTheFox;
 import sirius.animations.StateMachine;
 import sirius.editor.imgui.PropertiesWindow;
+import sirius.editor.imgui.ToolWindow;
 import sirius.input.KeyListener;
 import sirius.input.MouseListener;
 import sirius.rendering.Color;
@@ -178,8 +179,7 @@ public class MouseControls extends Component {
         }
     }
 
-    @Override
-    public void editorUpdate(float dt) {
+    private void selectionTool(float dt) {
         selectAndChangeMultipleGameObjects();
 
         debounce -= dt;
@@ -238,7 +238,7 @@ public class MouseControls extends Component {
 
             // If we are dragging and pressing the mouse's left button
         } else if (MouseListener.isDragging() && MouseListener.isMouseButtonPressed(GLFW_MOUSE_BUTTON_LEFT)
-                    && SiriusTheFox.getImGuiLayer().getPropertiesWindow().getActiveGameObjectList().size() != 1) {
+                && SiriusTheFox.getImGuiLayer().getPropertiesWindow().getActiveGameObjectList().size() != 1) {
             // If we aren't dragging
             if (!boxSelectSet) {
                 SiriusTheFox.getImGuiLayer().getPropertiesWindow().clearSelected();
@@ -295,6 +295,19 @@ public class MouseControls extends Component {
         if (holdingGameObject != null
                 && SiriusTheFox.getImGuiLayer().getPropertiesWindow().getActiveGameObject() != null) {
             SiriusTheFox.getImGuiLayer().getPropertiesWindow().clearSelected();
+        }
+    }
+
+    @Override
+    public void editorUpdate(float dt) {
+        ToolWindow toolWindow = SiriusTheFox.getImGuiLayer().getToolWindow();
+        // TODO: 07/07/2022 make enum
+        switch (toolWindow.getCurrentTool()) {
+            case "Selection tool":
+                selectionTool(dt);
+                break;
+            case "Text tool":
+                break;
         }
     }
 

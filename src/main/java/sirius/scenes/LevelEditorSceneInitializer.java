@@ -44,9 +44,15 @@ public class LevelEditorSceneInitializer implements ISceneInitializer {
         scene.addGameObject(levelEditorStuff);
     }
 
+    // TODO: 07/07/2022 Abstract this
     @Override
     public void loadResources(Scene scene) {
         AssetPool.getShader("assets/shaders/default.glsl");
+
+        AssetPool.addSpritesheet("assets/images/tools/tools.png",
+                new Spritesheet(
+                        AssetPool.getTexture("assets/images/tools/tools.png"),
+                        64, 64, 2, 0));
 
         AssetPool.addSpritesheet(Images.DECORATIONS_AND_BLOCKS.getSpritesheet(),
                 new Spritesheet(

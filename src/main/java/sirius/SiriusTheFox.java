@@ -11,6 +11,8 @@ import sirius.rendering.Color;
 import sirius.rendering.Renderer;
 import sirius.rendering.Shader;
 import sirius.rendering.debug.DebugDraw;
+import sirius.rendering.spritesheet.Images;
+import sirius.rendering.spritesheet.Spritesheet;
 import sirius.scenes.LevelEditorSceneInitializer;
 import sirius.scenes.LevelSceneInitializer;
 import sirius.scenes.Scene;
