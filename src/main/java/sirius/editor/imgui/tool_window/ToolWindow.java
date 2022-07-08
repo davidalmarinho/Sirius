@@ -1,4 +1,4 @@
-package sirius.editor.imgui;
+package sirius.editor.imgui.tool_window;
 
 import gameobjects.components.Sprite;
 import imgui.ImGui;
@@ -8,12 +8,15 @@ import sirius.rendering.spritesheet.Spritesheet;
 import sirius.utils.AssetPool;
 
 public class ToolWindow {
-    private final String[] TOOLS;
+    public boolean show;
+
+    private final Tools[] TOOLS;
     private int currentToolIndex;
 
     public ToolWindow() {
-        TOOLS = new String[]{"Selection tool", "Text tool"};
+        TOOLS = new Tools[]{Tools.SELECTION_TOOL, Tools.TEXT_TOOL};
         currentToolIndex = 0;
+        this.show = true;
     }
 
     public void imgui() {
@@ -49,7 +52,7 @@ public class ToolWindow {
 
             // Show tip when cursor above tool
             if (ImGui.isItemHovered())
-                ImGui.setTooltip(TOOLS[i]);
+                ImGui.setTooltip(TOOLS[i].toString());
 
             // After we don't want to worry about that we have changed textures' id, so let's replace it again
             ImGui.popID();
@@ -66,7 +69,7 @@ public class ToolWindow {
         }
     }
 
-    public String getCurrentTool() {
+    public Tools getCurrentTool() {
         return TOOLS[currentToolIndex];
     }
 }

@@ -7,7 +7,7 @@ import gameobjects.components.Transform;
 import sirius.SiriusTheFox;
 import sirius.animations.StateMachine;
 import sirius.editor.imgui.PropertiesWindow;
-import sirius.editor.imgui.ToolWindow;
+import sirius.editor.imgui.tool_window.ToolWindow;
 import sirius.input.KeyListener;
 import sirius.input.MouseListener;
 import sirius.rendering.Color;
@@ -301,12 +301,11 @@ public class MouseControls extends Component {
     @Override
     public void editorUpdate(float dt) {
         ToolWindow toolWindow = SiriusTheFox.getImGuiLayer().getToolWindow();
-        // TODO: 07/07/2022 make enum
         switch (toolWindow.getCurrentTool()) {
-            case "Selection tool":
+            case SELECTION_TOOL:
                 selectionTool(dt);
                 break;
-            case "Text tool":
+            case TEXT_TOOL:
                 break;
         }
     }

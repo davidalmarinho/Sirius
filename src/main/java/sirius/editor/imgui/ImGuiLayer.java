@@ -9,6 +9,7 @@ import imgui.flag.*;
 import imgui.gl3.ImGuiImplGl3;
 import imgui.glfw.ImGuiImplGlfw;
 import imgui.type.ImBoolean;
+import sirius.editor.imgui.tool_window.ToolWindow;
 import sirius.input.KeyListener;
 import sirius.input.MouseListener;
 import sirius.rendering.PickingTexture;

@@ -7,6 +7,7 @@ import observers.EventSystem;
 import observers.events.Events;
 import observers.events.Event;
 import sirius.editor.imgui.sprite_animation_window.SpriteAnimationWindow;
+import sirius.editor.imgui.tool_window.ToolWindow;
 import sirius.levels.Level;
 import sirius.utils.AssetPool;
 
@@ -77,6 +78,7 @@ public class MenuBar {
             ImGui.endMenu();
         }
 
+        // TODO: 08/07/2022 Save system to know which docks were non showed
         if (ImGui.beginMenu("Dock")) {
             ImGuiLayer imGuiLayer = SiriusTheFox.getImGuiLayer();
 
@@ -89,10 +91,11 @@ public class MenuBar {
             TabBar tabBar = imGuiLayer.getTabBar();
             tabBar.show = JImGui.checkBox("Tab Bar", tabBar.show);
 
+            ToolWindow toolWindow = imGuiLayer.getToolWindow();
+            toolWindow.show = JImGui.checkBox("Tool Window", toolWindow.show);
+
             ImGui.endMenu();
         }
-
-        // TODO: 05/07/2022 select tool and text tool
 
         ImGui.endMenuBar();
     }
