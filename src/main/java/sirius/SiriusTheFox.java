@@ -12,8 +12,6 @@ import sirius.rendering.Color;
 import sirius.rendering.Renderer;
 import sirius.rendering.Shader;
 import sirius.rendering.debug.DebugDraw;
-import sirius.rendering.spritesheet.Images;
-import sirius.rendering.spritesheet.Spritesheet;
 import sirius.scenes.LevelEditorSceneInitializer;
 import sirius.scenes.LevelSceneInitializer;
 import sirius.scenes.Scene;
@@ -160,11 +158,11 @@ public class SiriusTheFox implements Observer {
                 "showGameViewWindow", "showSpriteAnimationWindow", "showTabBar",
                 "showToolWindow", "showSceneHierarchy"};
         Boolean[] values = new Boolean[]{
-                getImGuiLayer().getGameViewWindow().show,
-                getImGuiLayer().getSpriteAnimationWindow().show,
-                getImGuiLayer().getTabBar().show,
-                getImGuiLayer().getToolWindow().show,
-                getImGuiLayer().getSceneHierarchy().show};
+                getImGuiLayer().getGameViewWindow().isVisible(),
+                getImGuiLayer().getSpriteAnimationWindow().isVisible(),
+                getImGuiLayer().getTabBar().isVisible(),
+                getImGuiLayer().getToolWindow().isVisible(),
+                getImGuiLayer().getSceneHierarchy().isVisible()};
         Encode.saveInFile(options, values, Settings.Files.GUI_VISIBILITY_SETTINGS, 0);
     }
 

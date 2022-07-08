@@ -78,24 +78,23 @@ public class MenuBar {
             ImGui.endMenu();
         }
 
-        // TODO: 08/07/2022 Save system to know which docks were non showed
         if (ImGui.beginMenu("Dock")) {
             ImGuiLayer imGuiLayer = SiriusTheFox.getImGuiLayer();
 
             GameViewWindow gameViewWindow = imGuiLayer.getGameViewWindow();
-            gameViewWindow.show = JImGui.checkBox("Game View Window", gameViewWindow.show);
+            gameViewWindow.setVisibility(JImGui.checkBox("Game View Window", gameViewWindow.isVisible()));
 
             SpriteAnimationWindow animationWindow = imGuiLayer.getSpriteAnimationWindow();
-            animationWindow.show = JImGui.checkBox("Sprite Animation Window", animationWindow.show);
+            animationWindow.setVisibility(JImGui.checkBox("Sprite Animation Window", animationWindow.isVisible()));
 
             TabBar tabBar = imGuiLayer.getTabBar();
-            tabBar.show = JImGui.checkBox("Tab Bar", tabBar.show);
+            tabBar.setVisibility(JImGui.checkBox("Tab Bar", tabBar.isVisible()));
 
             ToolWindow toolWindow = imGuiLayer.getToolWindow();
-            toolWindow.show = JImGui.checkBox("Tool Window", toolWindow.show);
+            toolWindow.setVisibility(JImGui.checkBox("Tool Window", toolWindow.isVisible()));
 
             SceneHierarchy sceneHierarchy = imGuiLayer.getSceneHierarchy();
-            sceneHierarchy.show = JImGui.checkBox("Scene Hierarchy Window", sceneHierarchy.show);
+            sceneHierarchy.setVisibility(JImGui.checkBox("Scene Hierarchy Window", sceneHierarchy.isVisible()));
 
             ImGui.endMenu();
         }

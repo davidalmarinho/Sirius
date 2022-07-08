@@ -10,18 +10,20 @@ import observers.events.Events;
 import observers.events.Event;
 import org.joml.Vector2f;
 
-public class GameViewWindow {
+public class GameViewWindow extends GuiWindow {
     private float leftX, rightX, topY, bottomY;
     private boolean playing;
     private boolean collapsed;
 
-    public boolean show = true;
+    public GameViewWindow() {
+        super();
+    }
 
     public void imgui() {
-        if (!show)
+        if (!show.get())
             return;
 
-        ImGui.begin("Game Viewport",
+        ImGui.begin("Game Viewport", show,
                 ImGuiWindowFlags.NoScrollbar
                         | ImGuiWindowFlags.NoScrollWithMouse
                         | ImGuiWindowFlags.MenuBar);

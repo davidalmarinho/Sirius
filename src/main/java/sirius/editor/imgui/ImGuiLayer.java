@@ -62,19 +62,19 @@ public class ImGuiLayer {
             // [1] -> Item value
             switch (navigator[0]) {
                 case "showGameViewWindow":
-                    gameViewWindow.show = Boolean.parseBoolean(navigator[1]);
+                    gameViewWindow.setVisibility(Boolean.parseBoolean(navigator[1]));
                     break;
                 case "showSpriteAnimationWindow":
-                    spriteAnimationWindow.show = Boolean.parseBoolean(navigator[1]);
+                    spriteAnimationWindow.setVisibility(Boolean.parseBoolean(navigator[1]));
                     break;
                 case "showTabBar":
-                    tabBar.show = Boolean.parseBoolean(navigator[1]);
+                    tabBar.setVisibility(Boolean.parseBoolean(navigator[1]));
                     break;
                 case "showToolWindow":
-                    toolWindow.show = Boolean.parseBoolean(navigator[1]);
+                    toolWindow.setVisibility(Boolean.parseBoolean(navigator[1]));
                     break;
                 case "showSceneHierarchy":
-                    sceneHierarchy.show = Boolean.parseBoolean(navigator[1]);
+                    sceneHierarchy.setVisibility(Boolean.parseBoolean(navigator[1]));
                     break;
             }
         }

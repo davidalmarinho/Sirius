@@ -4,25 +4,24 @@ import gameobjects.components.Sprite;
 import imgui.ImGui;
 import imgui.ImVec2;
 import org.joml.Vector2f;
+import sirius.editor.imgui.GuiWindow;
 import sirius.rendering.spritesheet.Spritesheet;
 import sirius.utils.AssetPool;
 
-public class ToolWindow {
-    public boolean show;
-
+public class ToolWindow extends GuiWindow {
     private final Tools[] TOOLS;
     private int currentToolIndex;
 
     public ToolWindow() {
+        super();
         TOOLS = new Tools[]{Tools.SELECTION_TOOL, Tools.TEXT_TOOL};
         currentToolIndex = 0;
-        this.show = true;
     }
 
     public void imgui() {
-        if (!show) return;
+        if (!isVisible()) return;
 
-        ImGui.begin("Tools");
+        ImGui.begin("Tools", show);
         toolsLayout(AssetPool.getSpritesheet("assets/images/tools/tools.png"));
         ImGui.end();
     }

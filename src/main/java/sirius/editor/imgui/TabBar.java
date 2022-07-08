@@ -12,15 +12,18 @@ import sirius.utils.AssetPool;
 import java.io.File;
 import java.util.Collection;
 
-public class TabBar {
+public class TabBar extends GuiWindow {
     private Spritesheet sprites;
-    public boolean show = true;
+
+    public TabBar() {
+        super();
+    }
 
     public void imgui() {
-        if (!show)
+        if (!isVisible())
             return;
 
-        ImGui.begin("Objects");
+        ImGui.begin("Objects", show);
 
         if (ImGui.beginTabBar("TabBar")) {
             if (ImGui.beginTabItem("Icons")) {
