@@ -1,7 +1,7 @@
 package components;
 
 import gameobjects.GameObject;
-import gameobjects.IPrefabs;
+import sirius.editor.imgui.IPrefabs;
 import sirius.SiriusTheFox;
 import sirius.animations.StateMachine;
 import main.CustomPrefabs;

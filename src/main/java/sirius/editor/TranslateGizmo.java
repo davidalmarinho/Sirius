@@ -1,6 +1,7 @@
 package sirius.editor;
 
 import gameobjects.components.Sprite;
+import sirius.editor.imgui.PropertiesWindow;
 import sirius.input.MouseListener;
 
 class TranslateGizmo extends Gizmo {

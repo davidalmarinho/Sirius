@@ -2,8 +2,10 @@ package sirius;
 
 import audio.Audio;
 import gameobjects.GameObject;
-import gameobjects.ICustomPrefabs;
-import sirius.editor.ICustomPropertiesWindow;
+import sirius.editor.imgui.ICustomPrefabs;
+import sirius.editor.imgui.ICustomPropertiesWindow;
+import sirius.editor.imgui.ImGuiLayer;
+import sirius.encode_tools.Encode;
 import sirius.input.Input;
 import sirius.input.MouseListener;
 import sirius.rendering.Color;
@@ -20,6 +22,7 @@ import observers.Observer;
 import observers.events.Event;
 import org.lwjgl.Version;
 import physics2d.Physics2d;
+import sirius.utils.Settings;
 
 import java.awt.*;
 
@@ -149,6 +152,18 @@ public class SiriusTheFox implements Observer {
             dt = endTime - beginTime;
             beginTime = endTime;
         }
+
+        // Save docks visibility --the docks' visibility are loaded in ImGuiLayer class
+        String[] options = new String[]{
+                "showGameViewWindow", "showSpriteAnimationWindow", "showTabBar",
+                "showToolWindow", "showSceneHierarchy"};
+        Boolean[] values = new Boolean[]{
+                getImGuiLayer().getGameViewWindow().isVisible(),
+                getImGuiLayer().getSpriteAnimationWindow().isVisible(),
+                getImGuiLayer().getTabBar().isVisible(),
+                getImGuiLayer().getToolWindow().isVisible(),
+                getImGuiLayer().getSceneHierarchy().isVisible()};
+        Encode.saveInFile(options, values, Settings.Files.GUI_VISIBILITY_SETTINGS, 0);
     }
 
     public void run() {

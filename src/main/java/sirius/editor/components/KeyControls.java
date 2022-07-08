@@ -4,7 +4,7 @@ import gameobjects.GameObject;
 import gameobjects.components.Component;
 import sirius.SiriusTheFox;
 import sirius.animations.StateMachine;
-import sirius.editor.PropertiesWindow;
+import sirius.editor.imgui.PropertiesWindow;
 import sirius.input.KeyListener;
 import sirius.utils.Settings;
 

@@ -1,5 +1,6 @@
 package sirius.rendering.spritesheet;
 
+// TODO: 07/07/2022 Make this better
 public enum Images {
     SPRITE_SHEET("spritesheet.png"),
     PLAYER_BIG_SPRITE_SHEET("bigSpritesheet.png"),

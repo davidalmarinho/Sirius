@@ -1,11 +1,12 @@
 package sirius.editor;
 
 import gameobjects.GameObject;
-import gameobjects.Prefabs;
+import sirius.editor.imgui.Prefabs;
 import gameobjects.components.Component;
 import gameobjects.components.Sprite;
 import gameobjects.components.SpriteRenderer;
 import sirius.SiriusTheFox;
+import sirius.editor.imgui.PropertiesWindow;
 import sirius.input.MouseListener;
 import sirius.rendering.Color;
 import org.joml.Vector2f;

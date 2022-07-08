@@ -2,7 +2,6 @@ package sirius.editor.imgui;
 
 import com.sun.istack.internal.NotNull;
 import gameobjects.GameObject;
-import gameobjects.Prefabs;
 import gameobjects.components.Sprite;
 import imgui.ImGui;
 import imgui.ImVec2;
@@ -257,8 +256,16 @@ public class JImGui {
         return pressed;
     }
 
+    public static boolean imgButton(int id, Sprite sprite, Color backgroundColor) {
+        return imgButton(id, sprite, sprite.getWidth() * 2, sprite.getHeight() * 2, backgroundColor);
+    }
+
     public static boolean imgButton(int id, Sprite sprite) {
         return imgButton(id, sprite, new Color(0.0f, 0.0f, 0.0f, 0.0f));
+    }
+
+    public static boolean imgButton(int id, Sprite sprite, float width, float height) {
+        return imgButton(id, sprite, width, height, new Color(0.0f, 0.0f, 0.0f, 0.0f));
     }
 
     /**
@@ -269,7 +276,7 @@ public class JImGui {
      * @param backgroundColor Background customized color for button
      * @return true, if the button was pressed.
      */
-    public static boolean imgButton(int id, Sprite sprite, Color backgroundColor) {
+    public static boolean imgButton(int id, Sprite sprite, float width, float height, Color backgroundColor) {
         float r = backgroundColor.getRed();
         float g = backgroundColor.getGreen();
         float b = backgroundColor.getBlue();
@@ -281,11 +288,9 @@ public class JImGui {
 
         int texId            = sprite.getTextureID();
         Vector2f[] texCoords = sprite.getTextureCoordinates();
-        float spriteWidth    = sprite.getWidth() * 2;
-        float spriteHeight   = sprite.getHeight() * 2;
 
         pressed = ImGui.imageButton(
-                texId, spriteWidth, spriteHeight, texCoords[2].x, texCoords[0].y, texCoords[0].x, texCoords[2].y, 0,
+                texId, width, height, texCoords[2].x, texCoords[0].y, texCoords[0].x, texCoords[2].y, 0,
                 r, g, b, a);
 
         ImGui.popID();
@@ -311,7 +316,41 @@ public class JImGui {
                 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f);
     }
 
+    // TODO: 07/07/2022 comment spritesLayout methods
+
     public static boolean spritesLayout(Spritesheet spritesheet, ImVec2 customWindowSize) {
+        return spritesLayout(spritesheet, 0, 0, customWindowSize);
+    }
+
+    /**
+     * Shows a layout with buttons where each button has a sprite and if you click in a button, it generates a
+     * game object using {@link Prefabs#generateSpriteObject(Sprite, float, float)} method.
+     * The game object is kept in {@link JImGui#selectedGameObject} until next frame.
+     *
+     * @param spritesheet Spritesheet where the sprites will be caught.
+     * @return true if we click in a button.
+     */
+    public static boolean spritesLayout(Spritesheet spritesheet) {
+        return spritesLayout(spritesheet, 0, 0, ImGui.getWindowSize());
+    }
+
+    public static boolean spritesLayout(Spritesheet spritesheet, float iconsWidth, float iconsHeight) {
+        return spritesLayout(spritesheet, iconsWidth, iconsHeight, ImGui.getWindowSize());
+    }
+
+    /**
+     * Shows a layout with buttons where each button has a sprite and if you click in a button, it generates a
+     * game object using {@link Prefabs#generateSpriteObject(Sprite, float, float)} method.
+     * The game object is kept in {@link JImGui#selectedGameObject} until next frame.
+     *
+     * @param spritesheet
+     * @param iconsWidth
+     * @param iconsHeight
+     * @param customWindowSize
+     * @return
+     */
+    public static boolean spritesLayout(Spritesheet spritesheet,
+                                        float iconsWidth, float iconsHeight, ImVec2 customWindowSize) {
         boolean pressed = false;
 
         // Gets the window's positions
@@ -325,8 +364,13 @@ public class JImGui {
         float windowX2 = windowPos.x + customWindowSize.x;
         for (int i = 0; i < spritesheet.size(); i++) {
             Sprite sprite = spritesheet.getSprite(i);
-            float spriteWidth = sprite.getWidth() * 2;
-            float spriteHeight = sprite.getHeight() * 2;
+            float spriteWidth = iconsWidth;
+            if (iconsWidth == 0)
+                spriteWidth = sprite.getWidth() * 2;
+
+            float spriteHeight = iconsHeight;
+            if (spriteHeight == 0)
+                spriteHeight = sprite.getHeight() * 2;
 
             int id = sprite.getTextureID();
             Vector2f[] texCoords = sprite.getTextureCoordinates();
@@ -354,18 +398,6 @@ public class JImGui {
         }
 
         return pressed;
-    }
-
-    /**
-     * Shows a layout with buttons where each button has a sprite and if you click in a button, it generates a
-     * game object using {@link gameobjects.Prefabs#generateSpriteObject(Sprite, float, float)} method.
-     * The game object is kept in {@link JImGui#selectedGameObject} until next frame.
-     *
-     * @param spritesheet Spritesheet where the sprites will be caught.
-     * @return true if we click in a button.
-     */
-    public static boolean spritesLayout(Spritesheet spritesheet) {
-        return spritesLayout(spritesheet, ImGui.getWindowSize());
     }
 
     /**

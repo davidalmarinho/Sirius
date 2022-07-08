@@ -3,7 +3,7 @@ package sirius.editor.imgui.sprite_animation_window;
 import imgui.*;
 import imgui.flag.ImGuiMouseButton;
 import imgui.flag.ImGuiWindowFlags;
-import imgui.type.ImBoolean;
+import sirius.editor.imgui.GuiWindow;
 import sirius.editor.imgui.JImGui;
 import sirius.encode_tools.Encode;
 import sirius.utils.AssetPool;
@@ -12,7 +12,7 @@ import sirius.utils.Settings;
 import java.io.File;
 import java.io.IOException;
 
-public class SpriteAnimationWindow {
+public class SpriteAnimationWindow extends GuiWindow {
     private static SpriteAnimationWindow instance;
 
     private ConfigChild configChild;
@@ -26,11 +26,15 @@ public class SpriteAnimationWindow {
     private int currentItem = -1;
 
     private SpriteAnimationWindow() {
+        super();
         this.configChild = new ConfigChild();
     }
 
     public void imgui(float dt) {
-        if (ImGui.begin("Sprite Animation Window", new ImBoolean(true))) {
+        if (!isVisible())
+            return;
+
+        if (ImGui.begin("Sprite Animation Window", show)) {
             if (ImGui.button("Create")) {
                 ImGui.openPopup(NEW_ANIMATION_CONTEXT);
             }

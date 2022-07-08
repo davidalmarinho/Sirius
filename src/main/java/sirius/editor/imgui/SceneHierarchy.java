@@ -1,4 +1,4 @@
-package sirius.editor;
+package sirius.editor.imgui;
 
 import gameobjects.GameObject;
 import imgui.ImGui;
@@ -7,11 +7,17 @@ import sirius.SiriusTheFox;
 
 import java.util.List;
 
-public class SceneHierarchy {
+public class SceneHierarchy extends GuiWindow {
     private static String payloadDragDropType = "SceneHierarchy";
 
+    public SceneHierarchy() {
+        super(false);
+    }
+
     public void imgui() {
-        ImGui.begin("Scene Hierarchy");
+        if (!isVisible()) return;
+
+        ImGui.begin("Scene Hierarchy", show);
 
         List<GameObject> gameObjects = SiriusTheFox.getCurrentScene().getGameObjectList();
 

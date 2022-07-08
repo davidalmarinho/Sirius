@@ -1,7 +1,8 @@
 package sirius;
 
-import gameobjects.ICustomPrefabs;
-import sirius.editor.ICustomPropertiesWindow;
+import sirius.editor.imgui.ICustomPrefabs;
+import sirius.editor.imgui.ICustomPropertiesWindow;
+import sirius.editor.imgui.ImGuiLayer;
 import sirius.input.KeyListener;
 import sirius.input.MouseListener;
 import sirius.rendering.FrameBuffer;

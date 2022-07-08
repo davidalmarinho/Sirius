@@ -6,6 +6,8 @@ import sirius.SiriusTheFox;
 import observers.EventSystem;
 import observers.events.Events;
 import observers.events.Event;
+import sirius.editor.imgui.sprite_animation_window.SpriteAnimationWindow;
+import sirius.editor.imgui.tool_window.ToolWindow;
 import sirius.levels.Level;
 import sirius.utils.AssetPool;
 
@@ -72,6 +74,27 @@ public class MenuBar {
         if (ImGui.beginMenu("Settings")) {
             if (ImGui.menuItem("Export Game Preview", "Ctrl + E"))
                 EventSystem.notify(null, new Event(Events.EXPORT_GAME));
+
+            ImGui.endMenu();
+        }
+
+        if (ImGui.beginMenu("Dock")) {
+            ImGuiLayer imGuiLayer = SiriusTheFox.getImGuiLayer();
+
+            GameViewWindow gameViewWindow = imGuiLayer.getGameViewWindow();
+            gameViewWindow.setVisibility(JImGui.checkBox("Game View Window", gameViewWindow.isVisible()));
+
+            SpriteAnimationWindow animationWindow = imGuiLayer.getSpriteAnimationWindow();
+            animationWindow.setVisibility(JImGui.checkBox("Sprite Animation Window", animationWindow.isVisible()));
+
+            TabBar tabBar = imGuiLayer.getTabBar();
+            tabBar.setVisibility(JImGui.checkBox("Tab Bar", tabBar.isVisible()));
+
+            ToolWindow toolWindow = imGuiLayer.getToolWindow();
+            toolWindow.setVisibility(JImGui.checkBox("Tool Window", toolWindow.isVisible()));
+
+            SceneHierarchy sceneHierarchy = imGuiLayer.getSceneHierarchy();
+            sceneHierarchy.setVisibility(JImGui.checkBox("Scene Hierarchy Window", sceneHierarchy.isVisible()));
 
             ImGui.endMenu();
         }

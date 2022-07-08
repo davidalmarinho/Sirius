@@ -3,8 +3,8 @@ package main;
 import components.BreakableBrick;
 import components.PlayerController;
 import gameobjects.GameObject;
-import sirius.editor.ICustomPropertiesWindow;
-import sirius.editor.PropertiesWindow;
+import sirius.editor.imgui.ICustomPropertiesWindow;
+import sirius.editor.imgui.PropertiesWindow;
 
 public class MyPropertiesWindow implements ICustomPropertiesWindow {
 
