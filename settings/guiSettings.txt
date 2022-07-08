@@ -1,0 +1,5 @@
+showGameViewWindow:true
+showSpriteAnimationWindow:true
+showTabBar:true
+showToolWindow:true
+showSceneHierarchy:false

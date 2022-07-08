@@ -10,10 +10,12 @@ import imgui.gl3.ImGuiImplGl3;
 import imgui.glfw.ImGuiImplGlfw;
 import imgui.type.ImBoolean;
 import sirius.editor.imgui.tool_window.ToolWindow;
+import sirius.encode_tools.Encode;
 import sirius.input.KeyListener;
 import sirius.input.MouseListener;
 import sirius.rendering.PickingTexture;
 import sirius.scenes.Scene;
+import sirius.utils.Settings;
 
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL11.*;
@@ -36,16 +38,46 @@ public class ImGuiLayer {
     private ToolWindow toolWindow;
 
     public ImGuiLayer(long glfwWindow, PickingTexture pickingTexture) {
+        // Don't need to load its visibility from external files
         this.imGuiGl3 = new ImGuiImplGl3();
         this.imGuiGlfw = new ImGuiImplGlfw();
         this.glfwWindow = glfwWindow;
-        this.gameViewWindow = new GameViewWindow();
         this.propertiesWindow = PropertiesWindow.get(pickingTexture);
         this.menuBar = new MenuBar();
-        this.sceneHierarchy = new SceneHierarchy();
+
+        // Need to load its visibility from external files
+        this.gameViewWindow = new GameViewWindow();
         this.spriteAnimationWindow = SpriteAnimationWindow.get();
         this.tabBar = new TabBar();
         this.toolWindow = new ToolWindow();
+
+        this.sceneHierarchy = new SceneHierarchy();
+
+        // Load docks' visibilities --the visibility of the docks are saved in SiriusTheFox class
+        String line = Encode.loadFromFile(Settings.Files.GUI_VISIBILITY_SETTINGS, 0);
+        String[] fullLine = line.split("/");
+        for (String s : fullLine) {
+            String[] navigator = s.split(":");
+            // [0] -> Item type
+            // [1] -> Item value
+            switch (navigator[0]) {
+                case "showGameViewWindow":
+                    gameViewWindow.show = Boolean.parseBoolean(navigator[1]);
+                    break;
+                case "showSpriteAnimationWindow":
+                    spriteAnimationWindow.show = Boolean.parseBoolean(navigator[1]);
+                    break;
+                case "showTabBar":
+                    tabBar.show = Boolean.parseBoolean(navigator[1]);
+                    break;
+                case "showToolWindow":
+                    toolWindow.show = Boolean.parseBoolean(navigator[1]);
+                    break;
+                case "showSceneHierarchy":
+                    sceneHierarchy.show = Boolean.parseBoolean(navigator[1]);
+                    break;
+            }
+        }
     }
 
     public void edit(long glfwWindow) {
@@ -185,7 +217,7 @@ public class ImGuiLayer {
         currentScene.imgui();
         tabBar.imgui();
         propertiesWindow.imgui();
-        // sceneHierarchy.imgui();
+        sceneHierarchy.imgui();
         spriteAnimationWindow.imgui(dt);
         gameViewWindow.imgui();
         toolWindow.imgui();
@@ -271,5 +303,9 @@ public class ImGuiLayer {
 
     public ToolWindow getToolWindow() {
         return toolWindow;
+    }
+
+    public SceneHierarchy getSceneHierarchy() {
+        return sceneHierarchy;
     }
 }

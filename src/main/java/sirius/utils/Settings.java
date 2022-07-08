@@ -13,5 +13,6 @@ public class Settings {
     public static class Files {
         public static final String ANIMATIONS_FOLDER = "assets/animations/";
         public static final String LEVELS_FOLDER = "assets/levels";
+        public static final String GUI_VISIBILITY_SETTINGS = "settings/guiSettings.txt";
     }
 }

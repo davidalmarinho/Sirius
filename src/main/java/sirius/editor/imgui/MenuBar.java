@@ -94,6 +94,9 @@ public class MenuBar {
             ToolWindow toolWindow = imGuiLayer.getToolWindow();
             toolWindow.show = JImGui.checkBox("Tool Window", toolWindow.show);
 
+            SceneHierarchy sceneHierarchy = imGuiLayer.getSceneHierarchy();
+            sceneHierarchy.show = JImGui.checkBox("Scene Hierarchy Window", sceneHierarchy.show);
+
             ImGui.endMenu();
         }
 

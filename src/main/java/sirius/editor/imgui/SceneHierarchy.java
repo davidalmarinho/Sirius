@@ -8,9 +8,17 @@ import sirius.SiriusTheFox;
 import java.util.List;
 
 public class SceneHierarchy {
+    public boolean show;
+
     private static String payloadDragDropType = "SceneHierarchy";
 
+    public SceneHierarchy() {
+        this.show = false;
+    }
+
     public void imgui() {
+        if (!show) return;
+
         ImGui.begin("Scene Hierarchy");
 
         List<GameObject> gameObjects = SiriusTheFox.getCurrentScene().getGameObjectList();

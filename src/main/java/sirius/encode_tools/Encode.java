@@ -11,9 +11,7 @@ import sirius.editor.imgui.sprite_animation_window.Animator;
 import sirius.levels.Level;
 import sirius.utils.AssetPool;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.lang.reflect.Type;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -150,5 +148,96 @@ public class Encode {
 
         // Return copy of game object
         return gson.fromJson(objAsJson, GameObject.class);
+    }
+
+    /**
+     * Saves an array of Strings and values in a file.
+     * Each String element corresponds to an object element by numerical order, being separated from each other by ':'.
+     * Example of output:
+     *      carBrand:Mercedes/
+     *      playerPosX:60.6f/
+     *      playerPosY:50.0f/
+     *
+     * To load the content of a file you might use the {@link Encode#loadFromFile(String, int)} method.
+     *
+     * @param outputFilePath File path of the file --make sure to include the file, not just the directory.
+     * @param encode Put 0 to don't encode the file or, we recommend putting 20 to encode the file.
+     */
+    public static void saveInFile(String[] opt, Object[] value, String outputFilePath, int encode) {
+        BufferedWriter writer = null;
+        try {
+            writer = new BufferedWriter(new FileWriter(outputFilePath));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        for (int i = 0; i < opt.length; i++) {
+            StringBuilder saveCurrent = new StringBuilder(opt[i]);
+            saveCurrent.append(":");
+            char[] curCharToConvert = String.valueOf(value[i]).toCharArray();
+
+            for (int j = 0; j < curCharToConvert.length; j++) {
+                curCharToConvert[j] += encode;
+                saveCurrent.append(curCharToConvert[j]);
+            }
+            try {
+                assert null != writer;
+                writer.write(String.valueOf(saveCurrent));
+                writer.newLine();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        try {
+            assert null != writer;
+            writer.flush();
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Loads all the content of a file and put it in a single line.
+     * This method might be used with {@link Encode#saveInFile(String[], Object[], String, int)} method.
+     *
+     * @param filepath Filepath of the file.
+     * @param encode Should be the same used when called {@link Encode#saveInFile(String[], Object[], String, int)} method.
+     * @return A String with all the content of a file.
+     */
+    public static String loadFromFile(String filepath, int encode) {
+        File file = new File(filepath);
+        StringBuilder current = new StringBuilder();
+
+        if (file.exists()) {
+            String analyser;
+            BufferedReader reader = null;
+            try {
+                reader = new BufferedReader(new FileReader(filepath));
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+
+            try {
+                while (true) {
+                    assert reader != null;
+                    if ((analyser = reader.readLine()) == null) break;
+                    String[] navigator = analyser.split(":");
+                    char[] decode = navigator[1].toCharArray();
+                    navigator[1] = "";
+                    for (int i = 0; i < decode.length; i++) {
+                        decode[i] -= encode;
+                        navigator[1] += decode[i];
+                    }
+
+                    current.append(navigator[0]);
+                    current.append(":");
+                    current.append(navigator[1]);
+                    current.append("/");
+                }
+            } catch (IOException ioE) {
+                ioE.printStackTrace();
+            }
+        }
+        return String.valueOf(current);
     }
 }

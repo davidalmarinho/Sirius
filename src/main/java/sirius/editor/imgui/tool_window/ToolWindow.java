@@ -20,6 +20,8 @@ public class ToolWindow {
     }
 
     public void imgui() {
+        if (!show) return;
+
         ImGui.begin("Tools");
         toolsLayout(AssetPool.getSpritesheet("assets/images/tools/tools.png"));
         ImGui.end();
