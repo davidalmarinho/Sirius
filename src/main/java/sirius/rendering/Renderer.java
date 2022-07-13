@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import static org.lwjgl.opengl.GL11.glClearColor;
+
 public class Renderer {
     private final int MAX_BATCH_SIZE = 1000;
     private List<RenderBatch> batches;
@@ -44,7 +46,7 @@ public class Renderer {
         }
 
         if (!added) {
-            // Else, the actual render batch is full and we need another one
+            // Else, the actual render batch is full, and we need another one
             RenderBatch newRenderBatch = new RenderBatch(MAX_BATCH_SIZE,
                     spriteRenderer.gameObject.getTransform().zIndex, this);
             newRenderBatch.start();
@@ -70,19 +72,13 @@ public class Renderer {
     }
 
     public void renderUserInterface() {
+        glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
         currentShader.use();
 
-        /*SiriusTheFox.getCurrentScene().getRenderer()
-                .addText("Test Text and I love it!", 0.1f, 0.1f, 0.009f,
-                        new Color(255, 255, 255));
-
-        SiriusTheFox.getCurrentScene().getRenderer()
-                .addText("Is it working if I had a lot of", 0.1f, 1.1f, 0.009f,
-                        new Color(255, 255, 255));
-
-        SiriusTheFox.getCurrentScene().getRenderer()
-                .addText("uncessary text? I mean LOLOL", 0.1f, 0.9f, 0.009f,
-                        new Color(255, 255, 255));*/
+        SiriusTheFox.getCurrentScene().getRenderer().addText("From ÀGILDE CITY", 0.1f, 1.5f, 0.005f, new Color(255, 255, 255));
+        SiriusTheFox.getCurrentScene().getRenderer().addText("\"When one story ends, another begins!\"", 0.1f, 1.2f, 0.005f, new Color(255, 255, 255));
+        SiriusTheFox.getCurrentScene().getRenderer().addText("\"You underestimate my power...\"", 0.1f, 0.67f, 0.005f, new Color(255, 255, 255));
+        // SiriusTheFox.getCurrentScene().getRenderer().addText("a", 0.1f, 0.67f, 0.005f, new Color(255, 255, 255));
     }
 
     public void render() {

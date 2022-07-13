@@ -114,6 +114,7 @@ public class SiriusTheFox implements Observer {
 
             // Cleanup the frame with a color
             Color color = currentScene.getCamera().clearColor;
+
             glClearColor(color.getColor().x, color.getColor().y, color.getColor().z, color.getColor().w); /* Specifies
             the color that glClear will use to cleaup buffer's color.*/
 

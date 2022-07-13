@@ -1,13 +1,11 @@
 package sirius.rendering;
 
-import gameobjects.components.fonts.CharInfo;
-import gameobjects.components.fonts.Font;
-import org.joml.Matrix4f;
+import sirius.rendering.fonts.Glyph;
+import sirius.rendering.fonts.Font;
 import org.lwjgl.opengl.GL15;
 import sirius.SiriusTheFox;
 import sirius.utils.AssetPool;
 
-import static org.lwjgl.opengl.GL11.GL_FLOAT;
 import static org.lwjgl.opengl.GL11.GL_TRIANGLES;
 import static org.lwjgl.opengl.GL11.GL_UNSIGNED_INT;
 import static org.lwjgl.opengl.GL11.glBindTexture;
@@ -16,7 +14,6 @@ import static org.lwjgl.opengl.GL13.GL_TEXTURE0;
 import static org.lwjgl.opengl.GL13.glActiveTexture;
 import static org.lwjgl.opengl.GL15.*;
 import static org.lwjgl.opengl.GL15.GL_ARRAY_BUFFER;
-import static org.lwjgl.opengl.GL20.*;
 import static org.lwjgl.opengl.GL30.glBindVertexArray;
 import static org.lwjgl.opengl.GL30.glGenVertexArrays;
 import static org.lwjgl.opengl.GL31.GL_TEXTURE_BUFFER;
@@ -79,7 +76,7 @@ public class BatchFont {
         shader.uploadMat4f("uProjection", SiriusTheFox.getCurrentScene().getCamera().getProjectionMatrix());
 
         glActiveTexture(GL_TEXTURE0);
-        glBindTexture(GL_TEXTURE_BUFFER, font.textureId);
+        glBindTexture(GL_TEXTURE_BUFFER, font.getTextureId());
 
         GlObjects.bindVao(vao);
         GlObjects.enableAttributes(2);
@@ -99,7 +96,7 @@ public class BatchFont {
         size = 0;
     }
 
-    public void addCharacter(float x, float y, float scale, CharInfo charInfo, int rgb) {
+    public void addCharacter(float x, float y, float scale, Glyph glyph, int rgb) {
         // If we have no more room in the current batch, flush it and start with a fresh batch
         if (size >= BATCH_SIZE - 4) {
             flushBatch();
@@ -110,14 +107,14 @@ public class BatchFont {
         float b = (float) ((rgb >> 0) & 0xFF) / 255.0f;
 
         float x0 = x;
-        float y0 = y;
-        float x1 = x + scale * charInfo.width;
-        float y1 = y + scale * charInfo.height;
+        float y0 = y - scale * (glyph.height - glyph.yBearing);
+        float x1 = x + scale * glyph.width;
+        float y1 = y + scale * (glyph.height - (glyph.height - glyph.yBearing));
 
-        float ux0 = charInfo.textureCoordinates[0].x;
-        float uy0 = charInfo.textureCoordinates[0].y;
-        float ux1 = charInfo.textureCoordinates[1].x;
-        float uy1 = charInfo.textureCoordinates[1].y;
+        float ux0 = glyph.textureCoordinates[0].x;
+        float uy0 = glyph.textureCoordinates[0].y;
+        float ux1 = glyph.textureCoordinates[1].x;
+        float uy1 = glyph.textureCoordinates[1].y;
 
         int index = size * 7;
         vertices[index] = x1;
@@ -171,17 +168,17 @@ public class BatchFont {
         for (int i = 0; i < text.length(); i++) {
             char c = text.charAt(i);
 
-            CharInfo charInfo = font.getCharacter(c);
+            Glyph glyph = font.getCharacter(c);
 
-            if (charInfo.width == 0) {
+            if (glyph.width == 0) {
                 System.out.println("Unknown character " + c);
                 continue;
             }
 
             float xPos = x;
             float yPos = y;
-            addCharacter(xPos, yPos, scale, charInfo, color);
-            x += charInfo.width * scale;
+            addCharacter(xPos, yPos, scale, glyph, color);
+            x += glyph.width * scale;
         }
     }
 }

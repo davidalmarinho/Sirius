@@ -2,7 +2,6 @@ package sirius.encode_tools;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.sun.istack.internal.NotNull;
 import gameobjects.GameObject;
 import gameobjects.components.Component;
 import sirius.editor.NonPickable;
@@ -52,7 +51,7 @@ public class Encode {
      *
      * @param gameObjectList {@link GameObject} list that needs to be saved in a file.
      */
-    public static void saveGameObjectListInFile(@NotNull List<GameObject> gameObjectList) {
+    public static void saveGameObjectListInFile(List<GameObject> gameObjectList) {
         Gson gson = gameObjectsGson();
 
         try {
@@ -81,7 +80,7 @@ public class Encode {
      * @param animationBlueprint Object needed to be saved in the file.
      * @param filePath Path to the saved file.
      */
-    public static void saveAnimation(@NotNull AnimationBlueprint animationBlueprint, @NotNull String filePath) {
+    public static void saveAnimation(AnimationBlueprint animationBlueprint, String filePath) {
         Gson gson = animatorGson();
 
         try {
@@ -99,7 +98,7 @@ public class Encode {
      * @param filePath Path to the saved file.
      * @return A {@link Animator} object.
      */
-    public static AnimationBlueprint getAnimation(@NotNull String filePath) {
+    public static AnimationBlueprint getAnimation(String filePath) {
         Gson gson = animatorGson();
         return gson.fromJson(readFile(filePath), AnimationBlueprint.class);
     }
@@ -121,7 +120,7 @@ public class Encode {
      * @param filePath Path to the saved file.
      * @return All the content of the file in a String.
      */
-    public static String readFile(@NotNull String filePath) {
+    public static String readFile(String filePath) {
         File file = new File(filePath);
         String inFile = "";
         if (file.exists()) {
@@ -141,7 +140,7 @@ public class Encode {
      * @param gameObject {@link GameObject} that needs a copy.
      * @return New {@link GameObject}.
      */
-    public static GameObject getGameObjectCopy(@NotNull GameObject gameObject) {
+    public static GameObject getGameObjectCopy(GameObject gameObject) {
         Gson gson = gameObjectsGson();
 
         String objAsJson  = gson.toJson(gameObject);

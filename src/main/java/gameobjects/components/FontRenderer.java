@@ -1,6 +1,5 @@
-package gameobjects.components.fonts;
+package gameobjects.components;
 
-import gameobjects.components.Component;
 import imgui.ImGui;
 import imgui.flag.ImGuiMouseButton;
 import org.joml.Vector2f;
