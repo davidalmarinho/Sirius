@@ -29,6 +29,9 @@ test {
 project.ext.lwjglVersion = "3.2.3"
 project.ext.jomlVersion = "1.10.1"
 project.ext.imguiVersion = '1.86.4'
+compileJava.options.encoding = 'UTF-8'
+compileTestJava.options.encoding = 'UTF-8'
+javadoc.options.encoding = 'UTF-8'
 
 /**
  * Sets the project.ext.lwjglNatives variable with the current operating system.

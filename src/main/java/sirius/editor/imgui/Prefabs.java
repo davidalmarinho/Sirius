@@ -3,7 +3,7 @@ package sirius.editor.imgui;
 import gameobjects.GameObject;
 import gameobjects.components.Sprite;
 import gameobjects.components.SpriteRenderer;
-import gameobjects.components.fonts.FontRenderer;
+import gameobjects.components.FontRenderer;
 import imgui.ImGui;
 import sirius.SiriusTheFox;
 import sirius.editor.MouseControls;

@@ -1,6 +1,6 @@
 package sirius.utils;
 
-import gameobjects.components.fonts.Font;
+import sirius.rendering.fonts.Font;
 import sirius.Sound;
 import sirius.editor.imgui.sprite_animation_window.AnimationBlueprint;
 import sirius.levels.Level;
@@ -212,7 +212,7 @@ public class AssetPool {
 
     public static void addFont(String filepath) {
         File file = new File(filepath);
-        Font font = new Font(filepath, 16);
+        Font font = new Font(filepath, 32);
 
         if (!fontMap.containsKey(file.getPath())) {
             fontMap.put(file.getPath(), font);

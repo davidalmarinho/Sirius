@@ -1,6 +1,5 @@
 package sirius.editor.imgui;
 
-import com.sun.istack.internal.NotNull;
 import gameobjects.GameObject;
 import gameobjects.components.Sprite;
 import imgui.ImGui;
@@ -408,7 +407,7 @@ public class JImGui {
         return selectedGameObject;
     }
 
-    public static int listBox(String label, int currentItem, @NotNull String[] items, int heightItems) {
+    public static int listBox(String label, int currentItem, String[] items, int heightItems) {
         ImInt imInt = new ImInt(currentItem);
         ImGui.listBox("##" + label, imInt, items, heightItems);
 
@@ -418,7 +417,7 @@ public class JImGui {
     /**
      * Uses {@link ImGui#beginListBox(String)} API.
      */
-    public static int doListBox(String label, int currentItem, @NotNull String[] items) {
+    public static int doListBox(String label, int currentItem, String[] items) {
         if (ImGui.beginListBox("##" + label)) {
             for (int i = 0; i < items.length; i++) {
 
