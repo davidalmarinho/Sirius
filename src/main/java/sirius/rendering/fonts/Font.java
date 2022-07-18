@@ -15,6 +15,7 @@ import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.opengl.GL11.GL_UNSIGNED_BYTE;
 
 public class Font {
+    private java.awt.Font font;
     private int textureId;
     private String filepath;
     private int size;
@@ -34,17 +35,7 @@ public class Font {
         this.size         = fontSize;
         this.glyphMap = new HashMap<>();
 
-        java.awt.Font font = new java.awt.Font(filepath, java.awt.Font.PLAIN, size);
-        BufferedImage bitmap = generateBitmap(font);
-        calculateGlyphsProperties(font, bitmap);
-
-        if (!useForTests) {
-            System.out.println("Image Width: " + bitmap.getWidth());
-            System.out.println("Line Height: " + fontMetrics.getHeight());
-            uploadTexture(bitmap);
-        }
-
-        exportBitmap(bitmap);
+        init(useForTests);
     }
 
     /**
@@ -54,15 +45,32 @@ public class Font {
      * @param newFont
      */
     public Font(Font newFont) {
-        this.filepath     = newFont.filepath;
-        this.size         = newFont.size;
-        this.glyphMap = newFont.glyphMap;
-        this.textureId    = newFont.textureId;
+        this.filepath  = newFont.filepath;
+        this.size      = newFont.size;
+        this.glyphMap  = newFont.glyphMap;
+        this.textureId = newFont.textureId;
+        this.advance    = newFont.advance;
 
-        java.awt.Font font = new java.awt.Font(filepath, java.awt.Font.PLAIN, size);
-        BufferedImage bitmap = generateBitmap(font);
-        calculateGlyphsProperties(font, bitmap);
-        uploadTexture(bitmap);
+        init(false);
+    }
+
+    public void init(boolean useForTests) {
+        try {
+            this.font = java.awt.Font.createFont(java.awt.Font.PLAIN, new File(filepath));
+        } catch (FontFormatException | IOException e) {
+            e.printStackTrace();
+        }
+        font = font.deriveFont(java.awt.Font.PLAIN, size);
+
+        BufferedImage bitmap = generateBitmap();
+        calculateGlyphsProperties(bitmap);
+
+        if (!useForTests) {
+            // System.out.println("Image Width: " + bitmap.getWidth());
+            // System.out.println("Line Height: " + fontMetrics.getHeight());
+            uploadTexture(bitmap);
+        }
+
         exportBitmap(bitmap);
     }
 
@@ -70,33 +78,25 @@ public class Font {
         return glyphMap.getOrDefault(codepoint, new Glyph(0, 0, 0, 0));
     }
 
-    public BufferedImage generateBitmap(java.awt.Font font) {
+    public BufferedImage generateBitmap() {
         // Create fake image to get font information
         BufferedImage img = new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB);
         Graphics2D g2d = img.createGraphics();
         g2d.setFont(font);
         this.fontMetrics = g2d.getFontMetrics();
 
-        // Note how big is the biggest character and save that width to after use it to make the bitmap grid
-        int advance = 0;
-        for (int i = 0; i < font.getNumGlyphs(); i++) {
-            if (font.canDisplay(i)) {
-                if (fontMetrics.charWidth(i) > advance)
-                    advance = fontMetrics.charWidth(i);
-            }
-        }
-
-        this.advance = advance;
+        calculateAdvance(font);
 
         final int LINE_HEIGHT = fontMetrics.getHeight();
-        final int LINE_WIDTH  = advance * 41; // 41 chars per line  in the bitmap. If you change the '41' value,
-                                              // change for an odd number, 1, 3, 5, 7, 9...
-                                              // To maintain the integrity of xBearing and yBearing calculations
+        final int LINE_WIDTH  = this.advance * 41;  // 41 chars per line  in the bitmap. If you change the '41' value,
+                                                    // change for an odd number, 1, 3, 5, 7, 9...
+                                                    // To maintain the integrity of xBearing and yBearing calculations
+
 
         int totalFontImgHeight = fontMetrics.getHeight();
 
-        // int breaker = 5;
-        // advance += breaker;
+        System.out.println("W: " + this.advance);
+        System.out.println("H:" + LINE_HEIGHT);
 
         int xCurrent = 0;
         int yCurrent = LINE_HEIGHT;
@@ -109,7 +109,7 @@ public class Font {
                 Glyph glyph = new Glyph(xCurrent, yCurrent, fontMetrics.charWidth(i), LINE_HEIGHT);
                 glyphMap.put(i, glyph);
 
-                xCurrent += advance;
+                xCurrent += this.advance;
 
                 // End of the line
                 if (xCurrent >= LINE_WIDTH) {
@@ -127,39 +127,69 @@ public class Font {
         g2d = img.createGraphics();
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         g2d.setFont(font);
-        g2d.setColor(Color.WHITE);
+        g2d.setColor(Color.BLACK);
+
+        int currentDisplayableGlyph = 0;
         for (int i = 0; i < font.getNumGlyphs(); i++) {
             if (font.canDisplay(i)) {
+                currentDisplayableGlyph++;
                 Glyph glyph = glyphMap.get(i);
-                if (i % 2 == 0) {
+                // TODO: 14/07/2022 Not working
+                if (currentDisplayableGlyph % 2 == 0) {
                     g2d.setColor(Color.BLUE);
                 } else {
                     g2d.setColor(Color.RED);
                 }
+                /* Sometimes Graphics2D fails loading some glyphs.
+                 * Full details in https://support.oracle.com/knowledge/Middleware/2544450_1.html#FIX
+                 */
                 g2d.drawString("" + (char) i, glyph.x, glyph.y);
             }
         }
 
+        g2d.setColor(Color.BLACK);
         g2d.dispose();
 
         return img;
     }
 
-    private void calculateGlyphsProperties(java.awt.Font font, BufferedImage bitmap) {
+    // TODO: 16/07/2022 Explain
+    private void calculateAdvance(java.awt.Font font) {
+        // Note how big is the biggest character and save that width to after use it to make the bitmap grid
+        int _advance = 0;
+        // int hitter = 0;
+
+        for (int i = 0; i < font.getNumGlyphs(); i++) {
+            if (font.canDisplay(i)) {
+                if (fontMetrics.charWidth(i) > _advance) {
+                    _advance = fontMetrics.charWidth(i);
+                    // hitter = (int) (font.getSize() / 8.0f);
+                }
+            }
+        }
+
+        int estimatedWidth = (int) Math.sqrt(font.getNumGlyphs()) * font.getSize() + 1;
+        System.out.println("Estimated: " + estimatedWidth);
+        this.advance = _advance;
+    }
+
+    private void calculateGlyphsProperties(BufferedImage bitmap) {
         int xCurrent = 0;
         int yCurrent = 0;
 
         final int LINE_WIDTH = bitmap.getWidth();
         final int LINE_HEIGHT = this.fontMetrics.getHeight();
 
-        for (int i = 0; i < glyphMap.size(); i++) {
-            if (font.canDisplay(i)) {
+        for (int i = 0; i < font.getNumGlyphs(); i++) {
+            if (this.font.canDisplay(i)) {
                 // TODO: 13/07/2022 Create Gson file to keep the xBearing, height and yBearing
-                int xBearing = calculateXBearing(bitmap, xCurrent, yCurrent, advance, LINE_HEIGHT);
                 int yBearing = calculateYBearing(bitmap, xCurrent, yCurrent, advance, LINE_HEIGHT);
 
                 int charWidth = this.fontMetrics.charWidth(i);
                 int charHeight = calculateHeight(bitmap, xCurrent, yCurrent, advance, LINE_HEIGHT, yBearing);
+
+                final int DELTA = charHeight - yBearing;
+                int xBearing = calculateXBearing(bitmap, xCurrent, yCurrent, advance, LINE_HEIGHT, DELTA);
 
                 int d = LINE_HEIGHT - yBearing;
 
@@ -214,11 +244,13 @@ public class Font {
 
     // TODO: 12/07/2022 document and explain weaknesses
     // TODO: 13/07/2022 Calculate new xBearing based in yBearing
-    private int calculateXBearing(BufferedImage img, int xBegin, int yBegin, int advance, int lineHeight) {
+    private int calculateXBearing(BufferedImage img, int xBegin, int yBegin, int advance, int lineHeight, int delta) {
         int xBearing = Integer.MAX_VALUE;
 
         final int X_FINAL = xBegin + advance;
-        final int Y_FINAL = yBegin + lineHeight;
+
+        // todo Problem when height > yBearing
+        final int Y_FINAL = yBegin + lineHeight + delta;
 
         int pixel = 0x000000;
 

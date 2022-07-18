@@ -191,7 +191,8 @@ public class SiriusTheFox implements Observer {
     }
 
     private void loadEngineResources() {
-        AssetPool.addFont("assets/fonts/verdana.ttf");
+        // AssetPool.addFont("assets/fonts/verdana.ttf");
+        AssetPool.addFont(Settings.Files.CURRENT_FONT_PATH);
     }
 
     @Override

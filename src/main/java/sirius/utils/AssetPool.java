@@ -210,13 +210,30 @@ public class AssetPool {
         return spritesheetsNames;
     }
 
-    public static void addFont(String filepath) {
+    /**
+     * Adds a font to the assets' manager.
+     *
+     * @param filepath Font's filepath.
+     * @param fontSize The size of the font. Bigger sizes means better quality but badder performance
+     *                 I personally recommend at least a size of 64.
+     */
+    public static void addFont(String filepath, int fontSize) {
         File file = new File(filepath);
-        Font font = new Font(filepath, 32);
+        Font font = new Font(file.getPath(), fontSize);
 
         if (!fontMap.containsKey(file.getPath())) {
             fontMap.put(file.getPath(), font);
         }
+    }
+
+    /**
+     * Adds a font to the assets' manager.
+     *
+     * @param filepath Font's filepath.
+     * The size of the font is 64 by default.
+     */
+    public static void addFont(String filepath) {
+        addFont(filepath, 64);
     }
 
     public static Font getFont(String filepath) {

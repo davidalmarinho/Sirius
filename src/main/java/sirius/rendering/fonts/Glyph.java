@@ -11,13 +11,14 @@ public class Glyph {
 
     public int d;
 
-    public Vector2f[] textureCoordinates = new Vector2f[2];
+    public Vector2f[] textureCoordinates;
 
     public Glyph(int x, int y, int width, int height) {
         this.x = x;
         this.y = y;
         this.width = width;
         this.height = height;
+        this.textureCoordinates = new Vector2f[2];
     }
 
     public void calculateTextureCoordinates(int imgFontWidth, int imgFontHeight) {

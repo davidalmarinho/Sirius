@@ -50354,19 +50354,19 @@
             },
             "textureCoordinates": [
               {
-                "x": 0.42857143,
+                "x": 0.14285715,
                 "y": 1.0
               },
               {
-                "x": 0.42857143,
+                "x": 0.14285715,
                 "y": 0.8
               },
               {
-                "x": 0.2857143,
+                "x": 0.0,
                 "y": 0.8
               },
               {
-                "x": 0.2857143,
+                "x": 0.0,
                 "y": 1.0
               }
             ]
@@ -61566,19 +61566,19 @@
             },
             "textureCoordinates": [
               {
-                "x": 0.42857143,
+                "x": 0.14285715,
                 "y": 1.0
               },
               {
-                "x": 0.42857143,
+                "x": 0.14285715,
                 "y": 0.8
               },
               {
-                "x": 0.2857143,
+                "x": 0.0,
                 "y": 0.8
               },
               {
-                "x": 0.2857143,
+                "x": 0.0,
                 "y": 1.0
               }
             ]
@@ -63713,17 +63713,17 @@
           },
           "sprite": {
             "width": 16,
-            "height": 16,
+            "height": 24,
             "texture": {
-              "filePath": "assets/images/spritesheets/spritesheet.png"
+              "filePath": "assets/images/spritesheets/turtle.png"
             },
             "textureCoordinates": [
               {
-                "x": 0.071428575,
-                "y": 0.5
+                "x": 0.25,
+                "y": 1.0
               },
               {
-                "x": 0.071428575,
+                "x": 0.25,
                 "y": 0.0
               },
               {
@@ -63732,7 +63732,7 @@
               },
               {
                 "x": 0.0,
-                "y": 0.5
+                "y": 1.0
               }
             ]
           }
@@ -63785,7 +63785,7 @@
                 "state": "walk",
                 "trigger": "squashMe"
               },
-              "squash"
+              "dead"
             ]
           ],
           "animationStateList": [
@@ -63795,17 +63795,17 @@
                 {
                   "sprite": {
                     "width": 16,
-                    "height": 16,
+                    "height": 24,
                     "texture": {
-                      "filePath": "assets/images/spritesheets/spritesheet.png"
+                      "filePath": "assets/images/spritesheets/turtle.png"
                     },
                     "textureCoordinates": [
                       {
-                        "x": 0.071428575,
-                        "y": 0.5
+                        "x": 0.25,
+                        "y": 1.0
                       },
                       {
-                        "x": 0.071428575,
+                        "x": 0.25,
                         "y": 0.0
                       },
                       {
@@ -63814,7 +63814,7 @@
                       },
                       {
                         "x": 0.0,
-                        "y": 0.5
+                        "y": 1.0
                       }
                     ]
                   },
@@ -63823,26 +63823,26 @@
                 {
                   "sprite": {
                     "width": 16,
-                    "height": 16,
+                    "height": 24,
                     "texture": {
-                      "filePath": "assets/images/spritesheets/spritesheet.png"
+                      "filePath": "assets/images/spritesheets/turtle.png"
                     },
                     "textureCoordinates": [
                       {
-                        "x": 0.14285715,
-                        "y": 0.5
+                        "x": 0.5,
+                        "y": 1.0
                       },
                       {
-                        "x": 0.14285715,
+                        "x": 0.5,
                         "y": 0.0
                       },
                       {
-                        "x": 0.071428575,
+                        "x": 0.25,
                         "y": 0.0
                       },
                       {
-                        "x": 0.071428575,
-                        "y": 0.5
+                        "x": 0.25,
+                        "y": 1.0
                       }
                     ]
                   },
@@ -63852,31 +63852,31 @@
               "doesLoop": true
             },
             {
-              "title": "squash",
+              "title": "dead",
               "animationFrameList": [
                 {
                   "sprite": {
                     "width": 16,
-                    "height": 16,
+                    "height": 24,
                     "texture": {
-                      "filePath": "assets/images/spritesheets/spritesheet.png"
+                      "filePath": "assets/images/spritesheets/turtle.png"
                     },
                     "textureCoordinates": [
                       {
-                        "x": 0.21428572,
-                        "y": 0.5
+                        "x": 0.75,
+                        "y": 1.0
                       },
                       {
-                        "x": 0.21428572,
+                        "x": 0.75,
                         "y": 0.0
                       },
                       {
-                        "x": 0.14285715,
+                        "x": 0.5,
                         "y": 0.0
                       },
                       {
-                        "x": 0.14285715,
-                        "y": 0.5
+                        "x": 0.5,
+                        "y": 1.0
                       }
                     ]
                   },

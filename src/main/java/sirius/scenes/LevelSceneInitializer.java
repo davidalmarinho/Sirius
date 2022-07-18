@@ -6,6 +6,7 @@ import sirius.animations.StateMachine;
 import sirius.rendering.spritesheet.Images;
 import sirius.rendering.spritesheet.Spritesheet;
 import sirius.utils.AssetPool;
+import sirius.utils.Settings;
 
 public class LevelSceneInitializer implements ISceneInitializer {
 
@@ -85,7 +86,8 @@ public class LevelSceneInitializer implements ISceneInitializer {
             }
         }
 
-        AssetPool.addFont("assets/fonts/verdana.ttf");
+        // AssetPool.addFont("assets/fonts/verdana.ttf");
+        AssetPool.addFont(Settings.Files.CURRENT_FONT_PATH);
     }
 
     @Override

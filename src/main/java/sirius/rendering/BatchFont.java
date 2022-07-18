@@ -5,6 +5,7 @@ import sirius.rendering.fonts.Font;
 import org.lwjgl.opengl.GL15;
 import sirius.SiriusTheFox;
 import sirius.utils.AssetPool;
+import sirius.utils.Settings;
 
 import static org.lwjgl.opengl.GL11.GL_TRIANGLES;
 import static org.lwjgl.opengl.GL11.GL_UNSIGNED_INT;
@@ -157,10 +158,12 @@ public class BatchFont {
 
     public void addText(String text, float x, float y, float scale, int color) {
         if (font == null) {
-            this.font = new Font(AssetPool.getFont("assets/fonts/verdana.ttf"));
-
             // TODO: 04/07/2022 Handle better this error
-            if (AssetPool.getFont("assets/fonts/verdana.ttf") == null) {
+            // this.font = new Font(AssetPool.getFont("assets/fonts/verdana.ttf"));
+            this.font = new Font(AssetPool.getFont(Settings.Files.CURRENT_FONT_PATH));
+
+            // if (AssetPool.getFont("assets/fonts/verdana.ttf") == null) {
+            if (AssetPool.getFont(Settings.Files.CURRENT_FONT_PATH) == null) {
                 System.err.println("Error: Couldn't find font. Have you added a font?");
             }
         }

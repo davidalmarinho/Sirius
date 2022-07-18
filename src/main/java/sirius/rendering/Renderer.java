@@ -78,6 +78,8 @@ public class Renderer {
         SiriusTheFox.getCurrentScene().getRenderer().addText("From ÀGILDE CITY", 0.1f, 1.5f, 0.005f, new Color(255, 255, 255));
         SiriusTheFox.getCurrentScene().getRenderer().addText("\"When one story ends, another begins!\"", 0.1f, 1.2f, 0.005f, new Color(255, 255, 255));
         SiriusTheFox.getCurrentScene().getRenderer().addText("\"You underestimate my power...\"", 0.1f, 0.67f, 0.005f, new Color(255, 255, 255));
+        // SiriusTheFox.getCurrentScene().getRenderer().addText("\"۞\"", 0.1f, 0.37f, 0.005f, new Color(255, 255, 255));
+        SiriusTheFox.getCurrentScene().getRenderer().addText("\"Jajão!\"", 0.1f, 0.37f, 0.005f, new Color(255, 255, 255));
         // SiriusTheFox.getCurrentScene().getRenderer().addText("a", 0.1f, 0.67f, 0.005f, new Color(255, 255, 255));
     }
 

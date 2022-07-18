@@ -72,7 +72,7 @@ public class FontTests {
         System.out.println("xBearing: " + 2);
         System.out.println("yBearing: " + 23);
         System.out.println("Height: " + 29);
-        assertTrue(j.xBearing == 2 && j.yBearing == 23 && j.height == 29);
+        assertTrue(j.xBearing == 6 && j.yBearing == 23 && j.height == 29);
     }
 
     @Test

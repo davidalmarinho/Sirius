@@ -191,7 +191,7 @@ public class ImGuiLayer {
         // Fonts merge example
         // fontConfig.setMergeMode(true); // When enabled, all fonts added with this config would be merged with the previously added font
         fontConfig.setPixelSnapH(true);
-        fontAtlas.addFontFromFileTTF("assets/fonts/verdana.ttf", 26, fontConfig);
+        fontAtlas.addFontFromFileTTF(Settings.Files.CURRENT_FONT_PATH, 26, fontConfig);
 
         // fontAtlas.addFontFromMemoryTTF(loadFromResources("basis33.ttf"), 16, fontConfig);
 
