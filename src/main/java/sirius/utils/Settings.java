@@ -8,11 +8,15 @@ public class Settings {
 
     public static class GameObjects {
         public static final String GENERATED_NAME = "Sprite_Object_Gen";
+        public static final int DEFAULT_FONT_SIZE = 64;
+        public static final float DEFAULT_FONT_SCALE = 0.05f;
     }
 
     public static class Files {
         public static final String ANIMATIONS_FOLDER = "assets/animations/";
         public static final String LEVELS_FOLDER = "assets/levels";
+        public static final String FONTS_FOLDER = "assets/fonts";
+        public static final String FONTS_PROPERTIES_FOLDER = "assets/fonts/cache";
         public static final String GUI_VISIBILITY_SETTINGS = "settings/guiSettings.txt";
 
         // TODO: 14/07/2022 Remove this lines

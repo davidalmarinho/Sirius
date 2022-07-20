@@ -45,7 +45,7 @@ public class SiriusTheFox implements Observer {
     private SiriusTheFox() {
         System.out.println("Hello LWJGL " + Version.getVersion() + "!");
 
-        window = new Window("Mario", 1920, 1080);
+        window = new Window("Sirius, the Fox!", 1920, 1080);
         audio = new Audio();
 
         EventSystem.addObserver(this);
@@ -187,44 +187,42 @@ public class SiriusTheFox implements Observer {
         currentScene = new Scene(sceneInitializer);
         currentScene.load();
         currentScene.init();
+        loadEngineResources();
         currentScene.start();
     }
 
-    private void loadEngineResources() {
-        // AssetPool.addFont("assets/fonts/verdana.ttf");
-        AssetPool.addFont(Settings.Files.CURRENT_FONT_PATH);
+    private static void loadEngineResources() {
+        AssetPool.addAllFonts();
     }
 
     @Override
     public void onNotify(GameObject gameObject, Event event) {
         switch (event.type) {
-            case GAME_ENGINE_START_PLAY:
+            case GAME_ENGINE_START_PLAY -> {
                 currentScene.save();
                 this.runtimePlaying = true;
                 if (customSceneInitializer != null)
                     changeScene(customSceneInitializer.build());
                 else
                     changeScene(new LevelSceneInitializer());
-                break;
-            case GAME_ENGINE_STOP_PLAY:
+            }
+            case GAME_ENGINE_STOP_PLAY -> {
                 this.runtimePlaying = false;
                 changeScene(new LevelEditorSceneInitializer());
-                break;
-            case LOAD_LEVEL:
+            }
+            case LOAD_LEVEL -> {
                 currentScene.load();
                 changeScene(new LevelEditorSceneInitializer());
-                break;
-            case SAVE_LEVEL:
-                currentScene.save();
-                break;
-            case EXPORT_GAME:
+            }
+            case SAVE_LEVEL -> currentScene.save();
+            case EXPORT_GAME -> {
                 this.exportGame = true;
                 this.runtimePlaying = true;
                 if (customSceneInitializer != null)
                     changeScene(customSceneInitializer.build());
                 else
                     changeScene(new LevelSceneInitializer());
-                break;
+            }
         }
     }
 

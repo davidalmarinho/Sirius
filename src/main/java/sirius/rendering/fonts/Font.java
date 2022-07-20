@@ -1,6 +1,8 @@
 package sirius.rendering.fonts;
 
 import org.lwjgl.BufferUtils;
+import sirius.encode_tools.Encode;
+import sirius.utils.Settings;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -8,68 +10,84 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.nio.ByteBuffer;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
+import java.util.List;
 
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.opengl.GL11.GL_UNSIGNED_BYTE;
 
 public class Font {
-    private java.awt.Font font;
-    private int textureId;
-    private String filepath;
-    private int size;
+    private transient java.awt.Font font;
+    private transient int textureId;
+    private final transient String FILEPATH;
+    private transient int size;
 
     // private int fontImageHeight, lineHeight;
     private Map<Integer, Glyph> glyphMap;
 
-    private int advance;
-    private FontMetrics fontMetrics;
+    private transient int advance;
+    private transient FontMetrics fontMetrics;
 
-    public Font(String filepath, int fontSize) {
-        this(filepath, fontSize, false);
-    }
+    public Font(String FILEPATH, int fontSize) {
+        this.FILEPATH = FILEPATH;
+        this.size = fontSize;
 
-    public Font(String filepath, int fontSize, boolean useForTests) {
-        this.filepath     = filepath;
-        this.size         = fontSize;
-        this.glyphMap = new HashMap<>();
+        try {
+            this.font = java.awt.Font.createFont(java.awt.Font.PLAIN, new File(FILEPATH));
+        } catch (FontFormatException | IOException e) {
+            e.printStackTrace();
+        }
+        font = font.deriveFont(java.awt.Font.PLAIN, size);
 
-        init(useForTests);
+        Font newFont = searchForPropertiesFiles(FILEPATH, fontSize);
+        if (newFont == null) {
+            this.size = fontSize;
+            this.glyphMap = new HashMap<>();
+
+            BufferedImage bitmap = generateBitmap();
+
+            calculateGlyphsProperties(bitmap);
+
+            uploadTexture(bitmap);
+
+            exportBitmap(bitmap);
+
+            Encode.saveFont(this, Settings.Files.FONTS_PROPERTIES_FOLDER + "/" + font.getName() + fontSize + ".json");
+        } else {
+            this.glyphMap = new HashMap<>(newFont.glyphMap);
+            this.size     = fontSize;
+
+            BufferedImage bitmap = generateBitmap();
+            uploadTexture(bitmap);
+        }
     }
 
     /**
      * // TODO: 04/07/2022 Note this
+     * // TODO: 20/07/2022 Try to not use this
      * Created due to Java abstraction.
      *
      * @param newFont
      */
     public Font(Font newFont) {
-        this.filepath  = newFont.filepath;
+        this.FILEPATH = newFont.FILEPATH;
         this.size      = newFont.size;
-        this.glyphMap  = newFont.glyphMap;
+        this.glyphMap  = new HashMap<>(newFont.glyphMap);
         this.textureId = newFont.textureId;
-        this.advance    = newFont.advance;
+        this.advance   = newFont.advance;
 
-        init(false);
-    }
-
-    public void init(boolean useForTests) {
         try {
-            this.font = java.awt.Font.createFont(java.awt.Font.PLAIN, new File(filepath));
+            this.font = java.awt.Font.createFont(java.awt.Font.PLAIN, new File(FILEPATH));
         } catch (FontFormatException | IOException e) {
             e.printStackTrace();
         }
         font = font.deriveFont(java.awt.Font.PLAIN, size);
 
         BufferedImage bitmap = generateBitmap();
+
         calculateGlyphsProperties(bitmap);
 
-        if (!useForTests) {
-            // System.out.println("Image Width: " + bitmap.getWidth());
-            // System.out.println("Line Height: " + fontMetrics.getHeight());
-            uploadTexture(bitmap);
-        }
+        uploadTexture(bitmap);
 
         exportBitmap(bitmap);
     }
@@ -91,7 +109,6 @@ public class Font {
         final int LINE_WIDTH  = this.advance * 41;  // 41 chars per line  in the bitmap. If you change the '41' value,
                                                     // change for an odd number, 1, 3, 5, 7, 9...
                                                     // To maintain the integrity of xBearing and yBearing calculations
-
 
         int totalFontImgHeight = fontMetrics.getHeight();
 
@@ -182,7 +199,6 @@ public class Font {
 
         for (int i = 0; i < font.getNumGlyphs(); i++) {
             if (this.font.canDisplay(i)) {
-                // TODO: 13/07/2022 Create Gson file to keep the xBearing, height and yBearing
                 int yBearing = calculateYBearing(bitmap, xCurrent, yCurrent, advance, LINE_HEIGHT);
 
                 int charWidth = this.fontMetrics.charWidth(i);
@@ -377,6 +393,40 @@ public class Font {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    private Font searchForPropertiesFiles(String filepath, int fontSize) {
+        File propertiesFolder = new File(Settings.Files.FONTS_PROPERTIES_FOLDER);
+
+        List<String> propertiesFilesNamesList = new ArrayList<>();
+        List<String> propertiesFilesPathsList = new ArrayList<>();
+
+        // Get the names and the paths of the properties files
+        for (int i = 0; i < Objects.requireNonNull(propertiesFolder.list()).length; i++ ) {
+            String probablyPropertyFont = Objects.requireNonNull(propertiesFolder.list())[0];
+            if (probablyPropertyFont.endsWith(".json")) {
+                propertiesFilesNamesList.add(probablyPropertyFont.split(".json")[0]);
+                propertiesFilesPathsList.add(Objects.requireNonNull(propertiesFolder.listFiles())[i].getPath());
+            }
+        }
+
+        // Ex.: From 'assets\fonts\folks\Folks-Light.ttf' get Folks-Light
+        String fontName = filepath.split("(/)|(\\\\)")[filepath.split("(/)|(\\\\)").length - 1].split(".ttf")[0];
+
+        // Check if glyphs' properties from desired font are saved in cache directory
+        for (int i = 0; i < propertiesFilesNamesList.size(); i++) {
+            String propertyFile = propertiesFilesNamesList.get(i);
+            // If the property file has the same name of the font, we are going to choose that property's file
+            if (propertyFile.equals(fontName + fontSize)) {
+                return Encode.getFontProperty(propertiesFilesPathsList.get(i));
+            }
+        }
+
+        return null;
+    }
+
+    public int getSize() {
+        return this.size;
     }
 
     public int getTextureId() {
