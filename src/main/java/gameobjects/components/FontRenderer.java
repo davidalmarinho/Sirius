@@ -2,8 +2,9 @@ package gameobjects.components;
 
 import imgui.ImGui;
 import imgui.flag.ImGuiMouseButton;
-import org.joml.Vector2f;
 import sirius.editor.imgui.JImGui;
+import sirius.rendering.BatchFont;
+import sirius.rendering.Color;
 import sirius.rendering.fonts.Font;
 import sirius.utils.AssetPool;
 import sirius.utils.Settings;
@@ -11,38 +12,37 @@ import sirius.utils.Settings;
 public class FontRenderer extends Component {
     private transient Font font;
     private float scale;
-    private Vector2f position;
-    private String showingText;
     private String fontpath;
+    private int previousMaxTextLength;
     private int maxTextLength;
+    private transient BatchFont batchFont;
 
     private transient int currentItem = -1;
 
     public FontRenderer() {
-        this.position = new Vector2f();
-        this.showingText = "I'm a text box!";
+        font = new Font(AssetPool.getFont(Settings.Files.CURRENT_FONT_PATH));
         this.maxTextLength = 32;
+        this.previousMaxTextLength = maxTextLength;
+        this.batchFont = new BatchFont(maxTextLength);
         this.scale = Settings.GameObjects.DEFAULT_FONT_SCALE;
+        // this.scale = 1.0f;
+        // this.scale = 0.25f;
     }
 
     @Override
     public void start() {
-        this.position.set(gameObject.getPosition());
+        this.batchFont.initBatch();
     }
 
-    @Override
-    public void update(float dt) {
-
+    public void render() {
+        batchFont.addText("I am a Text  box!", gameObject.getPosition().x, gameObject.getPosition().y,
+                this.scale, Color.BLACK.getDecimal32());
+        batchFont.flushBatch();
     }
 
     @Override
     public void imgui() {
         boolean reloadFont = false;
-
-        // Set showing text
-        JImGui.drawVec2Control("Position", this.position);
-        this.showingText   = JImGui.inputText("Text Box:", this.showingText, maxTextLength);
-        this.maxTextLength = JImGui.inputInt(1, "Max text length: ", this.maxTextLength);
 
         // Set the scale of the text
         this.scale = JImGui.dragFloat("Font Scale:", this.scale);
@@ -57,6 +57,11 @@ public class FontRenderer extends Component {
 
         if (reloadFont) {
             font = AssetPool.getFont(this.fontpath);
+        }
+
+        if (previousMaxTextLength != maxTextLength) {
+            batchFont.reset(maxTextLength);
+            this.previousMaxTextLength = maxTextLength;
         }
     }
 }

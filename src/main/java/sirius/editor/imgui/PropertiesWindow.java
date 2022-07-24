@@ -3,7 +3,6 @@ package sirius.editor.imgui;
 import gameobjects.GameObject;
 import gameobjects.components.Component;
 import gameobjects.components.SpriteRenderer;
-import gameobjects.components.FontRenderer;
 import gameobjects.components.game_components.Ground;
 import imgui.ImGui;
 import sirius.SiriusTheFox;
@@ -69,12 +68,6 @@ public class PropertiesWindow {
                     if (!activeGameObject.hasComponent(CircleCollider.class)
                             && !activeGameObject.hasComponent(Box2DCollider.class)) {
                         activeGameObject.addComponent(new CircleCollider());
-                    }
-                }
-
-                if (ImGui.menuItem("Add Font Renderer")) {
-                    if (!activeGameObject.hasComponent(FontRenderer.class)) {
-                        activeGameObject.addComponent(new FontRenderer());
                     }
                 }
 

@@ -112,8 +112,8 @@ public class Font {
 
         int totalFontImgHeight = fontMetrics.getHeight();
 
-        System.out.println("W: " + this.advance);
-        System.out.println("H:" + LINE_HEIGHT);
+        // System.out.println("W: " + this.advance);
+        // System.out.println("H:" + LINE_HEIGHT);
 
         int xCurrent = 0;
         int yCurrent = LINE_HEIGHT;
@@ -185,8 +185,6 @@ public class Font {
             }
         }
 
-        int estimatedWidth = (int) Math.sqrt(font.getNumGlyphs()) * font.getSize() + 1;
-        System.out.println("Estimated: " + estimatedWidth);
         this.advance = _advance;
     }
 

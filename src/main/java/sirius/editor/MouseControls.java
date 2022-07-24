@@ -3,9 +3,11 @@ package sirius.editor;
 import gameobjects.GameObject;
 import gameobjects.components.Component;
 import gameobjects.components.SpriteRenderer;
+import gameobjects.components.TextBox;
 import gameobjects.components.Transform;
 import sirius.SiriusTheFox;
 import sirius.animations.StateMachine;
+import sirius.editor.imgui.Prefabs;
 import sirius.editor.imgui.PropertiesWindow;
 import sirius.editor.imgui.tool_window.ToolWindow;
 import sirius.input.KeyListener;
@@ -298,15 +300,92 @@ public class MouseControls extends Component {
         }
     }
 
+    private void textTool() {
+        boxSelectEnd = MouseListener.getGameViewport();
+
+        // Draw box with mouse
+        boolean mayDrawBox = MouseListener.isDragging()
+                && MouseListener.isMouseButtonPressed(GLFW_MOUSE_BUTTON_1)
+                && SiriusTheFox.getImGuiLayer().getPropertiesWindow().getActiveGameObjectList().isEmpty();
+
+        if (mayDrawBox) {
+            Vector2f boxSelectStartWorld = MouseListener.screenToGameViewport(boxSelectStart);
+            Vector2f boxSelectEndWorld = MouseListener.screenToGameViewport(boxSelectEnd);
+            Vector2f halfSize = new Vector2f(boxSelectEndWorld).sub(boxSelectStartWorld).mul(0.5f);
+
+            DebugDraw.addBox2D(new Vector2f(boxSelectStartWorld).add(halfSize), new Vector2f(halfSize).mul(2.0f),
+                    0.0f, Color.BLACK);
+            boxSelectSet = true;
+        }
+
+        if (!MouseListener.isDragging()){
+            // Place text box
+            if (boxSelectSet) {
+                Vector2f boxSelectStartWorld = MouseListener.screenToGameViewport(boxSelectStart);
+                Vector2f boxSelectEndWorld = MouseListener.screenToGameViewport(boxSelectEnd);
+                Vector2f halfSize = new Vector2f(boxSelectEndWorld).sub(boxSelectStartWorld).mul(0.5f);
+                Vector2f size = new Vector2f(halfSize).mul(2f);
+                Vector2f origin = new Vector2f(boxSelectStartWorld).add(halfSize);
+                boxSelectSet = false;
+
+                if (Math.abs(size.x) > Settings.GameObjects.DEFAULT_GAME_OBJECT_SCALE
+                        && Math.abs(size.y) > Settings.GameObjects.DEFAULT_GAME_OBJECT_SCALE) {
+                    SiriusTheFox.getCurrentScene().addGameObject(Prefabs.generateTextObject(origin.x, origin.y,
+                            Math.abs(size.x), Math.abs(size.y)));
+                }
+            }
+
+            // Reset values
+            boxSelectStart.zero();
+            boxSelectEnd.zero();
+            boxSelectStart = MouseListener.getGameViewport();
+        }
+
+        boolean cursorInsideTextBoxField;
+        if (SiriusTheFox.getImGuiLayer().getPropertiesWindow().getActiveGameObjectList().isEmpty()) {
+            for (GameObject gameObject : SiriusTheFox.getCurrentScene().getGameObjectList()) {
+                if (gameObject.hasComponent(TextBox.class)) {
+                    TextBox textBox = gameObject.getComponent(TextBox.class);
+
+                    cursorInsideTextBoxField =
+                            MouseListener.getWorld().x >= gameObject.getPosition().x - textBox.width / 2.0f
+                                    && MouseListener.getWorld().x <= gameObject.getPosition().x + textBox.width / 2.0f
+                                    && MouseListener.getWorld().y >= gameObject.getPosition().y - textBox.height / 2.0f
+                                    && MouseListener.getWorld().y <= gameObject.getPosition().y + textBox.height / 2.0f;
+
+                    if (cursorInsideTextBoxField && MouseListener.isMouseButtonDown(GLFW_MOUSE_BUTTON_1)) {
+                        SiriusTheFox.getImGuiLayer().getPropertiesWindow().setActiveGameObject(gameObject);
+                        break;
+                    }
+                }
+            }
+        } else if (MouseListener.isMouseButtonDown(GLFW_MOUSE_BUTTON_1) && !MouseListener.isDragging()) {
+            for (GameObject gameObject : SiriusTheFox.getCurrentScene().getGameObjectList()) {
+                if (gameObject.hasComponent(TextBox.class)) {
+                    TextBox textBox = gameObject.getComponent(TextBox.class);
+
+                    cursorInsideTextBoxField =
+                            MouseListener.getWorld().x >= gameObject.getPosition().x - textBox.width / 2.0f
+                                    && MouseListener.getWorld().x <= gameObject.getPosition().x + textBox.width / 2.0f
+                                    && MouseListener.getWorld().y >= gameObject.getPosition().y + textBox.height / 2.0f
+                                    && MouseListener.getWorld().y <= gameObject.getPosition().y - textBox.height / 2.0f;
+
+                    if (!cursorInsideTextBoxField) {
+                        SiriusTheFox.getImGuiLayer().getPropertiesWindow().clearSelected();
+                    }
+                }
+            }
+        }
+
+        allComponentsHaveSameType = areAllComponentsSameType(SiriusTheFox.getImGuiLayer().getPropertiesWindow().getActiveGameObjectList());
+    }
+
     @Override
     public void editorUpdate(float dt) {
         ToolWindow toolWindow = SiriusTheFox.getImGuiLayer().getToolWindow();
         switch (toolWindow.getCurrentTool()) {
-            case SELECTION_TOOL:
-                selectionTool(dt);
-                break;
-            case TEXT_TOOL:
-                break;
+            case SELECTION_TOOL -> selectionTool(dt);
+            case TEXT_TOOL -> textTool();
         }
     }
 

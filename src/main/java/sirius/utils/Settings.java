@@ -8,8 +8,9 @@ public class Settings {
 
     public static class GameObjects {
         public static final String GENERATED_NAME = "Sprite_Object_Gen";
+        public static final float DEFAULT_GAME_OBJECT_SCALE = 0.25f;
         public static final int DEFAULT_FONT_SIZE = 64;
-        public static final float DEFAULT_FONT_SCALE = 0.05f;
+        public static final float DEFAULT_FONT_SCALE = 0.005f;
     }
 
     public static class Files {

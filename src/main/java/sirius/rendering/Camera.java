@@ -47,18 +47,18 @@ public class Camera {
         Vector3f cameraForward = new Vector3f(0.0f, 0.0f, -1.0f); // x's direction
         center.add(cameraForward);
 
-        // Para onde o topo da câmara está a apontar
+        // To the top of where is the camera pointing
         Vector3f cameraUp = new Vector3f(0.0f, 1.0f, 0.0f); // y's direction
 
         this.viewMatrix.identity();
 
-        viewMatrix = viewMatrix.lookAt(
+        viewMatrix.lookAt(
                 new Vector3f(position.x, position.y, 20.0f), // Where the camera is positioned
                 center, // To where it is looking
                 cameraUp
         );
 
-        viewMatrix.invert(inverseView);
+        inverseView = new Matrix4f(viewMatrix.invert(inverseView));
 
         return this.viewMatrix;
     }

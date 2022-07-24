@@ -122,7 +122,7 @@ public class Scene {
         pendingGameObjectList.clear();
     }
 
-    public void renderUserInterface() {
+    public void renderFontInGame() {
         this.renderer.renderUserInterface();
     }
 

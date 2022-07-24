@@ -1,6 +1,7 @@
 package sirius.rendering;
 
 import gameobjects.GameObject;
+import gameobjects.components.FontRenderer;
 import gameobjects.components.SpriteRenderer;
 import sirius.SiriusTheFox;
 import sirius.rendering.spritesheet.Texture;
@@ -8,8 +9,6 @@ import sirius.rendering.spritesheet.Texture;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
-import static org.lwjgl.opengl.GL11.glClearColor;
 
 public class Renderer {
     private final int MAX_BATCH_SIZE = 1000;
@@ -20,13 +19,13 @@ public class Renderer {
     public Renderer() {
         batches = new ArrayList<>();
         fontBatch = new BatchFont();
-        fontBatch.initBatch();
+        // fontBatch.initBatch();
     }
 
     public void add(GameObject gameObject) {
         SpriteRenderer spriteRenderer = gameObject.getComponent(SpriteRenderer.class);
 
-        if (spriteRenderer != null) {
+        if (spriteRenderer != null && !gameObject.hasComponent(FontRenderer.class)) {
             add(spriteRenderer);
         }
     }
@@ -34,7 +33,7 @@ public class Renderer {
     private void add(SpriteRenderer spriteRenderer) {
         boolean added = false;
         for (RenderBatch renderBatch : batches) {
-            // Se tivermos espaço no renderBatch atual, colocamos o sprite nesse
+            // If we have more free space in the actual renderBatch, we will put the sprite in that renderBatch
             if (renderBatch.hasRoom() && renderBatch.getzIndex() == spriteRenderer.gameObject.getTransform().zIndex) {
                 Texture texture = spriteRenderer.getTexture();
                 if (texture == null ||renderBatch.hasRoomTexture() || renderBatch.hasTexture(texture)) {
@@ -60,7 +59,7 @@ public class Renderer {
 
     public void addText(String text, float x, float y, float scale, Color color) {
         fontBatch.addText(text, x, y, scale, color.getDecimal32());
-        fontBatch.flushBatch();
+        // fontBatch.flushBatch();
     }
 
     public static void bindShader(Shader shader) {
@@ -72,15 +71,21 @@ public class Renderer {
     }
 
     public void renderUserInterface() {
-        glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+        //glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
         currentShader.use();
 
-        SiriusTheFox.getCurrentScene().getRenderer().addText("From ÀGILDE CITY", 0.1f, 1.5f, 0.005f, new Color(255, 255, 255));
-        SiriusTheFox.getCurrentScene().getRenderer().addText("\"When one story ends, another begins!\"", 0.1f, 1.2f, 0.005f, new Color(255, 255, 255));
-        SiriusTheFox.getCurrentScene().getRenderer().addText("\"You underestimate my power...\"", 0.1f, 0.67f, 0.005f, new Color(255, 255, 255));
-        // SiriusTheFox.getCurrentScene().getRenderer().addText("\"۞\"", 0.1f, 0.37f, 0.005f, new Color(255, 255, 255));
-        SiriusTheFox.getCurrentScene().getRenderer().addText("\"Jajão!\"", 0.1f, 0.37f, 0.005f, new Color(255, 255, 255));
-        // SiriusTheFox.getCurrentScene().getRenderer().addText("a", 0.1f, 0.67f, 0.005f, new Color(255, 255, 255));
+        for (GameObject gameObject : SiriusTheFox.getCurrentScene().getGameObjectList()) {
+            if (gameObject.hasComponent(FontRenderer.class)) {
+                gameObject.getComponent(FontRenderer.class).render();
+            }
+        }
+
+        // SiriusTheFox.getCurrentScene().getRenderer().addText("From ÀGILDE CITY", 0.1f, 1.5f, 0.005f, new Color(255, 255, 255));
+        // SiriusTheFox.getCurrentScene().getRenderer().addText("\"When one story ends, another begins!\"", 0.1f, 1.2f, 0.005f, new Color(255, 255, 255));
+        // SiriusTheFox.getCurrentScene().getRenderer().addText("\"You underestimate my power...\"", 0.1f, 0.67f, 0.005f, new Color(255, 255, 255));
+        // // SiriusTheFox.getCurrentScene().getRenderer().addText("\"۞\"", 0.1f, 0.37f, 0.005f, new Color(255, 255, 255));
+        // SiriusTheFox.getCurrentScene().getRenderer().addText("\"Jajão!\"", 0.1f, 0.37f, 0.005f, new Color(255, 255, 255));
+        // // SiriusTheFox.getCurrentScene().getRenderer().addText("a", 0.1f, 0.67f, 0.005f, new Color(255, 255, 255));
     }
 
     public void render() {

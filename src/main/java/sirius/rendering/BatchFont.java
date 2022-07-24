@@ -25,18 +25,29 @@ public class BatchFont {
             1, 2, 3
     };
 
-    // 25 quads
-    public static int BATCH_SIZE = 100;
-    public static int VERTEX_SIZE = 7;
-    public float[] vertices = new float[BATCH_SIZE * VERTEX_SIZE];
+    // 100 quads
+    private int batchSize;
+    private int vertexSize;
+    public float[] vertices;
     public int size = 0;
 
     public int vao;
     public int vbo;
     public Font font;
 
+    public BatchFont() {
+        this(32);
+    }
+
+    public BatchFont(int maxCharacters) {
+        this.vertexSize = 7;
+
+        this.batchSize = maxCharacters;
+        this.vertices = new float[batchSize * vertexSize];
+    }
+
     public void generateEbo() {
-        int elementSize = BATCH_SIZE * 3;
+        int elementSize = batchSize * 3;
         int[] elementBuffer = new int[elementSize];
 
         for (int i = 0; i < elementSize; i++) {
@@ -54,7 +65,7 @@ public class BatchFont {
 
         vbo = glGenBuffers();
         glBindBuffer(GL_ARRAY_BUFFER, vbo);
-        glBufferData(GL_ARRAY_BUFFER, (long) Float.BYTES * VERTEX_SIZE * BATCH_SIZE, GL_DYNAMIC_DRAW);
+        glBufferData(GL_ARRAY_BUFFER, (long) Float.BYTES * vertexSize * batchSize, GL_DYNAMIC_DRAW);
 
         generateEbo();
 
@@ -67,17 +78,19 @@ public class BatchFont {
     public void flushBatch() {
         // Clear the buffer on the GPU, and then upload the CPU contents, and then draw
         glBindBuffer(GL_ARRAY_BUFFER, vbo);
-        glBufferData(GL_ARRAY_BUFFER, (long) Float.BYTES * VERTEX_SIZE * BATCH_SIZE, GL_DYNAMIC_DRAW);
+        glBufferData(GL_ARRAY_BUFFER, (long) Float.BYTES * vertexSize * batchSize, GL_DYNAMIC_DRAW);
         glBufferSubData(GL_ARRAY_BUFFER, 0, vertices);
 
         // Use shader
         Shader shader = Renderer.getBoundShader();
         shader.use();
-        shader.uploadTexture("uFontTexture", 0);
         shader.uploadMat4f("uProjection", SiriusTheFox.getCurrentScene().getCamera().getProjectionMatrix());
+        shader.uploadMat4f("uView", SiriusTheFox.getCurrentScene().getCamera().getViewMatrix());
 
         glActiveTexture(GL_TEXTURE0);
         glBindTexture(GL_TEXTURE_BUFFER, font.getTextureId());
+
+        shader.uploadTexture("uFontTexture", 0);
 
         GlObjects.bindVao(vao);
         GlObjects.enableAttributes(2);
@@ -99,7 +112,7 @@ public class BatchFont {
 
     public void addCharacter(float x, float y, float scale, Glyph glyph, int rgb) {
         // If we have no more room in the current batch, flush it and start with a fresh batch
-        if (size >= BATCH_SIZE - 4) {
+        if (size >= batchSize - 4) {
             flushBatch();
         }
 
@@ -183,5 +196,10 @@ public class BatchFont {
             addCharacter(xPos, yPos, scale, glyph, color);
             x += glyph.width * scale;
         }
+    }
+
+    public void reset(int maxTextLength) {
+        this.batchSize = maxTextLength;
+        initBatch();
     }
 }

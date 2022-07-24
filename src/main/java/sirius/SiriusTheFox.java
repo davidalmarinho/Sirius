@@ -94,6 +94,7 @@ public class SiriusTheFox implements Observer {
                         (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight());
             else
                 glViewport(0, 0, window.getWidth(), window.getHeight());
+
             glClearColor(0f, 0f, 0f, 0f);
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
             Renderer.bindShader(pickingShader);
@@ -134,7 +135,7 @@ public class SiriusTheFox implements Observer {
 
                 glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
                 Renderer.bindShader(fontShader);
-                currentScene.renderUserInterface();
+                currentScene.renderFontInGame();
 
                 if (!exportGame) {
                     DebugDraw.draw();
