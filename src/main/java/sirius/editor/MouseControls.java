@@ -348,10 +348,10 @@ public class MouseControls extends Component {
                     TextBox textBox = gameObject.getComponent(TextBox.class);
 
                     cursorInsideTextBoxField =
-                            MouseListener.getWorld().x >= gameObject.getPosition().x - textBox.width / 2.0f
-                                    && MouseListener.getWorld().x <= gameObject.getPosition().x + textBox.width / 2.0f
-                                    && MouseListener.getWorld().y >= gameObject.getPosition().y - textBox.height / 2.0f
-                                    && MouseListener.getWorld().y <= gameObject.getPosition().y + textBox.height / 2.0f;
+                            MouseListener.getWorld().x >= gameObject.getPosition().x - textBox.getWidth() / 2.0f
+                                    && MouseListener.getWorld().x <= gameObject.getPosition().x + textBox.getWidth() / 2.0f
+                                    && MouseListener.getWorld().y >= gameObject.getPosition().y - textBox.getHeight() / 2.0f
+                                    && MouseListener.getWorld().y <= gameObject.getPosition().y + textBox.getHeight() / 2.0f;
 
                     if (cursorInsideTextBoxField && MouseListener.isMouseButtonDown(GLFW_MOUSE_BUTTON_1)) {
                         SiriusTheFox.getImGuiLayer().getPropertiesWindow().setActiveGameObject(gameObject);
@@ -365,10 +365,10 @@ public class MouseControls extends Component {
                     TextBox textBox = gameObject.getComponent(TextBox.class);
 
                     cursorInsideTextBoxField =
-                            MouseListener.getWorld().x >= gameObject.getPosition().x - textBox.width / 2.0f
-                                    && MouseListener.getWorld().x <= gameObject.getPosition().x + textBox.width / 2.0f
-                                    && MouseListener.getWorld().y >= gameObject.getPosition().y + textBox.height / 2.0f
-                                    && MouseListener.getWorld().y <= gameObject.getPosition().y - textBox.height / 2.0f;
+                            MouseListener.getWorld().x >= gameObject.getPosition().x - textBox.getWidth() / 2.0f
+                                    && MouseListener.getWorld().x <= gameObject.getPosition().x + textBox.getWidth() / 2.0f
+                                    && MouseListener.getWorld().y >= gameObject.getPosition().y + textBox.getHeight() / 2.0f
+                                    && MouseListener.getWorld().y <= gameObject.getPosition().y - textBox.getHeight() / 2.0f;
 
                     if (!cursorInsideTextBoxField) {
                         SiriusTheFox.getImGuiLayer().getPropertiesWindow().clearSelected();

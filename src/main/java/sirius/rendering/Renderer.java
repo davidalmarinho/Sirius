@@ -58,7 +58,7 @@ public class Renderer {
     }
 
     public void addText(String text, float x, float y, float scale, Color color) {
-        fontBatch.addText(text, x, y, scale, color.getDecimal32());
+        fontBatch.addText(text, x, y, scale, color);
         // fontBatch.flushBatch();
     }
 
@@ -80,12 +80,7 @@ public class Renderer {
             }
         }
 
-        // SiriusTheFox.getCurrentScene().getRenderer().addText("From ÀGILDE CITY", 0.1f, 1.5f, 0.005f, new Color(255, 255, 255));
-        // SiriusTheFox.getCurrentScene().getRenderer().addText("\"When one story ends, another begins!\"", 0.1f, 1.2f, 0.005f, new Color(255, 255, 255));
-        // SiriusTheFox.getCurrentScene().getRenderer().addText("\"You underestimate my power...\"", 0.1f, 0.67f, 0.005f, new Color(255, 255, 255));
-        // // SiriusTheFox.getCurrentScene().getRenderer().addText("\"۞\"", 0.1f, 0.37f, 0.005f, new Color(255, 255, 255));
-        // SiriusTheFox.getCurrentScene().getRenderer().addText("\"Jajão!\"", 0.1f, 0.37f, 0.005f, new Color(255, 255, 255));
-        // // SiriusTheFox.getCurrentScene().getRenderer().addText("a", 0.1f, 0.67f, 0.005f, new Color(255, 255, 255));
+        currentShader.detach();
     }
 
     public void render() {
@@ -93,6 +88,8 @@ public class Renderer {
 
         for (int i = 0; i < batches.size(); i++)
             batches.get(i).render();
+
+        currentShader.detach();
     }
 
     public void destroyGameObject(GameObject go) {

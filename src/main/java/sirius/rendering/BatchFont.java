@@ -7,6 +7,8 @@ import sirius.SiriusTheFox;
 import sirius.utils.AssetPool;
 import sirius.utils.Settings;
 
+import java.util.Arrays;
+
 import static org.lwjgl.opengl.GL11.GL_TRIANGLES;
 import static org.lwjgl.opengl.GL11.GL_UNSIGNED_INT;
 import static org.lwjgl.opengl.GL11.glBindTexture;
@@ -40,7 +42,7 @@ public class BatchFont {
     }
 
     public BatchFont(int maxCharacters) {
-        this.vertexSize = 7;
+        this.vertexSize = 8;
 
         this.batchSize = maxCharacters;
         this.vertices = new float[batchSize * vertexSize];
@@ -69,10 +71,10 @@ public class BatchFont {
 
         generateEbo();
 
-        int stride = 7 * Float.BYTES;
+        int stride = vertexSize * Float.BYTES;
         GlObjects.attributeAndEnablePointer(0, 2, stride, 0);
-        GlObjects.attributeAndEnablePointer(1, 3, stride, 2 * Float.BYTES);
-        GlObjects.attributeAndEnablePointer(2, 2, stride, 5 * Float.BYTES);
+        GlObjects.attributeAndEnablePointer(1, 4, stride, 2 * Float.BYTES);
+        GlObjects.attributeAndEnablePointer(2, 2, stride, 6 * Float.BYTES);
     }
 
     public void flushBatch() {
@@ -108,17 +110,23 @@ public class BatchFont {
 
         // Reset batch for use on next draw call
         size = 0;
+        Arrays.fill(vertices, 0);
     }
 
-    public void addCharacter(float x, float y, float scale, Glyph glyph, int rgb) {
+    public void addCharacter(float x, float y, float scale, Glyph glyph, Color rgba) {
         // If we have no more room in the current batch, flush it and start with a fresh batch
         if (size >= batchSize - 4) {
             flushBatch();
         }
 
-        float r = (float) ((rgb >> 16) & 0xFF) / 255.0f;
-        float g = (float) ((rgb >> 8) & 0xFF) / 255.0f;
-        float b = (float) ((rgb >> 0) & 0xFF) / 255.0f;
+        // float a = (float) ((rgba >> 24) & 0xFF) / 255.0f;
+        float a = rgba.getOpacity();
+        // float r = (float) ((rgba >> 16) & 0xFF) / 255.0f;
+        float r = rgba.getRed();
+        // float g = (float) ((rgba >> 8) & 0xFF) / 255.0f;
+        float g = rgba.getGreen();
+        // float b = (float) ((rgba >> 0) & 0xFF) / 255.0f;
+        float b = rgba.getBlue();
 
         float x0 = x;
         float y0 = y - scale * (glyph.height - glyph.yBearing);
@@ -130,46 +138,65 @@ public class BatchFont {
         float ux1 = glyph.textureCoordinates[1].x;
         float uy1 = glyph.textureCoordinates[1].y;
 
-        int index = size * 7;
+        int index = size * vertexSize;
         vertices[index] = x1;
         vertices[index + 1] = y0;
         vertices[index + 2] = r;
         vertices[index + 3] = g;
         vertices[index + 4] = b;
-        vertices[index + 5] = ux1;
-        vertices[index + 6] = uy0;
+        vertices[index + 5] = a;
+        vertices[index + 6] = ux1;
+        vertices[index + 7] = uy0;
 
-        index += 7;
+        index += vertexSize;
         vertices[index] = x1;
         vertices[index + 1] = y1;
         vertices[index + 2] = r;
         vertices[index + 3] = g;
         vertices[index + 4] = b;
-        vertices[index + 5] = ux1;
-        vertices[index + 6] = uy1;
+        vertices[index + 5] = a;
+        vertices[index + 6] = ux1;
+        vertices[index + 7] = uy1;
 
-        index += 7;
+        index += vertexSize;
         vertices[index] = x0;
         vertices[index + 1] = y1;
         vertices[index + 2] = r;
         vertices[index + 3] = g;
         vertices[index + 4] = b;
-        vertices[index + 5] = ux0;
-        vertices[index + 6] = uy1;
+        vertices[index + 5] = a;
+        vertices[index + 6] = ux0;
+        vertices[index + 7] = uy1;
 
-        index += 7;
+        index += vertexSize;
         vertices[index] = x0;
         vertices[index + 1] = y0;
         vertices[index + 2] = r;
         vertices[index + 3] = g;
         vertices[index + 4] = b;
-        vertices[index + 5] = ux0;
-        vertices[index + 6] = uy0;
+        vertices[index + 5] = a;
+        vertices[index + 6] = ux0;
+        vertices[index + 7] = uy0;
 
         size += 4;
     }
 
-    public void addText(String text, float x, float y, float scale, int color) {
+    public void addText(String text, float x, float y, float scale, Color color) {
+        for (int i = 0; i < text.length(); i++) {
+            char c = text.charAt(i);
+
+            Glyph glyph = getGlyph(c);
+
+            if (glyph == null) continue;
+
+            float xPos = x;
+            float yPos = y;
+            addCharacter(xPos, yPos, scale, glyph, color);
+            x += glyph.width * scale;
+        }
+    }
+
+    public Glyph getGlyph(char c) {
         if (font == null) {
             // TODO: 04/07/2022 Handle better this error
             // this.font = new Font(AssetPool.getFont("assets/fonts/verdana.ttf"));
@@ -181,25 +208,32 @@ public class BatchFont {
             }
         }
 
-        for (int i = 0; i < text.length(); i++) {
-            char c = text.charAt(i);
+        Glyph glyph = font.getCharacter(c);
 
-            Glyph glyph = font.getCharacter(c);
-
-            if (glyph.width == 0) {
-                System.out.println("Unknown character " + c);
-                continue;
-            }
-
-            float xPos = x;
-            float yPos = y;
-            addCharacter(xPos, yPos, scale, glyph, color);
-            x += glyph.width * scale;
+        if (glyph.width == 0) {
+            System.out.println("Unknown character " + c);
+            return null;
         }
+
+        return glyph;
     }
 
     public void reset(int maxTextLength) {
+        // Disengage everything
+        GlObjects.disableAttributes(2);
+        GlObjects.unbindVao();
+
+        // Disengage the textures
+        glBindTexture(GL_TEXTURE_2D, 0);
+
+        Renderer.getBoundShader().detach();
+
+        // Reset batch for use on next draw call
+        // size = 0;
+
         this.batchSize = maxTextLength;
+
         initBatch();
+        // flushBatch();
     }
 }

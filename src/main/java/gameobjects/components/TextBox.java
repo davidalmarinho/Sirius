@@ -6,8 +6,8 @@ import sirius.rendering.Color;
 import sirius.rendering.debug.DebugDraw;
 
 public class TextBox extends Component {
-    public String text;
-    public float width, height;
+    private String text;
+    private float width, height;
 
     private int maxTextLength;
 
@@ -15,7 +15,7 @@ public class TextBox extends Component {
         this.text = text;
         this.width = width;
         this.height = height;
-        this.maxTextLength = 32;
+        this.maxTextLength = text.length();
     }
 
     public TextBox(float width, float height) {
@@ -39,5 +39,21 @@ public class TextBox extends Component {
         // Set showing text
         this.text   = JImGui.inputText("Text Box:", this.text, maxTextLength);
         this.maxTextLength = JImGui.inputInt(1, "Max text length: ", this.maxTextLength);
+
+        // Set text box's size
+        this.width = JImGui.dragFloat("Width: ", this.width);
+        this.height = JImGui.dragFloat("Height: ", this.height);
+    }
+
+    public String getText() {
+        return text;
+    }
+
+    public float getWidth() {
+        return width;
+    }
+
+    public float getHeight() {
+        return height;
     }
 }

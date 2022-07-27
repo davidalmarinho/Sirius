@@ -2,14 +2,14 @@
     #version 330 core
 
     layout(location = 0) in vec2 aPos;
-    layout(location = 1) in vec3 aColor;
+    layout(location = 1) in vec4 aColor;
     layout(location = 2) in vec2 aTexCoords;
 
     uniform mat4 uProjection;
     uniform mat4 uView;
 
     out vec2 fTexCoords;
-    out vec3 fColor;
+    out vec4 fColor;
 
     void main() {
         fTexCoords  = aTexCoords;
@@ -21,7 +21,7 @@
     #version 330 core
 
     in vec2 fTexCoords;
-    in vec3 fColor;
+    in vec4 fColor;
 
     uniform sampler2D uFontTexture;
 
@@ -29,5 +29,5 @@
 
     void main() {
         float c = texture(uFontTexture, fTexCoords).r;
-        color   = vec4(1, 1, 1, c) * vec4(fColor, 1);
+        color   = vec4(1, 1, 1, c) * vec4(fColor.x, fColor.y, fColor.z, fColor.w);
     }

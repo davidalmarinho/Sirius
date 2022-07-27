@@ -82,6 +82,10 @@ public class JImGui {
     }
 
     public static float dragFloat(String label, float value) {
+        return dragFloat(label, value, 0.1f);
+    }
+
+    public static float dragFloat(String label, float value, float vSpeed) {
         ImGui.pushID(label);
 
         ImGui.columns(2);
@@ -90,7 +94,7 @@ public class JImGui {
         ImGui.nextColumn();
 
         float[] valArray = {value};
-        ImGui.dragFloat("##dragFloat", valArray, 0.1f);
+        ImGui.dragFloat("##dragFloat", valArray, vSpeed);
 
         ImGui.columns(1);
         ImGui.popID();
@@ -132,7 +136,12 @@ public class JImGui {
     }
 
     public static boolean colorPicker4(String label, Vector4f vec4Color) {
+        return colorPicker4(label, new Color(vec4Color.x, vec4Color.y, vec4Color.z, vec4Color.w));
+    }
+
+    public static boolean colorPicker4(String label, Color color) {
         boolean res = false;
+        Vector4f vec4Color = color.getColor();
 
         ImGui.pushID(label);
 

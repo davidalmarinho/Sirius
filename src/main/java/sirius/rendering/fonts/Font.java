@@ -423,6 +423,22 @@ public class Font {
         return null;
     }
 
+    public int getGreatestHeight() {
+        int greatestHeight = 0;
+
+        for (int i = 0; i < glyphMap.size(); i++) {
+            Glyph glyph = glyphMap.get(i);
+            if (glyph == null) {
+                continue;
+            }
+
+            if (greatestHeight < glyph.height)
+                greatestHeight = glyph.height;
+        }
+
+        return greatestHeight;
+    }
+
     public int getSize() {
         return this.size;
     }

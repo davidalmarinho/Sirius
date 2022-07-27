@@ -8,13 +8,9 @@ import java.nio.IntBuffer;
 public class Data {
 
     public static FloatBuffer toBuffer(float[] data) {
-        // Criar o espaço na memória
         FloatBuffer floatBuffer = BufferUtils.createFloatBuffer(data.length);
 
-        // Para armazenar na memória criada anteriormente
         floatBuffer.put(data);
-
-        // Para organizar e dizer que já não o vamos editar mais
         floatBuffer.flip();
 
         return floatBuffer;
