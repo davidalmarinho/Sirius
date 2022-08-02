@@ -77,15 +77,14 @@ public class MouseListener {
     }
 
     /**
-     * Para o jogo reconhecer keycodes
-     * @param window Ponteiro da janela
-     * @param button Botão pressionado
-     * @param action Verificar se botão foi pressionado
-     * @param mods Para keybindings
+     * To the game recognise the mouse buttons.
+     * @param window The window pointer.
+     * @param button Pressed button.
+     * @param action Verifies if the button as been pressed.
+     * @param mods To make binds.
      */
     public static void mouseButtonCallback(long window, int button, int action, int mods) {
         if (action == GLFW_PRESS) {
-            // Verificar se "temos as teclas todas"
             if (button < get().mouseButtons.length) {
                 get().mouseButtonsDown++;
                 get().mouseButtons[button] = true;
@@ -95,7 +94,7 @@ public class MouseListener {
                 get().mouseButtonsDown--;
                 get().mouseButtons[button] = false;
 
-                // Como não clicamos em nenhum botão, sabemos que também não há dragging
+                // Didn't click in a button, so the mouse can't be dragging as consequence
                 get().dragging = false;
             }
         }

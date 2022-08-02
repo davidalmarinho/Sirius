@@ -30,7 +30,7 @@ public class Prefabs {
         GameObject textBlock = SiriusTheFox.getCurrentScene().createGameObject(Settings.GameObjects.GENERATED_NAME);
         textBlock.setPosition(x, y);
         textBlock.setScale(width, height);
-        textBlock.addComponent(new TextBox("I'm a text box!", width, height));
+        textBlock.addComponent(new TextBox("I am a text box!", width, height));
         textBlock.addComponent(new FontRenderer());
 
         return textBlock;

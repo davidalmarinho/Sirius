@@ -305,6 +305,11 @@ public class Scene {
 
     public void load() {
         Level level = AssetPool.getLevel(Level.currentLevel);
+        if (level == null) {
+            // TODO: 01/08/2022 Handle better this error
+            level = new Level("level1.json", "assets/levels/level1.json", 1);
+            AssetPool.addLevel(level);
+        }
         String inFile = Encode.readFile(level.getPath());
 
         // Means that the saving txt file isn't empty

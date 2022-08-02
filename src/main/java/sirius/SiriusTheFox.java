@@ -56,6 +56,8 @@ public class SiriusTheFox implements Observer {
         audio.init();
         window.start();
 
+        loadEngineResources();
+
         // Put the scene
         if (!exportGame)
             changeScene(new LevelEditorSceneInitializer());
@@ -66,8 +68,6 @@ public class SiriusTheFox implements Observer {
             else
                 changeScene(new LevelSceneInitializer());
         }
-
-        loadEngineResources();
     }
 
     public void loop() {
@@ -117,12 +117,13 @@ public class SiriusTheFox implements Observer {
             Color color = currentScene.getCamera().clearColor;
 
             glClearColor(color.getColor().x, color.getColor().y, color.getColor().z, color.getColor().w); /* Specifies
-            the color that glClear will use to cleaup buffer's color.*/
+            the color that glClear will use to clean up buffer's color.*/
 
-            glClear(GL_COLOR_BUFFER_BIT); /* Tell OpenGL to cleanup the frame (Indicates the buffers
+            glClear(GL_COLOR_BUFFER_BIT); /* Tell OpenGL to clea nup the frame (Indicates the buffers
             currently enabled for color writing).*/
 
             if (dt >= 0) {
+                // System.out.println("FPS: " + 1.0f / dt);
                 Renderer.bindShader(defaultShader);
                 window.update();
 
@@ -188,7 +189,6 @@ public class SiriusTheFox implements Observer {
         currentScene = new Scene(sceneInitializer);
         currentScene.load();
         currentScene.init();
-        loadEngineResources();
         currentScene.start();
     }
 

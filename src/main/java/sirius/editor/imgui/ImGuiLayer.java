@@ -126,6 +126,10 @@ public class ImGuiLayer {
             if (c != GLFW_KEY_DELETE) {
                 io.addInputCharacter(c);
             }
+
+            if (!io.getWantCaptureKeyboard()) {
+                KeyListener.characterCallback(w, c);
+            }
         });
 
         glfwSetMouseButtonCallback(glfwWindow, (w, button, action, mods) -> {

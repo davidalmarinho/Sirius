@@ -182,6 +182,10 @@ public class BatchFont {
     }
 
     public void addText(String text, float x, float y, float scale, Color color) {
+        addText(text, x, y, scale, 0.0f, color);
+    }
+
+    public void addText(String text, float x, float y, float scale, float charactersSpacing, Color color) {
         for (int i = 0; i < text.length(); i++) {
             char c = text.charAt(i);
 
@@ -192,7 +196,7 @@ public class BatchFont {
             float xPos = x;
             float yPos = y;
             addCharacter(xPos, yPos, scale, glyph, color);
-            x += glyph.width * scale;
+            x += (glyph.width + charactersSpacing) * scale;
         }
     }
 
@@ -212,7 +216,7 @@ public class BatchFont {
 
         if (glyph.width == 0) {
             System.out.println("Unknown character " + c);
-            return null;
+            return new Glyph(font.getCharacter('?'));
         }
 
         return glyph;

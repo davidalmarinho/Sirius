@@ -1,12 +1,21 @@
 package sirius.input;
 
-import static org.lwjgl.glfw.GLFW.GLFW_PRESS;
-import static org.lwjgl.glfw.GLFW.GLFW_RELEASE;
+import java.awt.*;
+import java.awt.event.KeyEvent;
+
+import static org.lwjgl.glfw.GLFW.*;
 
 public class KeyListener {
     private static KeyListener instance;
     private boolean[] lastKeys = new boolean[350];
     private boolean[] keys = new boolean[350];
+    private char lastPressedCharacter = '\0';
+    private int mods;
+    private static boolean capsLock;
+
+    static {
+        capsLock = Toolkit.getDefaultToolkit().getLockingKeyState(KeyEvent.VK_CAPS_LOCK);
+    }
 
     private KeyListener() {}
 
@@ -17,11 +26,11 @@ public class KeyListener {
     }
 
     /**
-     * Lê os valores do teclado
-     * @param window Ponteiro
-     * @param action Se alguma tecla foi pressionada
+     * Read values from keyboard
+     * @param window The window pointer
+     * @param action If is has been any key pressed
      * @param scancode
-     * @param keycode ASCII decimal que aponta para um Char
+     * @param keycode ASCII decimal that points to a char
      * @param mods Keybindings
      */
     public static void keyCallback(long window, int keycode, int scancode, int action, int mods) {
@@ -29,13 +38,27 @@ public class KeyListener {
             if (keycode < get().keys.length && keycode > 0) {
                 get().keys[keycode] = true;
             }
+
+            get().mods = mods;
+
+            // Set caps lock
+            if (keycode == GLFW_KEY_CAPS_LOCK) {
+                capsLock = !capsLock;
+            }
+
         } else if (action == GLFW_RELEASE && keycode > 0) {
             if (keycode < get().keys.length) {
                 get().keys[keycode] = false;
             }
+
+            // TODO: 02/08/2022 See better about mods
+            get().mods = mods;
         }
     }
 
+    public static void characterCallback(long window, int codepoint) {
+        get().lastPressedCharacter = (char) codepoint;
+    }
     public static boolean isKeyPressed(int keycode) {
         if (keycode < get().keys.length) {
             return get().keys[keycode];
@@ -82,6 +105,12 @@ public class KeyListener {
         }
 
         return instance;
+    }
+
+    public static char getPressedKey() {
+        char c = get().lastPressedCharacter;
+        get().lastPressedCharacter = '\0';
+        return c;
     }
 
     public static boolean isAnyKeyPressed() {

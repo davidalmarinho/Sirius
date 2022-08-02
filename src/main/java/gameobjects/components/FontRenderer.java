@@ -11,13 +11,16 @@ import sirius.utils.AssetPool;
 import sirius.utils.Settings;
 
 public class FontRenderer extends Component {
-    private transient Font font;
+    private Font font;
     private float scale;
     private String fontpath;
     private int previousMaxTextLength;
     private int maxTextLength;
     private transient BatchFont batchFont;
     private Color color;
+    private float paragraphSpacing = 0.5f;
+    private float lineSpacing = 0.0f;
+    private float charactersSpacing = 0.0f;
 
     private transient int currentItem = -1;
 
@@ -41,39 +44,52 @@ public class FontRenderer extends Component {
 
         float greatestHeight = font.getGreatestHeight() * scale;
 
-        // for (int i = 0; i < text.length(); i++) {
-        //     char c = text.charAt(i);
-        //     if (batchFont.getGlyph(c).height > greatestHeight) {
-        //         greatestHeight = batchFont.getGlyph(c).height * scale;
-        //     }
-        // }
-
         final float TEXT_BOX_WIDTH = textBox.getWidth();
-        float currentWidth = 0.0f;
 
-        int numParagraphs = 0;
+        // Split text in paragraphs using '\n' char
+        String[] paragraphs = text.split("\n");
 
-        int lastStrIndex = 0;
-        // Go throughout each character of the desired text to render
-        for (int i = 0; i < text.length(); i++) {
-            Glyph glyph = batchFont.getGlyph(text.charAt(i));
-            if (glyph == null) continue;
+        int numLines = 0;
 
-            currentWidth += glyph.width * scale;
+        for (String paragraph : paragraphs) {
+            float currentWidth = 0.0f;
 
-            if (currentWidth > textBox.getWidth()) {
-                // batchFont.addText(text.substring(lastStrIndex, i), gameObject.getPosition().x - TEXT_BOX_WIDTH / 2.0f, gameObject.getPosition().y + textBox.getHeight() / 2.0f - greatestHeight - greatestHeight * numParagraphs, this.scale, color);
-                batchFont.addText(text.substring(lastStrIndex, i), gameObject.getPosition().x - TEXT_BOX_WIDTH / 2.0f, gameObject.getPosition().y + textBox.getHeight() / 2.0f - greatestHeight - greatestHeight * numParagraphs, this.scale, color);
+            // Keeps the index of the last character possible to render in the same line
+            int lastCharIndex = 0;
 
-                currentWidth = 0;
-                lastStrIndex = i;
-                numParagraphs++;
+            // Go throughout each character of the desired text to render
+            for (int index = 0; index < paragraph.length(); index++) {
+                Glyph glyph = batchFont.getGlyph(paragraph.charAt(index));
+                if (glyph == null) continue;
+
+                currentWidth += glyph.width * scale;
+
+                // New line
+                if (currentWidth > TEXT_BOX_WIDTH) {
+                    batchFont.addText(paragraph.substring(lastCharIndex, index),
+                            gameObject.getPosition().x - TEXT_BOX_WIDTH / 2.0f,
+                            gameObject.getPosition().y + textBox.getHeight() / 2.0f
+                                    - greatestHeight
+                                    - greatestHeight * numLines,
+                            this.scale,
+                            color);
+
+                    currentWidth = glyph.width * scale;
+                    lastCharIndex = index;
+                    numLines++;
+                }
+
+                if (currentWidth < TEXT_BOX_WIDTH && index == paragraph.length() - 1) {
+                    batchFont.addText(paragraph.substring(lastCharIndex), gameObject.getPosition().x - TEXT_BOX_WIDTH / 2.0f,
+                            gameObject.getPosition().y + textBox.getHeight() / 2.0f
+                                    - greatestHeight
+                                    - greatestHeight * numLines,
+                            this.scale,
+                            color);
+                }
             }
 
-            if (currentWidth < textBox.getWidth() && i == text.length() - 1) {
-                // batchFont.addText(text.substring(lastStrIndex), gameObject.getPosition().x - TEXT_BOX_WIDTH / 2.0f, gameObject.getPosition().y + textBox.getHeight() / 2.0f - greatestHeight - greatestHeight * numParagraphs, this.scale, color);
-                batchFont.addText(text.substring(lastStrIndex), gameObject.getPosition().x - TEXT_BOX_WIDTH / 2.0f, gameObject.getPosition().y + textBox.getHeight() / 2.0f - greatestHeight - greatestHeight * numParagraphs, this.scale, color);
-            }
+            numLines++;
         }
 
         batchFont.flushBatch();
@@ -99,12 +115,7 @@ public class FontRenderer extends Component {
 
         if (reloadFont) {
             font = AssetPool.getFont(this.fontpath);
-        }
-
-        maxTextLength = gameObject.getComponent(TextBox.class).getText().length();
-        if (previousMaxTextLength != maxTextLength) {
             batchFont.reset(maxTextLength);
-            this.previousMaxTextLength = maxTextLength;
         }
     }
 }

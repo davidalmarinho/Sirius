@@ -89,6 +89,7 @@ public class Window {
 
         // Configure keyboard's callbacks
         glfwSetKeyCallback(glfwWindow, KeyListener::keyCallback);
+        glfwSetCharCallback(glfwWindow, KeyListener::characterCallback);
 
         try (MemoryStack stack = stackPush()) {
             IntBuffer pWidth = stack.mallocInt(1);
@@ -109,7 +110,7 @@ public class Window {
                     (vidMode.height() / 2 - pHeight.get(0) / 2));
 
             if (fullscreen)
-                glfwSetWindowMonitor(glfwWindow, monitor, 0, 0, vidMode.width(), vidMode.height(), 0);
+                glfwSetWindowMonitor(glfwWindow, monitor, 0, 0, vidMode.width(), vidMode.height(), vidMode.refreshRate());
         }
 
         // OpenGL context
@@ -151,10 +152,11 @@ public class Window {
             fullscreen = !fullscreen;
             GLFWVidMode glfwVidMode = glfwGetVideoMode(monitor);
 
-            if (fullscreen)
-                glfwSetWindowMonitor(glfwWindow, monitor, 0, 0, glfwVidMode.width(), glfwVidMode.height(), 0);
-            else
-                glfwSetWindowMonitor(glfwWindow, NULL, 0, 0, 1920, 1080, 0);
+            if (fullscreen) {
+                glfwSetWindowMonitor(glfwWindow, monitor, 0, 0, glfwVidMode.width(), glfwVidMode.height(), glfwVidMode.refreshRate());
+            } else {
+                glfwSetWindowMonitor(glfwWindow, NULL, 0, 0, 1920, 1080, glfwVidMode.refreshRate());
+            }
         }
     }
 
