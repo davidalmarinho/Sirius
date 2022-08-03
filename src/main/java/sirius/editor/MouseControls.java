@@ -3,7 +3,7 @@ package sirius.editor;
 import gameobjects.GameObject;
 import gameobjects.components.Component;
 import gameobjects.components.SpriteRenderer;
-import gameobjects.components.TextBox;
+import gameobjects.components.text_components.TextBox;
 import gameobjects.components.Transform;
 import sirius.SiriusTheFox;
 import sirius.animations.StateMachine;

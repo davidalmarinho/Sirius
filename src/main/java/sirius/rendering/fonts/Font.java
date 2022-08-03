@@ -50,7 +50,7 @@ public class Font {
 
             uploadTexture(bitmap);
 
-            exportBitmap(bitmap);
+            // exportBitmap(bitmap);
 
             Encode.saveFont(this, Settings.Files.FONTS_PROPERTIES_FOLDER + "/" + font.getName() + fontSize + ".json");
         } else {
@@ -89,7 +89,7 @@ public class Font {
 
         uploadTexture(bitmap);
 
-        exportBitmap(bitmap);
+        // exportBitmap(bitmap);
     }
 
     public Glyph getCharacter(int codepoint) {
@@ -112,6 +112,7 @@ public class Font {
 
         int totalFontImgHeight = fontMetrics.getHeight();
 
+        // System.out.println("Name: " + font.getName());
         // System.out.println("W: " + this.advance);
         // System.out.println("H:" + LINE_HEIGHT);
 
@@ -151,7 +152,7 @@ public class Font {
             if (font.canDisplay(i)) {
                 currentDisplayableGlyph++;
                 Glyph glyph = glyphMap.get(i);
-                // TODO: 14/07/2022 Not working
+                // TODO: 14/07/2022 Not working --I think that this is working...
                 if (currentDisplayableGlyph % 2 == 0) {
                     g2d.setColor(Color.BLUE);
                 } else {
@@ -386,7 +387,7 @@ public class Font {
 
     private void exportBitmap(BufferedImage bitmap) {
         try {
-            File file = new File("assets/fonts/cache/tmp.png");
+            File file = new File("assets/fonts/cache/" + font.getName() + ".png");
             ImageIO.write(bitmap, "png", file);
         } catch (IOException e) {
             e.printStackTrace();

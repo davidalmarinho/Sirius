@@ -1,5 +1,6 @@
-package gameobjects.components;
+package gameobjects.components.text_components;
 
+import gameobjects.components.Component;
 import org.joml.Vector2f;
 import sirius.editor.imgui.JImGui;
 import sirius.input.KeyListener;
@@ -17,6 +18,9 @@ public class TextBox extends Component {
     private int index;
     private float curDebounce;
     private final float DEBOUNCE;
+
+    private final float BLINKING_TIME = 0.8f;
+    private float blinking = 0.0f;
 
     public TextBox(String text, float width, float height) {
         this.text = text;
@@ -45,6 +49,60 @@ public class TextBox extends Component {
         DebugDraw.addBox2D(new Vector2f(gameObject.getPosition().x, gameObject.getPosition().y),
                 new Vector2f(width, height), 0.0f, Color.BLACK);
 
+        FontRenderer fontRenderer = gameObject.getComponent(FontRenderer.class);
+
+        float xCurrentAdvance = 0.0f;
+        float yCurrentAdvance = 0.0f;
+        char[] textInChars = text.toCharArray();
+        for (int i = 0; i < text.length(); i++) {
+            // When beginning text box, we always have a paragraph
+            if (i == 0) {
+                xCurrentAdvance += fontRenderer.getParagraphSpacing();
+            }
+
+            char curChar = textInChars[i];
+
+            float curCharWidth = fontRenderer.getBatchFont().getGlyph(curChar).width * fontRenderer.getScale();
+            if (i <= index) {
+                xCurrentAdvance += curCharWidth;
+
+                // Align insertion point with the paragraph
+                if (curChar == '\n') {
+                    xCurrentAdvance = fontRenderer.getParagraphSpacing();
+                    yCurrentAdvance += fontRenderer.getGreatestHeight();
+                }
+            }
+
+            // New line
+            if (xCurrentAdvance > this.width) {
+                xCurrentAdvance = curCharWidth;
+                yCurrentAdvance += fontRenderer.getGreatestHeight();
+            }
+        }
+
+        // Blinking insertion point
+        blinking -= dt;
+        if (blinking < -0.3f) {
+            blinking = BLINKING_TIME;
+        }
+
+        // When writing, the insertion point won't blink
+        if (KeyListener.isAnyKeyPressed()) {
+            blinking = BLINKING_TIME;
+        }
+
+        if (blinking >= 0) {
+            DebugDraw.addLine2D(
+                    new Vector2f(
+                            gameObject.getPosition().x - this.width / 2.0f + xCurrentAdvance,
+                            gameObject.getPosition().y + this.height / 2.0f - yCurrentAdvance),
+                    new Vector2f(
+                            gameObject.getPosition().x - this.width / 2.0f + xCurrentAdvance,
+                            gameObject.getPosition().y + this.height / 2.0f
+                                    - fontRenderer.getGreatestHeight() - yCurrentAdvance),
+                    new Color(Color.BLUE));
+        }
+
         // Navigate in the text to select the current character
         if (KeyListener.isKeyPressed(GLFW_KEY_RIGHT)) {
             curDebounce -= dt;
@@ -57,6 +115,18 @@ public class TextBox extends Component {
             if (curDebounce < 0) {
                 curDebounce = DEBOUNCE;
                 moveLeft();
+            }
+        } else if (KeyListener.isKeyDown(GLFW_KEY_UP)) {
+            curDebounce -= dt;
+            if (curDebounce < 0) {
+                curDebounce = DEBOUNCE;
+                moveUp();
+            }
+        } else if (KeyListener.isKeyPressed(GLFW_KEY_DOWN)) {
+            curDebounce -= dt;
+            if (curDebounce < 0) {
+                curDebounce = DEBOUNCE;
+                moveDown();
             }
 
         // Delete current character
@@ -83,6 +153,22 @@ public class TextBox extends Component {
             curDebounce = 0;
         }
 
+        // TODO: 03/08/2022 Implement:
+        // Better system than debounce system
+        // UP key                     [X]
+        // DOWN key                   [X]
+        // CTRL + RIGHT bind
+        // CTRL + LEFT bind
+        // SHIFT + RIGHT BIND
+        // SHIFT + LEFT bind
+        // CTRL + SHIFT + RIGHT bind
+        // CTRL + SHIFT + LEFT bind
+        // END key
+        // HOME key
+        // SHIFT + END
+        // SHIFT + HOME
+        // TAB --4 spaces
+
         if (!text.isEmpty()) {
             if (index == -1) {
                 // System.out.println("Current char: ' ' ");
@@ -104,6 +190,21 @@ public class TextBox extends Component {
             index--;
         else
             index = maxIndex;
+    }
+
+    private void moveUp() {
+        int numCharsPreviousLine = gameObject.getComponent(FontRenderer.class).getNumCharsPreviousLine(index);
+        // System.out.println("Previous Line: " + numCharsPreviousLine);
+        if (index - numCharsPreviousLine >= 0) {
+            index -= numCharsPreviousLine;
+        }
+    }
+
+    private void moveDown() {
+        int numCharsCurrentLine = gameObject.getComponent(FontRenderer.class).getNumCharsCurrentLine(index);
+        if (index + numCharsCurrentLine < text.length()) {
+            index += numCharsCurrentLine;
+        }
     }
 
     private void delCurrentChar() {
@@ -153,7 +254,14 @@ public class TextBox extends Component {
 
         // Set text box's size
         this.width = JImGui.dragFloat("Width: ", this.width);
+        if (width < 0.0f) {
+            width = 0.0f;
+        }
+
         this.height = JImGui.dragFloat("Height: ", this.height);
+        if (height < 0.0f) {
+            height = 0.0f;
+        }
     }
 
     public String getText() {

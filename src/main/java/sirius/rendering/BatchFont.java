@@ -196,7 +196,7 @@ public class BatchFont {
             float xPos = x;
             float yPos = y;
             addCharacter(xPos, yPos, scale, glyph, color);
-            x += (glyph.width + charactersSpacing) * scale;
+            x += (glyph.width) * scale + charactersSpacing;
         }
     }
 

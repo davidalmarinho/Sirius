@@ -1,7 +1,7 @@
 package sirius.rendering;
 
 import gameobjects.GameObject;
-import gameobjects.components.FontRenderer;
+import gameobjects.components.text_components.FontRenderer;
 import gameobjects.components.SpriteRenderer;
 import sirius.SiriusTheFox;
 import sirius.rendering.spritesheet.Texture;

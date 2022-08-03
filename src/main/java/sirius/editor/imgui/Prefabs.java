@@ -1,10 +1,10 @@
 package sirius.editor.imgui;
 
 import gameobjects.GameObject;
-import gameobjects.components.FontRenderer;
+import gameobjects.components.text_components.FontRenderer;
 import gameobjects.components.Sprite;
 import gameobjects.components.SpriteRenderer;
-import gameobjects.components.TextBox;
+import gameobjects.components.text_components.TextBox;
 import imgui.ImGui;
 import sirius.SiriusTheFox;
 import sirius.editor.MouseControls;

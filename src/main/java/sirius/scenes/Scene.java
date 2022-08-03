@@ -66,6 +66,7 @@ public class Scene {
 
         this.camera.adjustProjection();
 
+        // TODO: 02/08/2022 Do just in case of debugging
         if (KeyListener.isKeyDown(GLFW_KEY_T)) {
             for (GameObject go : gameObjectList) {
                 System.out.println("ID: " + go.getUid());
