@@ -14,6 +14,7 @@ import org.lwjgl.opengl.GL;
 import org.lwjgl.system.MemoryStack;
 
 import java.nio.IntBuffer;
+import java.util.Objects;
 
 import static org.lwjgl.glfw.Callbacks.glfwFreeCallbacks;
 import static org.lwjgl.glfw.GLFW.*;
@@ -36,6 +37,10 @@ public class Window {
     private ImGuiLayer imGuiLayer;
     private FrameBuffer frameBuffer;
     private PickingTexture pickingTexture;
+
+    public int maxFps = 60;
+    private boolean vsync = true;
+    private float updateFps = 1.0f / maxFps;
 
     public Window(String title, int width, int height) {
         this.title  = title;
@@ -117,7 +122,7 @@ public class Window {
         glfwMakeContextCurrent(glfwWindow);
 
         // Turn on the v-sync --Uses how many hz the monitor has to refresh the frames
-        glfwSwapInterval(1);
+        setVsync(this.vsync);
 
         // Turn the window visible
         glfwShowWindow(glfwWindow);
@@ -148,7 +153,7 @@ public class Window {
     }
 
     public void update() {
-        if (KeyListener.isBindPressed(GLFW_KEY_LEFT_CONTROL, GLFW_KEY_F)) {
+        if (KeyListener.isBindDown(GLFW_KEY_LEFT_CONTROL, GLFW_KEY_F)) {
             fullscreen = !fullscreen;
             GLFWVidMode glfwVidMode = glfwGetVideoMode(monitor);
 
@@ -183,9 +188,28 @@ public class Window {
         glfwSwapBuffers(glfwWindow);
     }
 
+    public boolean isVsync() {
+        return vsync;
+    }
+
+    public void setVsync(boolean vsync) {
+        if (this.vsync != vsync) {
+            this.vsync = vsync;
+
+            if (vsync) {
+                glfwSwapInterval(1);
+            } else {
+                glfwSwapInterval(0);
+            }
+
+            maxFps = Objects.requireNonNull(glfwGetVideoMode(monitor)).refreshRate();
+        }
+    }
+
     public int getWidth() {
         return width;
     }
+
     public int getHeight() {
         return height;
     }
@@ -206,6 +230,10 @@ public class Window {
         return maxHeight;
     }
 
+    public float getUpdateFps() {
+        return updateFps;
+    }
+
     public boolean isWindowClosed() {
         return glfwWindowShouldClose(glfwWindow);
     }
@@ -224,6 +252,14 @@ public class Window {
 
     public PickingTexture getPickingTexture() {
         return pickingTexture;
+    }
+
+    public int getMaxFps() {
+        return maxFps;
+    }
+
+    public void setMaxFps(int maxFps) {
+        this.maxFps = maxFps;
     }
 
     public ICustomPropertiesWindow getICustomPropertiesWindow() {

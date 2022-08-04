@@ -122,4 +122,8 @@ public class GameViewWindow extends GuiWindow {
     public float getBottomY() {
         return bottomY;
     }
+
+    public void setPlaying(boolean playing) {
+        this.playing = playing;
+    }
 }

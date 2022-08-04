@@ -28,8 +28,7 @@ public class TextBox extends Component {
         this.height = height;
         this.maxTextLength = text.length();
         this.maxIndex = text.length() - 1;
-        // TODO: 29/07/2022 Better system than this debounce system
-        this.DEBOUNCE  = 0.20f;
+        this.DEBOUNCE  = 0.02f;
     }
 
     public TextBox(float width, float height) {
@@ -103,8 +102,36 @@ public class TextBox extends Component {
                     new Color(Color.BLUE));
         }
 
-        // Navigate in the text to select the current character
-        if (KeyListener.isKeyPressed(GLFW_KEY_RIGHT)) {
+        // Delete current character
+        if (KeyListener.isKeyPressed(GLFW_KEY_BACKSPACE)) {
+            curDebounce -= dt;
+            if (curDebounce < 0) {
+                curDebounce = DEBOUNCE;
+                delCurrentChar();
+            }
+
+        // Make paragraph
+        } else if (KeyListener.isKeyPressed(GLFW_KEY_ENTER)) {
+            curDebounce -= dt;
+            if (curDebounce < 0) {
+                curDebounce = DEBOUNCE;
+                write('\n');
+            }
+
+        // Navigation controls
+        } else if (KeyListener.isBindPressed(GLFW_KEY_LEFT_CONTROL, GLFW_KEY_RIGHT)) {
+            curDebounce -= dt;
+            if (curDebounce < 0) {
+                curDebounce = DEBOUNCE;
+                moveRightBind();
+            }
+        } else if (KeyListener.isBindPressed(GLFW_KEY_LEFT_CONTROL, GLFW_KEY_LEFT)) {
+            curDebounce -= dt;
+            if (curDebounce < 0) {
+                curDebounce = DEBOUNCE;
+                moveLeftBind();
+            }
+        } else if (KeyListener.isKeyPressed(GLFW_KEY_RIGHT)) {
             curDebounce -= dt;
             if (curDebounce < 0) {
                 curDebounce = DEBOUNCE;
@@ -116,12 +143,12 @@ public class TextBox extends Component {
                 curDebounce = DEBOUNCE;
                 moveLeft();
             }
-        } else if (KeyListener.isKeyDown(GLFW_KEY_UP)) {
-            curDebounce -= dt;
-            if (curDebounce < 0) {
-                curDebounce = DEBOUNCE;
-                moveUp();
-            }
+        } else if (KeyListener.isKeyPressed(GLFW_KEY_UP)) {
+                curDebounce -= dt;
+                if (curDebounce < 0) {
+                    curDebounce = DEBOUNCE;
+                    moveUp();
+                }
         } else if (KeyListener.isKeyPressed(GLFW_KEY_DOWN)) {
             curDebounce -= dt;
             if (curDebounce < 0) {
@@ -129,27 +156,12 @@ public class TextBox extends Component {
                 moveDown();
             }
 
-        // Delete current character
-        } else if (KeyListener.isKeyPressed(GLFW_KEY_BACKSPACE)) {
-            curDebounce -= dt;
-            if (curDebounce < 0) {
-                curDebounce = DEBOUNCE;
-                delCurrentChar();
-            }
-        } else if (KeyListener.isKeyPressed(GLFW_KEY_ENTER)) {
-            curDebounce -= dt;
-            if (curDebounce < 0) {
-                curDebounce = DEBOUNCE;
-                write('\n');
-            }
+        // Type
         } else if (KeyListener.isAnyKeyPressed()) {
-            curDebounce -= dt;
-            if (curDebounce < 0) {
-                curDebounce = DEBOUNCE;
-                write(KeyListener.getPressedKey());
-            }
+            write(KeyListener.getPressedKey());
+        }
 
-        } else {
+        if (KeyListener.isAnyKeyReleased()) {
             curDebounce = 0;
         }
 
@@ -157,8 +169,8 @@ public class TextBox extends Component {
         // Better system than debounce system
         // UP key                     [X]
         // DOWN key                   [X]
-        // CTRL + RIGHT bind
-        // CTRL + LEFT bind
+        // CTRL + RIGHT bind          [X]
+        // CTRL + LEFT bind           [X]
         // SHIFT + RIGHT BIND
         // SHIFT + LEFT bind
         // CTRL + SHIFT + RIGHT bind
@@ -183,6 +195,28 @@ public class TextBox extends Component {
             index++;
         else
             index = -1;
+    }
+
+    private void moveRightBind() {
+        char[] textInChars = text.toCharArray();
+        final int START = index + 1;
+        for (int i = START; i < textInChars.length; i++) {
+            if (textInChars[i] == ' ' && i > START) {
+                break;
+            }
+            moveRight();
+        }
+    }
+
+    private void moveLeftBind() {
+        char[] textInChars = text.toCharArray();
+        final int START = index;
+        for (int i = START; i >= 0; i--) {
+            if (textInChars[i] == ' ' && i < START) {
+                break;
+            }
+            moveLeft();
+        }
     }
 
     private void moveLeft() {

@@ -213,6 +213,25 @@ public class JImGui {
         return text;
     }
 
+    public static int defaultInputInt(int step, String label, int value) {
+        ImGui.pushID(label);
+
+        ImGui.text(label);
+
+        ImGui.sameLine();
+
+        ImInt outInt = new ImInt(value);
+        if (ImGui.inputInt("##" + label, outInt, step)) {
+            ImGui.popID();
+
+            return outInt.get();
+        }
+
+        ImGui.popID();
+
+        return value;
+    }
+
     public static int inputInt(int step, String label, int value) {
         ImGui.pushID(label);
 

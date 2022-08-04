@@ -28,7 +28,7 @@ public class KeyControls extends Component {
         // When pressing left shift key, the game object takes "smaller steps" --Moves less
         float multiplayer = KeyListener.isKeyPressed(GLFW_KEY_LEFT_SHIFT) ? 0.1f : 1.0f;
 
-        if (KeyListener.isBindPressed(GLFW_KEY_LEFT_CONTROL, GLFW_KEY_D) && activeGameObject != null) {
+        if (KeyListener.isBindDown(GLFW_KEY_LEFT_CONTROL, GLFW_KEY_D) && activeGameObject != null) {
             GameObject newObj = activeGameObject.copy();
             newObj.getTransform().position.add(Settings.GRID_WIDTH, 0.0f);
 
@@ -38,7 +38,7 @@ public class KeyControls extends Component {
 
             SiriusTheFox.getCurrentScene().addGameObject(newObj);
             propertiesWindow.setActiveGameObject(newObj);
-        } else if (KeyListener.isBindPressed(GLFW_KEY_LEFT_CONTROL, GLFW_KEY_D) && activeGameObjectList.size() > 1) {
+        } else if (KeyListener.isBindDown(GLFW_KEY_LEFT_CONTROL, GLFW_KEY_D) && activeGameObjectList.size() > 1) {
             List<GameObject> gameObjectList = new ArrayList<>(activeGameObjectList);
             propertiesWindow.clearSelected();
             for (GameObject go : gameObjectList) {

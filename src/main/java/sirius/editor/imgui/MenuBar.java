@@ -72,8 +72,16 @@ public class MenuBar {
         }
 
         if (ImGui.beginMenu("Settings")) {
-            if (ImGui.menuItem("Export Game Preview", "Ctrl + E"))
-                EventSystem.notify(null, new Event(Events.EXPORT_GAME));
+            SiriusTheFox.get().setMaximizeOnPlay(JImGui.checkBox("Maximize on play", SiriusTheFox.get().isMaximizeOnPlay()));
+            SiriusTheFox.getWindow().setVsync(JImGui.checkBox("V-sync", SiriusTheFox.getWindow().isVsync()));
+
+            if (SiriusTheFox.getWindow().isVsync()) {
+                ImGui.beginDisabled();
+            }
+            SiriusTheFox.getWindow().maxFps = JImGui.defaultInputInt(1, "Max fps:", SiriusTheFox.getWindow().maxFps);
+            if (SiriusTheFox.getWindow().isVsync()) {
+                ImGui.endDisabled();
+            }
 
             ImGui.endMenu();
         }

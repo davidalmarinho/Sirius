@@ -56,12 +56,12 @@ public class Scene {
 
     public void editorUpdate(float dt) {
         // Save and load file
-        if (KeyListener.isBindPressed(GLFW_KEY_LEFT_CONTROL, GLFW_KEY_S)
+        if (KeyListener.isBindDown(GLFW_KEY_LEFT_CONTROL, GLFW_KEY_S)
                 && !SiriusTheFox.get().isRuntimePlaying()) {
             save();
-        } else if (KeyListener.isBindPressed(GLFW_KEY_LEFT_CONTROL, GLFW_KEY_O))
+        } else if (KeyListener.isBindDown(GLFW_KEY_LEFT_CONTROL, GLFW_KEY_O))
             load();
-        else if (KeyListener.isBindPressed(GLFW_KEY_LEFT_CONTROL, GLFW_KEY_E))
+        else if (KeyListener.isBindDown(GLFW_KEY_LEFT_CONTROL, GLFW_KEY_E))
             EventSystem.notify(null, new Event(Events.EXPORT_GAME));
 
         this.camera.adjustProjection();

@@ -2,11 +2,13 @@ package sirius;
 
 import audio.Audio;
 import gameobjects.GameObject;
+import observers.events.Events;
 import sirius.editor.imgui.ICustomPrefabs;
 import sirius.editor.imgui.ICustomPropertiesWindow;
 import sirius.editor.imgui.ImGuiLayer;
 import sirius.encode_tools.Encode;
 import sirius.input.Input;
+import sirius.input.KeyListener;
 import sirius.input.MouseListener;
 import sirius.rendering.Color;
 import sirius.rendering.Renderer;
@@ -38,7 +40,7 @@ public class SiriusTheFox implements Observer {
 
     private boolean runtimePlaying;
 
-    private boolean exportGame = false;
+    private boolean maximizeOnPlay = false;
 
     private ISceneInitializer customSceneInitializer;
 
@@ -59,15 +61,15 @@ public class SiriusTheFox implements Observer {
         loadEngineResources();
 
         // Put the scene
-        if (!exportGame)
-            changeScene(new LevelEditorSceneInitializer());
-        else {
-            this.runtimePlaying = true;
-            if (customSceneInitializer != null)
-                changeScene(customSceneInitializer.build());
-            else
-                changeScene(new LevelSceneInitializer());
-        }
+        // if (!maximizeOnPlay)
+        changeScene(new LevelEditorSceneInitializer());
+        // else {
+        //     this.runtimePlaying = true;
+        //     if (customSceneInitializer != null)
+        //         changeScene(customSceneInitializer.build());
+        //     else
+        //         changeScene(new LevelSceneInitializer());
+        // }
     }
 
     public void loop() {
@@ -79,50 +81,65 @@ public class SiriusTheFox implements Observer {
         Shader fontShader    = AssetPool.getShader("assets/shaders/font.glsl");
         Shader pickingShader = AssetPool.getShader("assets/shaders/pickingShader.glsl");
 
-
         while (!window.isWindowClosed()) {
-            Input.updateEvents();
+            if ((dt >= 0 && window.isVsync()) || (dt >= window.getUpdateFps() && !window.isVsync())) {
+                // ========================================
+                // Render pass 1. render to picking texture
+                // ========================================
+                glDisable(GL_BLEND);
+                window.getPickingTexture().enableWriting();
 
-            // ========================================
-            // Render pass 1. render to picking texture
-            // ========================================
-            glDisable(GL_BLEND);
-            window.getPickingTexture().enableWriting();
-            if (!exportGame)
-                glViewport(0, 0,
-                        (int) Toolkit.getDefaultToolkit().getScreenSize().getWidth(),
-                        (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight());
-            else
-                glViewport(0, 0, window.getWidth(), window.getHeight());
+                // if (!export) {
+                //     glViewport(0, 0,
+                //             (int) Toolkit.getDefaultToolkit().getScreenSize().getWidth(),
+                //             (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight());
+                // } else {
+                //     glViewport(0, 0, window.getWidth(), window.getHeight());
+                // }
+                if (!maximizeOnPlay)
+                    glViewport(0, 0,
+                            (int) Toolkit.getDefaultToolkit().getScreenSize().getWidth(),
+                            (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight());
+                else
+                    glViewport(0, 0, window.getWidth(), window.getHeight());
 
-            glClearColor(0f, 0f, 0f, 0f);
-            glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-            Renderer.bindShader(pickingShader);
+                glClearColor(0f, 0f, 0f, 0f);
+                glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+                Renderer.bindShader(pickingShader);
 
-            currentScene.render();
+                currentScene.render();
 
-            window.getPickingTexture().disableWriting();
-            glEnable(GL_BLEND);
+                window.getPickingTexture().disableWriting();
+                glEnable(GL_BLEND);
 
-            // ========================================
-            // Render pass 2. render actual game
-            // ========================================
-            if (!exportGame)
+                // ========================================
+                // Render pass 2. render actual game
+                // ========================================
+
+                // if (!export)
+                //     DebugDraw.beginFrame();
                 DebugDraw.beginFrame();
 
-            if (!exportGame)
-                window.getFramebuffer().bind();
+                // if (!export)
+                //     window.getFramebuffer().bind();
+                if (!maximizeOnPlay) {
+                    window.getFramebuffer().bind();
+                } else {
+                    if (!runtimePlaying) {
+                        window.getFramebuffer().bind();
+                    }
+                }
 
-            // Cleanup the frame with a color
-            Color color = currentScene.getCamera().clearColor;
+                // Cleanup the frame with a color
+                Color color = currentScene.getCamera().clearColor;
 
-            glClearColor(color.getColor().x, color.getColor().y, color.getColor().z, color.getColor().w); /* Specifies
-            the color that glClear will use to clean up buffer's color.*/
+                glClearColor(color.getColor().x, color.getColor().y, color.getColor().z, color.getColor().w); /* Specifies
+                the color that glClear will use to clean up buffer's color.*/
 
-            glClear(GL_COLOR_BUFFER_BIT); /* Tell OpenGL to clea nup the frame (Indicates the buffers
-            currently enabled for color writing).*/
+                glClear(GL_COLOR_BUFFER_BIT); /* Tell OpenGL to clea nup the frame (Indicates the buffers
+                currently enabled for color writing).*/
 
-            if (dt >= 0) {
+                Input.updateEvents();
                 // System.out.println("FPS: " + 1.0f / dt);
                 Renderer.bindShader(defaultShader);
                 window.update();
@@ -138,21 +155,50 @@ public class SiriusTheFox implements Observer {
                 Renderer.bindShader(fontShader);
                 currentScene.renderFontInGame();
 
-                if (!exportGame) {
+                // if (!export) {
+                    // DebugDraw.draw();
+                // }
+                if (!runtimePlaying)
                     DebugDraw.draw();
-                }
 
-                if (!exportGame) {
+
+                // if (!export) {
+                //     window.getFramebuffer().unbind();
+                //     window.getImGuiLayer().update(dt, currentScene);
+                // }
+                if (!maximizeOnPlay) {
                     window.getFramebuffer().unbind();
                     window.getImGuiLayer().update(dt, currentScene);
+                } else {
+                    if (!runtimePlaying) {
+                        window.getFramebuffer().unbind();
+                        window.getImGuiLayer().update(dt, currentScene);
+                    }
                 }
+
+                // TODO: 04/08/2022 Put this somewhere else
+                if (KeyListener.isKeyDown(GLFW_KEY_ESCAPE) && maximizeOnPlay && runtimePlaying) {
+                    // if (!export) {
+                    //     onNotify(null, new Event(Events.GAME_ENGINE_STOP_PLAY));
+                    //     getImGuiLayer().getGameViewWindow().setPlaying(false);
+                    // }
+                    onNotify(null, new Event(Events.GAME_ENGINE_STOP_PLAY));
+                    getImGuiLayer().getGameViewWindow().setPlaying(false);
+                }
+
+                if (!window.isVsync()) {
+                    dt = 0.0f;
+                }
+                MouseListener.endFrame();
+                window.dispose();
             }
 
-            MouseListener.endFrame();
-            window.dispose();
-
             endTime = (float) glfwGetTime();
-            dt = endTime - beginTime;
+            if (window.isVsync()) {
+                dt = endTime - beginTime;
+            } else {
+                dt += endTime - beginTime;
+            }
             beginTime = endTime;
         }
 
@@ -167,6 +213,10 @@ public class SiriusTheFox implements Observer {
                 getImGuiLayer().getToolWindow().isVisible(),
                 getImGuiLayer().getSceneHierarchy().isVisible()};
         Encode.saveInFile(options, values, Settings.Files.GUI_VISIBILITY_SETTINGS, 0);
+    }
+
+    private void updateEngine() {
+
     }
 
     public void run() {
@@ -216,13 +266,15 @@ public class SiriusTheFox implements Observer {
                 changeScene(new LevelEditorSceneInitializer());
             }
             case SAVE_LEVEL -> currentScene.save();
+
+            // TODO: 04/08/2022 Unbind gui libs when exporting game
             case EXPORT_GAME -> {
-                this.exportGame = true;
-                this.runtimePlaying = true;
-                if (customSceneInitializer != null)
-                    changeScene(customSceneInitializer.build());
-                else
-                    changeScene(new LevelSceneInitializer());
+                // this.maximizeOnPlay = true;
+                // this.runtimePlaying = true;
+                // if (customSceneInitializer != null)
+                //     changeScene(customSceneInitializer.build());
+                // else
+                //     changeScene(new LevelSceneInitializer());
             }
         }
     }
@@ -239,9 +291,9 @@ public class SiriusTheFox implements Observer {
         window.setICustomPrefabs(iCustomPrefabs);
     }
 
-    public void setReadyToExport(boolean readyToExport) {
-        this.exportGame = true;
-    }
+    // public void setReadyToExport(boolean readyToExport) {
+    //     this.maximizeOnPlay = true;
+    // }
 
     public static Window getWindow() {
         return get().window;
@@ -267,13 +319,21 @@ public class SiriusTheFox implements Observer {
         return get().customSceneInitializer;
     }
 
+    public boolean isRuntimePlaying() {
+        return runtimePlaying;
+    }
+
+    public boolean isMaximizeOnPlay() {
+        return maximizeOnPlay;
+    }
+
+    public void setMaximizeOnPlay(boolean maximizeOnPlay) {
+        this.maximizeOnPlay = maximizeOnPlay;
+    }
+
     public static SiriusTheFox get() {
         if (instance == null) instance = new SiriusTheFox();
 
         return instance;
-    }
-
-    public boolean isRuntimePlaying() {
-        return runtimePlaying;
     }
 }
