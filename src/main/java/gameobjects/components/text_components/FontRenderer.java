@@ -158,20 +158,20 @@ public class FontRenderer extends Component {
         }
     }
 
-    private int getLineIndex(int index) {
+    public int getLineIndex(int characterTextIndex) {
         int lineIndex = 0;
         int currentCharIndex = 0;
         for (int i = 0; i < lines.length; i++) {
             char[] currentLine = lines[i].toCharArray();
             for (int j = 0; j < currentLine.length; j++) {
-                if (currentCharIndex == index) {
+                if (currentCharIndex == characterTextIndex) {
                     lineIndex = i;
                     break;
                 }
                 currentCharIndex++;
             }
 
-            if (currentCharIndex == index) {
+            if (currentCharIndex == characterTextIndex) {
                 lineIndex = i;
                 break;
             }
@@ -192,6 +192,10 @@ public class FontRenderer extends Component {
         }
 
         return lines[previousLineIndex].length();
+    }
+
+    public String[] getLines() {
+        return lines;
     }
 
     public float getParagraphSpacing() {

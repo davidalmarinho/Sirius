@@ -43,6 +43,7 @@ public class TextBox extends Component {
     @Override
     public void editorUpdate(float dt) {
         // Update always the maxIndex because we can add and remove characters from the text
+        this.maxTextLength = text.length();
         maxIndex = text.length() - 1;
 
         DebugDraw.addBox2D(new Vector2f(gameObject.getPosition().x, gameObject.getPosition().y),
@@ -118,14 +119,25 @@ public class TextBox extends Component {
                 write('\n');
             }
 
+        // Select characters
+            // TODO: 05/08/2022 Make this system SHIFT and stuff bind
+        // } else if (KeyListener.isBindPressed(GLFW_KEY_LEFT_SHIFT, GLFW_KEY_RIGHT) || KeyListener.isBindPressed(GLFW_KEY_RIGHT_SHIFT, GLFW_KEY_RIGHT)) {
+        //     curDebounce -= dt;
+        //     if (curDebounce < 0) {
+        //         curDebounce = DEBOUNCE;
+        //         selectCharRight();
+        //     }
+        // } else if (KeyListener.isBindPressed(GLFW_KEY_LEFT_SHIFT, GLFW_KEY_LEFT) || KeyListener.isBindPressed(GLFW_KEY_RIGHT_SHIFT, GLFW_KEY_LEFT)) {
+        //     selectCharLeft();
+
         // Navigation controls
-        } else if (KeyListener.isBindPressed(GLFW_KEY_LEFT_CONTROL, GLFW_KEY_RIGHT)) {
+        } else if (KeyListener.isBindPressed(GLFW_KEY_LEFT_CONTROL, GLFW_KEY_RIGHT) || KeyListener.isBindPressed(GLFW_KEY_RIGHT_CONTROL, GLFW_KEY_RIGHT)) {
             curDebounce -= dt;
             if (curDebounce < 0) {
                 curDebounce = DEBOUNCE;
                 moveRightBind();
             }
-        } else if (KeyListener.isBindPressed(GLFW_KEY_LEFT_CONTROL, GLFW_KEY_LEFT)) {
+        } else if (KeyListener.isBindPressed(GLFW_KEY_LEFT_CONTROL, GLFW_KEY_LEFT) || KeyListener.isBindPressed(GLFW_KEY_RIGHT_CONTROL, GLFW_KEY_LEFT)) {
             curDebounce -= dt;
             if (curDebounce < 0) {
                 curDebounce = DEBOUNCE;
@@ -156,6 +168,31 @@ public class TextBox extends Component {
                 moveDown();
             }
 
+        // Tab spaces
+        } else if (KeyListener.isKeyPressed(GLFW_KEY_TAB)) {
+            curDebounce -= dt;
+            if (curDebounce < 0) {
+                curDebounce = DEBOUNCE;
+                for (int i = 0; i < 4; i++)
+                    write(' ');
+            }
+
+        // Go to the end of the line
+        } else if (KeyListener.isKeyPressed(GLFW_KEY_END)) {
+            curDebounce -= dt;
+            if (curDebounce < 0) {
+                curDebounce = DEBOUNCE;
+                goEndLine();
+            }
+
+        // Go to the beginning of the line
+        } else if (KeyListener.isKeyPressed(GLFW_KEY_HOME)) {
+            curDebounce -= dt;
+            if (curDebounce < 0) {
+                curDebounce = DEBOUNCE;
+                goStartLine();
+            }
+
         // Type
         } else if (KeyListener.isAnyKeyPressed()) {
             write(KeyListener.getPressedKey());
@@ -175,11 +212,11 @@ public class TextBox extends Component {
         // SHIFT + LEFT bind
         // CTRL + SHIFT + RIGHT bind
         // CTRL + SHIFT + LEFT bind
-        // END key
-        // HOME key
+        // END key                    [X]
+        // HOME key                   [X]
         // SHIFT + END
         // SHIFT + HOME
-        // TAB --4 spaces
+        // TAB --4 spaces              [X]
 
         if (!text.isEmpty()) {
             if (index == -1) {
@@ -228,7 +265,6 @@ public class TextBox extends Component {
 
     private void moveUp() {
         int numCharsPreviousLine = gameObject.getComponent(FontRenderer.class).getNumCharsPreviousLine(index);
-        // System.out.println("Previous Line: " + numCharsPreviousLine);
         if (index - numCharsPreviousLine >= 0) {
             index -= numCharsPreviousLine;
         }
@@ -278,6 +314,35 @@ public class TextBox extends Component {
         index++;
 
         this.text = newText.toString();
+    }
+
+    private void goEndLine() {
+        FontRenderer fr = gameObject.getComponent(FontRenderer.class);
+        int currentLineIndex = fr.getLineIndex(index);
+        String[] lines = fr.getLines();
+
+        StringBuilder textBuffer = new StringBuilder();
+        for (int i = 0; i < lines.length; i++) {
+            textBuffer.append(lines[i]);
+            if (i == currentLineIndex) break;
+        }
+
+        int endLineIndex = textBuffer.length() - 1;
+        do moveRight(); while(index < endLineIndex);
+    }
+
+    private void goStartLine() {
+        FontRenderer fr = gameObject.getComponent(FontRenderer.class);
+        int currentLineIndex = fr.getLineIndex(index);
+        String[] lines = fr.getLines();
+
+        StringBuilder textBuffer = new StringBuilder();
+        for (int i = 0; i < lines.length; i++) {
+            if (i == currentLineIndex) break;
+            textBuffer.append(lines[i]);
+        }
+        int startLineIndex = textBuffer.length() + 1;
+        do moveLeft(); while(index > startLineIndex);
     }
 
     @Override
