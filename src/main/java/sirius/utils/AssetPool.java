@@ -12,13 +12,23 @@ import java.io.File;
 import java.util.*;
 
 public class AssetPool {
-    private static Map<String, Shader> shaders = new HashMap<>();
-    private static Map<String, Texture> textures = new HashMap<>();
-    private static List<Level> levelList = new ArrayList<>();
-    private static Map<String, AnimationBlueprint> animationsMap = new HashMap<>();
-    private static Map<String, Spritesheet> spritesheets = new HashMap<>();
-    private static Map<String, Sound> stringSoundHashMap = new HashMap<>();
-    private static Map<String, Font> fontMap = new HashMap<>();
+    private static Map<String, Shader> shaders;
+    private static Map<String, Texture> textures;
+    private static List<Level> levelList;
+    private static Map<String, AnimationBlueprint> animationsMap;
+    private static Map<String, Spritesheet> spritesheets;
+    private static Map<String, Sound> stringSoundHashMap;
+    private static Map<String, Font> fontMap;
+
+    static {
+        shaders = new HashMap<>();
+        textures = new HashMap<>();
+        levelList = new ArrayList<>();
+        animationsMap = new HashMap<>();
+        spritesheets = new HashMap<>();
+        stringSoundHashMap = new HashMap<>();
+        fontMap = new HashMap<>();
+    }
 
 
     public static Shader getShader(String filePath) {
@@ -76,14 +86,13 @@ public class AssetPool {
         return null;
     }
 
-    public static Sound addSound(String soundFile, boolean doesLoop) {
+    public static void addSound(String soundFile, boolean doesLoop) {
         File file = new File(soundFile);
-        if (stringSoundHashMap.containsKey(file.getAbsolutePath()))
-            return stringSoundHashMap.get(file.getAbsolutePath());
-        else {
+        if (stringSoundHashMap.containsKey(file.getAbsolutePath())) {
+            stringSoundHashMap.get(file.getAbsolutePath());
+        } else {
             Sound sound = new Sound(file.getAbsolutePath(), doesLoop);
             AssetPool.stringSoundHashMap.put(file.getAbsolutePath(), sound);
-            return sound;
         }
     }
 
@@ -210,12 +219,55 @@ public class AssetPool {
         return spritesheetsNames;
     }
 
-    public static void addFont(String filepath) {
+    /**
+     * Adds a font to the assets' manager.
+     *
+     * @param filepath Font's filepath.
+     * @param fontSize The size of the font. Bigger sizes means better quality but badder performance
+     *                 I personally recommend at least a size of 64.
+     */
+    public static void addFont(String filepath, int fontSize) {
         File file = new File(filepath);
-        Font font = new Font(filepath, 32);
+        Font font = new Font(file.getPath(), fontSize);
 
         if (!fontMap.containsKey(file.getPath())) {
             fontMap.put(file.getPath(), font);
+        }
+    }
+
+    /**
+     * Adds a font to the assets' manager.
+     *
+     * @param filepath Font's filepath.
+     * The size of the font is 64 by default.
+     */
+    public static void addFont(String filepath) {
+        addFont(filepath, 64);
+    }
+
+    public static void addAllShaders() {
+        File folder = new File(Settings.Files.SHADERS_FOLDER);
+
+        for (File fileEntry : Objects.requireNonNull(folder.listFiles())) {
+            if (fileEntry.isDirectory()) {
+                for (File file : Objects.requireNonNull(fileEntry.listFiles())) {
+                    if (file.getName().endsWith(".glsl"))
+                        addShader(file.getPath());
+                }
+            }
+        }
+    }
+
+    public static void addAllFonts() {
+        File folder = new File(Settings.Files.FONTS_FOLDER);
+
+        for (File fileEntry : Objects.requireNonNull(folder.listFiles())) {
+            if (fileEntry.isDirectory()) {
+                for (File file : Objects.requireNonNull(fileEntry.listFiles())) {
+                    if (file.getName().endsWith(".ttf") || file.getName().endsWith(".otf"))
+                        addFont(file.getPath());
+                }
+            }
         }
     }
 
@@ -228,7 +280,7 @@ public class AssetPool {
 
         int i = 0;
         for (String key : fontMap.keySet()) {
-            fontsPaths[i] = key;
+            fontsPaths[i] = key.replace("\\", "/");
             i++;
         }
 
@@ -243,9 +295,11 @@ public class AssetPool {
         for (String key : fontMap.keySet()) {
             file = new File(key);
             String name = file.getName();
-            fontsPaths[i] = name.split("\\.")[0];
+            fontsPaths[i] = name.split("(\\.)")[0];
             i++;
         }
+
+        Arrays.sort(fontsPaths);
 
         return fontsPaths;
     }

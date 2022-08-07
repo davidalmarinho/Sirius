@@ -1,6 +1,7 @@
 package sirius.rendering;
 
 import gameobjects.GameObject;
+import gameobjects.components.text_components.FontRenderer;
 import gameobjects.components.SpriteRenderer;
 import sirius.SiriusTheFox;
 import sirius.rendering.spritesheet.Texture;
@@ -14,19 +15,16 @@ import static org.lwjgl.opengl.GL11.glClearColor;
 public class Renderer {
     private final int MAX_BATCH_SIZE = 1000;
     private List<RenderBatch> batches;
-    private BatchFont fontBatch;
     private static Shader currentShader;
 
     public Renderer() {
         batches = new ArrayList<>();
-        fontBatch = new BatchFont();
-        fontBatch.initBatch();
     }
 
     public void add(GameObject gameObject) {
         SpriteRenderer spriteRenderer = gameObject.getComponent(SpriteRenderer.class);
 
-        if (spriteRenderer != null) {
+        if (spriteRenderer != null && !gameObject.hasComponent(FontRenderer.class)) {
             add(spriteRenderer);
         }
     }
@@ -34,10 +32,10 @@ public class Renderer {
     private void add(SpriteRenderer spriteRenderer) {
         boolean added = false;
         for (RenderBatch renderBatch : batches) {
-            // Se tivermos espaço no renderBatch atual, colocamos o sprite nesse
+            // If we have more free space in the actual renderBatch, we will put the sprite in that renderBatch
             if (renderBatch.hasRoom() && renderBatch.getzIndex() == spriteRenderer.gameObject.getTransform().zIndex) {
                 Texture texture = spriteRenderer.getTexture();
-                if (texture == null ||renderBatch.hasRoomTexture() || renderBatch.hasTexture(texture)) {
+                if (texture == null || renderBatch.hasRoomTexture() || renderBatch.hasTexture(texture)) {
                     renderBatch.addSprite(spriteRenderer);
                     added = true;
                     break;
@@ -58,11 +56,6 @@ public class Renderer {
         }
     }
 
-    public void addText(String text, float x, float y, float scale, Color color) {
-        fontBatch.addText(text, x, y, scale, color.getDecimal32());
-        fontBatch.flushBatch();
-    }
-
     public static void bindShader(Shader shader) {
         currentShader = shader;
     }
@@ -73,12 +66,16 @@ public class Renderer {
 
     public void renderUserInterface() {
         glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+
         currentShader.use();
 
-        SiriusTheFox.getCurrentScene().getRenderer().addText("From ÀGILDE CITY", 0.1f, 1.5f, 0.005f, new Color(255, 255, 255));
-        SiriusTheFox.getCurrentScene().getRenderer().addText("\"When one story ends, another begins!\"", 0.1f, 1.2f, 0.005f, new Color(255, 255, 255));
-        SiriusTheFox.getCurrentScene().getRenderer().addText("\"You underestimate my power...\"", 0.1f, 0.67f, 0.005f, new Color(255, 255, 255));
-        // SiriusTheFox.getCurrentScene().getRenderer().addText("a", 0.1f, 0.67f, 0.005f, new Color(255, 255, 255));
+        for (GameObject gameObject : SiriusTheFox.getCurrentScene().getGameObjectList()) {
+            if (gameObject.hasComponent(FontRenderer.class)) {
+                gameObject.getComponent(FontRenderer.class).render();
+            }
+        }
+
+        currentShader.detach();
     }
 
     public void render() {
@@ -86,6 +83,8 @@ public class Renderer {
 
         for (int i = 0; i < batches.size(); i++)
             batches.get(i).render();
+
+        currentShader.detach();
     }
 
     public void destroyGameObject(GameObject go) {

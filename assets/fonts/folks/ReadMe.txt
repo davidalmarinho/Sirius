@@ -1,0 +1,1 @@
+By Manfred Klein, https://www.dafont.com/pt/manfred-klein.d302

@@ -1,9 +1,10 @@
 package sirius.editor.imgui;
 
 import gameobjects.GameObject;
+import gameobjects.components.text_components.FontRenderer;
 import gameobjects.components.Sprite;
 import gameobjects.components.SpriteRenderer;
-import gameobjects.components.FontRenderer;
+import gameobjects.components.text_components.TextBox;
 import imgui.ImGui;
 import sirius.SiriusTheFox;
 import sirius.editor.MouseControls;
@@ -25,10 +26,12 @@ public class Prefabs {
         return block;
     }
 
-    public static GameObject generateTextObject(float sizeX, float sizeY) {
+    public static GameObject generateTextObject(float x, float y, float width, float height) {
         GameObject textBlock = SiriusTheFox.getCurrentScene().createGameObject(Settings.GameObjects.GENERATED_NAME);
-        textBlock.setScale(sizeX, sizeY);
-        textBlock.addComponent(new FontRenderer());
+        textBlock.setPosition(x, y);
+        textBlock.setScale(width, height);
+        textBlock.addComponent(new TextBox("I am a text box!", width, height));
+        textBlock.addComponent(new FontRenderer(Settings.Files.DEFAULT_FONT_PATH));
 
         return textBlock;
     }

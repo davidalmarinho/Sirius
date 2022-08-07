@@ -14,6 +14,7 @@ import org.lwjgl.opengl.GL;
 import org.lwjgl.system.MemoryStack;
 
 import java.nio.IntBuffer;
+import java.util.Objects;
 
 import static org.lwjgl.glfw.Callbacks.glfwFreeCallbacks;
 import static org.lwjgl.glfw.GLFW.*;
@@ -36,6 +37,9 @@ public class Window {
     private ImGuiLayer imGuiLayer;
     private FrameBuffer frameBuffer;
     private PickingTexture pickingTexture;
+
+    public int maxFps = 60;
+    private boolean vsync = true;
 
     public Window(String title, int width, int height) {
         this.title  = title;
@@ -89,6 +93,7 @@ public class Window {
 
         // Configure keyboard's callbacks
         glfwSetKeyCallback(glfwWindow, KeyListener::keyCallback);
+        glfwSetCharCallback(glfwWindow, KeyListener::characterCallback);
 
         try (MemoryStack stack = stackPush()) {
             IntBuffer pWidth = stack.mallocInt(1);
@@ -109,14 +114,14 @@ public class Window {
                     (vidMode.height() / 2 - pHeight.get(0) / 2));
 
             if (fullscreen)
-                glfwSetWindowMonitor(glfwWindow, monitor, 0, 0, vidMode.width(), vidMode.height(), 0);
+                glfwSetWindowMonitor(glfwWindow, monitor, 0, 0, vidMode.width(), vidMode.height(), vidMode.refreshRate());
         }
 
         // OpenGL context
         glfwMakeContextCurrent(glfwWindow);
 
         // Turn on the v-sync --Uses how many hz the monitor has to refresh the frames
-        glfwSwapInterval(1);
+        setVsync(this.vsync);
 
         // Turn the window visible
         glfwShowWindow(glfwWindow);
@@ -147,14 +152,15 @@ public class Window {
     }
 
     public void update() {
-        if (KeyListener.isBindPressed(GLFW_KEY_LEFT_CONTROL, GLFW_KEY_F)) {
+        if (KeyListener.isBindDown(GLFW_KEY_LEFT_CONTROL, GLFW_KEY_F)) {
             fullscreen = !fullscreen;
             GLFWVidMode glfwVidMode = glfwGetVideoMode(monitor);
 
-            if (fullscreen)
-                glfwSetWindowMonitor(glfwWindow, monitor, 0, 0, glfwVidMode.width(), glfwVidMode.height(), 0);
-            else
-                glfwSetWindowMonitor(glfwWindow, NULL, 0, 0, 1920, 1080, 0);
+            if (fullscreen) {
+                glfwSetWindowMonitor(glfwWindow, monitor, 0, 0, glfwVidMode.width(), glfwVidMode.height(), glfwVidMode.refreshRate());
+            } else {
+                glfwSetWindowMonitor(glfwWindow, NULL, 0, 0, 1920, 1080, glfwVidMode.refreshRate());
+            }
         }
     }
 
@@ -181,9 +187,28 @@ public class Window {
         glfwSwapBuffers(glfwWindow);
     }
 
+    public boolean isVsync() {
+        return vsync;
+    }
+
+    public void setVsync(boolean vsync) {
+        if (this.vsync != vsync) {
+            this.vsync = vsync;
+
+            if (vsync) {
+                glfwSwapInterval(1);
+            } else {
+                glfwSwapInterval(0);
+            }
+
+            maxFps = Objects.requireNonNull(glfwGetVideoMode(monitor)).refreshRate();
+        }
+    }
+
     public int getWidth() {
         return width;
     }
+
     public int getHeight() {
         return height;
     }
@@ -204,6 +229,10 @@ public class Window {
         return maxHeight;
     }
 
+    public float getUpdateFps() {
+        return 1.0f / maxFps;
+    }
+
     public boolean isWindowClosed() {
         return glfwWindowShouldClose(glfwWindow);
     }
@@ -222,6 +251,14 @@ public class Window {
 
     public PickingTexture getPickingTexture() {
         return pickingTexture;
+    }
+
+    public int getMaxFps() {
+        return maxFps;
+    }
+
+    public void setMaxFps(int maxFps) {
+        this.maxFps = maxFps;
     }
 
     public ICustomPropertiesWindow getICustomPropertiesWindow() {

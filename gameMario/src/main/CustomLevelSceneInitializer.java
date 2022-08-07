@@ -3,6 +3,7 @@ package main;
 import components.GameCamera;
 import gameobjects.GameObject;
 import gameobjects.components.SpriteRenderer;
+import gameobjects.components.text_components.FontRenderer;
 import sirius.animations.StateMachine;
 import sirius.rendering.spritesheet.Images;
 import sirius.rendering.spritesheet.Spritesheet;
@@ -56,8 +57,6 @@ public class CustomLevelSceneInitializer implements ISceneInitializer {
 
         AssetPool.getTexture(Images.BLEND_IMAGE_2.getTexture());
 
-
-
         AssetPool.addSound("assets/sounds/main-theme-overworld.ogg", true);
         AssetPool.addSound("assets/sounds/flagpole.ogg", false);
         AssetPool.addSound("assets/sounds/break_block.ogg", false);
@@ -89,7 +88,6 @@ public class CustomLevelSceneInitializer implements ISceneInitializer {
                 stateMachine.refreshTextures();
             }
         }
-
     }
 
     @Override

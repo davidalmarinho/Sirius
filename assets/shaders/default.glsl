@@ -1,7 +1,7 @@
     #type vertex
     #version 330 core
 
-    layout (location = 0) in vec3 aPosition;// 0 => attributionPosition (vec3 -> [x, y, z])
+    layout (location = 0) in vec2 aPosition;// 0 => attributionPosition (vec3 -> [x, y])
     layout (location = 1) in vec4 aColor;// 1 => attributonColor (vec4 -> [a, r, g, b])
     layout (location = 2) in vec2 aTexCoordinates; // 2 => attributonTextureCoordinates (vec2 → [x, y])
     layout (location = 3) in float aTexID; // 3 => attributionTextureID (float)
@@ -17,7 +17,7 @@
         fColor = aColor;
         fTexCoordinates = aTexCoordinates;
         fTexID = aTexID;
-        gl_Position = uProjection * uView * vec4(aPosition, 1.0);
+        gl_Position = uProjection * uView * vec4(aPosition, -10.0, 1.0);
     }
 
     #type fragment

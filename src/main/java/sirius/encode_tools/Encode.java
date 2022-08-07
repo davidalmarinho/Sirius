@@ -8,6 +8,7 @@ import sirius.editor.NonPickable;
 import sirius.editor.imgui.sprite_animation_window.AnimationBlueprint;
 import sirius.editor.imgui.sprite_animation_window.Animator;
 import sirius.levels.Level;
+import sirius.rendering.fonts.Font;
 import sirius.utils.AssetPool;
 
 import java.io.*;
@@ -42,6 +43,13 @@ public class Encode {
         return new GsonBuilder()
                 .setPrettyPrinting()
                 .registerTypeAdapter(Animator.class, new AnimatorDeserializer())
+                .enableComplexMapKeySerialization()
+                .create();
+    }
+
+    public static Gson defaultGson() {
+        return new GsonBuilder()
+                .setPrettyPrinting()
                 .enableComplexMapKeySerialization()
                 .create();
     }
@@ -92,6 +100,18 @@ public class Encode {
         }
     }
 
+    public static void saveFont(Font font, String filepath) {
+        Gson gson = defaultGson();
+
+        try {
+            FileWriter writer = new FileWriter(filepath);
+            writer.write(gson.toJson(font));
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     /**
      * Get a game object's animation from a file.
      *
@@ -101,6 +121,11 @@ public class Encode {
     public static AnimationBlueprint getAnimation(String filePath) {
         Gson gson = animatorGson();
         return gson.fromJson(readFile(filePath), AnimationBlueprint.class);
+    }
+
+    public static Font getFontProperty(String filePath) {
+        Gson gson = defaultGson();
+        return gson.fromJson(readFile(filePath), Font.class);
     }
 
     /**

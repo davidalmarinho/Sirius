@@ -84,8 +84,6 @@ public class LevelSceneInitializer implements ISceneInitializer {
                 stateMachine.refreshTextures();
             }
         }
-
-        AssetPool.addFont("assets/fonts/verdana.ttf");
     }
 
     @Override

@@ -3,15 +3,25 @@ package sirius.rendering;
 import org.joml.Vector4f;
 
 public class Color {
-    public static Color WHITE      = new Color(1.0f, 1.0f, 1.0f);
-    public static Color RED        = new Color(1.0f, 0.0f, 0.0f);
-    public static Color DARK_GREEN = new Color(0.08f, 0.27f, 0.2f);
-    public static Color GREEN      = new Color(0.0f, 1.0f, 0.0f);
-    public static Color BLUE       = new Color(0.0f, 0.0f, 1.0f);
-    public static Color BLACK      = new Color(0.0f, 0.0f, 0.0f);
-    public static Color NEON_PINK  = new Color(1.0f, 0.06f, 0.94f);
+    public static Color WHITE;
+    public static Color RED;
+    public static Color DARK_GREEN;
+    public static Color GREEN;
+    public static Color BLUE;
+    public static Color BLACK;
+    public static Color NEON_PINK;
 
     private final Vector4f color;
+
+    static {
+        WHITE      = new Color(1.0f, 1.0f, 1.0f);
+        RED        = new Color(1.0f, 0.0f, 0.0f);
+        DARK_GREEN = new Color(0.08f, 0.27f, 0.2f);
+        GREEN      = new Color(0.0f, 1.0f, 0.0f);
+        BLUE       = new Color(0.0f, 0.0f, 1.0f);
+        BLACK      = new Color(0.0f, 0.0f, 0.0f);
+        NEON_PINK  = new Color(1.0f, 0.06f, 0.94f);
+    }
 
     public Color(float r, float g, float b, float a) {
         this.color = new Vector4f(r, g, b, a);
@@ -23,6 +33,10 @@ public class Color {
 
     public Color() {
         this(0.0f, 0.0f, 0.0f, 0.0f);
+    }
+
+    public Color(Color newColor) {
+        this.color = new Vector4f(newColor.getColor());
     }
 
     public Vector4f getColor() {

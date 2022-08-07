@@ -3,7 +3,6 @@ package sirius.editor;
 import gameobjects.components.Component;
 import sirius.input.KeyListener;
 import sirius.input.MouseListener;
-import sirius.levels.Level;
 import sirius.rendering.Camera;
 import org.joml.Vector2f;
 

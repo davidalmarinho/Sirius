@@ -5,6 +5,9 @@ import sirius.rendering.fonts.Font;
 import org.lwjgl.opengl.GL15;
 import sirius.SiriusTheFox;
 import sirius.utils.AssetPool;
+import sirius.utils.Settings;
+
+import java.util.Arrays;
 
 import static org.lwjgl.opengl.GL11.GL_TRIANGLES;
 import static org.lwjgl.opengl.GL11.GL_UNSIGNED_INT;
@@ -19,23 +22,56 @@ import static org.lwjgl.opengl.GL30.glGenVertexArrays;
 import static org.lwjgl.opengl.GL31.GL_TEXTURE_BUFFER;
 
 public class BatchFont {
-    private int[] indices = {
-            0, 1, 3,
-            1, 2, 3
-    };
+    private int[] indices;
 
-    // 25 quads
-    public static int BATCH_SIZE = 100;
-    public static int VERTEX_SIZE = 7;
-    public float[] vertices = new float[BATCH_SIZE * VERTEX_SIZE];
+    // 100 quads
+    private int batchSize;
+    private int vertexSize;
+    public float[] vertices;
     public int size = 0;
 
     public int vao;
     public int vbo;
     public Font font;
+    public String filepath;
+
+    public BatchFont() {
+        this(Settings.Files.DEFAULT_FONT_PATH, 32);
+    }
+
+    public BatchFont(String fontPath, int maxCharacters) {
+        this.indices = new int[] {
+                0, 1, 3,
+                1, 2, 3
+        };
+
+        this.filepath = fontPath;
+
+        this.vertexSize = 8;
+
+        this.batchSize = maxCharacters;
+        this.vertices = new float[batchSize * vertexSize];
+        initBatch();
+
+        // font will be created in another method, to avoid the textures creation in builders' methods.
+        // Stack overflow comment explaining why:
+        /*
+         * "I assume you had the must have operations implemented like glEnable(GL_TEXTURE_2D) and the texture binding
+         * since your textures worked fine before and then suddenly they just won't show.
+         * If you are doing Object Oriented code you might want to have the texture generation happen when the thread
+         * that is actually doing the draw is instanced, in other words: avoid doing it in constructors or a call coming
+         * from a constructor, this might instance your texture object before the window or the app that is going to
+         * use it is on.
+         * What I usually do is that I create a manual Init function of the texture creation that is called in the
+         * Init function of the App. Therefore I guarantee that the App exist when the binding occurs.
+         * More info here: http://www.opengl.org/wiki/Common_Mistakes#The_Object_Oriented_Language_Problem"
+         */
+        // Comment from https://stackoverflow.com/a/12152556
+        this.font = null;
+    }
 
     public void generateEbo() {
-        int elementSize = BATCH_SIZE * 3;
+        int elementSize = batchSize * 3;
         int[] elementBuffer = new int[elementSize];
 
         for (int i = 0; i < elementSize; i++) {
@@ -53,30 +89,32 @@ public class BatchFont {
 
         vbo = glGenBuffers();
         glBindBuffer(GL_ARRAY_BUFFER, vbo);
-        glBufferData(GL_ARRAY_BUFFER, (long) Float.BYTES * VERTEX_SIZE * BATCH_SIZE, GL_DYNAMIC_DRAW);
+        glBufferData(GL_ARRAY_BUFFER, (long) Float.BYTES * vertexSize * batchSize, GL_DYNAMIC_DRAW);
 
         generateEbo();
 
-        int stride = 7 * Float.BYTES;
+        int stride = vertexSize * Float.BYTES;
         GlObjects.attributeAndEnablePointer(0, 2, stride, 0);
-        GlObjects.attributeAndEnablePointer(1, 3, stride, 2 * Float.BYTES);
-        GlObjects.attributeAndEnablePointer(2, 2, stride, 5 * Float.BYTES);
+        GlObjects.attributeAndEnablePointer(1, 4, stride, 2 * Float.BYTES);
+        GlObjects.attributeAndEnablePointer(2, 2, stride, 6 * Float.BYTES);
     }
 
     public void flushBatch() {
         // Clear the buffer on the GPU, and then upload the CPU contents, and then draw
         glBindBuffer(GL_ARRAY_BUFFER, vbo);
-        glBufferData(GL_ARRAY_BUFFER, (long) Float.BYTES * VERTEX_SIZE * BATCH_SIZE, GL_DYNAMIC_DRAW);
+        glBufferData(GL_ARRAY_BUFFER, (long) Float.BYTES * vertexSize * batchSize, GL_DYNAMIC_DRAW);
         glBufferSubData(GL_ARRAY_BUFFER, 0, vertices);
 
         // Use shader
         Shader shader = Renderer.getBoundShader();
         shader.use();
-        shader.uploadTexture("uFontTexture", 0);
         shader.uploadMat4f("uProjection", SiriusTheFox.getCurrentScene().getCamera().getProjectionMatrix());
+        shader.uploadMat4f("uView", SiriusTheFox.getCurrentScene().getCamera().getViewMatrix());
 
         glActiveTexture(GL_TEXTURE0);
-        glBindTexture(GL_TEXTURE_BUFFER, font.getTextureId());
+        glBindTexture(GL_TEXTURE_BUFFER, this.font.getTextureId());
+
+        shader.uploadTexture("uFontTexture", 0);
 
         GlObjects.bindVao(vao);
         GlObjects.enableAttributes(2);
@@ -94,17 +132,23 @@ public class BatchFont {
 
         // Reset batch for use on next draw call
         size = 0;
+        Arrays.fill(vertices, 0);
     }
 
-    public void addCharacter(float x, float y, float scale, Glyph glyph, int rgb) {
+    public void addCharacter(float x, float y, float scale, Glyph glyph, Color rgba) {
         // If we have no more room in the current batch, flush it and start with a fresh batch
-        if (size >= BATCH_SIZE - 4) {
+        if (size >= batchSize - 4) {
             flushBatch();
         }
 
-        float r = (float) ((rgb >> 16) & 0xFF) / 255.0f;
-        float g = (float) ((rgb >> 8) & 0xFF) / 255.0f;
-        float b = (float) ((rgb >> 0) & 0xFF) / 255.0f;
+        // float a = (float) ((rgba >> 24) & 0xFF) / 255.0f;
+        float a = rgba.getOpacity();
+        // float r = (float) ((rgba >> 16) & 0xFF) / 255.0f;
+        float r = rgba.getRed();
+        // float g = (float) ((rgba >> 8) & 0xFF) / 255.0f;
+        float g = rgba.getGreen();
+        // float b = (float) ((rgba >> 0) & 0xFF) / 255.0f;
+        float b = rgba.getBlue();
 
         float x0 = x;
         float y0 = y - scale * (glyph.height - glyph.yBearing);
@@ -116,69 +160,107 @@ public class BatchFont {
         float ux1 = glyph.textureCoordinates[1].x;
         float uy1 = glyph.textureCoordinates[1].y;
 
-        int index = size * 7;
+        int index = size * vertexSize;
+
         vertices[index] = x1;
         vertices[index + 1] = y0;
         vertices[index + 2] = r;
         vertices[index + 3] = g;
         vertices[index + 4] = b;
-        vertices[index + 5] = ux1;
-        vertices[index + 6] = uy0;
+        vertices[index + 5] = a;
+        vertices[index + 6] = ux1;
+        vertices[index + 7] = uy0;
 
-        index += 7;
+        index += vertexSize;
         vertices[index] = x1;
         vertices[index + 1] = y1;
         vertices[index + 2] = r;
         vertices[index + 3] = g;
         vertices[index + 4] = b;
-        vertices[index + 5] = ux1;
-        vertices[index + 6] = uy1;
+        vertices[index + 5] = a;
+        vertices[index + 6] = ux1;
+        vertices[index + 7] = uy1;
 
-        index += 7;
+        index += vertexSize;
         vertices[index] = x0;
         vertices[index + 1] = y1;
         vertices[index + 2] = r;
         vertices[index + 3] = g;
         vertices[index + 4] = b;
-        vertices[index + 5] = ux0;
-        vertices[index + 6] = uy1;
+        vertices[index + 5] = a;
+        vertices[index + 6] = ux0;
+        vertices[index + 7] = uy1;
 
-        index += 7;
+        index += vertexSize;
         vertices[index] = x0;
         vertices[index + 1] = y0;
         vertices[index + 2] = r;
         vertices[index + 3] = g;
         vertices[index + 4] = b;
-        vertices[index + 5] = ux0;
-        vertices[index + 6] = uy0;
+        vertices[index + 5] = a;
+        vertices[index + 6] = ux0;
+        vertices[index + 7] = uy0;
 
         size += 4;
     }
 
-    public void addText(String text, float x, float y, float scale, int color) {
-        if (font == null) {
-            this.font = new Font(AssetPool.getFont("assets/fonts/verdana.ttf"));
+    public void addText(String text, float x, float y, float scale, Color color) {
+        addText(text, x, y, scale, 0.0f, color);
+    }
 
-            // TODO: 04/07/2022 Handle better this error
-            if (AssetPool.getFont("assets/fonts/verdana.ttf") == null) {
-                System.err.println("Error: Couldn't find font. Have you added a font?");
-            }
-        }
-
+    public void addText(String text, float x, float y, float scale, float charactersSpacing, Color color) {
         for (int i = 0; i < text.length(); i++) {
             char c = text.charAt(i);
 
-            Glyph glyph = font.getCharacter(c);
+            Glyph glyph = getGlyph(c);
 
-            if (glyph.width == 0) {
-                System.out.println("Unknown character " + c);
-                continue;
-            }
+            if (glyph == null) continue;
 
             float xPos = x;
             float yPos = y;
             addCharacter(xPos, yPos, scale, glyph, color);
-            x += glyph.width * scale;
+            x += (glyph.width) * scale + charactersSpacing;
         }
+    }
+
+    public Glyph getGlyph(char c) {
+        if (font == null) {
+            this.font = new Font(AssetPool.getFont(filepath));
+
+            if (AssetPool.getFont(filepath) == null) {
+                System.err.println("Error: Couldn't find font. Have you added a font?");
+            }
+        }
+
+        Glyph glyph = this.font.getCharacter(c);
+
+        if (glyph.width == 0) {
+            if (c != '\n') {
+                System.out.println("Unknown character " + c);
+            }
+            return new Glyph(this.font.getCharacter('?'));
+        }
+
+        return glyph;
+    }
+
+    /**
+     * Reset batch for use on next draw call
+     */
+    public void reset(String fontpath, int maxTextLength) {
+        this.filepath = fontpath;
+
+        this.font = new Font(AssetPool.getFont(fontpath));
+
+        // Disengage everything
+        GlObjects.disableAttributes(2);
+        GlObjects.unbindVao();
+
+        // Disengage the textures
+        glBindTexture(GL_TEXTURE_2D, 0);
+
+        Renderer.getBoundShader().detach();
+
+        initBatch();
     }
 }

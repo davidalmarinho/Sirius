@@ -12,7 +12,6 @@ public class Main {
         engine.addCustomizedPropertiesWindow(new MyPropertiesWindow());
         engine.addRuntimeOptionCustomizedPrefabs(new CustomPrefabs());
         engine.addCustomLevelSceneInitializer(new CustomLevelSceneInitializer());
-        // engine.setReadyToExport(true);
 
         // Run engine
         engine.run();

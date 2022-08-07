@@ -56,16 +56,17 @@ public class Scene {
 
     public void editorUpdate(float dt) {
         // Save and load file
-        if (KeyListener.isBindPressed(GLFW_KEY_LEFT_CONTROL, GLFW_KEY_S)
+        if (KeyListener.isBindDown(GLFW_KEY_LEFT_CONTROL, GLFW_KEY_S)
                 && !SiriusTheFox.get().isRuntimePlaying()) {
             save();
-        } else if (KeyListener.isBindPressed(GLFW_KEY_LEFT_CONTROL, GLFW_KEY_O))
+        } else if (KeyListener.isBindDown(GLFW_KEY_LEFT_CONTROL, GLFW_KEY_O))
             load();
-        else if (KeyListener.isBindPressed(GLFW_KEY_LEFT_CONTROL, GLFW_KEY_E))
+        else if (KeyListener.isBindDown(GLFW_KEY_LEFT_CONTROL, GLFW_KEY_E))
             EventSystem.notify(null, new Event(Events.EXPORT_GAME));
 
         this.camera.adjustProjection();
 
+        // TODO: 02/08/2022 Do just in case of debugging
         if (KeyListener.isKeyDown(GLFW_KEY_T)) {
             for (GameObject go : gameObjectList) {
                 System.out.println("ID: " + go.getUid());
@@ -122,7 +123,7 @@ public class Scene {
         pendingGameObjectList.clear();
     }
 
-    public void renderUserInterface() {
+    public void renderFontInGame() {
         this.renderer.renderUserInterface();
     }
 
@@ -305,6 +306,11 @@ public class Scene {
 
     public void load() {
         Level level = AssetPool.getLevel(Level.currentLevel);
+        if (level == null) {
+            // TODO: 01/08/2022 Handle better this error
+            level = new Level("level1.json", "assets/levels/level1.json", 1);
+            AssetPool.addLevel(level);
+        }
         String inFile = Encode.readFile(level.getPath());
 
         // Means that the saving txt file isn't empty

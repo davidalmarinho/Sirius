@@ -1,6 +1,5 @@
 package sirius.scenes;
 
-import imgui.ImGui;
 import gameobjects.GameObject;
 import gameobjects.components.*;
 import sirius.SiriusTheFox;

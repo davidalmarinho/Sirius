@@ -126,6 +126,10 @@ public class ImGuiLayer {
             if (c != GLFW_KEY_DELETE) {
                 io.addInputCharacter(c);
             }
+
+            if (!io.getWantCaptureKeyboard()) {
+                KeyListener.characterCallback(w, c);
+            }
         });
 
         glfwSetMouseButtonCallback(glfwWindow, (w, button, action, mods) -> {
@@ -191,7 +195,7 @@ public class ImGuiLayer {
         // Fonts merge example
         // fontConfig.setMergeMode(true); // When enabled, all fonts added with this config would be merged with the previously added font
         fontConfig.setPixelSnapH(true);
-        fontAtlas.addFontFromFileTTF("assets/fonts/verdana.ttf", 26, fontConfig);
+        fontAtlas.addFontFromFileTTF(Settings.Files.DEFAULT_FONT_PATH, 26, fontConfig);
 
         // fontAtlas.addFontFromMemoryTTF(loadFromResources("basis33.ttf"), 16, fontConfig);
 
