@@ -12,7 +12,7 @@ import sirius.utils.AssetPool;
 import sirius.utils.Settings;
 
 public class FontRenderer extends Component {
-    private Font font;
+    private transient Font font;
     private float scale;
     private String fontpath;
     private int maxTextLength;
@@ -23,24 +23,32 @@ public class FontRenderer extends Component {
     private float lineSpacing = 0.0f;
     private float charactersSpacing = 0.0f;
 
-    private transient int currentItem = -1;
+    private int currentItem = -1;
 
     private transient String[] lines;
     private transient int numLines;
 
-    public FontRenderer() {
-        font = new Font(AssetPool.getFont(Settings.Files.CURRENT_FONT_PATH));
-        this.maxTextLength = 32;
-        this.batchFont = new BatchFont(maxTextLength);
+    public FontRenderer(String fontpath) {
+        this.fontpath = fontpath;
         this.scale = Settings.GameObjects.DEFAULT_FONT_SCALE;
         this.color = new Color(Color.BLACK);
-
+        this.maxTextLength = 32;
         this.lines = new String[0];
     }
 
     @Override
     public void start() {
-        this.batchFont.initBatch();
+        this.maxTextLength = gameObject.getComponent(TextBox.class).getText().length();
+
+        // Since 'java.awt.Font' can't be serialized, we will have to create some objects manually with
+        // the proprieties that were supposed to be saved.
+        this.batchFont = new BatchFont(this.fontpath, maxTextLength);
+        this.font = new Font(AssetPool.getFont(this.fontpath));
+    }
+
+    @Override
+    public void editorUpdate(float dt) {
+        this.maxTextLength = gameObject.getComponent(TextBox.class).getText().length();
     }
 
     public void render() {
@@ -153,8 +161,10 @@ public class FontRenderer extends Component {
         }
 
         if (reloadFont) {
-            font = AssetPool.getFont(this.fontpath);
-            batchFont.reset(maxTextLength);
+            System.out.println("Font Reloaded!");
+            font = new Font(AssetPool.getFont(this.fontpath));
+            batchFont.filepath = this.fontpath;
+            batchFont.reset(this.fontpath, 32);
         }
     }
 

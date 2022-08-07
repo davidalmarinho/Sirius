@@ -31,7 +31,7 @@ public class Prefabs {
         textBlock.setPosition(x, y);
         textBlock.setScale(width, height);
         textBlock.addComponent(new TextBox("I am a text box!", width, height));
-        textBlock.addComponent(new FontRenderer());
+        textBlock.addComponent(new FontRenderer(Settings.Files.DEFAULT_FONT_PATH));
 
         return textBlock;
     }

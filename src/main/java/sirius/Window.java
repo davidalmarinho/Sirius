@@ -40,7 +40,6 @@ public class Window {
 
     public int maxFps = 60;
     private boolean vsync = true;
-    private float updateFps = 1.0f / maxFps;
 
     public Window(String title, int width, int height) {
         this.title  = title;
@@ -231,7 +230,7 @@ public class Window {
     }
 
     public float getUpdateFps() {
-        return updateFps;
+        return 1.0f / maxFps;
     }
 
     public boolean isWindowClosed() {

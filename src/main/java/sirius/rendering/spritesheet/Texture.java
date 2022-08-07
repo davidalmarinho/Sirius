@@ -4,6 +4,7 @@ import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.stb.STBImage;
 
+import java.awt.image.BufferedImage;
 import java.nio.ByteBuffer;
 import java.nio.IntBuffer;
 
@@ -14,13 +15,42 @@ public class Texture {
     private transient int textureID;
     private transient int width, height;
 
-    private Texture() {
-        this.filePath = "";
-    }
-
     public Texture(String filePath) {
         this.filePath = filePath;
         init();
+    }
+
+    public Texture(String filePath, BufferedImage image) {
+        this.filePath = filePath;
+
+        // Init texture based in an existing image
+        int[] pixels = new int[image.getWidth() * image.getHeight()];
+        image.getRGB(0, 0, image.getWidth(), image.getHeight(), pixels, 0, image.getWidth());
+
+        ByteBuffer buffer = BufferUtils.createByteBuffer(image.getWidth() * image.getHeight() * Integer.BYTES);
+        for (int y = 0; y < image.getHeight(); y++) {
+            for (int x = 0; x < image.getWidth(); x++) {
+                int pixel = pixels[y * image.getWidth() + x];
+                byte alphaComponent = (byte) ((pixel >> 24) & 0xFF);
+                buffer.put(alphaComponent);
+                buffer.put(alphaComponent);
+                buffer.put(alphaComponent);
+                buffer.put(alphaComponent);
+            }
+        }
+        buffer.flip();
+
+        this.textureID = glGenTextures();
+
+        glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+        glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+        glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+        glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, image.getWidth(), image.getHeight(),
+                0, GL_RGBA, GL_UNSIGNED_BYTE, buffer);
+
+        buffer.clear();
     }
 
     /**

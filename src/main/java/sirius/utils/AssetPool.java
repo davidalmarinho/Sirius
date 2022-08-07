@@ -245,6 +245,19 @@ public class AssetPool {
         addFont(filepath, 64);
     }
 
+    public static void addAllShaders() {
+        File folder = new File(Settings.Files.SHADERS_FOLDER);
+
+        for (File fileEntry : Objects.requireNonNull(folder.listFiles())) {
+            if (fileEntry.isDirectory()) {
+                for (File file : Objects.requireNonNull(fileEntry.listFiles())) {
+                    if (file.getName().endsWith(".glsl"))
+                        addShader(file.getPath());
+                }
+            }
+        }
+    }
+
     public static void addAllFonts() {
         File folder = new File(Settings.Files.FONTS_FOLDER);
 
@@ -267,7 +280,7 @@ public class AssetPool {
 
         int i = 0;
         for (String key : fontMap.keySet()) {
-            fontsPaths[i] = key;
+            fontsPaths[i] = key.replace("\\", "/");
             i++;
         }
 

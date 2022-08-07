@@ -22,10 +22,7 @@ import static org.lwjgl.opengl.GL30.glGenVertexArrays;
 import static org.lwjgl.opengl.GL31.GL_TEXTURE_BUFFER;
 
 public class BatchFont {
-    private int[] indices = {
-            0, 1, 3,
-            1, 2, 3
-    };
+    private int[] indices;
 
     // 100 quads
     private int batchSize;
@@ -36,16 +33,41 @@ public class BatchFont {
     public int vao;
     public int vbo;
     public Font font;
+    public String filepath;
 
     public BatchFont() {
-        this(32);
+        this(Settings.Files.DEFAULT_FONT_PATH, 32);
     }
 
-    public BatchFont(int maxCharacters) {
+    public BatchFont(String fontPath, int maxCharacters) {
+        this.indices = new int[] {
+                0, 1, 3,
+                1, 2, 3
+        };
+
+        this.filepath = fontPath;
+
         this.vertexSize = 8;
 
         this.batchSize = maxCharacters;
         this.vertices = new float[batchSize * vertexSize];
+        initBatch();
+
+        // font will be created in another method, to avoid the textures creation in builders' methods.
+        // Stack overflow comment explaining why:
+        /*
+         * "I assume you had the must have operations implemented like glEnable(GL_TEXTURE_2D) and the texture binding
+         * since your textures worked fine before and then suddenly they just won't show.
+         * If you are doing Object Oriented code you might want to have the texture generation happen when the thread
+         * that is actually doing the draw is instanced, in other words: avoid doing it in constructors or a call coming
+         * from a constructor, this might instance your texture object before the window or the app that is going to
+         * use it is on.
+         * What I usually do is that I create a manual Init function of the texture creation that is called in the
+         * Init function of the App. Therefore I guarantee that the App exist when the binding occurs.
+         * More info here: http://www.opengl.org/wiki/Common_Mistakes#The_Object_Oriented_Language_Problem"
+         */
+        // Comment from https://stackoverflow.com/a/12152556
+        this.font = null;
     }
 
     public void generateEbo() {
@@ -90,7 +112,7 @@ public class BatchFont {
         shader.uploadMat4f("uView", SiriusTheFox.getCurrentScene().getCamera().getViewMatrix());
 
         glActiveTexture(GL_TEXTURE0);
-        glBindTexture(GL_TEXTURE_BUFFER, font.getTextureId());
+        glBindTexture(GL_TEXTURE_BUFFER, this.font.getTextureId());
 
         shader.uploadTexture("uFontTexture", 0);
 
@@ -139,6 +161,7 @@ public class BatchFont {
         float uy1 = glyph.textureCoordinates[1].y;
 
         int index = size * vertexSize;
+
         vertices[index] = x1;
         vertices[index + 1] = y0;
         vertices[index + 2] = r;
@@ -202,27 +225,33 @@ public class BatchFont {
 
     public Glyph getGlyph(char c) {
         if (font == null) {
-            // TODO: 04/07/2022 Handle better this error
-            // this.font = new Font(AssetPool.getFont("assets/fonts/verdana.ttf"));
-            this.font = new Font(AssetPool.getFont(Settings.Files.CURRENT_FONT_PATH));
+            this.font = new Font(AssetPool.getFont(filepath));
 
-            // if (AssetPool.getFont("assets/fonts/verdana.ttf") == null) {
-            if (AssetPool.getFont(Settings.Files.CURRENT_FONT_PATH) == null) {
+            if (AssetPool.getFont(filepath) == null) {
                 System.err.println("Error: Couldn't find font. Have you added a font?");
             }
         }
 
-        Glyph glyph = font.getCharacter(c);
+        Glyph glyph = this.font.getCharacter(c);
 
         if (glyph.width == 0) {
-            System.out.println("Unknown character " + c);
-            return new Glyph(font.getCharacter('?'));
+            if (c != '\n') {
+                System.out.println("Unknown character " + c);
+            }
+            return new Glyph(this.font.getCharacter('?'));
         }
 
         return glyph;
     }
 
-    public void reset(int maxTextLength) {
+    /**
+     * Reset batch for use on next draw call
+     */
+    public void reset(String fontpath, int maxTextLength) {
+        this.filepath = fontpath;
+
+        this.font = new Font(AssetPool.getFont(fontpath));
+
         // Disengage everything
         GlObjects.disableAttributes(2);
         GlObjects.unbindVao();
@@ -232,12 +261,6 @@ public class BatchFont {
 
         Renderer.getBoundShader().detach();
 
-        // Reset batch for use on next draw call
-        // size = 0;
-
-        this.batchSize = maxTextLength;
-
         initBatch();
-        // flushBatch();
     }
 }

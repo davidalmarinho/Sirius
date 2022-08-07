@@ -2,6 +2,7 @@ package sirius.rendering.fonts;
 
 import org.lwjgl.BufferUtils;
 import sirius.encode_tools.Encode;
+import sirius.rendering.spritesheet.Texture;
 import sirius.utils.Settings;
 
 import javax.imageio.ImageIO;
@@ -9,24 +10,23 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.nio.ByteBuffer;
 import java.util.*;
 import java.util.List;
 
-import static org.lwjgl.opengl.GL11.*;
-import static org.lwjgl.opengl.GL11.GL_UNSIGNED_BYTE;
-
+// TODO: 07/08/2022 Refactor this... -_-
 public class Font {
     private transient java.awt.Font font;
-    private transient int textureId;
-    private final transient String FILEPATH;
-    private transient int size;
+    private final String FILEPATH;
+    private Texture texture;
+    private int size;
 
     // private int fontImageHeight, lineHeight;
     private Map<Integer, Glyph> glyphMap;
 
     private transient int advance;
     private transient FontMetrics fontMetrics;
+
+    private transient BufferedImage bitmap;
 
     public Font(String FILEPATH, int fontSize) {
         this.FILEPATH = FILEPATH;
@@ -37,14 +37,14 @@ public class Font {
         } catch (FontFormatException | IOException e) {
             e.printStackTrace();
         }
-        font = font.deriveFont(java.awt.Font.PLAIN, size);
+        this.font = font.deriveFont(java.awt.Font.PLAIN, size);
 
         Font newFont = searchForPropertiesFiles(FILEPATH, fontSize);
         if (newFont == null) {
             this.size = fontSize;
             this.glyphMap = new HashMap<>();
 
-            BufferedImage bitmap = generateBitmap();
+            bitmap = generateBitmap();
 
             calculateGlyphsProperties(bitmap);
 
@@ -54,10 +54,25 @@ public class Font {
 
             Encode.saveFont(this, Settings.Files.FONTS_PROPERTIES_FOLDER + "/" + font.getName() + fontSize + ".json");
         } else {
-            this.glyphMap = new HashMap<>(newFont.glyphMap);
-            this.size     = fontSize;
+            // Copy hash map
+            this.glyphMap = new HashMap<>();
+            int[] keys = new int[newFont.glyphMap.size()];
+            Glyph[] values = new Glyph[newFont.glyphMap.size()];
+            for (int i = 0; i < newFont.glyphMap.size(); i++) {
+                int index = 0;
+                for (int k : newFont.glyphMap.keySet()) {
+                    keys[index] = k;
+                    values[index] = new Glyph(newFont.glyphMap.get(k));
+                    index++;
+                }
+            }
 
-            BufferedImage bitmap = generateBitmap();
+            for (int i = 0; i < keys.length; i++) {
+                this.glyphMap.put(keys[i], values[i]);
+            }
+            this.size    = fontSize;
+
+            bitmap = generateBitmap();
             uploadTexture(bitmap);
         }
     }
@@ -70,10 +85,26 @@ public class Font {
      * @param newFont
      */
     public Font(Font newFont) {
-        this.FILEPATH = newFont.FILEPATH;
+        this.FILEPATH  = newFont.FILEPATH;
         this.size      = newFont.size;
-        this.glyphMap  = new HashMap<>(newFont.glyphMap);
-        this.textureId = newFont.textureId;
+        this.glyphMap  = new HashMap<>();
+
+        // Copy hash map
+        int[] keys = new int[newFont.glyphMap.size()];
+        Glyph[] values = new Glyph[newFont.glyphMap.size()];
+        for (int i = 0; i < newFont.glyphMap.size(); i++) {
+            int index = 0;
+            for (int k : newFont.glyphMap.keySet()) {
+                keys[index] = k;
+                values[index] = new Glyph(newFont.glyphMap.get(k));
+                index++;
+            }
+        }
+
+        for (int i = 0; i < keys.length; i++) {
+            this.glyphMap.put(keys[i], values[i]);
+        }
+
         this.advance   = newFont.advance;
 
         try {
@@ -81,9 +112,9 @@ public class Font {
         } catch (FontFormatException | IOException e) {
             e.printStackTrace();
         }
-        font = font.deriveFont(java.awt.Font.PLAIN, size);
+        this.font = font.deriveFont(java.awt.Font.PLAIN, size);
 
-        BufferedImage bitmap = generateBitmap();
+        bitmap = generateBitmap();
 
         calculateGlyphsProperties(bitmap);
 
@@ -228,33 +259,7 @@ public class Font {
     }
 
     private void uploadTexture(BufferedImage image) {
-        int[] pixels = new int[image.getWidth() * image.getHeight()];
-        image.getRGB(0, 0, image.getWidth(), image.getHeight(), pixels, 0, image.getWidth());
-
-        ByteBuffer buffer = BufferUtils.createByteBuffer(image.getWidth() * image.getHeight() * Integer.BYTES);
-        for (int y = 0; y < image.getHeight(); y++) {
-            for (int x = 0; x < image.getWidth(); x++) {
-                int pixel = pixels[y * image.getWidth() + x];
-                byte alphaComponent = (byte) ((pixel >> 24) & 0xFF);
-                buffer.put(alphaComponent);
-                buffer.put(alphaComponent);
-                buffer.put(alphaComponent);
-                buffer.put(alphaComponent);
-            }
-        }
-        buffer.flip();
-
-        textureId = glGenTextures();
-
-        glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-        glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-        glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-        glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, image.getWidth(), image.getHeight(),
-                0, GL_RGBA, GL_UNSIGNED_BYTE, buffer);
-
-        buffer.clear();
+        this.texture = new Texture(this.FILEPATH, image);
     }
 
     // TODO: 12/07/2022 document and explain weaknesses
@@ -440,11 +445,19 @@ public class Font {
         return greatestHeight;
     }
 
+    public void refresh() {
+        this.texture = new Texture(this.FILEPATH, this.bitmap);
+    }
+
+    public String getName() {
+        return font.getName();
+    }
+
     public int getSize() {
         return this.size;
     }
 
     public int getTextureId() {
-        return textureId;
+        return texture.getTextureID();
     }
 }

@@ -1,4 +1,9 @@
 {
+  "FILEPATH": "assets\\fonts\\folks\\Folks-Normal.ttf",
+  "texture": {
+    "filePath": "assets\\fonts\\folks\\Folks-Normal.ttf"
+  },
+  "size": 64,
   "glyphMap": {
     "5": {
       "x": 0,

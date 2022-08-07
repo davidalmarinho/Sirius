@@ -2,6 +2,7 @@ package sirius;
 
 import audio.Audio;
 import gameobjects.GameObject;
+import gameobjects.components.text_components.FontRenderer;
 import observers.events.Events;
 import sirius.editor.imgui.ICustomPrefabs;
 import sirius.editor.imgui.ICustomPropertiesWindow;
@@ -43,6 +44,8 @@ public class SiriusTheFox implements Observer {
     private boolean maximizeOnPlay = false;
 
     private ISceneInitializer customSceneInitializer;
+
+    boolean flag = true;
 
     private SiriusTheFox() {
         System.out.println("Hello LWJGL " + Version.getVersion() + "!");
@@ -150,8 +153,8 @@ public class SiriusTheFox implements Observer {
                     currentScene.editorUpdate(dt);
 
                 currentScene.render();
-
                 glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
                 Renderer.bindShader(fontShader);
                 currentScene.renderFontInGame();
 
@@ -243,6 +246,7 @@ public class SiriusTheFox implements Observer {
     }
 
     private static void loadEngineResources() {
+        AssetPool.addAllShaders();
         AssetPool.addAllFonts();
     }
 

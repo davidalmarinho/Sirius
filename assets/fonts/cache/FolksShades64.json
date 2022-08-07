@@ -1,4 +1,9 @@
 {
+  "FILEPATH": "assets\\fonts\\folks\\FolksShades.ttf",
+  "texture": {
+    "filePath": "assets\\fonts\\folks\\FolksShades.ttf"
+  },
+  "size": 64,
   "glyphMap": {
     "5": {
       "x": 0,

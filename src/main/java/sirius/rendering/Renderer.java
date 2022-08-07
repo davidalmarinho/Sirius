@@ -10,16 +10,15 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import static org.lwjgl.opengl.GL11.glClearColor;
+
 public class Renderer {
     private final int MAX_BATCH_SIZE = 1000;
     private List<RenderBatch> batches;
-    private BatchFont fontBatch;
     private static Shader currentShader;
 
     public Renderer() {
         batches = new ArrayList<>();
-        fontBatch = new BatchFont();
-        // fontBatch.initBatch();
     }
 
     public void add(GameObject gameObject) {
@@ -36,7 +35,7 @@ public class Renderer {
             // If we have more free space in the actual renderBatch, we will put the sprite in that renderBatch
             if (renderBatch.hasRoom() && renderBatch.getzIndex() == spriteRenderer.gameObject.getTransform().zIndex) {
                 Texture texture = spriteRenderer.getTexture();
-                if (texture == null ||renderBatch.hasRoomTexture() || renderBatch.hasTexture(texture)) {
+                if (texture == null || renderBatch.hasRoomTexture() || renderBatch.hasTexture(texture)) {
                     renderBatch.addSprite(spriteRenderer);
                     added = true;
                     break;
@@ -57,11 +56,6 @@ public class Renderer {
         }
     }
 
-    public void addText(String text, float x, float y, float scale, Color color) {
-        fontBatch.addText(text, x, y, scale, color);
-        // fontBatch.flushBatch();
-    }
-
     public static void bindShader(Shader shader) {
         currentShader = shader;
     }
@@ -71,7 +65,8 @@ public class Renderer {
     }
 
     public void renderUserInterface() {
-        //glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+        glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+
         currentShader.use();
 
         for (GameObject gameObject : SiriusTheFox.getCurrentScene().getGameObjectList()) {

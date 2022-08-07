@@ -13,14 +13,14 @@ public class TextBox extends Component {
     private String text;
     private float width, height;
 
-    private int maxTextLength;
-    private int maxIndex;
-    private int index;
-    private float curDebounce;
+    private transient int maxTextLength;
+    private transient int maxIndex;
+    private transient int index;
+    private transient float curDebounce;
     private final float DEBOUNCE;
 
     private final float BLINKING_TIME = 0.8f;
-    private float blinking = 0.0f;
+    private transient float blinking = 0.0f;
 
     public TextBox(String text, float width, float height) {
         this.text = text;
@@ -28,7 +28,7 @@ public class TextBox extends Component {
         this.height = height;
         this.maxTextLength = text.length();
         this.maxIndex = text.length() - 1;
-        this.DEBOUNCE  = 0.02f;
+        this.DEBOUNCE  = 0.1f;
     }
 
     public TextBox(float width, float height) {
@@ -37,7 +37,7 @@ public class TextBox extends Component {
 
     @Override
     public void start() {
-
+        this.maxTextLength = text.length();
     }
 
     @Override
@@ -216,7 +216,7 @@ public class TextBox extends Component {
         // HOME key                   [X]
         // SHIFT + END
         // SHIFT + HOME
-        // TAB --4 spaces              [X]
+        // TAB --4 spaces             [X]
 
         if (!text.isEmpty()) {
             if (index == -1) {
@@ -302,6 +302,9 @@ public class TextBox extends Component {
 
         for (int i = 0; i < text.length() + 1; i++) {
             if (i - 1 < index) {
+                if (index == -1) {
+                    i = 0;
+                }
                 newText.append(text.charAt(i));
             } else if (i - 1 == index) {
                 newText.append(key);
@@ -327,7 +330,11 @@ public class TextBox extends Component {
             if (i == currentLineIndex) break;
         }
 
-        int endLineIndex = textBuffer.length() - 1;
+        // The paragraphs weren't been saved, so we will count how many of them were supposed to exist until
+        // the index of the current character.
+        int curParagraphIndex = numParagraphsUntilCharacter(index);
+
+        int endLineIndex = textBuffer.length() + curParagraphIndex - 1;
         do moveRight(); while(index < endLineIndex);
     }
 
@@ -341,8 +348,31 @@ public class TextBox extends Component {
             if (i == currentLineIndex) break;
             textBuffer.append(lines[i]);
         }
-        int startLineIndex = textBuffer.length() + 1;
+
+        // The paragraphs weren't been saved, so we will count how many of them were supposed to exist until
+        // the index of the current character.
+        int curParagraphIndex = numParagraphsUntilCharacter(index);
+
+        // TODO: 05/08/2022 Almost, fix it!!
+        int startLineIndex = textBuffer.length() + curParagraphIndex - 1;
         do moveLeft(); while(index > startLineIndex);
+    }
+
+    /**
+     * Counts how many paragraphs were done until the desired character is reached.
+     * @param charIndex The index of the character.
+     * @return How many paragraphs were made to reach that character.
+     */
+    private int numParagraphsUntilCharacter(int charIndex) {
+        int curParagraphIndex = 0;
+        char[] textInChars = text.toCharArray();
+        for (int i = 0; i < charIndex; i++) {
+            if (textInChars[i] == '\n') {
+                curParagraphIndex++;
+            }
+        }
+
+        return curParagraphIndex;
     }
 
     @Override

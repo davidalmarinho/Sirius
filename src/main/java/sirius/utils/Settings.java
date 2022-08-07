@@ -18,6 +18,7 @@ public class Settings {
         public static final String LEVELS_FOLDER = "assets/levels";
         public static final String FONTS_FOLDER = "assets/fonts";
         public static final String FONTS_PROPERTIES_FOLDER = "assets/fonts/cache";
+        public static final String SHADERS_FOLDER = "assets/shaders";
         public static final String GUI_VISIBILITY_SETTINGS = "settings/guiSettings.txt";
 
         // TODO: 14/07/2022 Remove this lines
@@ -46,6 +47,6 @@ public class Settings {
         public static final String DYNO_ITALIC_FONT = "assets/fonts/dyno_sans/Dyno Italic.ttf";
         public static final String DYNO_REGULAR_FONT = "assets/fonts/dyno_sans/Dyno Regular.ttf";
 
-        public static final String CURRENT_FONT_PATH = FOLKS_LIGHT_FONT;
+        public static final String DEFAULT_FONT_PATH = FOLKS_LIGHT_FONT;
     }
 }

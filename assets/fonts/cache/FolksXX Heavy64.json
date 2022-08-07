@@ -1,4 +1,9 @@
 {
+  "FILEPATH": "assets\\fonts\\folks\\FolksXXHeavy.ttf",
+  "texture": {
+    "filePath": "assets\\fonts\\folks\\FolksXXHeavy.ttf"
+  },
+  "size": 64,
   "glyphMap": {
     "9": {
       "x": 0,

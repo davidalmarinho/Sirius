@@ -72,16 +72,15 @@ public class MenuBar {
         }
 
         if (ImGui.beginMenu("Settings")) {
+            if (SiriusTheFox.get().isRuntimePlaying()) ImGui.beginDisabled();
             SiriusTheFox.get().setMaximizeOnPlay(JImGui.checkBox("Maximize on play", SiriusTheFox.get().isMaximizeOnPlay()));
+            if (SiriusTheFox.get().isRuntimePlaying()) ImGui.endDisabled();
+
             SiriusTheFox.getWindow().setVsync(JImGui.checkBox("V-sync", SiriusTheFox.getWindow().isVsync()));
 
-            if (SiriusTheFox.getWindow().isVsync()) {
-                ImGui.beginDisabled();
-            }
+            if (SiriusTheFox.getWindow().isVsync()) ImGui.beginDisabled();
             SiriusTheFox.getWindow().maxFps = JImGui.defaultInputInt(1, "Max fps:", SiriusTheFox.getWindow().maxFps);
-            if (SiriusTheFox.getWindow().isVsync()) {
-                ImGui.endDisabled();
-            }
+            if (SiriusTheFox.getWindow().isVsync()) ImGui.endDisabled();
 
             ImGui.endMenu();
         }
