@@ -4,7 +4,7 @@ import gameobjects.GameObject;
 import gameobjects.components.Component;
 import sirius.SiriusTheFox;
 import sirius.rendering.Camera;
-import sirius.rendering.Color;
+import sirius.rendering.color.Color;
 
 public class GameCamera extends Component {
     private transient GameObject player;

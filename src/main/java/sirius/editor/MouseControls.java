@@ -12,7 +12,7 @@ import sirius.editor.imgui.PropertiesWindow;
 import sirius.editor.imgui.tool_window.ToolWindow;
 import sirius.input.KeyListener;
 import sirius.input.MouseListener;
-import sirius.rendering.Color;
+import sirius.rendering.color.Color;
 import sirius.rendering.PickingTexture;
 import sirius.rendering.debug.DebugDraw;
 import sirius.scenes.Scene;

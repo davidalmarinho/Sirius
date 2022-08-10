@@ -1,6 +1,6 @@
 package sirius.rendering.debug;
 
-import sirius.rendering.Color;
+import sirius.rendering.color.Color;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
 

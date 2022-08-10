@@ -1,7 +1,7 @@
 package gameobjects.components;
 
 import sirius.editor.imgui.JImGui;
-import sirius.rendering.Color;
+import sirius.rendering.color.Color;
 import sirius.rendering.spritesheet.Texture;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
@@ -53,7 +53,11 @@ public class SpriteRenderer extends Component {
         }
     }
 
-    public Vector4f getColor() {
+    public Color getColor() {
+        return new Color(color.x, color.y, color.z, color.w);
+    }
+
+    public Vector4f getColorVec4() {
         return color;
     }
 

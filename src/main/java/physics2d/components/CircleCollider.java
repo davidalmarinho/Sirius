@@ -2,7 +2,7 @@ package physics2d.components;
 
 import gameobjects.GameObject;
 import sirius.SiriusTheFox;
-import sirius.rendering.Color;
+import sirius.rendering.color.Color;
 import sirius.rendering.debug.DebugDraw;
 import org.joml.Vector2f;
 

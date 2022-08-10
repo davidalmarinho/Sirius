@@ -1,8 +1,12 @@
-package sirius.rendering;
+package sirius.rendering.color;
 
+import org.joml.Matrix3f;
+import org.joml.Vector3f;
 import org.joml.Vector4f;
 
 public class Color {
+    private transient ColorBlindnessCategories colorBlindnessCategory = ColorBlindnessCategories.PROTANOPIA;
+
     public static Color WHITE;
     public static Color RED;
     public static Color DARK_GREEN;
@@ -40,6 +44,25 @@ public class Color {
     }
 
     public Vector4f getColor() {
+        float r = color.x;
+        float g = color.y;
+        float b = color.z;
+        float a = color.w;
+
+        // RGB to XYZ
+        // Vector3f rgb = new Vector3f(r, g, b);
+        // Vector3f xyz = ColorBlindness.mul(new Matrix3f(ColorBlindness.mXYZ), new Vector3f(rgb));
+        // Vector3f lms = ColorBlindness.mul(new Matrix3f(ColorBlindness.mLMSD65), new Vector3f(xyz));
+        // Vector3f lmsCorrection = ColorBlindness.mul(new Matrix3f(ColorBlindness.sProtanopia), new Vector3f(lms));
+        // Vector3f xyzCorrection = ColorBlindness.mul(new Matrix3f(ColorBlindness.mLMSD65).invert(), new Vector3f(lmsCorrection));
+        // Vector3f rgbCorrection = ColorBlindness.mul(new Matrix3f(ColorBlindness.mXYZ).invert(), new Vector3f(xyzCorrection));
+//
+        // switch (colorBlindnessCategory) {
+        //     case PROTANOPIA -> {
+        //         return new Vector4f(rgbCorrection.x, rgbCorrection.y, rgbCorrection.z, a);
+        //     }
+        // }
+
         return this.color;
     }
 
@@ -68,6 +91,14 @@ public class Color {
 
         return opacity + red + green + blue;
     }*/
+
+    public void convertToCMYK(Color color, ColorBlindnessCategories colorBlindness) {
+        switch (colorBlindness) {
+            case NO_COLOR_BLINDNESS -> {
+
+            }
+        }
+    }
 
     public float getRed() {
         return this.color.x;

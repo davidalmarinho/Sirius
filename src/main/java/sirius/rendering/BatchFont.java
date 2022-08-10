@@ -1,5 +1,6 @@
 package sirius.rendering;
 
+import sirius.rendering.color.Color;
 import sirius.rendering.fonts.Glyph;
 import sirius.rendering.fonts.Font;
 import org.lwjgl.opengl.GL15;

@@ -5,7 +5,7 @@ import imgui.ImGui;
 import imgui.flag.ImGuiMouseButton;
 import sirius.editor.imgui.JImGui;
 import sirius.rendering.BatchFont;
-import sirius.rendering.Color;
+import sirius.rendering.color.Color;
 import sirius.rendering.fonts.Font;
 import sirius.rendering.fonts.Glyph;
 import sirius.utils.AssetPool;

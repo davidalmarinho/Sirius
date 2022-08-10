@@ -8,7 +8,7 @@ import sirius.SiriusTheFox;
 import sirius.animations.StateMachine;
 import sirius.input.KeyListener;
 import sirius.levels.Level;
-import sirius.rendering.Color;
+import sirius.rendering.color.Color;
 import sirius.scenes.ISceneInitializer;
 import sirius.scenes.LevelSceneInitializer;
 import sirius.utils.AssetPool;
@@ -204,12 +204,12 @@ public class PlayerController extends Component {
 
             if (blinkTime <= 0) {
                 blinkTime = 0.2f;
-                if (spriteRenderer.getColor().w == 1)
+                if (spriteRenderer.getColorVec4().w == 1)
                     spriteRenderer.setColor(new Color(1.0f, 1.0f, 1.0f, 0.0f));
                 else
                     spriteRenderer.setColor(new Color(1.0f, 1.0f, 1.0f, 1.0f));
             } else {
-                if (spriteRenderer.getColor().w == 0)
+                if (spriteRenderer.getColorVec4().w == 0)
                     spriteRenderer.setColor(new Color(1.0f, 1.0f, 1.0f, 1.0f));
             }
         }

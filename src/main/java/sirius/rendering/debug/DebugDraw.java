@@ -2,7 +2,7 @@ package sirius.rendering.debug;
 
 import sirius.SiriusTheFox;
 import sirius.rendering.Camera;
-import sirius.rendering.Color;
+import sirius.rendering.color.Color;
 import sirius.rendering.GlObjects;
 import sirius.rendering.Shader;
 import sirius.utils.AssetPool;

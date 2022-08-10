@@ -3,7 +3,12 @@ package sirius.rendering;
 import gameobjects.GameObject;
 import gameobjects.components.text_components.FontRenderer;
 import gameobjects.components.SpriteRenderer;
+import org.joml.Matrix3f;
+import org.joml.Vector3f;
 import sirius.SiriusTheFox;
+import sirius.rendering.color.Color;
+import sirius.rendering.color.ColorBlindness;
+import sirius.rendering.color.ColorBlindnessCategories;
 import sirius.rendering.spritesheet.Texture;
 
 import java.util.ArrayList;
@@ -13,6 +18,10 @@ import java.util.List;
 import static org.lwjgl.opengl.GL11.glClearColor;
 
 public class Renderer {
+    public static boolean changeColorBlindness;
+    private ColorBlindnessCategories curColorBlindness = ColorBlindnessCategories.NO_COLOR_BLINDNESS;
+    private ColorBlindnessCategories previousColorBlindness = ColorBlindnessCategories.NO_COLOR_BLINDNESS;
+
     private final int MAX_BATCH_SIZE = 1000;
     private List<RenderBatch> batches;
     private static Shader currentShader;
@@ -85,6 +94,26 @@ public class Renderer {
             batches.get(i).render();
 
         currentShader.detach();
+    }
+
+    // TODO: 08/08/2022 organize better where to put this method
+    public void adaptColorBlindness() {
+        // for (GameObject gameObject : SiriusTheFox.getCurrentScene().getGameObjectList()) {
+        //     SpriteRenderer sr = gameObject.getComponent(SpriteRenderer.class);
+        //     if (sr != null) {
+        //         Color color = sr.getColor();
+        //         // RGB to XYZ
+        //         Vector3f rgb = new Vector3f(color.getRed(), color.getGreen(), color.getBlue());
+        //         Vector3f xyz = ColorBlindness.mul(new Matrix3f(ColorBlindness.mXYZ), new Vector3f(rgb));
+        //         Vector3f lms = ColorBlindness.mul(new Matrix3f(ColorBlindness.mLMSD65), new Vector3f(xyz));
+        //         Vector3f lmsCorrection = ColorBlindness.mul(new Matrix3f(ColorBlindness.sProtanopia), new Vector3f(lms));
+        //         Vector3f xyzCorrection = ColorBlindness.mul(new Matrix3f(ColorBlindness.mLMSD65).invert(), new Vector3f(lmsCorrection));
+        //         Vector3f rgbCorrection = ColorBlindness.mul(new Matrix3f(ColorBlindness.mXYZ).invert(), new Vector3f(xyzCorrection));
+        //
+        //         sr.setColor(new Color(rgbCorrection.x, rgbCorrection.y, rgbCorrection.z, color.getOpacity()));
+        //         sr.setDirty(true);
+        //     }
+        // }
     }
 
     public void destroyGameObject(GameObject go) {

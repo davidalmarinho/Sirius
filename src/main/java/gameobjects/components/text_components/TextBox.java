@@ -4,7 +4,7 @@ import gameobjects.components.Component;
 import org.joml.Vector2f;
 import sirius.editor.imgui.JImGui;
 import sirius.input.KeyListener;
-import sirius.rendering.Color;
+import sirius.rendering.color.Color;
 import sirius.rendering.debug.DebugDraw;
 
 import static org.lwjgl.glfw.GLFW.*;

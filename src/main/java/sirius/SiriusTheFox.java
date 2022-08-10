@@ -2,7 +2,6 @@ package sirius;
 
 import audio.Audio;
 import gameobjects.GameObject;
-import gameobjects.components.text_components.FontRenderer;
 import observers.events.Events;
 import sirius.editor.imgui.ICustomPrefabs;
 import sirius.editor.imgui.ICustomPropertiesWindow;
@@ -11,7 +10,7 @@ import sirius.encode_tools.Encode;
 import sirius.input.Input;
 import sirius.input.KeyListener;
 import sirius.input.MouseListener;
-import sirius.rendering.Color;
+import sirius.rendering.color.Color;
 import sirius.rendering.Renderer;
 import sirius.rendering.Shader;
 import sirius.rendering.debug.DebugDraw;
@@ -146,6 +145,8 @@ public class SiriusTheFox implements Observer {
                 // System.out.println("FPS: " + 1.0f / dt);
                 Renderer.bindShader(defaultShader);
                 window.update();
+
+                // currentScene.adaptColorBlindness();
 
                 if (runtimePlaying)
                     currentScene.update(dt);

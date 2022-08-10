@@ -1,5 +1,6 @@
 package sirius.scenes;
 
+import gameobjects.components.SpriteRenderer;
 import gameobjects.components.Transform;
 import gameobjects.GameObject;
 import gameobjects.components.Component;
@@ -129,6 +130,10 @@ public class Scene {
 
     public void render() {
         this.renderer.render();
+    }
+
+    public void adaptColorBlindness() {
+        this.renderer.adaptColorBlindness();
     }
 
     public void start() {
@@ -299,6 +304,14 @@ public class Scene {
             pendingGameObjectList.clear();
         }
         // ===============================================================================
+
+        // TODO: 08/08/2022 Save the colors with ColorBlindness.NO_COLOR_BLINDNESS
+        for (GameObject gameObject : gameObjectList) {
+            SpriteRenderer sr = gameObject.getComponent(SpriteRenderer.class);
+            if (sr  != null) {
+
+            }
+        }
 
         // Save game objects
         Encode.saveGameObjectListInFile(gameObjectList);

@@ -122,7 +122,7 @@ public class RenderBatch implements Comparable<RenderBatch> {
         // Find offset within array (4 vertices per sprite)
         int offset = index * 4 * VERTEX_SIZE;
 
-        Vector4f color = sprite.getColor();
+        Vector4f color = sprite.getColorVec4();
         Vector2f[] textCoords = sprite.getTexCoords();
 
         // By default, the textID will be 0

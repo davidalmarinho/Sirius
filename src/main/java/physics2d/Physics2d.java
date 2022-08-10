@@ -4,7 +4,7 @@ import gameobjects.GameObject;
 import gameobjects.components.Transform;
 import gameobjects.components.game_components.Ground;
 import sirius.SiriusTheFox;
-import sirius.rendering.Color;
+import sirius.rendering.color.Color;
 import sirius.rendering.debug.DebugDraw;
 import org.jbox2d.collision.shapes.CircleShape;
 import org.jbox2d.collision.shapes.PolygonShape;
