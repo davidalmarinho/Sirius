@@ -1,6 +1,7 @@
 package sirius.rendering;
 
 import sirius.rendering.color.Color;
+import sirius.rendering.color.ColorBlindness;
 import sirius.rendering.fonts.Glyph;
 import sirius.rendering.fonts.Font;
 import org.lwjgl.opengl.GL15;
@@ -142,14 +143,16 @@ public class BatchFont {
             flushBatch();
         }
 
+        Color rgbaCorrected = ColorBlindness.adaptColorBlindness(rgba);
+
         // float a = (float) ((rgba >> 24) & 0xFF) / 255.0f;
-        float a = rgba.getOpacity();
+        float a = rgbaCorrected.getOpacity();
         // float r = (float) ((rgba >> 16) & 0xFF) / 255.0f;
-        float r = rgba.getRed();
+        float r = rgbaCorrected.getRed();
         // float g = (float) ((rgba >> 8) & 0xFF) / 255.0f;
-        float g = rgba.getGreen();
+        float g = rgbaCorrected.getGreen();
         // float b = (float) ((rgba >> 0) & 0xFF) / 255.0f;
-        float b = rgba.getBlue();
+        float b = rgbaCorrected.getBlue();
 
         float x0 = x;
         float y0 = y - scale * (glyph.height - glyph.yBearing);

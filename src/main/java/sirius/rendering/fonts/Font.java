@@ -48,7 +48,8 @@ public class Font {
 
             calculateGlyphsProperties(bitmap);
 
-            uploadTexture(bitmap);
+            // TODO: 10/08/2022 Commented, to not bug picking system
+            // uploadTexture(bitmap);
 
             // exportBitmap(bitmap);
 
@@ -73,7 +74,9 @@ public class Font {
             this.size    = fontSize;
 
             bitmap = generateBitmap();
-            uploadTexture(bitmap);
+
+            // TODO: 10/08/2022 Commented, to not bug picking system
+            // uploadTexture(bitmap);
         }
     }
 

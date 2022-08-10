@@ -1,8 +1,5 @@
 {
   "FILEPATH": "assets\\fonts\\folks\\Folks-Heavy.ttf",
-  "texture": {
-    "filePath": "assets\\fonts\\folks\\Folks-Heavy.ttf"
-  },
   "size": 64,
   "glyphMap": {
     "5": {

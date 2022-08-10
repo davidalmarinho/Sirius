@@ -204,6 +204,10 @@ public class FontRenderer extends Component {
         return lines[previousLineIndex].length();
     }
 
+    public float getCharactersSpacing() {
+        return charactersSpacing;
+    }
+
     public String[] getLines() {
         return lines;
     }

@@ -60,10 +60,9 @@ public class SiriusTheFox implements Observer {
         audio.init();
         window.start();
 
-        loadEngineResources();
-
         // Put the scene
         // if (!maximizeOnPlay)
+        loadEngineResources();
         changeScene(new LevelEditorSceneInitializer());
         // else {
         //     this.runtimePlaying = true;
@@ -145,8 +144,6 @@ public class SiriusTheFox implements Observer {
                 // System.out.println("FPS: " + 1.0f / dt);
                 Renderer.bindShader(defaultShader);
                 window.update();
-
-                // currentScene.adaptColorBlindness();
 
                 if (runtimePlaying)
                     currentScene.update(dt);
@@ -246,7 +243,7 @@ public class SiriusTheFox implements Observer {
         currentScene.start();
     }
 
-    private static void loadEngineResources() {
+    public static void loadEngineResources() {
         AssetPool.addAllShaders();
         AssetPool.addAllFonts();
     }

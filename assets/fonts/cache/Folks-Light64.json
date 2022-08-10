@@ -1,8 +1,5 @@
 {
   "FILEPATH": "assets\\fonts\\folks\\Folks-Light.ttf",
-  "texture": {
-    "filePath": "assets\\fonts\\folks\\Folks-Light.ttf"
-  },
   "size": 64,
   "glyphMap": {
     "5": {

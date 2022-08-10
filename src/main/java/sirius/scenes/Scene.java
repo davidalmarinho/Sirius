@@ -132,10 +132,6 @@ public class Scene {
         this.renderer.render();
     }
 
-    public void adaptColorBlindness() {
-        this.renderer.adaptColorBlindness();
-    }
-
     public void start() {
         for (int i = 0; i < gameObjectList.size(); i++) {
             GameObject g = gameObjectList.get(i);

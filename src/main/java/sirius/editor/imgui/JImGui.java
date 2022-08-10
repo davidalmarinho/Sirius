@@ -154,6 +154,7 @@ public class JImGui {
         float[] imColor = {vec4Color.x, vec4Color.y, vec4Color.z, vec4Color.w};
         if (ImGui.colorEdit4("##colorPicker", imColor)) {
             vec4Color.set(imColor[0], imColor[1], imColor[2], imColor[3]);
+            color.setColor(vec4Color.x, vec4Color.y, vec4Color.z, vec4Color.w);
             res = true;
         }
 

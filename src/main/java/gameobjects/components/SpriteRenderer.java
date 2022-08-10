@@ -1,13 +1,13 @@
 package gameobjects.components;
 
-import sirius.editor.imgui.JImGui;
+import imgui.ImGui;
 import sirius.rendering.color.Color;
 import sirius.rendering.spritesheet.Texture;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
 
 public class SpriteRenderer extends Component {
-    private Vector4f color = new Vector4f(1, 1, 1, 1);
+    private Vector4f color;
     private Sprite sprite = new Sprite();
 
     private transient Transform lastTransform;
@@ -16,7 +16,7 @@ public class SpriteRenderer extends Component {
     private transient boolean dirty = true;
 
     private SpriteRenderer() {
-
+        this.color = new Vector4f(1, 1, 1, 1);
     }
 
     @Override
@@ -42,23 +42,20 @@ public class SpriteRenderer extends Component {
 
     @Override
     public void imgui() {
-        /*final float[] imColors = {color.x, color.y, color.z, color.w};
+        final float[] imColors = {color.x, color.y, color.z, color.w};
         if (ImGui.colorPicker4("Color Picker: ", imColors)) {
             this.color.set(imColors[0], imColors[1], imColors[2], imColors[3]);
-            this.dirty = true;
-        }*/
-
-        if (JImGui.colorPicker4("Color Picker", this.color)) {
             this.dirty = true;
         }
     }
 
     public Color getColor() {
+        // return ColorBlindness.adaptColorBlindness(new Color(color.x, color.y, color.z, color.w));
         return new Color(color.x, color.y, color.z, color.w);
     }
 
     public Vector4f getColorVec4() {
-        return color;
+        return this.color;
     }
 
     public Vector2f[] getTexCoords() {

@@ -62,7 +62,8 @@ public class TextBox extends Component {
 
             char curChar = textInChars[i];
 
-            float curCharWidth = fontRenderer.getBatchFont().getGlyph(curChar).width * fontRenderer.getScale();
+            float curCharWidth = gameObject.getComponent(FontRenderer.class).getCharactersSpacing()
+                    + fontRenderer.getBatchFont().getGlyph(curChar).width * fontRenderer.getScale();
             if (i <= index) {
                 xCurrentAdvance += curCharWidth;
 
