@@ -28,7 +28,7 @@ public class GameCamera extends Component {
     @Override
     public void start() {
         this.player = SiriusTheFox.getCurrentScene().getGameObjectWith(PlayerController.class);
-        this.gameCamera.clearColor.setColor(skyColor);
+        this.gameCamera.setClearColor(skyColor);
         this.undergroundYLevel = this.gameCamera.position.y - this.gameCamera.getProjectionSize().y - this.cameraBuffer;
     }
 
@@ -47,10 +47,10 @@ public class GameCamera extends Component {
 
             if (player.getPosition().y < -playerHeight) {
                 this.gameCamera.position.y = undergroundYLevel;
-                this.gameCamera.clearColor.setColor(undergroundColor);
+                this.gameCamera.setClearColor(undergroundColor);
             } else if (player.getPosition().y >= 0.0f) {
                 this.gameCamera.position.y = 0.0f;
-                this.gameCamera.clearColor.setColor(skyColor);
+                this.gameCamera.setClearColor(skyColor);
             }
         }
     }

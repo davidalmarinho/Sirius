@@ -192,17 +192,14 @@ public class Window {
     }
 
     public void setVsync(boolean vsync) {
-        if (this.vsync != vsync) {
-            this.vsync = vsync;
+        this.vsync = vsync;
 
-            if (vsync) {
-                glfwSwapInterval(1);
-            } else {
-                glfwSwapInterval(0);
-            }
-
-            maxFps = Objects.requireNonNull(glfwGetVideoMode(monitor)).refreshRate();
+        if (vsync) {
+            glfwSwapInterval(1);
+        } else {
+            glfwSwapInterval(0);
         }
+        maxFps = Objects.requireNonNull(glfwGetVideoMode(monitor)).refreshRate();
     }
 
     public int getWidth() {

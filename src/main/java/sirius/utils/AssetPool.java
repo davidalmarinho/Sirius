@@ -73,6 +73,10 @@ public class AssetPool {
         return spritesheets.getOrDefault(file.getAbsolutePath(), null);
     }
 
+    public static Map<String, Spritesheet> getSpritesheetsMap() {
+        return spritesheets;
+    }
+
     public static Collection<Sound> getAllSounds() {
         return stringSoundHashMap.values();
     }
@@ -302,5 +306,10 @@ public class AssetPool {
         Arrays.sort(fontsPaths);
 
         return fontsPaths;
+    }
+
+    public static void clearTextures() {
+        spritesheets.clear();
+        textures.clear();
     }
 }

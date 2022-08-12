@@ -10,7 +10,6 @@ import sirius.editor.imgui.sprite_animation_window.SpriteAnimationWindow;
 import sirius.editor.imgui.tool_window.ToolWindow;
 import sirius.levels.Level;
 import sirius.rendering.color.ColorBlindness;
-import sirius.rendering.color.ColorBlindnessCategories;
 import sirius.utils.AssetPool;
 
 import java.io.FileWriter;
@@ -20,20 +19,8 @@ import java.util.List;
 public class MenuBar {
     private transient ImInt lvl = new ImInt(1);
 
-    // TODO: 10/08/2022 Move this to ColorBlindness class
-    private final ColorBlindnessCategories[] COLOR_BLINDNESSES;
-
     public MenuBar() {
-        COLOR_BLINDNESSES = new ColorBlindnessCategories[9];
-        COLOR_BLINDNESSES[0] = ColorBlindnessCategories.NO_COLOR_BLINDNESS;
-        COLOR_BLINDNESSES[1] = ColorBlindnessCategories.PROTANOPIA;
-        COLOR_BLINDNESSES[2] = ColorBlindnessCategories.PROTANOMALY;
-        COLOR_BLINDNESSES[3] = ColorBlindnessCategories.DEUTERANOPIA;
-        COLOR_BLINDNESSES[4] = ColorBlindnessCategories.DEUTERANOMALY;
-        COLOR_BLINDNESSES[5] = ColorBlindnessCategories.TRITANOPIA;
-        COLOR_BLINDNESSES[6] = ColorBlindnessCategories.TRITANOMALY;
-        COLOR_BLINDNESSES[7] = ColorBlindnessCategories.ACHROMATOPSIA;
-        COLOR_BLINDNESSES[8] = ColorBlindnessCategories.ACHROMATOMALY;
+
     }
 
     public void imgui() {
@@ -100,8 +87,9 @@ public class MenuBar {
             SiriusTheFox.getWindow().maxFps = JImGui.defaultInputInt(1, "Max fps:", SiriusTheFox.getWindow().maxFps);
             if (SiriusTheFox.getWindow().isVsync()) ImGui.endDisabled();
 
-            ColorBlindness.currentColorBlindness = JImGui.combo("Color Blindness", COLOR_BLINDNESSES, ColorBlindness.currentColorBlindness);
-            ColorBlindness.selectedColorBlindness = COLOR_BLINDNESSES[ColorBlindness.currentColorBlindness];
+            ColorBlindness.currentColorBlindness = JImGui.combo("Color Blindness",
+                    ColorBlindness.COLOR_BLINDNESSES, ColorBlindness.currentColorBlindness);
+            ColorBlindness.selectedColorBlindness = ColorBlindness.COLOR_BLINDNESSES[ColorBlindness.currentColorBlindness];
 
             ImGui.endMenu();
         }

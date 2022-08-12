@@ -161,7 +161,6 @@ public class FontRenderer extends Component {
         }
 
         if (reloadFont) {
-            System.out.println("Font Reloaded!");
             font = new Font(AssetPool.getFont(this.fontpath));
             batchFont.filepath = this.fontpath;
             batchFont.reset(this.fontpath, 32);

@@ -21,9 +21,11 @@ public class Renderer {
     private final int MAX_BATCH_SIZE = 1000;
     private List<RenderBatch> batches;
     private static Shader currentShader;
+    private ColorBlindness colorBlindness;
 
     public Renderer() {
         batches = new ArrayList<>();
+        colorBlindness = new ColorBlindness();
     }
 
     public void add(GameObject gameObject) {
@@ -85,6 +87,7 @@ public class Renderer {
 
     public void render() {
         currentShader.use();
+        colorBlindness.adaptImages();
 
         for (int i = 0; i < batches.size(); i++)
             batches.get(i).render();
