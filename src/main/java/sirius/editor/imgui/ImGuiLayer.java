@@ -23,6 +23,11 @@ import static org.lwjgl.opengl.GL30.GL_FRAMEBUFFER;
 import static org.lwjgl.opengl.GL30.glBindFramebuffer;
 
 public class ImGuiLayer {
+    public Themes currentTheme;
+    public Themes previousTheme;
+    public int currentThemeIndex = 0;
+    public final Themes[] THEMES;
+
     private long glfwWindow;
 
     // LWJGL3 renderer (SHOULD be initialized)
@@ -68,6 +73,13 @@ public class ImGuiLayer {
                 case "showSceneHierarchy" -> sceneHierarchy.setVisibility(Boolean.parseBoolean(navigator[1]));
             }
         }
+
+        currentTheme = Themes.LIGHT;
+        previousTheme = currentTheme;
+        THEMES = new Themes[3];
+        THEMES[0] = Themes.LIGHT;
+        THEMES[1] = Themes.DARK;
+        THEMES[2] = Themes.CLASSICAL;
     }
 
     public void edit(long glfwWindow) {
@@ -201,7 +213,7 @@ public class ImGuiLayer {
         imGuiGlfw.init(glfwWindow, false); // False because we already have set callbacks before
         imGuiGl3.init("#version 330 core");
 
-        style();
+        style(currentTheme);
     }
 
     public void update(float dt, Scene currentScene) {
@@ -217,6 +229,11 @@ public class ImGuiLayer {
         spriteAnimationWindow.imgui(dt);
         gameViewWindow.imgui();
         toolWindow.imgui();
+
+        if (currentTheme != previousTheme) {
+            style(currentTheme);
+            previousTheme = currentTheme;
+        }
 
         // We have to end ImGui before we render ImGui
         endFrame();
@@ -281,9 +298,7 @@ public class ImGuiLayer {
         ImGui.end();
     }
 
-    private void style() {
-        ImGui.styleColorsLight();
-
+    private void style(Themes theme) {
         ImGuiStyle style = ImGui.getStyle();
         style.setFrameRounding(6.0f);
         style.setWindowPadding(8.0f, 6.0f);
@@ -299,6 +314,11 @@ public class ImGuiLayer {
         style.setChildBorderSize(0.0f);
         style.setWindowBorderSize(1.0f);
         style.setCircleTessellationMaxError(0.1f);
+        switch (theme) {
+            case LIGHT -> ImGui.styleColorsLight(style);
+            case DARK -> ImGui.styleColorsDark(style);
+            case CLASSICAL -> ImGui.styleColorsClassic(style);
+        }
     }
 
     public PropertiesWindow getPropertiesWindow() {

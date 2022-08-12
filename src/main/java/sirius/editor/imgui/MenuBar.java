@@ -88,13 +88,18 @@ public class MenuBar {
             if (SiriusTheFox.getWindow().isVsync()) ImGui.beginDisabled();
             SiriusTheFox.getWindow().maxFps = JImGui.defaultInputInt(1, "Max fps:", SiriusTheFox.getWindow().maxFps);
             if (SiriusTheFox.getWindow().isVsync()) ImGui.endDisabled();
-
             ImGui.sameLine();
             JImGui.helpMarker("Un-mark v-sync option to active field");
 
+            // Colorblindness option
             ColorBlindness.currentColorBlindness = JImGui.combo("Color Blindness",
                     ColorBlindness.COLOR_BLINDNESSES, ColorBlindness.currentColorBlindness);
             ColorBlindness.selectedColorBlindness = ColorBlindness.COLOR_BLINDNESSES[ColorBlindness.currentColorBlindness];
+
+            // ImGui theme
+            ImGuiLayer guiLayer = SiriusTheFox.getImGuiLayer();
+            guiLayer.currentThemeIndex = JImGui.combo("Theme: ", guiLayer.THEMES, guiLayer.currentThemeIndex);
+            guiLayer.currentTheme = guiLayer.THEMES[guiLayer.currentThemeIndex];
 
             ImGui.endMenu();
         }

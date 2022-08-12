@@ -498,6 +498,7 @@ public class JImGui {
     }
 
     public static int combo(String label, Object[] items, int curItem) {
+        ImGui.pushID(label);
         ImGui.text(label);
         ImGui.sameLine();
         if (ImGui.beginCombo("##", Encode.formatString(String.valueOf(items[curItem])))) {
@@ -512,6 +513,7 @@ public class JImGui {
             }
             ImGui.endCombo();
         }
+        ImGui.popID();
 
         return curItem;
     }
