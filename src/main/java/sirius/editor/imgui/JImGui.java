@@ -216,6 +216,10 @@ public class JImGui {
     }
 
     public static int defaultInputInt(int step, String label, int value) {
+        return defaultInputInt(step, label, value, "");
+    }
+
+    public static int defaultInputInt(int step, String label, int value, String hint) {
         ImGui.pushID(label);
 
         ImGui.text(label);
@@ -227,6 +231,10 @@ public class JImGui {
             ImGui.popID();
 
             return outInt.get();
+        }
+
+        if (ImGui.isItemHovered() && !hint.isEmpty()) {
+            ImGui.setTooltip(hint);
         }
 
         ImGui.popID();
@@ -267,6 +275,19 @@ public class JImGui {
         return imBool.get();
     }
 
+    public static boolean checkBoxAllignRight(String label, boolean value) {
+        ImGui.pushID(label);
+
+        ImGui.textUnformatted(label);
+        ImGui.sameLine();
+        ImBoolean imBool = new ImBoolean(value);
+        ImGui.checkbox("##", imBool);
+
+        ImGui.popID();
+
+        return imBool.get();
+    }
+
     /**
      * Checks if a key was pressed based on ascii table.
      * Range: [0, 127]
@@ -285,8 +306,12 @@ public class JImGui {
         return pressed;
     }
 
+    public static boolean imgButton(int id, Sprite sprite, Color backgroundColor, String tip) {
+        return imgButton(id, sprite, sprite.getWidth() * 2, sprite.getHeight() * 2, backgroundColor, tip);
+    }
+
     public static boolean imgButton(int id, Sprite sprite, Color backgroundColor) {
-        return imgButton(id, sprite, sprite.getWidth() * 2, sprite.getHeight() * 2, backgroundColor);
+        return imgButton(id, sprite, sprite.getWidth() * 2, sprite.getHeight() * 2, backgroundColor, "");
     }
 
     public static boolean imgButton(int id, Sprite sprite) {
@@ -294,7 +319,7 @@ public class JImGui {
     }
 
     public static boolean imgButton(int id, Sprite sprite, float width, float height) {
-        return imgButton(id, sprite, width, height, new Color(0.0f, 0.0f, 0.0f, 0.0f));
+        return imgButton(id, sprite, width, height, new Color(0.0f, 0.0f, 0.0f, 0.0f), "");
     }
 
     /**
@@ -305,7 +330,7 @@ public class JImGui {
      * @param backgroundColor Background customized color for button
      * @return true, if the button was pressed.
      */
-    public static boolean imgButton(int id, Sprite sprite, float width, float height, Color backgroundColor) {
+    public static boolean imgButton(int id, Sprite sprite, float width, float height, Color backgroundColor, String tip) {
         float r = backgroundColor.getRed();
         float g = backgroundColor.getGreen();
         float b = backgroundColor.getBlue();
@@ -321,6 +346,12 @@ public class JImGui {
         pressed = ImGui.imageButton(
                 texId, width, height, texCoords[2].x, texCoords[0].y, texCoords[0].x, texCoords[2].y, 0,
                 r, g, b, a);
+
+        if (!tip.isEmpty()) {
+            if (ImGui.isItemHovered()) {
+                ImGui.setTooltip(tip);
+            }
+        }
 
         ImGui.popID();
 
@@ -467,7 +498,9 @@ public class JImGui {
     }
 
     public static int combo(String label, Object[] items, int curItem) {
-        if (ImGui.beginCombo(label, Encode.formatString(String.valueOf(items[curItem])))) {
+        ImGui.text(label);
+        ImGui.sameLine();
+        if (ImGui.beginCombo("##", Encode.formatString(String.valueOf(items[curItem])))) {
             for (int n = 0; n < items.length; n++) {
                 boolean isSelected = curItem == n;
                 if (ImGui.selectable(Encode.formatString(String.valueOf(items[n])), isSelected))
@@ -510,5 +543,16 @@ public class JImGui {
         ImGui.popID();
 
         return currentItem;
+    }
+
+    public static void helpMarker(String hint) {
+        ImGui.textDisabled("(?)");
+        if (ImGui.isItemHovered()) {
+            ImGui.beginTooltip();
+            ImGui.pushTextWrapPos(ImGui.getFontSize() * 35.0f);
+            ImGui.textUnformatted(hint);
+            ImGui.popTextWrapPos();
+            ImGui.endTooltip();
+        }
     }
 }

@@ -19,7 +19,7 @@ import javax.swing.*;
 
 public class ConfigChild {
     private ImVec2 size;
-    public ImBoolean showConfigChild;
+    public boolean showConfigChild;
 
     private String currentSpritesheet = "";
     private final String POPUP_FRAME_SETTINGS = "frame_settings_popup";
@@ -39,7 +39,7 @@ public class ConfigChild {
     private float animationTime;
 
     public ConfigChild() {
-        this.showConfigChild = new ImBoolean(false);
+        this.showConfigChild = false;
         this.size = new ImVec2();
     }
 
@@ -60,7 +60,8 @@ public class ConfigChild {
                 btnBackgroundColor = new Color(0.0f, 1.0f, 0.0f, 0.4f);
             }
 
-            if (JImGui.imgButton(i, sprite, btnBackgroundColor)) {
+            // Show tip when cursor above tool
+            if (JImGui.imgButton(i, sprite, btnBackgroundColor, "Click to open frame's settings")) {
                 activeFrame = activeBox.getFrame(i);
                 ImGui.openPopup(POPUP_FRAME_SETTINGS);
             }
@@ -150,6 +151,8 @@ public class ConfigChild {
     private void previewAnimation(float dt) {
         if (activeBox.getFrameListSize() > 0) {
             ImGui.newLine();
+            ImGui.textUnformatted("Animation Preview:");
+            ImGui.newLine();
             animationTime += dt;
 
             // Bug fix
@@ -170,14 +173,6 @@ public class ConfigChild {
             JImGui.image(sprite, sprite.getWidth() * 6, sprite.getHeight() * 6);
         } else {
             curFrameAnimationIndex = 0;
-        }
-
-        if (activeBox.getFrameListSize() > 1) {
-            ImGui.newLine();
-            if (ImGui.button("Edit all frames")) {
-                ImGui.openPopup(POPUP_FRAME_SETTINGS);
-                changeAllFrames = true;
-            }
         }
     }
 
@@ -227,6 +222,15 @@ public class ConfigChild {
         }
     }
 
+    private void editAllFramesButton() {
+        if (activeBox.getFrameListSize() > 1) {
+            if (ImGui.button("Edit all frames")) {
+                ImGui.openPopup(POPUP_FRAME_SETTINGS);
+                changeAllFrames = true;
+            }
+        }
+    }
+
     private void removeFrame() {
         activeBox.removeFrame(activeFrame);
         activeFrame = null;
@@ -249,6 +253,12 @@ public class ConfigChild {
         ImGui.beginChild("config", regionAvailable.x, regionAvailable.y, true,
                 ImGuiWindowFlags.AlwaysAutoResize | ImGuiWindowFlags.HorizontalScrollbar);
 
+        if (SpriteAnimationWindow.getAnimator() == null) {
+            // Terminate child
+            terminateChild();
+            return;
+        }
+
         // Get the animation box that is selected or get the selected wire if it is select.
         // Just one of these may be selected.
         this.activeBox  = SpriteAnimationWindow.getAnimator().getActiveBox();
@@ -257,8 +267,7 @@ public class ConfigChild {
         // Don't have active box to show its configs
         if (activeBox == null && activeWire == null) {
             resetAnimationPreview();
-            ImGui.endChild();
-            ImGui.sameLine();
+            terminateChild();
             return;
         }
 
@@ -266,7 +275,7 @@ public class ConfigChild {
             ImGui.text("Title: ");
             ImGui.sameLine();
             ImGui.text(activeBox.getTitle());
-            activeBox.doesLoop = JImGui.checkBox("Loop:", activeBox.doesLoop);
+            activeBox.doesLoop = JImGui.checkBoxAllignRight("Loop:", activeBox.doesLoop);
 
             framesMenu();
 
@@ -279,6 +288,7 @@ public class ConfigChild {
             }
 
             addFrameButton();
+            editAllFramesButton();
 
             framesSettings();
 
@@ -291,15 +301,19 @@ public class ConfigChild {
             activeWire.setTrigger(inputText(activeWire.getTrigger()));
         }
 
+        terminateChild();
+    }
+
+    private void terminateChild() {
         // Terminate child
+        ImGui.newLine();
         ImGui.endChild();
-        ImGui.sameLine();
     }
 
     private String inputText(String text) {
         ImString outString = new ImString(text, 32);
 
-        if (ImGui.inputText("Trigger: ", outString, ImGuiInputTextFlags.AutoSelectAll)) {
+        if (ImGui.inputText("##", outString, ImGuiInputTextFlags.AutoSelectAll)) {
             return outString.get();
         }
 
@@ -307,6 +321,6 @@ public class ConfigChild {
     }
 
     public boolean isShowConfigChild() {
-        return showConfigChild.get();
+        return showConfigChild;
     }
 }

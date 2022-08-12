@@ -1,6 +1,5 @@
 package sirius.rendering.spritesheet;
 
-import org.joml.Vector4f;
 import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.stb.STBImage;

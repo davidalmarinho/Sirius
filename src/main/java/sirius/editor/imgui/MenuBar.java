@@ -81,11 +81,16 @@ public class MenuBar {
             SiriusTheFox.get().setMaximizeOnPlay(JImGui.checkBox("Maximize on play", SiriusTheFox.get().isMaximizeOnPlay()));
             if (SiriusTheFox.get().isRuntimePlaying()) ImGui.endDisabled();
 
+            // V-sync option
             SiriusTheFox.getWindow().setVsync(JImGui.checkBox("V-sync", SiriusTheFox.getWindow().isVsync()));
 
+            // Max fps option
             if (SiriusTheFox.getWindow().isVsync()) ImGui.beginDisabled();
             SiriusTheFox.getWindow().maxFps = JImGui.defaultInputInt(1, "Max fps:", SiriusTheFox.getWindow().maxFps);
             if (SiriusTheFox.getWindow().isVsync()) ImGui.endDisabled();
+
+            ImGui.sameLine();
+            JImGui.helpMarker("Un-mark v-sync option to active field");
 
             ColorBlindness.currentColorBlindness = JImGui.combo("Color Blindness",
                     ColorBlindness.COLOR_BLINDNESSES, ColorBlindness.currentColorBlindness);
