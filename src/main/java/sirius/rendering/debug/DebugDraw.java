@@ -2,9 +2,10 @@ package sirius.rendering.debug;
 
 import sirius.SiriusTheFox;
 import sirius.rendering.Camera;
-import sirius.rendering.Color;
+import sirius.rendering.color.Color;
 import sirius.rendering.GlObjects;
 import sirius.rendering.Shader;
+import sirius.rendering.color.ColorBlindness;
 import sirius.utils.AssetPool;
 import org.joml.Vector2f;
 import sirius.utils.JMath;
@@ -174,7 +175,7 @@ public class DebugDraw {
                 && to.y >= unrealBottomLeftCamera.y && to.y <= unrealTopRightCamera.y);
 
         if (lineInView)
-            DebugDraw.line2DList.add(new Line2D(from, to, color, lifetime));
+            DebugDraw.line2DList.add(new Line2D(from, to, ColorBlindness.adaptColorBlindness(color), lifetime));
     }
 
     // ===================================================================

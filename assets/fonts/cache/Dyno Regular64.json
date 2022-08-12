@@ -1,8 +1,5 @@
 {
   "FILEPATH": "assets\\fonts\\dyno_sans\\Dyno Regular.ttf",
-  "texture": {
-    "filePath": "assets\\fonts\\dyno_sans\\Dyno Regular.ttf"
-  },
   "size": 64,
   "glyphMap": {
     "9": {

@@ -10,7 +10,8 @@ import imgui.type.ImInt;
 import imgui.type.ImString;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
-import sirius.rendering.Color;
+import sirius.encode_tools.Encode;
+import sirius.rendering.color.Color;
 import sirius.rendering.spritesheet.Spritesheet;
 
 public class JImGui {
@@ -153,6 +154,7 @@ public class JImGui {
         float[] imColor = {vec4Color.x, vec4Color.y, vec4Color.z, vec4Color.w};
         if (ImGui.colorEdit4("##colorPicker", imColor)) {
             vec4Color.set(imColor[0], imColor[1], imColor[2], imColor[3]);
+            color.setColor(vec4Color.x, vec4Color.y, vec4Color.z, vec4Color.w);
             res = true;
         }
 
@@ -462,6 +464,23 @@ public class JImGui {
             ImGui.endListBox();
         }
         return currentItem;
+    }
+
+    public static int combo(String label, Object[] items, int curItem) {
+        if (ImGui.beginCombo(label, Encode.formatString(String.valueOf(items[curItem])))) {
+            for (int n = 0; n < items.length; n++) {
+                boolean isSelected = curItem == n;
+                if (ImGui.selectable(Encode.formatString(String.valueOf(items[n])), isSelected))
+                    curItem = n;
+
+                // Set the initial focus when opening the combo (scrolling + keyboard navigation focus)
+                if (isSelected)
+                    ImGui.setItemDefaultFocus();
+            }
+            ImGui.endCombo();
+        }
+
+        return curItem;
     }
 
     public static int listLeaf(String label, int currentItem, String[] items) {

@@ -8,7 +8,7 @@ import gameobjects.components.SpriteRenderer;
 import sirius.SiriusTheFox;
 import sirius.editor.imgui.PropertiesWindow;
 import sirius.input.MouseListener;
-import sirius.rendering.Color;
+import sirius.rendering.color.Color;
 import org.joml.Vector2f;
 
 import static org.lwjgl.glfw.GLFW.*;

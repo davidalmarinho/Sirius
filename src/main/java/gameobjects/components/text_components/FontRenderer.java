@@ -5,7 +5,7 @@ import imgui.ImGui;
 import imgui.flag.ImGuiMouseButton;
 import sirius.editor.imgui.JImGui;
 import sirius.rendering.BatchFont;
-import sirius.rendering.Color;
+import sirius.rendering.color.Color;
 import sirius.rendering.fonts.Font;
 import sirius.rendering.fonts.Glyph;
 import sirius.utils.AssetPool;
@@ -161,7 +161,6 @@ public class FontRenderer extends Component {
         }
 
         if (reloadFont) {
-            System.out.println("Font Reloaded!");
             font = new Font(AssetPool.getFont(this.fontpath));
             batchFont.filepath = this.fontpath;
             batchFont.reset(this.fontpath, 32);
@@ -202,6 +201,10 @@ public class FontRenderer extends Component {
         }
 
         return lines[previousLineIndex].length();
+    }
+
+    public float getCharactersSpacing() {
+        return charactersSpacing;
     }
 
     public String[] getLines() {

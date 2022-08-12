@@ -1,4 +1,4 @@
-package sirius.rendering;
+package sirius.rendering.color;
 
 import org.joml.Vector4f;
 

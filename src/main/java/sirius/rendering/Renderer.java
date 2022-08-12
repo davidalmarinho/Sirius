@@ -3,7 +3,12 @@ package sirius.rendering;
 import gameobjects.GameObject;
 import gameobjects.components.text_components.FontRenderer;
 import gameobjects.components.SpriteRenderer;
+import org.joml.Matrix3f;
+import org.joml.Vector3f;
 import sirius.SiriusTheFox;
+import sirius.rendering.color.Color;
+import sirius.rendering.color.ColorBlindness;
+import sirius.rendering.color.ColorBlindnessCategories;
 import sirius.rendering.spritesheet.Texture;
 
 import java.util.ArrayList;
@@ -16,9 +21,11 @@ public class Renderer {
     private final int MAX_BATCH_SIZE = 1000;
     private List<RenderBatch> batches;
     private static Shader currentShader;
+    private ColorBlindness colorBlindness;
 
     public Renderer() {
         batches = new ArrayList<>();
+        colorBlindness = new ColorBlindness();
     }
 
     public void add(GameObject gameObject) {
@@ -80,6 +87,7 @@ public class Renderer {
 
     public void render() {
         currentShader.use();
+        colorBlindness.adaptImages();
 
         for (int i = 0; i < batches.size(); i++)
             batches.get(i).render();

@@ -3,7 +3,7 @@ package sirius.editor;
 import gameobjects.components.Component;
 import sirius.SiriusTheFox;
 import sirius.rendering.Camera;
-import sirius.rendering.Color;
+import sirius.rendering.color.Color;
 import sirius.rendering.debug.DebugDraw;
 import sirius.utils.Settings;
 import org.joml.Vector2f;

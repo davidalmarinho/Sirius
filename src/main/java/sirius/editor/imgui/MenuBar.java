@@ -9,6 +9,7 @@ import observers.events.Event;
 import sirius.editor.imgui.sprite_animation_window.SpriteAnimationWindow;
 import sirius.editor.imgui.tool_window.ToolWindow;
 import sirius.levels.Level;
+import sirius.rendering.color.ColorBlindness;
 import sirius.utils.AssetPool;
 
 import java.io.FileWriter;
@@ -17,6 +18,10 @@ import java.util.List;
 
 public class MenuBar {
     private transient ImInt lvl = new ImInt(1);
+
+    public MenuBar() {
+
+    }
 
     public void imgui() {
         ImGui.beginMenuBar();
@@ -81,6 +86,10 @@ public class MenuBar {
             if (SiriusTheFox.getWindow().isVsync()) ImGui.beginDisabled();
             SiriusTheFox.getWindow().maxFps = JImGui.defaultInputInt(1, "Max fps:", SiriusTheFox.getWindow().maxFps);
             if (SiriusTheFox.getWindow().isVsync()) ImGui.endDisabled();
+
+            ColorBlindness.currentColorBlindness = JImGui.combo("Color Blindness",
+                    ColorBlindness.COLOR_BLINDNESSES, ColorBlindness.currentColorBlindness);
+            ColorBlindness.selectedColorBlindness = ColorBlindness.COLOR_BLINDNESSES[ColorBlindness.currentColorBlindness];
 
             ImGui.endMenu();
         }

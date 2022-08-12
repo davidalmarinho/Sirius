@@ -1,8 +1,5 @@
 {
   "FILEPATH": "assets\\fonts\\folks\\FolksBlack.ttf",
-  "texture": {
-    "filePath": "assets\\fonts\\folks\\FolksBlack.ttf"
-  },
   "size": 64,
   "glyphMap": {
     "5": {

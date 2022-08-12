@@ -12,7 +12,7 @@ import sirius.editor.imgui.PropertiesWindow;
 import sirius.editor.imgui.tool_window.ToolWindow;
 import sirius.input.KeyListener;
 import sirius.input.MouseListener;
-import sirius.rendering.Color;
+import sirius.rendering.color.Color;
 import sirius.rendering.PickingTexture;
 import sirius.rendering.debug.DebugDraw;
 import sirius.scenes.Scene;
@@ -70,7 +70,7 @@ public class MouseControls extends Component {
         Vector2i endScreen = new Vector2i((int) endScreenf.x - 2, (int) endScreenf.y - 2);
         float[] gameObjectsIds = propertiesWindow.getPickingTexture().readPixels(startScreen, endScreen);
 
-        // Z index compromizes this
+        // Z index compromises this
         for (int i = 0; i < gameObjectsIds.length; i++) {
             if (gameObjectsIds[i] >= 0) {
                 GameObject pickedObj = SiriusTheFox.getCurrentScene().getGameObject((int) gameObjectsIds[i]);
@@ -151,7 +151,7 @@ public class MouseControls extends Component {
     }
 
     /**
-     * Changes all the game objects that were been selected if they have the same
+     * Changes all the game objects that were being selected if they have the same
      * types of components.
      */
     private void selectAndChangeMultipleGameObjects() {
@@ -202,8 +202,9 @@ public class MouseControls extends Component {
             if (MouseListener.isMouseButtonPressed(GLFW_MOUSE_BUTTON_LEFT)) {
                 float halfWidth  = Settings.GRID_WIDTH / 2.0f;
                 float halfHeight = Settings.GRID_HEIGHT / 2.0f;
-                boolean isntBlockInSquare = !isBlockInSquare(holdingGameObject.getPosition().x - halfWidth,
-                        holdingGameObject.getPosition().y - halfHeight);
+
+                boolean isntBlockInSquare = !isBlockInSquare(holdingGameObject.getPosition().x
+                        - halfWidth, holdingGameObject.getPosition().y - halfHeight);
 
                 // Fix duplicated game object placement bug
                 if (MouseListener.isDragging() && isntBlockInSquare) {

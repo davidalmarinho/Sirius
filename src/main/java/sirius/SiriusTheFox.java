@@ -2,7 +2,6 @@ package sirius;
 
 import audio.Audio;
 import gameobjects.GameObject;
-import gameobjects.components.text_components.FontRenderer;
 import observers.events.Events;
 import sirius.editor.imgui.ICustomPrefabs;
 import sirius.editor.imgui.ICustomPropertiesWindow;
@@ -11,7 +10,7 @@ import sirius.encode_tools.Encode;
 import sirius.input.Input;
 import sirius.input.KeyListener;
 import sirius.input.MouseListener;
-import sirius.rendering.Color;
+import sirius.rendering.color.Color;
 import sirius.rendering.Renderer;
 import sirius.rendering.Shader;
 import sirius.rendering.debug.DebugDraw;
@@ -61,10 +60,9 @@ public class SiriusTheFox implements Observer {
         audio.init();
         window.start();
 
-        loadEngineResources();
-
         // Put the scene
         // if (!maximizeOnPlay)
+        loadEngineResources();
         changeScene(new LevelEditorSceneInitializer());
         // else {
         //     this.runtimePlaying = true;
@@ -134,7 +132,7 @@ public class SiriusTheFox implements Observer {
                 }
 
                 // Cleanup the frame with a color
-                Color color = currentScene.getCamera().clearColor;
+                Color color = currentScene.getCamera().getClearColor();
 
                 glClearColor(color.getColor().x, color.getColor().y, color.getColor().z, color.getColor().w); /* Specifies
                 the color that glClear will use to clean up buffer's color.*/
@@ -245,7 +243,7 @@ public class SiriusTheFox implements Observer {
         currentScene.start();
     }
 
-    private static void loadEngineResources() {
+    public static void loadEngineResources() {
         AssetPool.addAllShaders();
         AssetPool.addAllFonts();
     }

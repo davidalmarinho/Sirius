@@ -264,4 +264,24 @@ public class Encode {
         }
         return String.valueOf(current);
     }
+
+    /**
+     * Formats a String.
+     * @param str Desired String to format
+     * @return The first letter capitalized, all the rest of the words goes lower case, 'A' -> 'a'
+     * and all underscores are replaces with white spaces, '_' -> ' '.
+     */
+    public static String formatString(String str) {
+        StringBuilder formattedSentence = new StringBuilder();
+
+        String firstLetterCapitalized = String.valueOf(str).substring(0, 1).toUpperCase();
+        formattedSentence.append(firstLetterCapitalized);
+
+        String restWordFormatted = String.valueOf(str).substring(1)
+                .replace('_', ' ')
+                .toLowerCase();
+        formattedSentence.append(restWordFormatted);
+
+        return formattedSentence.toString();
+    }
 }

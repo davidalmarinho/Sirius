@@ -99,7 +99,7 @@ public class PropertiesWindow {
     public void addActiveGameObject(GameObject activeGameObject) {
         SpriteRenderer spriteRenderer = activeGameObject.getComponent(SpriteRenderer.class);
         if (spriteRenderer != null) {
-            this.activeGameObjectOriginalColorList.add(new Vector4f(spriteRenderer.getColor()));
+            this.activeGameObjectOriginalColorList.add(new Vector4f(spriteRenderer.getColorVec4()));
             spriteRenderer.setColor(new Vector4f(0.8f, 0.8f, 0.0f, 0.8f));
         } else {
             // To keep the list indices the same with the game object

@@ -3,13 +3,15 @@ package sirius.rendering;
 import org.joml.Matrix4f;
 import org.joml.Vector2f;
 import org.joml.Vector3f;
+import sirius.rendering.color.Color;
+import sirius.rendering.color.ColorBlindness;
 
 public class Camera {
     private Matrix4f projectionMatrix, viewMatrix, inverseProjection, inverseView;
     public Vector2f position;
     private float projectionWidth = 6f;
     private float projectionHeight = 3f;
-    public Color clearColor;
+    private Color clearColor;
     private Vector2f projectionSize = new Vector2f(projectionWidth, projectionHeight);
     private float zoom = 1.0f;
 
@@ -89,5 +91,13 @@ public class Camera {
 
     public void setZoom(float zoom) {
         this.zoom = zoom;
+    }
+
+    public Color getClearColor() {
+        return ColorBlindness.adaptColorBlindness(clearColor);
+    }
+
+    public void setClearColor(Color c) {
+        this.clearColor.setColor(c);
     }
 }

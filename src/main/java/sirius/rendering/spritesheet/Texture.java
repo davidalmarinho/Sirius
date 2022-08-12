@@ -1,8 +1,11 @@
 package sirius.rendering.spritesheet;
 
+import org.joml.Vector4f;
 import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.stb.STBImage;
+import sirius.rendering.color.Color;
+import sirius.rendering.color.ColorBlindness;
 
 import java.awt.image.BufferedImage;
 import java.nio.ByteBuffer;
@@ -104,6 +107,54 @@ public class Texture {
             this.width = width.get(0);
             this.height = height.get(0);
 
+            // Image with rgba support
+            if (channels.get(0) == 4) {
+                byte[] rgba = new byte[this.width * this.height * 4];
+                for (int i = 0; i < rgba.length; i += 4) {
+                    // Get color of the current pixel of the image
+                    byte red = image.get(i);
+                    byte green = image.get(i + 1);
+                    byte blue = image.get(i + 2);
+                    byte alpha = image.get(i + 3);
+
+                    // Adapt pixel's color according color blindness category
+                    Color color = ColorBlindness.adaptColorBlindness(red, green, blue, alpha);
+
+                    // Write the current pixel with the desired color
+                    red = (byte) ((int) (color.getRed() * 255.0f));
+                    image.put(i, red);
+                    green = (byte) ((int) (color.getGreen() * 255.0f));
+                    image.put(i + 1, green);
+                    blue = (byte) ((int) (color.getBlue() * 255.0f));
+                    image.put(i + 2, blue);
+                    alpha = (byte) ((int) (color.getOpacity() * 255.0f));
+                    image.put(i + 3, alpha);
+                }
+            }
+
+            // Image with rgb support
+            if (channels.get(0) == 3) {
+                byte[] rgb = new byte[this.width * this.height * 3];
+                for (int i = 0; i < rgb.length; i += 3) {
+                    // Get color of the current pixel of the image
+                    byte red = image.get(i);
+                    byte green = image.get(i + 1);
+                    byte blue = image.get(i + 2);
+                    byte alpha = (byte) 255;
+
+                    // Adapt pixel's color according color blindness category
+                    Color color = ColorBlindness.adaptColorBlindness(red, green, blue, alpha);
+
+                    // Write the current pixel with the desired color
+                    red = (byte) (color.getRed() * 255.0f);
+                    image.put(i, red);
+                    green = (byte) (color.getGreen() * 255.0f);
+                    image.put(i + 1, green);
+                    blue = (byte) (color.getBlue() * 255.0f);
+                    image.put(i + 2, blue);
+                }
+            }
+
             // We have data, so we can load the image
             if (channels.get(0) == 4) {
                 glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width.get(0), height.get(0),
@@ -119,7 +170,12 @@ public class Texture {
         }
 
         // Clean the memory in GPU
-        STBImage.stbi_image_free(image);
+        // TODO: 11/08/2022 Handle this error
+        try {
+            STBImage.stbi_image_free(image);
+        } catch (NullPointerException e) {
+            System.err.println("Error: '" + filePath + "' can't be found. Does this file really exists?");
+        }
     }
 
     @Override

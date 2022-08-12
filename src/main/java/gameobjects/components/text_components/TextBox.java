@@ -4,7 +4,7 @@ import gameobjects.components.Component;
 import org.joml.Vector2f;
 import sirius.editor.imgui.JImGui;
 import sirius.input.KeyListener;
-import sirius.rendering.Color;
+import sirius.rendering.color.Color;
 import sirius.rendering.debug.DebugDraw;
 
 import static org.lwjgl.glfw.GLFW.*;
@@ -62,7 +62,8 @@ public class TextBox extends Component {
 
             char curChar = textInChars[i];
 
-            float curCharWidth = fontRenderer.getBatchFont().getGlyph(curChar).width * fontRenderer.getScale();
+            float curCharWidth = gameObject.getComponent(FontRenderer.class).getCharactersSpacing()
+                    + fontRenderer.getBatchFont().getGlyph(curChar).width * fontRenderer.getScale();
             if (i <= index) {
                 xCurrentAdvance += curCharWidth;
 

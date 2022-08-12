@@ -11,7 +11,7 @@ import imgui.type.ImBoolean;
 import imgui.type.ImString;
 import sirius.animations.Frame;
 import sirius.editor.imgui.JImGui;
-import sirius.rendering.Color;
+import sirius.rendering.color.Color;
 import sirius.utils.AssetPool;
 import sirius.utils.Settings;
 

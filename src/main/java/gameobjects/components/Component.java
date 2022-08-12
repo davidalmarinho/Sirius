@@ -4,7 +4,7 @@ import sirius.editor.imgui.JImGui;
 import imgui.ImGui;
 import gameobjects.GameObject;
 import imgui.type.ImInt;
-import sirius.rendering.Color;
+import sirius.rendering.color.Color;
 import org.jbox2d.dynamics.contacts.Contact;
 import org.joml.Vector2f;
 import org.joml.Vector3f;
