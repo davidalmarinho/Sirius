@@ -83,6 +83,9 @@ def getImplementationBasedOnOS(String implWithoutNatives, String version) {
 }
 
 dependencies {
+    // Java-Script engine
+    implementation 'ch.obermuhlner:java-scriptengine:2.0.0'
+
     evaluationDependsOnChildren()
 
     // Box2D
@@ -138,17 +141,27 @@ dependencies {
 jar {
     manifest {
         attributes (
-                'Class-Path': configurations.compile.collect { it.getName() }.join(' '),
+                'Class-Path': configurations.runtimeClasspath.collect { it.getName() }.join(' '),
                 'Main-Class': 'Main'
         )
     }
 
     from {
-        configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+
+    try {
+        buildScan {
+            termsOfServiceUrl = 'https://gradle.com/terms-of-service'
+            termsOfServiceAgree = 'yes'
+        }
+    } catch (Exception e){
+        println ""
     }
 }
 
 task exportEngigeAsLib(type: Jar) {
+    duplicatesStrategy(DuplicatesStrategy.EXCLUDE)
     manifest.from jar.manifest
     classifier = 'all'
     from {
