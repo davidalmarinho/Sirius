@@ -23,6 +23,11 @@ import static org.lwjgl.opengl.GL30.GL_FRAMEBUFFER;
 import static org.lwjgl.opengl.GL30.glBindFramebuffer;
 
 public class ImGuiLayer {
+    public Themes currentTheme;
+    public Themes previousTheme;
+    public int currentThemeIndex = 0;
+    public final Themes[] THEMES;
+
     private long glfwWindow;
 
     // LWJGL3 renderer (SHOULD be initialized)
@@ -61,23 +66,20 @@ public class ImGuiLayer {
             // [0] -> Item type
             // [1] -> Item value
             switch (navigator[0]) {
-                case "showGameViewWindow":
-                    gameViewWindow.setVisibility(Boolean.parseBoolean(navigator[1]));
-                    break;
-                case "showSpriteAnimationWindow":
-                    spriteAnimationWindow.setVisibility(Boolean.parseBoolean(navigator[1]));
-                    break;
-                case "showTabBar":
-                    tabBar.setVisibility(Boolean.parseBoolean(navigator[1]));
-                    break;
-                case "showToolWindow":
-                    toolWindow.setVisibility(Boolean.parseBoolean(navigator[1]));
-                    break;
-                case "showSceneHierarchy":
-                    sceneHierarchy.setVisibility(Boolean.parseBoolean(navigator[1]));
-                    break;
+                case "showGameViewWindow" -> gameViewWindow.setVisibility(Boolean.parseBoolean(navigator[1]));
+                case "showSpriteAnimationWindow" -> spriteAnimationWindow.setVisibility(Boolean.parseBoolean(navigator[1]));
+                case "showTabBar" -> tabBar.setVisibility(Boolean.parseBoolean(navigator[1]));
+                case "showToolWindow" -> toolWindow.setVisibility(Boolean.parseBoolean(navigator[1]));
+                case "showSceneHierarchy" -> sceneHierarchy.setVisibility(Boolean.parseBoolean(navigator[1]));
             }
         }
+
+        currentTheme = Themes.LIGHT;
+        previousTheme = currentTheme;
+        THEMES = new Themes[3];
+        THEMES[0] = Themes.LIGHT;
+        THEMES[1] = Themes.DARK;
+        THEMES[2] = Themes.CLASSICAL;
     }
 
     public void edit(long glfwWindow) {
@@ -210,6 +212,8 @@ public class ImGuiLayer {
         // ImGui context should be created as well.
         imGuiGlfw.init(glfwWindow, false); // False because we already have set callbacks before
         imGuiGl3.init("#version 330 core");
+
+        style(currentTheme);
     }
 
     public void update(float dt, Scene currentScene) {
@@ -225,6 +229,11 @@ public class ImGuiLayer {
         spriteAnimationWindow.imgui(dt);
         gameViewWindow.imgui();
         toolWindow.imgui();
+
+        if (currentTheme != previousTheme) {
+            style(currentTheme);
+            previousTheme = currentTheme;
+        }
 
         // We have to end ImGui before we render ImGui
         endFrame();
@@ -287,6 +296,29 @@ public class ImGuiLayer {
         menuBar.imgui();
 
         ImGui.end();
+    }
+
+    private void style(Themes theme) {
+        ImGuiStyle style = ImGui.getStyle();
+        style.setFrameRounding(6.0f);
+        style.setWindowPadding(8.0f, 6.0f);
+        style.setFramePadding(3.0f, 3.0f);
+        style.setItemSpacing(8.0f, 8.0f);
+        style.setWindowRounding(6.0f);
+        style.setChildRounding(3.0f);
+        style.setPopupRounding(3.0f);
+        style.setGrabRounding(6.0f);
+        style.setWindowTitleAlign(0.5f, 0.5f);
+        style.setWindowMenuButtonPosition(ImGuiDir.None);
+        style.setPopupBorderSize(1.0f);
+        style.setChildBorderSize(0.0f);
+        style.setWindowBorderSize(1.0f);
+        style.setCircleTessellationMaxError(0.1f);
+        switch (theme) {
+            case LIGHT -> ImGui.styleColorsLight(style);
+            case DARK -> ImGui.styleColorsDark(style);
+            case CLASSICAL -> ImGui.styleColorsClassic(style);
+        }
     }
 
     public PropertiesWindow getPropertiesWindow() {
