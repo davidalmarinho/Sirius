@@ -30,7 +30,6 @@ public class AssetPool {
         fontMap = new HashMap<>();
     }
 
-
     public static Shader getShader(String filePath) {
         // Verify if we could access the file
         File file = new File(filePath);

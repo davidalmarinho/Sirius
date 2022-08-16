@@ -6,6 +6,7 @@ import sirius.SiriusTheFox;
 import sirius.Sound;
 import sirius.animations.StateMachine;
 import sirius.editor.*;
+import sirius.editor.components.AutoRecompile;
 import sirius.editor.components.KeyControls;
 import sirius.rendering.spritesheet.Images;
 import sirius.rendering.spritesheet.Spritesheet;
@@ -40,6 +41,8 @@ public class LevelEditorSceneInitializer implements ISceneInitializer {
         levelEditorStuff.addComponent(new EditorCamera(scene.getCamera()));
 
         levelEditorStuff.addComponent(new GizmoSystem(gizmos));
+
+        levelEditorStuff.addComponent(new AutoRecompile());
         scene.addGameObject(levelEditorStuff);
     }
 

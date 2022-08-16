@@ -24,10 +24,10 @@ import observers.Observer;
 import observers.events.Event;
 import org.lwjgl.Version;
 import physics2d.Physics2d;
+import sirius.utils.ScriptsPool;
 import sirius.utils.Settings;
 
 import java.awt.*;
-import java.io.File;
 
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL11.*;
@@ -284,10 +284,8 @@ public class SiriusTheFox implements Observer {
 
     public void addCustomizedPropertiesWindow(ICustomPropertiesWindow iCustomPropertiesWindow) {
         String pack = iCustomPropertiesWindow.getClass().getName().replace(".", "/");
-        String fullpath = "src/" + pack + ".java";
-        File file = new File(fullpath);
-        System.out.println(fullpath);
-        System.out.println(file.getAbsolutePath());
+        ScriptsPool.customPropertiesWindowPath = "src/" + pack + ".java";
+        ScriptsPool.customPropertiesWindowScript = Encode.readFile(ScriptsPool.customPropertiesWindowPath);
 
         window.setICustomPropertiesWindow(iCustomPropertiesWindow);
     }

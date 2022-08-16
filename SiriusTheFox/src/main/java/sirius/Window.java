@@ -41,6 +41,8 @@ public class Window {
     public int maxFps = 60;
     private boolean vsync = true;
 
+    private boolean focused;
+
     public Window(String title, int width, int height) {
         this.title  = title;
         this.width  = 1920;
@@ -81,6 +83,9 @@ public class Window {
         if (glfwWindow == NULL) {
             throw new IllegalStateException("Error: GLFW windows couldn't be initialized");
         }
+
+        // Configure window's focus callback
+        glfwSetWindowFocusCallback(glfwWindow, this::windowFocusCallback);
 
         // Configure mouse's callbacks
         glfwSetCursorPosCallback(glfwWindow, MouseListener::mousePosCallback);
@@ -202,6 +207,10 @@ public class Window {
         maxFps = Objects.requireNonNull(glfwGetVideoMode(monitor)).refreshRate();
     }
 
+    public void windowFocusCallback(long glfwWindow, boolean focused) {
+        this.focused = focused;
+    }
+
     public int getWidth() {
         return width;
     }
@@ -272,5 +281,9 @@ public class Window {
 
     public void setICustomPrefabs(ICustomPrefabs iCustomPrefabs) {
         this.iCustomPrefabs = iCustomPrefabs;
+    }
+
+    public boolean isFocused() {
+        return focused;
     }
 }
