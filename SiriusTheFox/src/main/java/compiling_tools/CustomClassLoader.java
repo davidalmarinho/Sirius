@@ -1,4 +1,4 @@
-package sirius;
+package compiling_tools;
 
 import java.io.*;
 

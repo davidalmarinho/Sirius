@@ -160,6 +160,16 @@ public class Encode {
     }
 
     /**
+     * Reads a file.
+     *
+     * @param file The file itself.
+     * @return All the content of the file in a String.
+     */
+    public static String readFile(File file) {
+        return readFile(file.getPath());
+    }
+
+    /**
      * Gets a copy of a game object.
      *
      * @param gameObject {@link GameObject} that needs a copy.

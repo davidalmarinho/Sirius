@@ -1,4 +1,4 @@
-package java_script_engine;
+package compiling_tools.java_script_engine;
 
 import ch.obermuhlner.scriptengine.java.JavaCompiledScript;
 import ch.obermuhlner.scriptengine.java.JavaScriptEngine;
