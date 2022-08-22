@@ -3,7 +3,6 @@ package main;
 import components.GameCamera;
 import gameobjects.GameObject;
 import gameobjects.components.SpriteRenderer;
-import gameobjects.components.text_components.FontRenderer;
 import sirius.animations.StateMachine;
 import sirius.rendering.spritesheet.Images;
 import sirius.rendering.spritesheet.Spritesheet;

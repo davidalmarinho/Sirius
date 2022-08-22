@@ -284,4 +284,9 @@ public class Encode {
 
         return formattedSentence.toString();
     }
+
+    public static boolean hasString(File file, String str) {
+        String content = Encode.readFile(file.getPath());
+        return content.contains(str);
+    }
 }

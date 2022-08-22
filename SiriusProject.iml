@@ -11,5 +11,6 @@
     <orderEntry type="library" name="Gradle: :jbox2d-library:" level="project" />
     <orderEntry type="library" name="Gradle: org.joml:joml:1.10.1" level="project" />
     <orderEntry type="library" name="Gradle: org.lwjgl:lwjgl-glfw:3.2.3" level="project" />
+    <orderEntry type="library" name="Gradle: ch.obermuhlner:java-scriptengine:2.0.0" level="project" />
   </component>
 </module>

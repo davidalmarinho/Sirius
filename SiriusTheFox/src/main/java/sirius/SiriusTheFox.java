@@ -295,6 +295,10 @@ public class SiriusTheFox implements Observer {
     }
 
     public void addRuntimeOptionCustomizedPrefabs(ICustomPrefabs iCustomPrefabs) {
+        String pack = iCustomPrefabs.getClass().getName().replace(".", "/");
+        ScriptsPool.customPrefabsPath = "src/" + pack + ".java";
+        ScriptsPool.customPrefabsScript = Encode.readFile(ScriptsPool.customPrefabsPath);
+
         window.setICustomPrefabs(iCustomPrefabs);
     }
 
