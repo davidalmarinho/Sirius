@@ -6,10 +6,10 @@ import sirius.rendering.color.Color;
 import sirius.rendering.GlObjects;
 import sirius.rendering.Shader;
 import sirius.rendering.color.ColorBlindness;
-import sirius.utils.AssetPool;
 import org.joml.Vector2f;
 import sirius.utils.JMath;
 import org.joml.Vector4f;
+import sirius.utils.Pool;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +23,7 @@ public class DebugDraw {
     private static List<Line2D> line2DList = new ArrayList<>();
     // 6 floats per vertex (x, y, z, r, g, b) , 2 vertices per line
     private static float[] vertexArray = new float[MAX_LINES * 7 * 8];
-    private static Shader shader = AssetPool.getShader("assets/shaders/debugLine2D.glsl");
+    private static Shader shader = Pool.Assets.getShader("assets/shaders/debugLine2D.glsl");
 
     private static int vaoID;
     private static int vboID;

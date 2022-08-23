@@ -1,5 +1,7 @@
 package sirius.utils;
 
+import java.io.File;
+
 public class Settings {
     public static float GRID_WIDTH  = 0.25f;
     public static float GRID_HEIGHT = 0.25f;
@@ -14,6 +16,9 @@ public class Settings {
     }
 
     public static class Files {
+        public static String sourcesDirectory;
+        public static String outputDirectory;
+
         public static final String ANIMATIONS_FOLDER = "assets/animations/";
         public static final String LEVELS_FOLDER = "assets/levels";
         public static final String FONTS_FOLDER = "assets/fonts";
@@ -48,5 +53,83 @@ public class Settings {
         public static final String DYNO_REGULAR_FONT = "assets/fonts/dyno_sans/Dyno Regular.ttf";
 
         public static final String DEFAULT_FONT_PATH = FOLKS_LIGHT_FONT;
+
+        /**
+         * Locates and saves the sources and the output directories
+         */
+        public static void searchForSrcAndOutDirectories() {
+            File mainFile = Settings.Files.lookForMainFile(new File(System.getProperty("user.dir")));
+            File outputMainFile = Settings.Files.lookForClassFile(new File(System.getProperty("user.dir")),
+                    mainFile.getName().split(".java")[0]);
+
+            // Transform the slashes, '\' or '/' due to the operating system, into points, '.'
+            // Also remove file's extension.
+            String parsedMainSrcFilePath = mainFile.getPath()
+                    .replace('\\', '/')
+                    .replace('/', '.')
+                    .split(".java")[0];
+            String parsedMainOutFilePath = outputMainFile.getPath()
+                    .replace('\\', '/')
+                    .replace('/', '.')
+                    .split(".class")[0];
+
+            String[] splitParsedMainSrcFilePath = parsedMainSrcFilePath.split("\\.");
+            String[] splitParsedMainOutFilePath = parsedMainOutFilePath.split("\\.");
+
+            // Build the path of the output directory
+            StringBuilder outputDirPath = new StringBuilder();
+            for (String s : splitParsedMainOutFilePath) {
+                if (parsedMainSrcFilePath.contains(s)) {
+                    continue;
+                }
+
+                if (!outputDirPath.isEmpty())
+                    outputDirPath.append("/");
+
+                outputDirPath.append(s);
+            }
+
+            // Build the path of the sources directory
+            StringBuilder sourcesDirPath = new StringBuilder();
+            for (String s : splitParsedMainSrcFilePath) {
+                if (parsedMainOutFilePath.contains(s)) {
+                    continue;
+                }
+
+                if (!sourcesDirPath.isEmpty())
+                    sourcesDirPath.append("/");
+
+                sourcesDirPath.append(s);
+            }
+
+            Settings.Files.outputDirectory = outputDirPath.toString();
+            Settings.Files.sourcesDirectory = sourcesDirPath.toString();
+        }
+
+        /**
+         * Locates the file with the 'main' method.
+         * @param currentDirectory Directory where the search is going to begin
+         * @return The file with the 'main' method.
+         */
+        private static File lookForMainFile(File currentDirectory) {
+            return Scanner.lookForFile(currentDirectory, file ->
+                    Scanner.hasString(file, "public static void main")
+                            && !file.getName().equals("Settings.java")
+                            && !file.getName().endsWith(".class")
+            );
+        }
+
+        /**
+         * Locates the compiled class with the 'main' method.
+         * This method depends on the {@link Settings.Files#lookForMainFile(File)}
+         *
+         * @param currentDirectory Directory where the search is going to begin
+         * @param desiredOutputClassName The name of the file found in {@link Settings.Files#lookForMainFile(File)} method.
+         * @return The compiled class with the 'main' method.
+         */
+        private static File lookForClassFile(File currentDirectory, String desiredOutputClassName) {
+            return Scanner.lookForFile(currentDirectory, file ->
+                    file.getName().endsWith(desiredOutputClassName + ".class"));
+        }
     }
 }

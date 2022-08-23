@@ -6,7 +6,7 @@ import sirius.rendering.fonts.Glyph;
 import sirius.rendering.fonts.Font;
 import org.lwjgl.opengl.GL15;
 import sirius.SiriusTheFox;
-import sirius.utils.AssetPool;
+import sirius.utils.Pool;
 import sirius.utils.Settings;
 
 import java.util.Arrays;
@@ -229,9 +229,9 @@ public class BatchFont {
 
     public Glyph getGlyph(char c) {
         if (font == null) {
-            this.font = new Font(AssetPool.getFont(filepath));
+            this.font = new Font(Pool.Assets.getFont(filepath));
 
-            if (AssetPool.getFont(filepath) == null) {
+            if (Pool.Assets.getFont(filepath) == null) {
                 System.err.println("Error: Couldn't find font. Have you added a font?");
             }
         }
@@ -254,7 +254,7 @@ public class BatchFont {
     public void reset(String fontpath, int maxTextLength) {
         this.filepath = fontpath;
 
-        this.font = new Font(AssetPool.getFont(fontpath));
+        this.font = new Font(Pool.Assets.getFont(fontpath));
 
         // Disengage everything
         GlObjects.disableAttributes(2);

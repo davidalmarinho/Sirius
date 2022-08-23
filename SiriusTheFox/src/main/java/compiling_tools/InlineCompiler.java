@@ -1,9 +1,10 @@
 package compiling_tools;
 
+import sirius.utils.Settings;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import javax.tools.*;
 
@@ -18,7 +19,7 @@ public class InlineCompiler {
                 DiagnosticCollector<JavaFileObject> diagnostics = new DiagnosticCollector<>();
                 JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
                 StandardJavaFileManager fileManager = compiler.getStandardFileManager(diagnostics, null, null);
-                fileManager.setLocation(StandardLocation.CLASS_OUTPUT, Arrays.asList(new File("out/production/SiriusProject")));
+                fileManager.setLocation(StandardLocation.CLASS_OUTPUT, List.of(new File(Settings.Files.outputDirectory)));
 
                 // This sets up the class path that the compiler will use.
                 List<String> optionList = new ArrayList<>();
@@ -38,14 +39,16 @@ public class InlineCompiler {
 
                 if (task.call()) {
                     // Load and execute
-                    System.out.println("Congrats: Compiled '" + srcJavaFile.getPath() + "' script!");
+                    System.out.println("Congrats: Compiled '" + srcJavaFile.getPath()
+                            .replace('\\', '/') + "' script!");
 
                     CustomClassLoader classLoader = new CustomClassLoader();
+                    String prefix = Settings.Files.sourcesDirectory.replace('/', '.') + ".";
                     String packageAndClass = srcJavaFile.getPath()
                             .split(".java")[0]
                             .replace('\\', '/')
                             .replace('/', '.')
-                            .replace("src.", "");
+                            .replace(prefix, "");
                     classLoader.findClass(packageAndClass);
 
                 } else {

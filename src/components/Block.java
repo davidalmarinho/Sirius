@@ -2,9 +2,9 @@ package components;
 
 import gameobjects.GameObject;
 import gameobjects.components.Component;
-import sirius.utils.AssetPool;
 import org.jbox2d.dynamics.contacts.Contact;
 import org.joml.Vector2f;
+import sirius.utils.Pool;
 
 public abstract class Block extends Component {
     private transient boolean bopGoingUp = true;
@@ -49,7 +49,7 @@ public abstract class Block extends Component {
 
         if (active && playerController != null && contactNormal.y < -0.8f) {
             doBopAnimation = true;
-            AssetPool.getSound("assets/sounds/bump.ogg").play();
+            Pool.Assets.getSound("assets/sounds/bump.ogg").play();
             playerHit(playerController);
         }
     }

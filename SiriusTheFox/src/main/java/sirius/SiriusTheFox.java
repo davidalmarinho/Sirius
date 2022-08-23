@@ -18,16 +18,17 @@ import sirius.scenes.LevelEditorSceneInitializer;
 import sirius.scenes.LevelSceneInitializer;
 import sirius.scenes.Scene;
 import sirius.scenes.ISceneInitializer;
-import sirius.utils.AssetPool;
 import observers.EventSystem;
 import observers.Observer;
 import observers.events.Event;
 import org.lwjgl.Version;
 import physics2d.Physics2d;
-import sirius.utils.ScriptsPool;
+import sirius.utils.Pool;
+import sirius.utils.Scanner;
 import sirius.utils.Settings;
 
 import java.awt.*;
+import java.io.File;
 
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL11.*;
@@ -44,8 +45,6 @@ public class SiriusTheFox implements Observer {
     private boolean maximizeOnPlay = false;
 
     private ISceneInitializer customSceneInitializer;
-
-    boolean flag = true;
 
     private SiriusTheFox() {
         System.out.println("Hello LWJGL " + Version.getVersion() + "!");
@@ -79,9 +78,9 @@ public class SiriusTheFox implements Observer {
         float endTime;
         float dt = -1.0f;
 
-        Shader defaultShader = AssetPool.getShader("assets/shaders/default.glsl");
-        Shader fontShader    = AssetPool.getShader("assets/shaders/font.glsl");
-        Shader pickingShader = AssetPool.getShader("assets/shaders/pickingShader.glsl");
+        Shader defaultShader = Pool.Assets.getShader("assets/shaders/default.glsl");
+        Shader fontShader    = Pool.Assets.getShader("assets/shaders/font.glsl");
+        Shader pickingShader = Pool.Assets.getShader("assets/shaders/pickingShader.glsl");
 
         while (!window.isWindowClosed()) {
             if ((dt >= 0 && window.isVsync()) || (dt >= window.getUpdateFps() && !window.isVsync())) {
@@ -245,8 +244,11 @@ public class SiriusTheFox implements Observer {
     }
 
     public static void loadEngineResources() {
-        AssetPool.addAllShaders();
-        AssetPool.addAllFonts();
+        // if (!export) {
+            Settings.Files.searchForSrcAndOutDirectories();
+        // }
+        Pool.Assets.addAllShaders();
+        Pool.Assets.addAllFonts();
     }
 
     @Override
@@ -284,8 +286,8 @@ public class SiriusTheFox implements Observer {
 
     public void addCustomizedPropertiesWindow(ICustomPropertiesWindow iCustomPropertiesWindow) {
         String pack = iCustomPropertiesWindow.getClass().getName().replace(".", "/");
-        ScriptsPool.customPropertiesWindowPath = "src/" + pack + ".java";
-        ScriptsPool.customPropertiesWindowScript = Encode.readFile(ScriptsPool.customPropertiesWindowPath);
+        Pool.Scripts.customPropertiesWindowPath = "src/" + pack + ".java";
+        Pool.Scripts.customPropertiesWindowScript = Scanner.readFile(Pool.Scripts.customPropertiesWindowPath);
 
         window.setICustomPropertiesWindow(iCustomPropertiesWindow);
     }
@@ -296,8 +298,8 @@ public class SiriusTheFox implements Observer {
 
     public void addRuntimeOptionCustomizedPrefabs(ICustomPrefabs iCustomPrefabs) {
         String pack = iCustomPrefabs.getClass().getName().replace(".", "/");
-        ScriptsPool.customPrefabsPath = "src/" + pack + ".java";
-        ScriptsPool.customPrefabsScript = Encode.readFile(ScriptsPool.customPrefabsPath);
+        Pool.Scripts.customPrefabsPath = "src/" + pack + ".java";
+        Pool.Scripts.customPrefabsScript = Scanner.readFile(Pool.Scripts.customPrefabsPath);
 
         window.setICustomPrefabs(iCustomPrefabs);
     }

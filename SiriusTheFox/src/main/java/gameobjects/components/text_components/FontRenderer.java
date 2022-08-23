@@ -8,7 +8,7 @@ import sirius.rendering.BatchFont;
 import sirius.rendering.color.Color;
 import sirius.rendering.fonts.Font;
 import sirius.rendering.fonts.Glyph;
-import sirius.utils.AssetPool;
+import sirius.utils.Pool;
 import sirius.utils.Settings;
 
 public class FontRenderer extends Component {
@@ -43,7 +43,7 @@ public class FontRenderer extends Component {
         // Since 'java.awt.Font' can't be serialized, we will have to create some objects manually with
         // the proprieties that were supposed to be saved.
         this.batchFont = new BatchFont(this.fontpath, maxTextLength);
-        this.font = new Font(AssetPool.getFont(this.fontpath));
+        this.font = new Font(Pool.Assets.getFont(this.fontpath));
     }
 
     @Override
@@ -153,15 +153,15 @@ public class FontRenderer extends Component {
         this.lineSpacing = JImGui.dragFloat("Line Spacing:", this.lineSpacing, 0.01f);
 
         // Load desired font
-        currentItem = JImGui.listOpenArrow("Font list:", currentItem, AssetPool.getFontsNames());
+        currentItem = JImGui.listOpenArrow("Font list:", currentItem, Pool.Assets.getFontsNames());
         if (ImGui.isMouseReleased(ImGuiMouseButton.Left) && currentItem >= 0) {
-            this.fontpath = AssetPool.getFontsPaths()[currentItem];
+            this.fontpath = Pool.Assets.getFontsPaths()[currentItem];
             reloadFont = true;
             currentItem = -1;
         }
 
         if (reloadFont) {
-            font = new Font(AssetPool.getFont(this.fontpath));
+            font = new Font(Pool.Assets.getFont(this.fontpath));
             batchFont.filepath = this.fontpath;
             batchFont.reset(this.fontpath, 32);
         }

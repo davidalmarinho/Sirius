@@ -3,11 +3,10 @@ package sirius.editor.imgui.sprite_animation_window;
 import imgui.*;
 import imgui.flag.ImGuiMouseButton;
 import imgui.flag.ImGuiWindowFlags;
-import imgui.type.ImString;
 import sirius.editor.imgui.GuiWindow;
 import sirius.editor.imgui.JImGui;
 import sirius.encode_tools.Encode;
-import sirius.utils.AssetPool;
+import sirius.utils.Pool;
 import sirius.utils.Settings;
 
 import java.io.File;
@@ -139,7 +138,7 @@ public class SpriteAnimationWindow extends GuiWindow {
 
         if (ImGui.beginPopupModal(DELETE_CONTEXT, ImGuiWindowFlags.AlwaysUseWindowPadding
                 | ImGuiWindowFlags.AlwaysAutoResize)) {
-            String[] items = AssetPool.getAnimationsPaths();
+            String[] items = Pool.Assets.getAnimationsPaths();
 
             // Close instantly the load menu popup if there aren't any animations files
             if (items.length == 0)
@@ -151,7 +150,7 @@ public class SpriteAnimationWindow extends GuiWindow {
                 // TODO: 17/06/2022 Are you sure? Window
                 currentAnimationPath = items[currentItem];
                 new File(currentAnimationPath).delete();
-                AssetPool.removeAnimation(currentAnimationPath);
+                Pool.Assets.removeAnimation(currentAnimationPath);
                 ImGui.closeCurrentPopup();
             }
 
@@ -168,7 +167,7 @@ public class SpriteAnimationWindow extends GuiWindow {
         if (ImGui.button("Save") && animator.animationBlueprint != null) {
             // TODO: 17/06/2022 Throw error when a trigger is just "" (empty)
             Encode.saveAnimation(animator.animationBlueprint, currentAnimationPath);
-            AssetPool.updateAnimation(currentAnimationPath, animator.animationBlueprint);
+            Pool.Assets.updateAnimation(currentAnimationPath, animator.animationBlueprint);
         }
     }
 
@@ -180,7 +179,7 @@ public class SpriteAnimationWindow extends GuiWindow {
 
         if (ImGui.beginPopupModal(LOAD_CONTEXT, ImGuiWindowFlags.AlwaysUseWindowPadding
                 | ImGuiWindowFlags.AlwaysAutoResize)) {
-            String[] items = AssetPool.getAnimationsPaths();
+            String[] items = Pool.Assets.getAnimationsPaths();
 
             // Close instantly the load menu popup if there aren't any animations files
             if (items.length == 0)

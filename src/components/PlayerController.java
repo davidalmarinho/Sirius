@@ -11,7 +11,7 @@ import sirius.levels.Level;
 import sirius.rendering.color.Color;
 import sirius.scenes.ISceneInitializer;
 import sirius.scenes.LevelSceneInitializer;
-import sirius.utils.AssetPool;
+import sirius.utils.Pool;
 import sirius.utils.Settings;
 import main.CustomPrefabs;
 import org.jbox2d.dynamics.contacts.Contact;
@@ -91,7 +91,7 @@ public class PlayerController extends Component {
     public void powerup() {
         if (playerState == PlayerState.SMALL) {
             playerState = PlayerState.BIG;
-            AssetPool.getSound("assets/sounds/powerup.ogg").play();
+            Pool.Assets.getSound("assets/sounds/powerup.ogg").play();
             gameObject.setScale(gameObject.getScale().x, 0.42f);
             PillboxCollider pb = gameObject.getComponent(PillboxCollider.class);
             if (pb != null) {
@@ -102,7 +102,7 @@ public class PlayerController extends Component {
             }
         } else if (playerState == PlayerState.BIG) {
             playerState = PlayerState.FIRE;
-            AssetPool.getSound("assets/sounds/powerup.ogg").play();
+            Pool.Assets.getSound("assets/sounds/powerup.ogg").play();
         }
 
         stateMachine.trigger("powerup");
@@ -140,7 +140,7 @@ public class PlayerController extends Component {
                             ? new Vector2f(0.26f, 0.0f) : new Vector2f(-0.26f, 0.0f));
             GameObject fireball = CustomPrefabs.generateFireball(position);
             fireball.getComponent(Fireball.class).goingRight = this.gameObject.getScale().x > 0;
-            AssetPool.getSound("assets/sounds/fireball.ogg").play();
+            Pool.Assets.getSound("assets/sounds/fireball.ogg").play();
             SiriusTheFox.getCurrentScene().addGameObject(fireball);
         }
     }
@@ -148,9 +148,9 @@ public class PlayerController extends Component {
     @Override
     public void update(float dt) {
         if (!dead && !hasWon())
-            AssetPool.getSound("assets/sounds/main-theme-overworld.ogg").play();
+            Pool.Assets.getSound("assets/sounds/main-theme-overworld.ogg").play();
         else if (dead || hasWon())
-            AssetPool.getSound("assets/sounds/main-theme-overworld.ogg").stop();
+            Pool.Assets.getSound("assets/sounds/main-theme-overworld.ogg").stop();
 
         if (hasWon()) {
             if (!isOnGround()) {
@@ -164,8 +164,8 @@ public class PlayerController extends Component {
                     gameObject.transform(dt, 0);
                     stateMachine.trigger("startRunning");
                 }
-                if (!AssetPool.getSound("assets/sounds/stage_clear.ogg").isPlaying())
-                    AssetPool.getSound("assets/sounds/stage_clear.ogg").play();
+                if (!Pool.Assets.getSound("assets/sounds/stage_clear.ogg").isPlaying())
+                    Pool.Assets.getSound("assets/sounds/stage_clear.ogg").play();
 
                 timeToCastle -= dt;
                 walkTime -= dt;
@@ -216,7 +216,7 @@ public class PlayerController extends Component {
 
         if (KeyListener.isKeyPressed(GLFW_KEY_SPACE) && (jumpTime > 0 || isOnGround() || groundDebounce > 0)) {
             if (jumpTime == 0 && (isOnGround() || groundDebounce > 0)) {
-                AssetPool.getSound("assets/sounds/jump-small.ogg").play();
+                Pool.Assets.getSound("assets/sounds/jump-small.ogg").play();
                 jumpTime = 28;
                 this.velocity.y = jumpImpulse;
             } else if (jumpTime > 0) {
@@ -311,7 +311,7 @@ public class PlayerController extends Component {
                 this.rigidBody2d.setVelocity(new Vector2f());
                 this.dead = true;
                 this.rigidBody2d.setSensor(true);
-                AssetPool.getSound("assets/sounds/mario_die.ogg").play();
+                Pool.Assets.getSound("assets/sounds/mario_die.ogg").play();
                 deadMaxHeight = this.gameObject.getPosition().y + 0.3f;
                 this.rigidBody2d.setBodyType(BodyTypes.STATIC);
                 if (gameObject.getPosition().y > 0) deadMinHeight = -0.25f;
@@ -330,13 +330,13 @@ public class PlayerController extends Component {
                 }
 
                 hurtInvincibilityTimeLeft = hurtInvincibilityTime;
-                AssetPool.getSound("assets/sounds/pipe.ogg").play();
+                Pool.Assets.getSound("assets/sounds/pipe.ogg").play();
                 break;
 
             case FIRE:
                 this.playerState = PlayerState.BIG;
                 hurtInvincibilityTimeLeft = hurtInvincibilityTime;
-                AssetPool.getSound("assets/sounds/pipe.ogg").play();
+                Pool.Assets.getSound("assets/sounds/pipe.ogg").play();
                 break;
         }
     }
@@ -353,7 +353,7 @@ public class PlayerController extends Component {
             rigidBody2d.setSensor(true);
             rigidBody2d.setBodyType(BodyTypes.STATIC);
             gameObject.setPosition(flagpole.getPosition().x, gameObject.getPosition().y);
-            AssetPool.getSound("assets/sounds/flagpole.ogg").play();
+            Pool.Assets.getSound("assets/sounds/flagpole.ogg").play();
         }
     }
 

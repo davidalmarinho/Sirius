@@ -7,7 +7,7 @@ import sirius.editor.MouseControls;
 import sirius.rendering.spritesheet.Spritesheet;
 import sirius.scenes.ISceneInitializer;
 import sirius.scenes.LevelEditorSceneInitializer;
-import sirius.utils.AssetPool;
+import sirius.utils.Pool;
 
 import java.io.File;
 import java.util.Collection;
@@ -48,7 +48,7 @@ public class TabBar extends GuiWindow {
             }
 
             if (ImGui.beginTabItem("Sounds")) {
-                Collection<Sound> sounds = AssetPool.getAllSounds();
+                Collection<Sound> sounds = Pool.Assets.getAllSounds();
                 for (Sound sound : sounds) {
                     File tmp = new File(sound.getFilePath());
                     if (ImGui.button(tmp.getName())) {

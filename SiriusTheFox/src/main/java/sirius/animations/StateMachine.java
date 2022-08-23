@@ -7,7 +7,7 @@ import imgui.flag.ImGuiMouseButton;
 import sirius.editor.imgui.JImGui;
 import sirius.editor.imgui.sprite_animation_window.*;
 import sirius.encode_tools.Encode;
-import sirius.utils.AssetPool;
+import sirius.utils.Pool;
 
 import java.util.*;
 
@@ -117,14 +117,14 @@ public class StateMachine extends Component {
 
     @Override
     public void imgui() {
-        String[] animationsNames = AssetPool.getAnimationsNames();
+        String[] animationsNames = Pool.Assets.getAnimationsNames();
 
         // List available blueprints animations
         ImGui.textUnformatted("Select animation: ");
 
         currentItem = JImGui.listOpenArrow("Animation List:", currentItem, animationsNames);
 
-        String[] animationsPaths = AssetPool.getAnimationsPaths();
+        String[] animationsPaths = Pool.Assets.getAnimationsPaths();
 
         // Select a blueprint animation and pull it to the game object
         if (ImGui.isMouseReleased(ImGuiMouseButton.Left) && currentItem >= 0) {

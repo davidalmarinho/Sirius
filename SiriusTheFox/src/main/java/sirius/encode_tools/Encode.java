@@ -9,12 +9,11 @@ import sirius.editor.imgui.sprite_animation_window.AnimationBlueprint;
 import sirius.editor.imgui.sprite_animation_window.Animator;
 import sirius.levels.Level;
 import sirius.rendering.fonts.Font;
-import sirius.utils.AssetPool;
+import sirius.utils.Pool;
+import sirius.utils.Scanner;
 
 import java.io.*;
 import java.lang.reflect.Type;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -64,7 +63,7 @@ public class Encode {
 
         try {
             // Save gameObjectList in a .json file
-            FileWriter writer = new FileWriter(AssetPool.getLevel(Level.currentLevel).getPath());
+            FileWriter writer = new FileWriter(Pool.Assets.getLevel(Level.currentLevel).getPath());
             List<GameObject> objsToSerialize = new ArrayList<>();
             for (GameObject obj : gameObjectList) {
 
@@ -120,12 +119,12 @@ public class Encode {
      */
     public static AnimationBlueprint getAnimation(String filePath) {
         Gson gson = animatorGson();
-        return gson.fromJson(readFile(filePath), AnimationBlueprint.class);
+        return gson.fromJson(Scanner.readFile(filePath), AnimationBlueprint.class);
     }
 
     public static Font getFontProperty(String filePath) {
         Gson gson = defaultGson();
-        return gson.fromJson(readFile(filePath), Font.class);
+        return gson.fromJson(Scanner.readFile(filePath), Font.class);
     }
 
     /**
@@ -136,37 +135,7 @@ public class Encode {
      */
     public static GameObject[] getGameObjectsFromFile(String filePath) {
         Gson gson = gameObjectsGson();
-        return gson.fromJson(readFile(filePath), GameObject[].class);
-    }
-
-    /**
-     * Reads a file.
-     *
-     * @param filePath Path to the saved file.
-     * @return All the content of the file in a String.
-     */
-    public static String readFile(String filePath) {
-        File file = new File(filePath);
-        String inFile = "";
-        if (file.exists()) {
-            try {
-                inFile = new String(Files.readAllBytes(Paths.get(file.getPath())));
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        }
-
-        return inFile;
-    }
-
-    /**
-     * Reads a file.
-     *
-     * @param file The file itself.
-     * @return All the content of the file in a String.
-     */
-    public static String readFile(File file) {
-        return readFile(file.getPath());
+        return gson.fromJson(Scanner.readFile(filePath), GameObject[].class);
     }
 
     /**
@@ -295,8 +264,4 @@ public class Encode {
         return formattedSentence.toString();
     }
 
-    public static boolean hasString(File file, String str) {
-        String content = Encode.readFile(file.getPath());
-        return content.contains(str);
-    }
 }

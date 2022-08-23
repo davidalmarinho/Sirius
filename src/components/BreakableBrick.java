@@ -1,13 +1,13 @@
 package components;
 
-import sirius.utils.AssetPool;
+import sirius.utils.Pool;
 
 public class BreakableBrick extends Block {
 
     @Override
     void playerHit(PlayerController playerController) {
         if (!playerController.isSmall()) {
-            AssetPool.getSound("assets/sounds/break_block.ogg").play();
+            Pool.Assets.getSound("assets/sounds/break_block.ogg").play();
             gameObject.destroy();
         }
     }

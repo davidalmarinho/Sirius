@@ -9,21 +9,21 @@ import gameobjects.components.game_components.Ground;
 import sirius.animations.AnimationState;
 import sirius.animations.StateMachine;
 import sirius.rendering.spritesheet.Spritesheet;;
-import sirius.utils.AssetPool;
 import org.joml.Vector2f;
 import physics2d.BodyTypes;
 import physics2d.components.Box2DCollider;
 import physics2d.components.CircleCollider;
 import physics2d.components.PillboxCollider;
 import physics2d.components.RigidBody2d;
+import sirius.utils.Pool;
 
 import static sirius.editor.imgui.Prefabs.generateSpriteObject;
 
 public class CustomPrefabs implements ICustomPrefabs {
 
     public static GameObject generateMario(Sprite sprite, float sizeX, float sizeY) {
-        Spritesheet playerSprites = AssetPool.getSpritesheet("assets/images/spritesheets/spritesheet.png");
-        Spritesheet bigPlayerSprites = AssetPool.getSpritesheet("assets/images/spritesheets/bigSpritesheet.png");
+        Spritesheet playerSprites = Pool.Assets.getSpritesheet("assets/images/spritesheets/spritesheet.png");
+        Spritesheet bigPlayerSprites = Pool.Assets.getSpritesheet("assets/images/spritesheets/bigSpritesheet.png");
         GameObject mario = generateSpriteObject(playerSprites.getSprite(0), sizeX, sizeY);
 
         // Little mario animations
@@ -207,7 +207,7 @@ public class CustomPrefabs implements ICustomPrefabs {
     }
 
     public static GameObject generateQuestionMarkBlock(Sprite sprite, float xSize, float ySize) {
-        Spritesheet items = AssetPool.getSpritesheet("assets/images/spritesheets/items.png");
+        Spritesheet items = Pool.Assets.getSpritesheet("assets/images/spritesheets/items.png");
 
         GameObject questionBlock = generateSpriteObject(items.getSprite(0), 0.25f, 0.25f);
 
@@ -244,7 +244,7 @@ public class CustomPrefabs implements ICustomPrefabs {
     }
 
     public static GameObject generateCoin() {
-        Spritesheet items = AssetPool.getSpritesheet("assets/images/spritesheets/items.png");
+        Spritesheet items = Pool.Assets.getSpritesheet("assets/images/spritesheets/items.png");
 
         GameObject coin = generateSpriteObject(items.getSprite(0), 0.25f, 0.25f);
 
@@ -268,7 +268,7 @@ public class CustomPrefabs implements ICustomPrefabs {
     }
 
     public static GameObject generateMushroom(Sprite sprite, float xSize, float ySize) {
-        Spritesheet items = AssetPool.getSpritesheet("assets/images/spritesheets/items.png");
+        Spritesheet items = Pool.Assets.getSpritesheet("assets/images/spritesheets/items.png");
 
         GameObject mushroom = generateSpriteObject(items.getSprite(10), 0.25f, 0.25f);
 
@@ -288,7 +288,7 @@ public class CustomPrefabs implements ICustomPrefabs {
     }
 
     public static GameObject generateFlower(Sprite sprite, float xSize, float ySize) {
-        Spritesheet items = AssetPool.getSpritesheet("assets/images/spritesheets/items.png");
+        Spritesheet items = Pool.Assets.getSpritesheet("assets/images/spritesheets/items.png");
 
         GameObject flower = generateSpriteObject(items.getSprite(20), 0.25f, 0.25f);
 
@@ -308,7 +308,7 @@ public class CustomPrefabs implements ICustomPrefabs {
     }
 
     public static GameObject generateGoomba(Sprite sprite, float xSize, float ySize) {
-        Spritesheet spritesheet = AssetPool.getSpritesheet("assets/images/spritesheets/spritesheet.png");
+        Spritesheet spritesheet = Pool.Assets.getSpritesheet("assets/images/spritesheets/spritesheet.png");
 
         GameObject goomba = generateSpriteObject(spritesheet.getSprite(15), 0.25f, 0.25f);
 
@@ -346,7 +346,7 @@ public class CustomPrefabs implements ICustomPrefabs {
     }
 
     private static GameObject generatePipeDown(Sprite sprite, float xSize, float ySize) {
-        Spritesheet spritesheet = AssetPool.getSpritesheet("assets/images/spritesheets/pipes.png");
+        Spritesheet spritesheet = Pool.Assets.getSpritesheet("assets/images/spritesheets/pipes.png");
 
         GameObject pipe = generateSpriteObject(spritesheet.getSprite(0), 0.5f, 0.5f);
 
@@ -354,7 +354,7 @@ public class CustomPrefabs implements ICustomPrefabs {
     }
 
     private static GameObject generatePipeUp(Sprite sprite, float xSize, float ySize) {
-        Spritesheet spritesheet = AssetPool.getSpritesheet("assets/images/spritesheets/pipes.png");
+        Spritesheet spritesheet = Pool.Assets.getSpritesheet("assets/images/spritesheets/pipes.png");
 
         GameObject pipe = generateSpriteObject(spritesheet.getSprite(1), 0.5f, 0.5f);
 
@@ -363,7 +363,7 @@ public class CustomPrefabs implements ICustomPrefabs {
     }
 
     private static GameObject generatePipeRight(Sprite sprite, float xSize, float ySize) {
-        Spritesheet spritesheet = AssetPool.getSpritesheet("assets/images/spritesheets/pipes.png");
+        Spritesheet spritesheet = Pool.Assets.getSpritesheet("assets/images/spritesheets/pipes.png");
 
         GameObject pipe = generateSpriteObject(spritesheet.getSprite(2), 0.5f, 0.5f);
 
@@ -371,7 +371,7 @@ public class CustomPrefabs implements ICustomPrefabs {
     }
 
     private static GameObject generatePipeLeft(Sprite sprite, float xSize, float ySize) {
-        Spritesheet spritesheet = AssetPool.getSpritesheet("assets/images/spritesheets/pipes.png");
+        Spritesheet spritesheet = Pool.Assets.getSpritesheet("assets/images/spritesheets/pipes.png");
 
         GameObject pipe = generateSpriteObject(spritesheet.getSprite(3), 0.5f, 0.5f);
 
@@ -395,7 +395,7 @@ public class CustomPrefabs implements ICustomPrefabs {
     }
 
     public static GameObject generateTurtle(Sprite sprite, float xSize, float ySize) {
-        Spritesheet turtleSpritesheet = AssetPool.getSpritesheet("assets/images/spritesheets/turtle.png");
+        Spritesheet turtleSpritesheet = Pool.Assets.getSpritesheet("assets/images/spritesheets/turtle.png");
         GameObject turtle = generateSpriteObject(turtleSpritesheet.getSprite(0), 0.25f, 0.35f);
 
         AnimationState walk = new AnimationState();
@@ -446,7 +446,7 @@ public class CustomPrefabs implements ICustomPrefabs {
     }
 
     private static GameObject generateFlag(int index) {
-        GameObject flag = generateSpriteObject(AssetPool.getSpritesheet("assets/images/spritesheets/items.png")
+        GameObject flag = generateSpriteObject(Pool.Assets.getSpritesheet("assets/images/spritesheets/items.png")
                 .getSprite(index), 0.25f, 0.25f);
 
         RigidBody2d rigidBody2d = new RigidBody2d();
@@ -464,7 +464,7 @@ public class CustomPrefabs implements ICustomPrefabs {
     }
 
     public static GameObject generateFireball(Vector2f position) {
-        GameObject fireball = generateSpriteObject(AssetPool.getSpritesheet("assets/images/spritesheets/items.png")
+        GameObject fireball = generateSpriteObject(Pool.Assets.getSpritesheet("assets/images/spritesheets/items.png")
                 .getSprite(32), 0.18f, 0.18f);
         fireball.setPosition(position);
 
@@ -483,7 +483,7 @@ public class CustomPrefabs implements ICustomPrefabs {
     }
 
     public static GameObject generateCoin(Sprite sprite, float xSize, float ySize) {
-        Spritesheet items = AssetPool.getSpritesheet("assets/images/spritesheets/items.png");
+        Spritesheet items = Pool.Assets.getSpritesheet("assets/images/spritesheets/items.png");
         GameObject coin = generateSpriteObject(items.getSprite(7), 0.25f, 0.25f);
 
         AnimationState coinFlip = new AnimationState();
@@ -513,36 +513,36 @@ public class CustomPrefabs implements ICustomPrefabs {
     @Override
     public void imgui() {
         Prefabs.addPrefabImGui(CustomPrefabs::generateMario,
-                AssetPool.getSpritesheet("assets/images/spritesheets/spritesheet.png").getSprite(0));
+                Pool.Assets.getSpritesheet("assets/images/spritesheets/spritesheet.png").getSprite(0));
         Prefabs.sameLine();
         Prefabs.addPrefabImGui(CustomPrefabs::generateQuestionMarkBlock,
-                AssetPool.getSpritesheet("assets/images/spritesheets/items.png").getSprite(0));
+                Pool.Assets.getSpritesheet("assets/images/spritesheets/items.png").getSprite(0));
         Prefabs.sameLine();
         Prefabs.addPrefabImGui(CustomPrefabs::generateGoomba,
-                AssetPool.getSpritesheet("assets/images/spritesheets/spritesheet.png").getSprite(15));
+                Pool.Assets.getSpritesheet("assets/images/spritesheets/spritesheet.png").getSprite(15));
         Prefabs.sameLine();
         Prefabs.addPrefabImGui(CustomPrefabs::generatePipeDown,
-                AssetPool.getSpritesheet("assets/images/spritesheets/pipes.png").getSprite(0));
+                Pool.Assets.getSpritesheet("assets/images/spritesheets/pipes.png").getSprite(0));
         Prefabs.sameLine();
         Prefabs.addPrefabImGui(CustomPrefabs::generatePipeUp,
-                AssetPool.getSpritesheet("assets/images/spritesheets/pipes.png").getSprite(1));
+                Pool.Assets.getSpritesheet("assets/images/spritesheets/pipes.png").getSprite(1));
         Prefabs.sameLine();
         Prefabs.addPrefabImGui(CustomPrefabs::generatePipeRight,
-                AssetPool.getSpritesheet("assets/images/spritesheets/pipes.png").getSprite(2));
+                Pool.Assets.getSpritesheet("assets/images/spritesheets/pipes.png").getSprite(2));
         Prefabs.sameLine();
         Prefabs.addPrefabImGui(CustomPrefabs::generatePipeLeft,
-                AssetPool.getSpritesheet("assets/images/spritesheets/pipes.png").getSprite(3));
+                Pool.Assets.getSpritesheet("assets/images/spritesheets/pipes.png").getSprite(3));
         Prefabs.sameLine();
         Prefabs.addPrefabImGui(CustomPrefabs::generateTurtle,
-                AssetPool.getSpritesheet("assets/images/spritesheets/turtle.png").getSprite(0));
+                Pool.Assets.getSpritesheet("assets/images/spritesheets/turtle.png").getSprite(0));
 
         Prefabs.addPrefabImGui(CustomPrefabs::generateFlagtop,
-                AssetPool.getSpritesheet("assets/images/spritesheets/items.png").getSprite(6));
+                Pool.Assets.getSpritesheet("assets/images/spritesheets/items.png").getSprite(6));
         Prefabs.sameLine();
         Prefabs.addPrefabImGui(CustomPrefabs::generateFlagpole,
-                AssetPool.getSpritesheet("assets/images/spritesheets/items.png").getSprite(33));
+                Pool.Assets.getSpritesheet("assets/images/spritesheets/items.png").getSprite(33));
         Prefabs.sameLine();
         Prefabs.addPrefabImGui(CustomPrefabs::generateCoin,
-                AssetPool.getSpritesheet("assets/images/spritesheets/items.png").getSprite(7));
+                Pool.Assets.getSpritesheet("assets/images/spritesheets/items.png").getSprite(7));
     }
 }

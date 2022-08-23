@@ -3,10 +3,10 @@ package components;
 import gameobjects.GameObject;
 import gameobjects.components.Component;
 import gameobjects.components.game_components.Ground;
-import sirius.utils.AssetPool;
 import org.jbox2d.dynamics.contacts.Contact;
 import org.joml.Vector2f;
 import physics2d.components.RigidBody2d;
+import sirius.utils.Pool;
 
 public class MushroomAI extends Component {
     private transient boolean goingRight = true;
@@ -24,7 +24,7 @@ public class MushroomAI extends Component {
                 if (playerController.isSmall()) {
                     playerController.powerup();
                 } else {
-                    AssetPool.getSound("assets/sounds/coin.ogg").play();
+                    Pool.Assets.getSound("assets/sounds/coin.ogg").play();
                 }
                 this.gameObject.destroy();
                 hitPlayer = true;
@@ -42,7 +42,7 @@ public class MushroomAI extends Component {
     @Override
     public void start() {
         this.rigidBody2d = gameObject.getComponent(RigidBody2d.class);
-        AssetPool.getSound("assets/sounds/powerup_appears.ogg").play();
+        Pool.Assets.getSound("assets/sounds/powerup_appears.ogg").play();
     }
 
     @Override

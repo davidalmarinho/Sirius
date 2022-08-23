@@ -2,7 +2,7 @@ package compiling_tools.java_script_engine;
 
 import ch.obermuhlner.scriptengine.java.JavaCompiledScript;
 import ch.obermuhlner.scriptengine.java.JavaScriptEngine;
-import sirius.encode_tools.Encode;
+import sirius.utils.Scanner;
 
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
@@ -15,7 +15,7 @@ public class Compiler {
             ScriptEngine engine = manager.getEngineByName("java");
             JavaScriptEngine javaScriptEngine = (JavaScriptEngine) engine;
 
-            String script = Encode.readFile(filepath);
+            String script = Scanner.readFile(filepath);
             JavaCompiledScript compiledScript = javaScriptEngine.compile(script);
             System.out.println("Congrats: Recompiled '" + filepath + "' script!");
             return compiledScript;

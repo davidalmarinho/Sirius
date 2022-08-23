@@ -2,9 +2,9 @@ package components;
 
 import gameobjects.GameObject;
 import gameobjects.components.Component;
-import sirius.utils.AssetPool;
 import org.jbox2d.dynamics.contacts.Contact;
 import org.joml.Vector2f;
+import sirius.utils.Pool;
 
 public class Coin extends Component {
     private Vector2f topY;
@@ -31,7 +31,7 @@ public class Coin extends Component {
     @Override
     public void preSolve(GameObject collidingObject, Contact contact, Vector2f hitNormal) {
         if (collidingObject.getComponent(PlayerController.class) != null) {
-            AssetPool.getSound("assets/sounds/coin.ogg").play();
+            Pool.Assets.getSound("assets/sounds/coin.ogg").play();
             playAnim = true;
             contact.setEnabled(false);
         }

@@ -4,7 +4,7 @@ import org.joml.Matrix3f;
 import org.joml.Vector3f;
 import org.joml.Vector4f;
 import sirius.SiriusTheFox;
-import sirius.utils.AssetPool;
+import sirius.utils.Pool;
 
 public class ColorBlindness {
     public static final ColorBlindnessCategories[] COLOR_BLINDNESSES;
@@ -254,7 +254,7 @@ public class ColorBlindness {
 
     public void adaptImages() {
         if (selectedColorBlindness != previousSelectedColorBlindness) {
-            AssetPool.clearTextures();
+            Pool.Assets.clearTextures();
             SiriusTheFox.changeScene(SiriusTheFox.getCurrentScene().getSceneInitializer());
             previousSelectedColorBlindness = selectedColorBlindness;
         }

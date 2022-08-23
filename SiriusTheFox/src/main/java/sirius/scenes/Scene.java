@@ -18,7 +18,8 @@ import sirius.rendering.Camera;
 import sirius.rendering.Renderer;
 import org.joml.Vector2f;
 import physics2d.Physics2d;
-import sirius.utils.AssetPool;
+import sirius.utils.Pool;
+import sirius.utils.Scanner;
 import sirius.utils.Settings;
 
 import java.io.File;
@@ -250,7 +251,7 @@ public class Scene {
                 int levelFile = Integer.parseInt(navigator1[0]);
 
                 if (curLvl == levelFile) {
-                    AssetPool.addLevel(new Level(lvlName, levels[j].getPath(), curLvl));
+                    Pool.Assets.addLevel(new Level(lvlName, levels[j].getPath(), curLvl));
                     break;
                 }
             }
@@ -277,7 +278,7 @@ public class Scene {
         for (int i = 0; i < Objects.requireNonNull(animations).length; i++) {
             File file = animations[i];
             AnimationBlueprint animationBlueprint = Encode.getAnimation(file.getPath());
-            AssetPool.addAnimation(file.getPath(), animationBlueprint);
+            Pool.Assets.addAnimation(file.getPath(), animationBlueprint);
         }
     }
 
@@ -314,13 +315,13 @@ public class Scene {
     }
 
     public void load() {
-        Level level = AssetPool.getLevel(Level.currentLevel);
+        Level level = Pool.Assets.getLevel(Level.currentLevel);
         if (level == null) {
             // TODO: 01/08/2022 Handle better this error
             level = new Level("level1.json", "assets/levels/level1.json", 1);
-            AssetPool.addLevel(level);
+            Pool.Assets.addLevel(level);
         }
-        String inFile = Encode.readFile(level.getPath());
+        String inFile = Scanner.readFile(level.getPath());
 
         // Means that the saving txt file isn't empty
         if (!inFile.equals("")) {

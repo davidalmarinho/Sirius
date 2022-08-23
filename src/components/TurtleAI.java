@@ -5,11 +5,11 @@ import gameobjects.components.Component;
 import sirius.SiriusTheFox;
 import sirius.animations.StateMachine;
 import sirius.rendering.Camera;
-import sirius.utils.AssetPool;
 import org.jbox2d.dynamics.contacts.Contact;
 import org.joml.Vector2f;
 import physics2d.Physics2d;
 import physics2d.components.RigidBody2d;
+import sirius.utils.Pool;
 
 public class TurtleAI extends Component {
     private transient boolean goingRight;
@@ -49,7 +49,7 @@ public class TurtleAI extends Component {
         if (dead && moving && goomba != null) {
             goomba.stomp();
             contact.setEnabled(false);
-            AssetPool.getSound("assets/sounds/kick.ogg").play();
+            Pool.Assets.getSound("assets/sounds/kick.ogg").play();
         }
 
         PlayerController playerController = collidingObject.getComponent(PlayerController.class);
@@ -81,7 +81,7 @@ public class TurtleAI extends Component {
         } else if (Math.abs(hitNormal.y) < 0.1f && !collidingObject.isDead() && collidingObject.getComponent(MushroomAI.class) == null) {
             goingRight = hitNormal.x < 0;
             if (moving && dead) {
-                AssetPool.getSound("assets/sounds/bump.ogg").play();
+                Pool.Assets.getSound("assets/sounds/bump.ogg").play();
             }
         }
 
@@ -178,6 +178,6 @@ public class TurtleAI extends Component {
         rigidBody2d.setAngularVelocity(0.0f);
         rigidBody2d.setGravityScale(0.0f);
         stateMachine.trigger("squashMe");
-        AssetPool.getSound("assets/sounds/bump.ogg").play();
+        Pool.Assets.getSound("assets/sounds/bump.ogg").play();
     }
 }

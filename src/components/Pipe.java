@@ -4,10 +4,10 @@ import gameobjects.GameObject;
 import gameobjects.components.Component;
 import sirius.SiriusTheFox;
 import sirius.input.KeyListener;
-import sirius.utils.AssetPool;
 import main.Direction;
 import org.jbox2d.dynamics.contacts.Contact;
 import org.joml.Vector2f;
+import sirius.utils.Pool;
 
 import static org.lwjgl.glfw.GLFW.*;
 
@@ -91,7 +91,7 @@ public class Pipe extends Component {
             }
 
             if (playerEntering) {
-                AssetPool.getSound("assets/sounds/pipe.ogg").play();
+                Pool.Assets.getSound("assets/sounds/pipe.ogg").play();
                 collidingPlayer.setPosition(getPlayerPosition(connectingPipe));
                 GameCamera gameCamera = SiriusTheFox.getCurrentScene()
                         .getGameObject("GameCamera").getComponent(GameCamera.class);

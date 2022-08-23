@@ -6,7 +6,7 @@ import gameobjects.components.Transform;
 import imgui.ImGui;
 import org.joml.Vector2f;
 import sirius.encode_tools.Encode;
-import sirius.utils.AssetPool;
+import sirius.utils.Pool;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -116,7 +116,7 @@ public class GameObject {
 
         SpriteRenderer spriteRenderer = copyObj.getComponent(SpriteRenderer.class);
         if (spriteRenderer != null && spriteRenderer.getTexture() != null) {
-            spriteRenderer.setTexture(AssetPool.getTexture(spriteRenderer.getTexture().getFilePath()));
+            spriteRenderer.setTexture(Pool.Assets.getTexture(spriteRenderer.getTexture().getFilePath()));
         }
         return copyObj;
     }

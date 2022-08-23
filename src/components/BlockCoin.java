@@ -1,8 +1,8 @@
 package components;
 
 import gameobjects.components.Component;
-import sirius.utils.AssetPool;
 import org.joml.Vector2f;
+import sirius.utils.Pool;
 
 public class BlockCoin extends Component {
     private Vector2f topY;
@@ -11,7 +11,7 @@ public class BlockCoin extends Component {
     @Override
     public void start() {
         topY = new Vector2f(this.gameObject.getTransform().position).add(0, 0.5f);
-        AssetPool.getSound("assets/sounds/coin.ogg").play();
+        Pool.Assets.getSound("assets/sounds/coin.ogg").play();
     }
 
     @Override

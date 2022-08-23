@@ -6,7 +6,7 @@ import imgui.ImVec2;
 import org.joml.Vector2f;
 import sirius.editor.imgui.GuiWindow;
 import sirius.rendering.spritesheet.Spritesheet;
-import sirius.utils.AssetPool;
+import sirius.utils.Pool;
 
 public class ToolWindow extends GuiWindow {
     private final Tools[] TOOLS;
@@ -22,7 +22,7 @@ public class ToolWindow extends GuiWindow {
         if (!isVisible()) return;
 
         ImGui.begin("Tools", show);
-        toolsLayout(AssetPool.getSpritesheet("assets/images/tools/tools.png"));
+        toolsLayout(Pool.Assets.getSpritesheet("assets/images/tools/tools.png"));
         ImGui.end();
     }
 

@@ -1,7 +1,7 @@
 package sirius.animations;
 
 import gameobjects.components.Sprite;
-import sirius.utils.AssetPool;
+import sirius.utils.Pool;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,7 +43,7 @@ public class AnimationState {
 
     public void refreshTextures() {
         for (Frame frame : animationFrameList) {
-            frame.sprite.setTexture(AssetPool.getTexture(frame.sprite.getTexture().getFilePath()));
+            frame.sprite.setTexture(Pool.Assets.getTexture(frame.sprite.getTexture().getFilePath()));
         }
     }
 

@@ -5,11 +5,11 @@ import gameobjects.components.Component;
 import sirius.SiriusTheFox;
 import sirius.animations.StateMachine;
 import sirius.rendering.Camera;
-import sirius.utils.AssetPool;
 import org.jbox2d.dynamics.contacts.Contact;
 import org.joml.Vector2f;
 import physics2d.Physics2d;
 import physics2d.components.RigidBody2d;
+import sirius.utils.Pool;
 
 public class GoombaAI extends Component {
     private transient boolean goingRight;
@@ -32,7 +32,7 @@ public class GoombaAI extends Component {
         this.rigidBody2d.setGravityScale(0.0f);
         this.stateMachine.trigger("squashMe");
         this.rigidBody2d.setSensor(true);
-        AssetPool.getSound("assets/sounds/bump.ogg").play();
+        Pool.Assets.getSound("assets/sounds/bump.ogg").play();
     }
 
     @Override

@@ -7,14 +7,11 @@ import compiling_tools.InlineCompiler;
 import sirius.SiriusTheFox;
 import sirius.Window;
 import sirius.editor.imgui.ICustomPropertiesWindow;
-import sirius.encode_tools.Encode;
-import sirius.input.KeyListener;
-import sirius.utils.ScriptsPool;
+import sirius.utils.Pool;
+import sirius.utils.Scanner;
 
 import java.io.File;
 import java.util.Map;
-
-import static org.lwjgl.glfw.GLFW.GLFW_KEY_P;
 
 public class AutoRecompile extends Component {
     private boolean mayRecompileComponents;
@@ -23,39 +20,34 @@ public class AutoRecompile extends Component {
     @Override
     public void editorUpdate(float dt) {
         Window window = SiriusTheFox.getWindow();
-        String currentScriptCustomPropertiesWindow = Encode.readFile(ScriptsPool.customPropertiesWindowPath);
+        String currentScriptCustomPropertiesWindow = Scanner.readFile(Pool.Scripts.customPropertiesWindowPath);
 
-        String currentPrefabsScript = Encode.readFile(ScriptsPool.customPrefabsPath);
+        String currentPrefabsScript = Scanner.readFile(Pool.Scripts.customPrefabsPath);
 
         boolean immutableCustomPropertiesWindow =
-                currentScriptCustomPropertiesWindow.equals(ScriptsPool.customPropertiesWindowScript);
+                currentScriptCustomPropertiesWindow.equals(Pool.Scripts.customPropertiesWindowScript);
 
         boolean immutableCustomPrefabs =
-                currentPrefabsScript.equals(ScriptsPool.customPrefabsScript);
+                currentPrefabsScript.equals(Pool.Scripts.customPrefabsScript);
 
-        ScriptsPool.searchForComponentsFiles();
-
-        if (KeyListener.isKeyDown(GLFW_KEY_P)) {
-            ScriptsPool.componentFileStringMap.keySet().forEach(f -> System.out.println(f.getPath()));
-        }
+        Pool.Scripts.searchForComponentsFiles();
 
         if (!window.isFocused()) {
             if (!immutableCustomPropertiesWindow || !immutableCustomPrefabs) {
-                ScriptsPool.customPropertiesWindowScript = currentScriptCustomPropertiesWindow;
-                ScriptsPool.customPrefabsScript = currentPrefabsScript;
+                Pool.Scripts.customPropertiesWindowScript = currentScriptCustomPropertiesWindow;
+                Pool.Scripts.customPrefabsScript = currentPrefabsScript;
                 mayRecompileInterfaces = true;
             }
 
             // Check if there is some component that needs to be recompiled
-            for (Map.Entry<File, String> pair : ScriptsPool.componentFileStringMap.entrySet()) {
+            for (Map.Entry<File, String> pair : Pool.Scripts.componentFileStringMap.entrySet()) {
                 String scriptInScriptsPool = pair.getValue();
-                String currentScript = Encode.readFile(pair.getKey());
+                String currentScript = Scanner.readFile(pair.getKey());
                 if (!scriptInScriptsPool.equals(currentScript)) {
                     mayRecompileComponents = true;
                     break;
                 }
             }
-
         }
 
         if (window.isFocused()) {
@@ -64,10 +56,10 @@ public class AutoRecompile extends Component {
             }
 
             if (mayRecompileComponents) {
-                ScriptsPool.componentFileStringMap.entrySet()
+                Pool.Scripts.componentFileStringMap.entrySet()
                         .forEach(pair -> {
                             String scriptInScriptsPool = pair.getValue();
-                            String currentScript = Encode.readFile(pair.getKey());
+                            String currentScript = Scanner.readFile(pair.getKey());
                             if (!scriptInScriptsPool.equals(currentScript)) {
                                 pair.setValue(currentScript);
                                 InlineCompiler.compileCode(pair.getKey());
@@ -77,7 +69,7 @@ public class AutoRecompile extends Component {
 
             if (mayRecompileInterfaces) {
                 // Recompile
-                JavaCompiledScript compiledScript = Compiler.compile(ScriptsPool.customPropertiesWindowPath);
+                JavaCompiledScript compiledScript = Compiler.compile(Pool.Scripts.customPropertiesWindowPath);
                 ICustomPropertiesWindow myPropertiesWindow = (ICustomPropertiesWindow) compiledScript.getCompiledInstance();
                 SiriusTheFox.get().addCustomizedPropertiesWindow(myPropertiesWindow);
 

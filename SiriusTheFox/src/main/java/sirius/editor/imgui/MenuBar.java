@@ -10,7 +10,7 @@ import sirius.editor.imgui.sprite_animation_window.SpriteAnimationWindow;
 import sirius.editor.imgui.tool_window.ToolWindow;
 import sirius.levels.Level;
 import sirius.rendering.color.ColorBlindness;
-import sirius.utils.AssetPool;
+import sirius.utils.Pool;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -39,11 +39,11 @@ public class MenuBar {
                                 "assets/levels/level" + lvl.get() + ".json", lvl.get());
 
                         // Checks if we don't create an existing level
-                        if (AssetPool.getLevel(level.getId()) != null)
+                        if (Pool.Assets.getLevel(level.getId()) != null)
                             System.err.println("Error: Level " + level.getId() + " already exists.");
                         else {
                             new FileWriter(level.getPath());
-                            AssetPool.addLevel(level);
+                            Pool.Assets.addLevel(level);
                         }
 
                     } catch (IOException e) {
@@ -61,7 +61,7 @@ public class MenuBar {
             }
 
             if (ImGui.beginMenu("Load")) {
-                List<Level> levels = AssetPool.getLevelList();
+                List<Level> levels = Pool.Assets.getLevelList();
                 for (int i = 0; i < levels.size(); i++) {
                     Level level = levels.get(i);
                     if (ImGui.menuItem(level.getName())) {

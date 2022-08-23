@@ -7,12 +7,11 @@ import imgui.ImGui;
 import imgui.ImVec2;
 import imgui.flag.ImGuiInputTextFlags;
 import imgui.flag.ImGuiWindowFlags;
-import imgui.type.ImBoolean;
 import imgui.type.ImString;
 import sirius.animations.Frame;
 import sirius.editor.imgui.JImGui;
 import sirius.rendering.color.Color;
-import sirius.utils.AssetPool;
+import sirius.utils.Pool;
 import sirius.utils.Settings;
 
 import javax.swing.*;
@@ -186,10 +185,10 @@ public class ConfigChild {
             // Menu to select which spritesheet we want
             if (ImGui.beginMenuBar()) {
                 if (ImGui.beginMenu("Select spritesheet")) {
-                    String[] loadSprites = AssetPool.getSpritesheetsNames();
+                    String[] loadSprites = Pool.Assets.getSpritesheetsNames();
                     for (int i = 0; i < loadSprites.length; i++) {
                         if (ImGui.menuItem(loadSprites[i])) {
-                            currentSpritesheet = AssetPool.getSpritesheetsPaths()[i];
+                            currentSpritesheet = Pool.Assets.getSpritesheetsPaths()[i];
                         }
                     }
 
@@ -202,7 +201,7 @@ public class ConfigChild {
             if (ImGui.beginMenu("Sprites")) {
                 GameObject selectedGo = null;
                 // spriteLayout() is getting the size of the popup window and, we want the size of config's child window.
-                if (JImGui.spritesLayout(AssetPool.getSpritesheet(currentSpritesheet), size))
+                if (JImGui.spritesLayout(Pool.Assets.getSpritesheet(currentSpritesheet), size))
                     selectedGo = JImGui.getSelectedGameObject();
 
                 if (selectedGo != null) {
@@ -248,7 +247,7 @@ public class ConfigChild {
 
         // Initialize currentSpritesheet with the first spritesheet from the list
         if (currentSpritesheet.equals(""))
-            currentSpritesheet = AssetPool.getSpritesheetsPaths()[0];
+            currentSpritesheet = Pool.Assets.getSpritesheetsPaths()[0];
 
         ImGui.beginChild("config", regionAvailable.x, regionAvailable.y, true,
                 ImGuiWindowFlags.AlwaysAutoResize | ImGuiWindowFlags.HorizontalScrollbar);
