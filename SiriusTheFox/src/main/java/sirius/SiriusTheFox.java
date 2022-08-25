@@ -23,12 +23,12 @@ import observers.Observer;
 import observers.events.Event;
 import org.lwjgl.Version;
 import physics2d.Physics2d;
+import sirius.utils.JavaFile;
 import sirius.utils.Pool;
 import sirius.utils.Scanner;
 import sirius.utils.Settings;
 
 import java.awt.*;
-import java.io.File;
 
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL11.*;
@@ -49,8 +49,14 @@ public class SiriusTheFox implements Observer {
     private SiriusTheFox() {
         System.out.println("Hello LWJGL " + Version.getVersion() + "!");
 
+        // if (!export) {
+            Settings.Files.searchForSrcAndOutDirectories();
+        // }
+
         window = new Window("Sirius, the Fox!", 1920, 1080);
         audio = new Audio();
+
+
 
         EventSystem.addObserver(this);
     }
@@ -244,9 +250,6 @@ public class SiriusTheFox implements Observer {
     }
 
     public static void loadEngineResources() {
-        // if (!export) {
-            Settings.Files.searchForSrcAndOutDirectories();
-        // }
         Pool.Assets.addAllShaders();
         Pool.Assets.addAllFonts();
     }
@@ -286,20 +289,27 @@ public class SiriusTheFox implements Observer {
 
     public void addCustomizedPropertiesWindow(ICustomPropertiesWindow iCustomPropertiesWindow) {
         String pack = iCustomPropertiesWindow.getClass().getName().replace(".", "/");
-        Pool.Scripts.customPropertiesWindowPath = "src/" + pack + ".java";
-        Pool.Scripts.customPropertiesWindowScript = Scanner.readFile(Pool.Scripts.customPropertiesWindowPath);
+        String path = Settings.Files.sourcesDirectory + "/" + pack + ".java";
+        String script = Scanner.readFile(path);
+        Pool.Scripts.customPropertiesWindowJavaFile = new JavaFile(path, script);
 
         window.setICustomPropertiesWindow(iCustomPropertiesWindow);
     }
 
     public void addCustomLevelSceneInitializer(ISceneInitializer customSceneInitializer) {
+        String pack = customSceneInitializer.getClass().getName().replace(".", "/");
+        String path = Settings.Files.sourcesDirectory + "/" + pack + ".java";
+        String script = Scanner.readFile(path);
+        Pool.Scripts.customLvlSceneInitJavaFile = new JavaFile(path, script);
+
         this.customSceneInitializer = customSceneInitializer;
     }
 
     public void addRuntimeOptionCustomizedPrefabs(ICustomPrefabs iCustomPrefabs) {
         String pack = iCustomPrefabs.getClass().getName().replace(".", "/");
-        Pool.Scripts.customPrefabsPath = "src/" + pack + ".java";
-        Pool.Scripts.customPrefabsScript = Scanner.readFile(Pool.Scripts.customPrefabsPath);
+        String path = Settings.Files.sourcesDirectory + "/" + pack + ".java";
+        String script = Scanner.readFile(path);
+        Pool.Scripts.customPrefabsJavaFile = new JavaFile(path, script);
 
         window.setICustomPrefabs(iCustomPrefabs);
     }

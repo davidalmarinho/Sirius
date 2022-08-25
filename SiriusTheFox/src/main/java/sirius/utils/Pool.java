@@ -1,6 +1,5 @@
 package sirius.utils;
 
-import compiling_tools.InlineCompiler;
 import sirius.Sound;
 import sirius.editor.imgui.sprite_animation_window.AnimationBlueprint;
 import sirius.levels.Level;
@@ -316,52 +315,14 @@ public class Pool {
     }
 
     public static class Scripts {
-        public static String customPropertiesWindowPath;
-        public static String customPropertiesWindowScript;
+        public static JavaFile customPropertiesWindowJavaFile;
+        public static JavaFile customPrefabsJavaFile;
+        public static JavaFile customLvlSceneInitJavaFile;
 
-        public static String customPrefabsPath;
-        public static String customPrefabsScript;
-
-        public static Map<File, String> componentFileStringMap;
-
-        private static boolean flag;
+        public static List<JavaFile> javaFileList;
 
         static {
-            componentFileStringMap = new HashMap<>();
-            flag = true;
-        }
-
-        public static void searchForComponentsFiles() {
-            File srcDir = new File("src");
-            loopDirs(srcDir);
-        }
-
-        private static void loopDirs(File directory) {
-            for (File file : directory.listFiles()) {
-                if (!file.isDirectory()) {
-                    // No repeated files to componentScriptList
-                    if (componentFileStringMap.keySet().stream().anyMatch(s ->
-                            s.getPath().equals(file.getPath()) || file.getPath().endsWith("~"))) {
-                        continue;
-                    }
-
-                    if (Scanner.hasString(file, "extends Component")) {
-                        componentFileStringMap.put(file, Scanner.readFile(file));
-                        if (!flag) {
-                            InlineCompiler.printStart();
-                            InlineCompiler.compileCode(file);
-                            InlineCompiler.printEnd();
-                        }
-                    }
-
-                } else {
-                    loopDirs(file);
-                }
-            }
-
-            if (flag) {
-                flag = false;
-            }
+            javaFileList = new ArrayList<>();
         }
     }
 }

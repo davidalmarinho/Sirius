@@ -17,11 +17,11 @@ public class Compiler {
 
             String script = Scanner.readFile(filepath);
             JavaCompiledScript compiledScript = javaScriptEngine.compile(script);
-            System.out.println("Congrats: Recompiled '" + filepath + "' script!");
+            System.out.println("Congrats: Recompiled '" + filepath.replace('\\', '/') + "' script!");
             return compiledScript;
         } catch (ScriptException e) {
             e.printStackTrace();
-            System.err.println("Error: Couldn't recompile '" + filepath + "' script.");
+            System.err.println("Error: Couldn't recompile '" + filepath.replace('\\', '/') + "' script.");
         }
         return null;
     }
