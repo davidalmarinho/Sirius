@@ -61872,19 +61872,19 @@
             },
             "textureCoordinates": [
               {
-                "x": 0.2857143,
+                "x": 0.42857143,
                 "y": 1.0
               },
               {
+                "x": 0.42857143,
+                "y": 0.8
+              },
+              {
                 "x": 0.2857143,
                 "y": 0.8
               },
               {
-                "x": 0.14285715,
-                "y": 0.8
-              },
-              {
-                "x": 0.14285715,
+                "x": 0.2857143,
                 "y": 1.0
               }
             ]
@@ -64566,9 +64566,9 @@
               "w": 1.0
             }
           },
-          "paragraphSpacing": 0.09,
-          "lineSpacing": -0.24,
-          "charactersSpacing": 0.06,
+          "paragraphSpacing": 0.21,
+          "lineSpacing": -0.3,
+          "charactersSpacing": 0.0,
           "currentItem": -1
         }
       }
