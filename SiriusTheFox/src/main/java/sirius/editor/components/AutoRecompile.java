@@ -1,5 +1,6 @@
 package sirius.editor.components;
 
+import compiling_tools.InlineCompiler;
 import gameobjects.components.Component;
 import sirius.SiriusTheFox;
 import sirius.Window;
@@ -9,6 +10,7 @@ import sirius.utils.Scanner;
 import sirius.utils.Settings;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 public class AutoRecompile extends Component {
@@ -17,7 +19,7 @@ public class AutoRecompile extends Component {
 
     public AutoRecompile() {
         this.firstTimeRunning = true;
-        compile = true;
+        this.compile = true;
     }
 
     private void searchForNewComponents() {
@@ -30,24 +32,46 @@ public class AutoRecompile extends Component {
             return;
         }
 
-        // Verify if the files which have been found have been added already and if not, it will be added
+        // Verifies if the files which have been found have been added already and if not, they will be added
         List<JavaFile> javaFileList = Pool.Scripts.javaFileList;
         for (File file : possibleJavaFiles) {
             if (javaFileList.stream().noneMatch(javaFile -> javaFile.FILE.getPath().equals(file.getPath()))) {
-                Pool.Scripts.javaFileList.add(new JavaFile(file, Scanner.readFile(file)));
-                // if (!firstTimeRunning)
-                    System.out.println("Added component:" + file.getPath());
+                JavaFile jFile = new JavaFile(file, Scanner.readFile(file));
+                if (!firstTimeRunning) {
+                    jFile.compile = true;
+                }
+                javaFileList.add(jFile);
             }
         }
     }
 
-    private void compileComponents() {
-        // Verify which java files needs to be compiled
+    // Verifies which java files needs to be compiled
+    private boolean jFilesNeedCompilation() {
         for (JavaFile javaFile : Pool.Scripts.javaFileList) {
             if (!javaFile.script.equals(Scanner.readFile(javaFile.FILE))) {
                 javaFile.compile = true;
             }
         }
+
+        return Pool.Scripts.javaFileList.stream().anyMatch(jFile -> jFile.compile);
+    }
+
+    // Compiles the java files that have been modified
+    private void compileJavaFiles() {
+        List<JavaFile> fileToCompileList = new ArrayList<>();
+        for (JavaFile javaFile : Pool.Scripts.javaFileList) {
+            if (javaFile.compile) {
+                javaFile.compile = false;
+                javaFile.script = Scanner.readFile(javaFile.FILE);
+                fileToCompileList.add(javaFile);
+            }
+        }
+
+        JavaFile[] filesToCompile = new JavaFile[fileToCompileList.size()];
+        for (int i = 0; i < fileToCompileList.size(); i++) {
+            filesToCompile[i] = fileToCompileList.get(i);
+        }
+        InlineCompiler.compileCode(filesToCompile);
     }
 
     @Override
@@ -63,7 +87,11 @@ public class AutoRecompile extends Component {
         if (window.isFocused()) {
             if (compile) {
                 searchForNewComponents();
-                // compileComponents();
+                if (jFilesNeedCompilation()) {
+                    InlineCompiler.printStart();
+                    compileJavaFiles();
+                    InlineCompiler.printEnd();
+                }
                 compile = false;
             }
         } else {

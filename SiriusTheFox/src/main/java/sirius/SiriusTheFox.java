@@ -23,12 +23,12 @@ import observers.Observer;
 import observers.events.Event;
 import org.lwjgl.Version;
 import physics2d.Physics2d;
-import sirius.utils.JavaFile;
 import sirius.utils.Pool;
 import sirius.utils.Scanner;
 import sirius.utils.Settings;
 
 import java.awt.*;
+import java.io.File;
 
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL11.*;
@@ -290,8 +290,7 @@ public class SiriusTheFox implements Observer {
     public void addCustomizedPropertiesWindow(ICustomPropertiesWindow iCustomPropertiesWindow) {
         String pack = iCustomPropertiesWindow.getClass().getName().replace(".", "/");
         String path = Settings.Files.sourcesDirectory + "/" + pack + ".java";
-        String script = Scanner.readFile(path);
-        Pool.Scripts.customPropertiesWindowJavaFile = new JavaFile(path, script);
+        Pool.Scripts.customPropertiesWindowAbsolutePath = new File(path).getAbsolutePath();
 
         window.setICustomPropertiesWindow(iCustomPropertiesWindow);
     }
@@ -299,8 +298,7 @@ public class SiriusTheFox implements Observer {
     public void addCustomLevelSceneInitializer(ISceneInitializer customSceneInitializer) {
         String pack = customSceneInitializer.getClass().getName().replace(".", "/");
         String path = Settings.Files.sourcesDirectory + "/" + pack + ".java";
-        String script = Scanner.readFile(path);
-        Pool.Scripts.customLvlSceneInitJavaFile = new JavaFile(path, script);
+        Pool.Scripts.customLvlSceneInitAbsolutePath = new File(path).getAbsolutePath();
 
         this.customSceneInitializer = customSceneInitializer;
     }
@@ -308,8 +306,7 @@ public class SiriusTheFox implements Observer {
     public void addRuntimeOptionCustomizedPrefabs(ICustomPrefabs iCustomPrefabs) {
         String pack = iCustomPrefabs.getClass().getName().replace(".", "/");
         String path = Settings.Files.sourcesDirectory + "/" + pack + ".java";
-        String script = Scanner.readFile(path);
-        Pool.Scripts.customPrefabsJavaFile = new JavaFile(path, script);
+        Pool.Scripts.customPrefabsAbsolutePath = new File(path).getAbsolutePath();
 
         window.setICustomPrefabs(iCustomPrefabs);
     }

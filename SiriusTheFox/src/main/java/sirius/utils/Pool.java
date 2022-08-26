@@ -315,9 +315,9 @@ public class Pool {
     }
 
     public static class Scripts {
-        public static JavaFile customPropertiesWindowJavaFile;
-        public static JavaFile customPrefabsJavaFile;
-        public static JavaFile customLvlSceneInitJavaFile;
+        public static String customPropertiesWindowAbsolutePath;
+        public static String customPrefabsAbsolutePath;
+        public static String customLvlSceneInitAbsolutePath;
 
         public static List<JavaFile> javaFileList;
 

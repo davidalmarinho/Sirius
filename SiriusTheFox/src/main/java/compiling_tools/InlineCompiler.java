@@ -1,5 +1,6 @@
 package compiling_tools;
 
+import sirius.utils.JavaFile;
 import sirius.utils.Settings;
 
 import java.io.File;
@@ -12,8 +13,20 @@ import javax.tools.*;
  * Code based in https://stackoverflow.com/a/21544850
  */
 public class InlineCompiler {
-    public static void compileCode(File srcJavaFile) {
-        if (srcJavaFile.getParentFile().exists() || srcJavaFile.getParentFile().mkdirs()) {
+    public static void compileCode(JavaFile[] srcJavaFiles) {
+        File[] files = new File[srcJavaFiles.length];
+        for (int i = 0; i < srcJavaFiles.length; i++) {
+            files[i] = srcJavaFiles[i].FILE;
+        }
+
+        boolean val = true;
+        for (File f : files) {
+            if (!(f.getParentFile().exists() || f.getParentFile().mkdirs())) {
+                val = false;
+            }
+        }
+
+        if (val) {
             try {
                 // Compilation Requirements
                 DiagnosticCollector<JavaFileObject> diagnostics = new DiagnosticCollector<>();
@@ -27,7 +40,7 @@ public class InlineCompiler {
                 optionList.add(System.getProperty("java.class.path") + File.pathSeparator + "dist/InlineCompiler.jar");
 
                 Iterable<? extends JavaFileObject> compilationUnit
-                        = fileManager.getJavaFileObjectsFromFiles(List.of(srcJavaFile));
+                        = fileManager.getJavaFileObjectsFromFiles(List.of(files));
 
                 JavaCompiler.CompilationTask task = compiler.getTask(
                         null,
@@ -39,29 +52,40 @@ public class InlineCompiler {
 
                 if (task.call()) {
                     // Load and execute
-                    System.out.println("Congrats: Compiled '" + srcJavaFile.getPath()
-                            .replace('\\', '/') + "' script!");
+                    for (int i = 0; i < files.length; i++) {
+                        System.out.println("Congrats: Compiled '" + files[i].getPath()
+                                .replace('\\', '/') + "' script!");
 
-                    CustomClassLoader classLoader = new CustomClassLoader();
-                    String prefix = Settings.Files.sourcesDirectory.replace('/', '.') + ".";
-                    String packageAndClass = srcJavaFile.getPath()
-                            .split(".java")[0]
-                            .replace('\\', '/')
-                            .replace('/', '.')
-                            .replace(prefix, "");
-                    classLoader.findClass(packageAndClass);
-
+                        CustomClassLoader classLoader = new CustomClassLoader();
+                        String prefix = Settings.Files.sourcesDirectory.replace('/', '.') + ".";
+                        String packageAndClass = files[i].getPath()
+                                .split(".java")[0]
+                                .replace('\\', '/')
+                                .replace('/', '.')
+                                .replace(prefix, "");
+                        classLoader.findClass(packageAndClass);
+                    }
                 } else {
                     // TODO: 22/08/2022 Popup window to show the error
-                    System.err.println("⚠ Oh no! Something when wrong! ⚠");
+                    System.err.println("⚠ Oh no! Something went wrong! ⚠");
+                    System.err.println("Fix the error so we can compile all the modified scripts :)");
                     for (Diagnostic<? extends JavaFileObject> diagnostic : diagnostics.getDiagnostics()) {
-                        String errInfo = String
-                                .format("Error on line %d in %s%n",
-                                        diagnostic.getLineNumber(),
-                                        diagnostic.getSource().toUri());
-                        System.err.format(errInfo);
-                        String err = diagnostic.getMessage(null);
-                        System.err.println(err);
+
+                        // Files still need to be compiled, so they will be marked to be compiled
+                        for (JavaFile jFile : srcJavaFiles) {
+                            jFile.compile = true;
+                        }
+
+                        if (diagnostic != null) {
+                            String errInfo = String
+                                    .format("Error on line %d in %s%n",
+                                            diagnostic.getLineNumber(),
+                                            diagnostic.getSource().toUri());
+
+                            System.err.format(errInfo);
+                            String err = diagnostic.getMessage(null);
+                            System.err.println(err);
+                        }
                     }
                 }
                 fileManager.close();
@@ -69,6 +93,10 @@ public class InlineCompiler {
                 exp.printStackTrace();
             }
         }
+    }
+
+    private static void printSuccessfulCompilations(File[] srcJavaFile) {
+
     }
 
     public static void printStart() {
