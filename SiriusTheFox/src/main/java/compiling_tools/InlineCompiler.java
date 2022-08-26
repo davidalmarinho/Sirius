@@ -27,6 +27,8 @@ public class InlineCompiler {
     }
 
     public static void compileCode(JavaFile[] srcJavaFiles, ICustomCompilation iCustomCompilation) {
+        if (srcJavaFiles.length == 0) return;
+
         File[] files = new File[srcJavaFiles.length];
         for (int i = 0; i < srcJavaFiles.length; i++) {
             files[i] = srcJavaFiles[i].FILE;
@@ -97,7 +99,7 @@ public class InlineCompiler {
                         if (diagnostic != null) {
                             if (diagnostic.getSource() != null) {
                                 String errInfo = String
-                                        .format("Error on line %d in %s%n",
+                                        .format("Error on line %d in '%s%n'",
                                                 diagnostic.getLineNumber(),
                                                 diagnostic.getSource().toUri());
 

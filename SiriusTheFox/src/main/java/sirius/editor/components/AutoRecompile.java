@@ -26,7 +26,7 @@ public class AutoRecompile extends Component {
         this.compile = true;
     }
 
-    private void searchForNewComponents() {
+    private void checkJavaFiles() {
         // Look for all the files that has '.java' extension and has 'extends Component' hierarchy
         File[] possibleJavaFiles = Scanner.lookForFiles(new File(Settings.Files.sourcesDirectory), javaFile ->
                 javaFile.getPath().endsWith(".java"));
@@ -34,6 +34,20 @@ public class AutoRecompile extends Component {
         // No files have been found, so doesn't exist any component
         if (possibleJavaFiles == null) {
             return;
+        }
+
+        // Check if a java file has been deleted
+        for (JavaFile jFile : Pool.Scripts.javaFileList) {
+            boolean exists = false;
+            for (File possibleJFile : possibleJavaFiles) {
+                if (jFile.FILE.getPath().equals(possibleJFile.getPath())) {
+                    exists = true;
+                }
+            }
+
+            if (!exists) {
+                jFile.delete = true;
+            }
         }
 
         // Verifies if the files which have been found have been added already and if not, they will be added
@@ -52,7 +66,7 @@ public class AutoRecompile extends Component {
     // Verifies which java files needs to be compiled
     private boolean jFilesNeedCompilation() {
         for (JavaFile javaFile : Pool.Scripts.javaFileList) {
-            if (!javaFile.script.equals(Scanner.readFile(javaFile.FILE))) {
+            if (!javaFile.script.equals(Scanner.readFile(javaFile.FILE)) && !javaFile.delete) {
                 javaFile.compile = true;
             }
         }
@@ -64,7 +78,7 @@ public class AutoRecompile extends Component {
     private void compileJavaFiles() {
         List<JavaFile> fileToCompileList = new ArrayList<>();
         for (JavaFile javaFile : Pool.Scripts.javaFileList) {
-            if (javaFile.compile) {
+            if (javaFile.compile && !javaFile.delete) {
                 javaFile.compile = false;
                 javaFile.script = Scanner.readFile(javaFile.FILE);
                 fileToCompileList.add(javaFile);
@@ -93,21 +107,42 @@ public class AutoRecompile extends Component {
         });
     }
 
+    private boolean jFilesNeedDeletion() {
+        return Pool.Scripts.javaFileList.stream().anyMatch(jFile -> jFile.delete);
+    }
+
+    /**
+     * Removes deleted files from the list
+     */
+    private void deleteJavaFiles() {
+        for (int i = Pool.Scripts.javaFileList.size() - 1; i >= 0; i--) {
+            JavaFile jFile = Pool.Scripts.javaFileList.get(i);
+            if (jFile.delete) {
+                Pool.Scripts.javaFileList.remove(i);
+                System.out.println("Congrats: Deleted '" + jFile.FILE.getPath()
+                        .replace('\\', '/') + "' script!");
+            }
+        }
+    }
+
     @Override
     public void editorUpdate(float dt) {
         Window window = SiriusTheFox.getWindow();
 
+        // TODO: 26/08/2022 Cleanup the compiled files from output folder on exit --maybe...
+
         // Add all the components that have been compiled when the program started running
         if (firstTimeRunning) {
-            searchForNewComponents();
+            checkJavaFiles();
             firstTimeRunning = false;
         }
 
         if (window.isFocused()) {
             if (compile) {
-                searchForNewComponents();
-                if (jFilesNeedCompilation()) {
+                checkJavaFiles();
+                if (jFilesNeedCompilation() || jFilesNeedDeletion()) {
                     InlineCompiler.printStart();
+                    deleteJavaFiles();
                     compileJavaFiles();
                     InlineCompiler.printEnd();
                 }
