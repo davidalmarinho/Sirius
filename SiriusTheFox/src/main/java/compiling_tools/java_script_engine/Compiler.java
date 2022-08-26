@@ -17,7 +17,7 @@ public class Compiler {
 
             String script = Scanner.readFile(filepath);
             JavaCompiledScript compiledScript = javaScriptEngine.compile(script);
-            System.out.println("Congrats: Recompiled '" + filepath.replace('\\', '/') + "' script!");
+            // System.out.println("Congrats: Recompiled '" + filepath.replace('\\', '/') + "' script!");
             return compiledScript;
         } catch (ScriptException e) {
             e.printStackTrace();

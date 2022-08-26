@@ -13,7 +13,20 @@ import javax.tools.*;
  * Code based in https://stackoverflow.com/a/21544850
  */
 public class InlineCompiler {
+    public interface ICustomCompilation {
+        /**
+         * Called just when compilation is successful.
+         * With this, custom compilation methods can be added.
+         * @param file In case if the additional step requires file's properties.
+         */
+        void customStep(File file);
+    }
+
     public static void compileCode(JavaFile[] srcJavaFiles) {
+        compileCode(srcJavaFiles, null);
+    }
+
+    public static void compileCode(JavaFile[] srcJavaFiles, ICustomCompilation iCustomCompilation) {
         File[] files = new File[srcJavaFiles.length];
         for (int i = 0; i < srcJavaFiles.length; i++) {
             files[i] = srcJavaFiles[i].FILE;
@@ -64,6 +77,11 @@ public class InlineCompiler {
                                 .replace('/', '.')
                                 .replace(prefix, "");
                         classLoader.findClass(packageAndClass);
+
+                        // iCustomCompilation is null when not used
+                        if (iCustomCompilation != null) {
+                            iCustomCompilation.customStep(files[i]);
+                        }
                     }
                 } else {
                     // TODO: 22/08/2022 Popup window to show the error
@@ -77,14 +95,16 @@ public class InlineCompiler {
                         }
 
                         if (diagnostic != null) {
-                            String errInfo = String
-                                    .format("Error on line %d in %s%n",
-                                            diagnostic.getLineNumber(),
-                                            diagnostic.getSource().toUri());
+                            if (diagnostic.getSource() != null) {
+                                String errInfo = String
+                                        .format("Error on line %d in %s%n",
+                                                diagnostic.getLineNumber(),
+                                                diagnostic.getSource().toUri());
 
-                            System.err.format(errInfo);
-                            String err = diagnostic.getMessage(null);
-                            System.err.println(err);
+                                System.err.format(errInfo);
+                                String err = diagnostic.getMessage(null);
+                                System.err.println(err);
+                            }
                         }
                     }
                 }
@@ -93,10 +113,6 @@ public class InlineCompiler {
                 exp.printStackTrace();
             }
         }
-    }
-
-    private static void printSuccessfulCompilations(File[] srcJavaFile) {
-
     }
 
     public static void printStart() {

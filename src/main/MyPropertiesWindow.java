@@ -1,6 +1,7 @@
 package main;
 
 import components.BreakableBrick;
+import components.Chat;
 import components.PlayerController;
 import gameobjects.GameObject;
 import sirius.editor.imgui.ICustomPropertiesWindow;
@@ -12,5 +13,6 @@ public class MyPropertiesWindow implements ICustomPropertiesWindow {
     public void imgui(GameObject go) {
         PropertiesWindow.addMenuItem(go, "Add Player Controller", new PlayerController());
         PropertiesWindow.addMenuItem(go, "Add BreakableBrick", new BreakableBrick());
+        PropertiesWindow.addMenuItem(go, "Add Chat", new Chat());
     }
 }

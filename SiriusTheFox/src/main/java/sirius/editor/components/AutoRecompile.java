@@ -1,9 +1,13 @@
 package sirius.editor.components;
 
+import ch.obermuhlner.scriptengine.java.JavaCompiledScript;
 import compiling_tools.InlineCompiler;
 import gameobjects.components.Component;
 import sirius.SiriusTheFox;
 import sirius.Window;
+import sirius.editor.imgui.ICustomPrefabs;
+import sirius.editor.imgui.ICustomPropertiesWindow;
+import sirius.scenes.ISceneInitializer;
 import sirius.utils.JavaFile;
 import sirius.utils.Pool;
 import sirius.utils.Scanner;
@@ -71,7 +75,22 @@ public class AutoRecompile extends Component {
         for (int i = 0; i < fileToCompileList.size(); i++) {
             filesToCompile[i] = fileToCompileList.get(i);
         }
-        InlineCompiler.compileCode(filesToCompile);
+
+        InlineCompiler.compileCode(filesToCompile, file -> {
+            if (file.getAbsolutePath().equals(Pool.Scripts.customPropertiesWindowAbsolutePath)) {
+                JavaCompiledScript compiledScript = compiling_tools.java_script_engine.Compiler.compile(Pool.Scripts.customPropertiesWindowAbsolutePath);
+                ICustomPropertiesWindow myPropertiesWindow = (ICustomPropertiesWindow) compiledScript.getCompiledInstance();
+                SiriusTheFox.get().addCustomizedPropertiesWindow(myPropertiesWindow);
+            } else if (file.getAbsolutePath().equals(Pool.Scripts.customPrefabsAbsolutePath)) {
+                JavaCompiledScript compiledScript = compiling_tools.java_script_engine.Compiler.compile(Pool.Scripts.customPrefabsAbsolutePath);
+                ICustomPrefabs iCustomPrefabs = (ICustomPrefabs) compiledScript.getCompiledInstance();
+                SiriusTheFox.get().addRuntimeOptionCustomizedPrefabs(iCustomPrefabs);
+            } else if (file.getAbsolutePath().equals(Pool.Scripts.customLvlSceneInitAbsolutePath)) {
+                JavaCompiledScript compiledScript = compiling_tools.java_script_engine.Compiler.compile(Pool.Scripts.customLvlSceneInitAbsolutePath);
+                ISceneInitializer sceneInitializer = (ISceneInitializer) compiledScript.getCompiledInstance();
+                SiriusTheFox.get().addCustomLevelSceneInitializer(sceneInitializer);
+            }
+        });
     }
 
     @Override
