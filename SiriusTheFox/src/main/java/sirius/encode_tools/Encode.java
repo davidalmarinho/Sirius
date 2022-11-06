@@ -264,4 +264,24 @@ public class Encode {
         return formattedSentence.toString();
     }
 
+    public static String[] cutArrString(String[] str, int index) {
+        String[] newStr = new String[str.length - index];
+        for (int i = 0; i < newStr.length; i++) {
+            newStr[i] = str[index + i];
+        }
+        return newStr;
+    }
+
+    public static String join(String[] arr, char connector) {
+        StringBuilder strBuilder = new StringBuilder();
+        for (int i = 0; i < arr.length; i++) {
+            strBuilder.append(arr[i]);
+
+            // Don't want anything in the end of the string.
+            if (!(i == arr.length - 1))
+                strBuilder.append(connector);
+        }
+
+        return strBuilder.toString();
+    }
 }

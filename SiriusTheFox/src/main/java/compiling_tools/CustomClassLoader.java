@@ -1,6 +1,7 @@
 package compiling_tools;
 
 import java.io.*;
+import java.net.URL;
 
 public class CustomClassLoader extends ClassLoader {
     @Override
@@ -13,10 +14,10 @@ public class CustomClassLoader extends ClassLoader {
         InputStream inputStream = getClass().getClassLoader().getResourceAsStream(
                 fileName.replace('.', File.separatorChar) + ".class");
 
-        // if (inputStream == null) {
-        //     System.err.println("Error: Couldn't find '" + fileName + "' class.");
-        //     return new byte[0];
-        // }
+        /* if (inputStream == null) {
+            System.err.println("Error: Couldn't find '" + fileName + "' class.");
+            return new byte[0];
+        }*/
 
         byte[] buffer;
         ByteArrayOutputStream byteStream = new ByteArrayOutputStream();

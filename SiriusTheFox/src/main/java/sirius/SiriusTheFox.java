@@ -24,7 +24,6 @@ import observers.events.Event;
 import org.lwjgl.Version;
 import physics2d.Physics2d;
 import sirius.utils.Pool;
-import sirius.utils.Scanner;
 import sirius.utils.Settings;
 
 import java.awt.*;
@@ -50,7 +49,10 @@ public class SiriusTheFox implements Observer {
         System.out.println("Hello LWJGL " + Version.getVersion() + "!");
 
         // if (!export) {
-            Settings.Files.searchForSrcAndOutDirectories();
+            Settings.Files.trackSrcMainFile();
+            // Settings.Files.trackSourcesDirectory();
+            Settings.Files.trackOutputDir();
+            Settings.Files.trackSourcesDir();
         // }
 
         window = new Window("Sirius, the Fox!", 1920, 1080);

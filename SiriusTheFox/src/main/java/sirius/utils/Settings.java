@@ -1,5 +1,7 @@
 package sirius.utils;
 
+import sirius.encode_tools.Encode;
+
 import java.io.File;
 
 public class Settings {
@@ -16,6 +18,9 @@ public class Settings {
     }
 
     public static class Files {
+        public static String mainSrcFilePath;
+        public static String mainSrcFileName;
+        public static String mainOutFilePath;
         public static String sourcesDirectory;
         public static String outputDirectory;
 
@@ -55,44 +60,114 @@ public class Settings {
         public static final String DEFAULT_FONT_PATH = FOLKS_LIGHT_FONT;
 
         /**
-         * Locates and saves the sources and the output directories
+         * Tracks and saves the path and the name of the file that contains the main method.
+         * They are saved in {@link Settings.Files#mainSrcFilePath} variable
+         * and in the {@link Settings.Files#mainSrcFileName} variable.
          */
-        public static void searchForSrcAndOutDirectories() {
-            File mainFile = Settings.Files.lookForMainFile(new File(System.getProperty("user.dir")));
-            File outputMainFile = Settings.Files.lookForClassFile(new File(System.getProperty("user.dir")),
-                    mainFile.getName().split(".java")[0]);
+        public static void trackSrcMainFile() {
+            trackSrcMainFile(false);
+        }
 
-            // Transform the slashes, '\' or '/' due to the operating system, into points, '.'
-            // Also remove file's extension.
-            String parsedMainSrcFilePath = mainFile.getPath()
+        /**
+         * Tracks and saves the path and the name of the file that contains the main method.
+         * They are saved in {@link Settings.Files#mainSrcFilePath} variable
+         * and in the {@link Settings.Files#mainSrcFileName} variable.
+         * @param forceSearch Mark as true if you want to research for the file.
+         */
+
+        public static void trackSrcMainFile(boolean forceSearch) {
+            if (!(Files.mainSrcFileName == null || Files.mainSrcFilePath == null
+                    || Files.mainSrcFileName.isBlank() || Files.mainSrcFilePath.isBlank())) {
+                return;
+            }
+
+            File mainFile = Scanner.lookForFile(new File(System.getProperty("user.dir")), file ->
+                    Scanner.hasString(file, "public static void main")
+                            && !file.getName().equals("Settings.java")
+                            && !file.getName().endsWith(".class")
+            );
+
+            if (mainFile == null) {
+                // todo ERROR
+            }
+
+            Files.mainSrcFilePath = mainFile.getPath();
+            Files.mainSrcFileName = mainFile.getName();
+        }
+
+        /**
+         * Transform the slashes, '\' or '/' due to the operating system, into points, '.'
+         * Also removes file's extension.
+         *
+         * @param str String that will be transformed
+         * @param ext Extension that is needed to be removed
+         * @return The String with the pretended transformations.
+         */
+        public static String parseMainFile(String str, String ext) {
+            return str
                     .replace('\\', '/')
                     .replace('/', '.')
-                    .split(".java")[0];
-            String parsedMainOutFilePath = outputMainFile.getPath()
-                    .replace('\\', '/')
-                    .replace('/', '.')
-                    .split(".class")[0];
+                    .split(ext)[0];
+        }
 
-            String[] splitParsedMainSrcFilePath = parsedMainSrcFilePath.split("\\.");
+        /**
+         * Tracks and saves the output directory in {@link Settings.Files#outputDirectory} variable
+         */
+        public static void trackOutputDir() {
+            Files.mainOutFilePath = Settings.Files.lookForClassFile(new File(System.getProperty("user.dir")),
+                    Files.mainSrcFileName.split(".java")[0]).getPath();
+
+            String parsedMainOutFilePath = parseMainFile(Files.mainOutFilePath, ".class");
+            String[] splitParsedMainSrcFilePath = parseMainFile(Files.mainSrcFilePath, ".java").split("\\.");
             String[] splitParsedMainOutFilePath = parsedMainOutFilePath.split("\\.");
 
             // Build the path of the output directory
             StringBuilder outputDirPath = new StringBuilder();
-            for (String s : splitParsedMainOutFilePath) {
-                if (parsedMainSrcFilePath.contains(s)) {
-                    continue;
+
+            int comparator = 0;
+            boolean useOtherLogic = false;
+            String outDirAndOutMainDir = "";
+
+            /* Here we are going to exclude all the paths before.
+             * Ex.: Given 'home/user/documents/Project/out/production'
+             *      We stay with 'Project/out/production'
+             *
+             * At this point, userOtherLogic boolean becomes true, and we now use the other way of comparation
+             */
+            for (String curIndexContent : splitParsedMainOutFilePath) {
+                if (!useOtherLogic) {
+                    if (!curIndexContent.equals(splitParsedMainSrcFilePath[comparator])) {
+                        outputDirPath.append(curIndexContent);
+                        useOtherLogic = true;
+
+                        outDirAndOutMainDir = Encode.join(Encode.cutArrString(splitParsedMainSrcFilePath, comparator), '/');
+                    }
+
+                    comparator++;
+
+                } else {
+                    if (!outDirAndOutMainDir.contains(curIndexContent)) {
+                        outputDirPath.append("/");
+                        outputDirPath.append(curIndexContent);
+                    }
                 }
-
-                if (!outputDirPath.isEmpty())
-                    outputDirPath.append("/");
-
-                outputDirPath.append(s);
             }
+
+            Settings.Files.outputDirectory = outputDirPath.toString();
+        }
+
+        /**
+         * Locates and saves the sources directory in {@link Settings.Files#sourcesDirectory}.
+         */
+        public static void trackSourcesDir() {
+            String parsedMainSrcFilePath = parseMainFile(Files.mainSrcFilePath, ".java");
+
+            String[] splitParsedMainSrcFilePath = parsedMainSrcFilePath.split("\\.");
 
             // Build the path of the sources directory
             StringBuilder sourcesDirPath = new StringBuilder();
             for (String s : splitParsedMainSrcFilePath) {
-                if (parsedMainOutFilePath.contains(s)) {
+                if (parseMainFile(Files.mainOutFilePath, ".class").contains(s)) {
                     continue;
                 }
 
@@ -102,29 +177,16 @@ public class Settings {
                 sourcesDirPath.append(s);
             }
 
-            Settings.Files.outputDirectory = outputDirPath.toString();
+            System.out.println(sourcesDirPath);
             Settings.Files.sourcesDirectory = sourcesDirPath.toString();
         }
 
         /**
-         * Locates the file with the 'main' method.
-         * @param currentDirectory Directory where the search is going to begin
-         * @return The file with the 'main' method.
-         */
-        private static File lookForMainFile(File currentDirectory) {
-            return Scanner.lookForFile(currentDirectory, file ->
-                    Scanner.hasString(file, "public static void main")
-                            && !file.getName().equals("Settings.java")
-                            && !file.getName().endsWith(".class")
-            );
-        }
-
-        /**
          * Locates the compiled class with the 'main' method.
-         * This method depends on the {@link Settings.Files#lookForMainFile(File)}
+         * This method depends on the {@link Files#trackSrcMainFile()}
          *
          * @param currentDirectory Directory where the search is going to begin
-         * @param desiredOutputClassName The name of the file found in {@link Settings.Files#lookForMainFile(File)} method.
+         * @param desiredOutputClassName The name of the file found in {@link Files#trackSrcMainFile()} (File)} method.
          * @return The compiled class with the 'main' method.
          */
         private static File lookForClassFile(File currentDirectory, String desiredOutputClassName) {
