@@ -1,5 +1,5 @@
 {
-  "FILEPATH": "assets\\fonts\\folks\\FolksXXHeavy.ttf",
+  "FILEPATH": "assets/fonts/folks/FolksXXHeavy.ttf",
   "size": 64,
   "glyphMap": {
     "9": {
@@ -2247,7 +2247,7 @@
     "181": {
       "x": 2340,
       "y": 243,
-      "width": 0,
+      "width": 40,
       "height": 81,
       "xBearing": 1,
       "yBearing": 81,
@@ -2258,7 +2258,7 @@
           "y": 0.5
         },
         {
-          "x": 0.878424,
+          "x": 0.8934334,
           "y": 0.33333334
         }
       ]
