@@ -282,7 +282,7 @@ public class ConfigChild {
             if (!activeBox.doesLoop && activeBox.getFrameListSize() > 1) {
                 JOptionPane.showMessageDialog(new JFrame("Error message"),
                         "Couldn't un-mark this checkbox." +
-                                "\nEnsure that you have just one frame so you acn un-mark the checkbox.");
+                                "\nEnsure that you have just one frame so you can un-mark the checkbox.");
                 activeBox.doesLoop = true;
             }
 
