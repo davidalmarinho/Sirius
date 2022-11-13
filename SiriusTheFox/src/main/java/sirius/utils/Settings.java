@@ -177,7 +177,6 @@ public class Settings {
                 sourcesDirPath.append(s);
             }
 
-            System.out.println(sourcesDirPath);
             Settings.Files.sourcesDirectory = sourcesDirPath.toString();
         }
 
