@@ -148,6 +148,7 @@ public class SpriteAnimationWindow extends GuiWindow {
 
             if (ImGui.isMouseReleased(ImGuiMouseButton.Left) && currentItem >= 0) {
                 // TODO: 17/06/2022 Are you sure? Window
+                // TODO: 13/11/22 Error: Exception in thread "main" java.lang.ArrayIndexOutOfBoundsException: Index 2 out of bounds for length 2
                 currentAnimationPath = items[currentItem];
                 new File(currentAnimationPath).delete();
                 Pool.Assets.removeAnimation(currentAnimationPath);

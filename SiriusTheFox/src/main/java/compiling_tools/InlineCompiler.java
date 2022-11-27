@@ -73,13 +73,11 @@ public class InlineCompiler {
 
                         CustomClassLoader classLoader = new CustomClassLoader();
                         String prefix = Settings.Files.sourcesDirectory.replace('/', '.') + ".";
-                        System.out.println(Settings.Files.outputDirectory);
                         String packageAndClass = files[i].getPath()
                                 .split(".java")[0]
                                 .replace('\\', '/')
                                 .replace('/', '.')
                                 .replace(prefix, "");
-                        System.out.println(packageAndClass);
                         classLoader.findClass(packageAndClass);
 
                         // iCustomCompilation is null when not used
