@@ -8,17 +8,17 @@
   - Edit multiple game objects at once!
   - 
 - Built-in animation system creation
-- Built-in setting to deploy games for people  with daltonism,
+- Built-in setting adapt rendering for people  with daltonism,
   - Protanopia
   - Protanomaly
   - Deuteranopia
   - Deuteranomaly,
   - Achromatopsia
-  - 
-- Automatic compilation system so you can add you own components!
-- Built-in 
-- Tritanopia, Achromatopsia and Achromatomaly)
-- 
+  - Tritanopia
+  - Achromatopsia
+  - Achromatomaly
+- Automatic compilation system so you can add your own components!
+- Built-in ....
 
 ## Features in development:
 - Text-boxes system
