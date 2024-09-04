@@ -268,7 +268,10 @@ public class Scene {
             expectedLevel++;
         }
 
-        Level.maxLevel = loadedLevels[loadedLevels.length - 1];
+        if (loadedLevels.length == 0)
+            Level.maxLevel = 0;
+        else
+            Level.maxLevel = loadedLevels[loadedLevels.length - 1];
     }
 
     private void loadAnimations() {
