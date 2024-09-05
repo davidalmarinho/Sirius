@@ -29,3 +29,12 @@
 - Built-in light system
 - Built-in menu editor system
 - Textures/sprites loading interface
+
+## Libraries used
+ImGui Java Bindings: https://github.com/SpaiR/imgui-java for ImGui: https://github.com/ocornut/imgui
+JBox2D: http://www.jbox2d.org/
+
+Java bindings (https://www.lwjgl.org/) for
+OpenGL: https://www.opengl.org/
+OpenAL: https://www.openal.org/
+stb: https://github.com/nothings/stb
